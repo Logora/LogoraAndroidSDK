@@ -19,7 +19,6 @@ import com.airbnb.paris.Paris;
  * A simple {@link Fragment} subclass.
  */
 public class NavbarFragment extends Fragment {
-
     private Router router = Router.getInstance();
     public NavbarFragment() {
         super(R.layout.fragment_navbar);
@@ -35,12 +34,11 @@ public class NavbarFragment extends Fragment {
                              Bundle savedInstanceState) {
         View fragmentView = inflater.inflate(R.layout.fragment_navbar, container, false);
 
-        setNavbarTitle(fragmentView, getShortname());
+        Button navbarButtonView = fragmentView.findViewById(R.id.index_button);
+        TextView loginLinkView = fragmentView.findViewById(R.id.login_link_button);
 
-        Button navbarButtonView = fragmentView.findViewById(R.id.navbar_button);
-        Paris.styleBuilder(navbarButtonView)
-                .textColor(Color.parseColor(getPrimaryColor()))
-                .apply();
+        navbarButtonView.setBackgroundColor(Color.parseColor(getPrimaryColor()));
+        loginLinkView.setTextColor(Color.parseColor(getPrimaryColor()));
 
         navbarButtonView.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -48,16 +46,6 @@ public class NavbarFragment extends Fragment {
             }
         });
         return fragmentView;
-    }
-
-    private void setNavbarTitle(View view, String navbarTitle) {
-        TextView navbarTitleView = (TextView) view.findViewById(R.id.navbar_title);
-        navbarTitleView.setText(navbarTitle);
-    }
-
-    private String getShortname() {
-        SharedPreferences sharedPreferences =  this.getActivity().getSharedPreferences("logora_settings", 0);
-        return sharedPreferences.getString("shortname", "default");
     }
 
     private String getPrimaryColor() {

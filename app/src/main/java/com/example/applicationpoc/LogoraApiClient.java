@@ -59,12 +59,23 @@ public class LogoraApiClient {
     /* CLIENT METHODS */
     public void getSettings(Response.Listener<JSONObject> listener,
                             Response.ErrorListener errorListener) {
-        HashMap<String, String> queryParams = new HashMap<String, String>();
+        HashMap<String, String> queryParams = new HashMap<>();
         queryParams.put("shortname", this.applicationName);
         String route = "/settings";
         this.client_post(route, queryParams, null, listener, errorListener);
     }
 
+    public void getTrendingDebates(Response.Listener<JSONObject> listener,
+                                 Response.ErrorListener errorListener, Integer page,
+                                         Integer perPage, String sort, Integer outset) {
+        HashMap<String, String> queryParams = new HashMap<>();
+        queryParams.put("page", String.valueOf(page));
+        queryParams.put("perPage", String.valueOf(perPage));
+        queryParams.put("sort", sort);
+        queryParams.put("outset", String.valueOf(outset));
+        String route = "/groups/index/trending";
+        this.client_get(route, queryParams, listener, errorListener);
+    }
     /* AUTH METHODS */
     public void userAuth() {
         HashMap<String, String> bodyParams = new HashMap<>();
@@ -112,9 +123,7 @@ public class LogoraApiClient {
     }
 
     /* GENERIC REQUEST METHODS */
-
     /* CLIENT METHODS */
-
     /* Asynchrounous GET method */
     private void client_get(String route, HashMap<String, String> params,
                      Response.Listener<JSONObject> listener,
@@ -201,10 +210,55 @@ public class LogoraApiClient {
         this.queue.add(request);
     }
 
-    private HashMap<String, String> getUserAuthorizationHeaders() {
-        HashMap<String, String> headers = new HashMap<>();
-        headers.put("Authorization", "Bearer " + this.getUserToken());
-        return headers;
+    /* USER METHODS */
+    private void user_get(String route, HashMap<String, String> params,
+                            Response.Listener<JSONObject> listener,
+                            Response.ErrorListener errorListener) {
+        String paramsString = this.paramstoQueryString(params);
+        String requestUrl = this.apiUrl + route + paramsString;
+        String userAuthorizationHeader = this.getUserAuthorizationHeader();
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
+                requestUrl, null, listener, errorListener
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String>  params = new HashMap<>();
+                params.put("Content-Type", "application/json");
+                params.put("Authorization", userAuthorizationHeader);
+                return params;
+            }
+        };
+        this.queue.add(request);
+    }
+
+    private void user_post(String route, HashMap<String, String> params,
+                          HashMap<String, String> bodyParams,
+                          Response.Listener<JSONObject> listener,
+                          Response.ErrorListener errorListener) {
+        String paramsString = this.paramstoQueryString(params);
+        String requestUrl = this.apiUrl + route + paramsString;
+        String userAuthorizationHeader = this.getUserAuthorizationHeader();
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
+                requestUrl, null, listener, errorListener
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String>  params = new HashMap<>();
+                params.put("Content-Type", "application/json");
+                params.put("Authorization", userAuthorizationHeader);
+                return params;
+            }
+
+            @Override
+            protected Map<String,String> getParams() {
+                return bodyParams;
+            }
+        };
+        this.queue.add(request);
+    }
+
+    private String getUserAuthorizationHeader() {
+        return "Bearer " + this.getUserToken();
     }
 
     private String paramstoQueryString(HashMap<String, String> params) {
