@@ -20,6 +20,7 @@ import com.airbnb.paris.Paris;
  */
 public class NavbarFragment extends Fragment {
 
+    private Router router = Router.getInstance();
     public NavbarFragment() {
         super(R.layout.fragment_navbar);
     }
@@ -36,18 +37,14 @@ public class NavbarFragment extends Fragment {
 
         setNavbarTitle(fragmentView, getShortname());
 
-        String callPrimaryColor = getPrimaryColor();
-        Button navbarButtonView = (Button) fragmentView.findViewById(R.id.navbar_button);
+        Button navbarButtonView = fragmentView.findViewById(R.id.navbar_button);
         Paris.styleBuilder(navbarButtonView)
-                .textColor(Color.parseColor((String) getPrimaryColor()))
+                .textColor(Color.parseColor(getPrimaryColor()))
                 .apply();
 
         navbarButtonView.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Log.i("INFO", "BUTTON CLICK");
-                getParentFragmentManager().beginTransaction()
-                        .replace(R.id.main_fragment, new DebateFragment())
-                        .commit();
+                router.setCurrentRoute("myRoute");
             }
         });
         return fragmentView;

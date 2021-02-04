@@ -20,7 +20,7 @@ import org.json.JSONObject;
  * This component is responsible for routing and fetches settings and theme to store them
  * for children.
  */
-public class RootFragment extends Fragment {
+public class RootFragment extends Fragment implements Router.RouteListener {
     public RootFragment() {
         super(R.layout.fragment_root);
     }
@@ -30,6 +30,11 @@ public class RootFragment extends Fragment {
         super.onAttach(context);
 
         getSettings(context);
+        Router router = Router.getInstance();
+        router.setListener(this);
+
+        LogoraApiClient apiClient = LogoraApiClient.getInstance("logora_demo", context);
+        apiClient.userAuth();
     }
 
     @Override
@@ -78,5 +83,12 @@ public class RootFragment extends Fragment {
     private void setTheme() {
         SharedPreferences sharedPreferences =  this.getActivity().getSharedPreferences("logora_settings", 0);
         // SET THEME AND TRANSLATIONS
+    }
+
+    @Override
+    public void onRouteChange(String previousRoute, String currentRoute) {
+        getChildFragmentManager().beginTransaction()
+                .replace(R.id.main_fragment, new DebateFragment())
+                .commit();
     }
 }
