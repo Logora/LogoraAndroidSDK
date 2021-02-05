@@ -12,6 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.ProgressBar;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -21,6 +24,8 @@ import org.json.JSONObject;
  * for children.
  */
 public class RootFragment extends Fragment implements Router.RouteListener {
+    public Settings settings;
+
     public RootFragment() {
         super(R.layout.fragment_root);
     }
@@ -28,61 +33,40 @@ public class RootFragment extends Fragment implements Router.RouteListener {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+        LogoraApiClient apiClient = LogoraApiClient.getInstance("logora-demo", context);
 
-        getSettings(context);
+        this.settings = Settings.getInstance();
+        this.settings.setApiClient(apiClient);
+        this.settings.setSharedPreferences(this.getActivity());
         Router router = Router.getInstance();
         router.setListener(this);
-
-        LogoraApiClient apiClient = LogoraApiClient.getInstance("logora_demo", context);
-        apiClient.userAuth();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Adding navbar fragment
         if (savedInstanceState == null) {
             getChildFragmentManager().beginTransaction()
                     .add(R.id.navbar_fragment, new NavbarFragment())
-                    .add(R.id.main_fragment, new IndexFragment())
                     .add(R.id.footer_fragment, new FooterFragment())
                     .commit();
         }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_root, container, false);
-    }
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-    private void getSettings(Context context) {
-        LogoraApiClient apiClient = new LogoraApiClient("logora-demo", context);
-        apiClient.getSettings(
-            response -> {
-                try {
-                    setSettings(response);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            },
-            error -> {
-                Log.i("ERROR", String.valueOf(error));
-            });
-    }
-
-    private void setSettings(JSONObject settings) throws JSONException {
-        SharedPreferences sharedPreferences =  this.getActivity().getSharedPreferences("logora_settings", 0);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("shortname", settings.getJSONObject("data").getJSONObject("resource").getString("provider_token"));
-        editor.putString("callPrimaryColor", settings.getJSONObject("data").getJSONObject("resource").getJSONObject("theme").getString("callPrimaryColor"));
-        editor.apply();
-    }
-
-    private void setTheme() {
-        SharedPreferences sharedPreferences =  this.getActivity().getSharedPreferences("logora_settings", 0);
-        // SET THEME AND TRANSLATIONS
+        ProgressBar spinner = (ProgressBar) view.findViewById(R.id.root_loader);
+        spinner.setVisibility(View.VISIBLE);
+        SettingsViewModel model = new SettingsViewModel();
+        model.getSettings().observe(getViewLifecycleOwner(), settings -> {
+            getChildFragmentManager().beginTransaction()
+                    .add(R.id.main_fragment, new IndexFragment())
+                    .commit();
+            spinner.setVisibility(View.GONE);
+        });
     }
 
     @Override

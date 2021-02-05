@@ -1,23 +1,23 @@
 package com.example.applicationpoc.model;
 
 public class GroupBox {
-    private String title;
+    private String name;
     private String imageUrl;
 
     public GroupBox() {
     }
 
-    public GroupBox(String title, String imageUrl) {
-        this.title = title;
+    public GroupBox(String name, String imageUrl) {
+        this.name = name;
         this.imageUrl = imageUrl;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getImageUrl() {

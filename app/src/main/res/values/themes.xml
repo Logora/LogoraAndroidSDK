@@ -1,11 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Theme.ApplicationPOC" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Primary brand color. -->
         <item name="colorPrimary">@color/primary</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <item name="android:textColor">#00FF00</item>
+        <item name="android:textColor">@color/text_primary</item>
         <!-- Customize your theme here. -->
     </style>
 </resources>

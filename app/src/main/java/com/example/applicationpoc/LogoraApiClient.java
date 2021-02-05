@@ -27,7 +27,7 @@ public class LogoraApiClient {
     String userTokenKey = "logora_user_token";
     String userSessionKey = "logora_session";
     private String applicationName = null;
-    private String providerToken;
+    private String providerToken = null;
     private Context context = null;
     private static LogoraApiClient instance = null;
 
@@ -68,6 +68,7 @@ public class LogoraApiClient {
     public void getTrendingDebates(Response.Listener<JSONObject> listener,
                                  Response.ErrorListener errorListener, Integer page,
                                          Integer perPage, String sort, Integer outset) {
+        Log.i("INFO", String.valueOf(this.providerToken));
         HashMap<String, String> queryParams = new HashMap<>();
         queryParams.put("page", String.valueOf(page));
         queryParams.put("perPage", String.valueOf(perPage));
@@ -76,6 +77,7 @@ public class LogoraApiClient {
         String route = "/groups/index/trending";
         this.client_get(route, queryParams, listener, errorListener);
     }
+
     /* AUTH METHODS */
     public void userAuth() {
         HashMap<String, String> bodyParams = new HashMap<>();
@@ -123,12 +125,14 @@ public class LogoraApiClient {
     }
 
     /* GENERIC REQUEST METHODS */
+
     /* CLIENT METHODS */
-    /* Asynchrounous GET method */
-    private void client_get(String route, HashMap<String, String> params,
+
+    private void client_get(String route, HashMap<String, String> queryParams,
                      Response.Listener<JSONObject> listener,
                      Response.ErrorListener errorListener) {
-        String paramsString = this.paramstoQueryString(params);
+        queryParams.put("provider_token", this.providerToken);
+        String paramsString = this.paramstoQueryString(queryParams);
         String requestUrl = this.apiUrl + route + paramsString;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
             requestUrl, null, listener, errorListener
@@ -137,13 +141,13 @@ public class LogoraApiClient {
             public Map<String, String> getHeaders() {
                 Map<String, String>  params = new HashMap<>();
                 params.put("Content-Type", "application/json");
+                params.put("Origin", "https://logora.fr");
                 return params;
             }
         };
         this.queue.add(request);
     }
 
-    /* Asynchrounous POST method */
     private void client_post(String route, HashMap<String, String> queryParams,
                             HashMap<String, String> bodyParams,
                             Response.Listener<JSONObject> listener,
@@ -167,50 +171,8 @@ public class LogoraApiClient {
         this.queue.add(request);
     }
 
-    /* Asynchrounous PATCH method */
-    private void client_patch(String route,
-                              HashMap<String, String> queryParams,
-                              HashMap<String, String> bodyParams,
-                              Response.Listener<JSONObject> listener,
-                              Response.ErrorListener errorListener) {
-        String paramsString = this.paramstoQueryString(queryParams);
-        String requestUrl = this.apiUrl + route + paramsString;
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PATCH,
-                requestUrl, null, listener, errorListener)  {
-            @Override
-            public Map<String, String> getHeaders() {
-                Map<String, String>  params = new HashMap<>();
-                params.put("Content-Type", "application/json");
-                return params;
-            }
-
-            @Override
-            protected Map<String,String> getParams() {
-                return bodyParams;
-            }
-        };
-        this.queue.add(request);
-    }
-
-    /* Asynchrounous DELETE method */
-    private void client_delete(String route, HashMap<String, String> queryParams,
-                        Response.Listener<JSONObject> listener,
-                        Response.ErrorListener errorListener) {
-        String paramsString = this.paramstoQueryString(queryParams);
-        String requestUrl = this.apiUrl + route + paramsString;
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.DELETE,
-                requestUrl, null, listener, errorListener)  {
-            @Override
-            public Map<String, String> getHeaders() {
-                Map<String, String>  params = new HashMap<String, String>();
-                params.put("Content-Type", "application/json");
-                return params;
-            }
-        };
-        this.queue.add(request);
-    }
-
     /* USER METHODS */
+
     private void user_get(String route, HashMap<String, String> params,
                             Response.Listener<JSONObject> listener,
                             Response.ErrorListener errorListener) {
