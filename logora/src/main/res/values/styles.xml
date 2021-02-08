@@ -1,0 +1,6 @@
+<resources>
+    <style name="Widget.Theme.ApplicationPOC.MyView" parent="">
+        <item name="android:background">@color/primary</item>
+        <item name="android:textColor">#00FF00</item>
+    </style>
+</resources>
