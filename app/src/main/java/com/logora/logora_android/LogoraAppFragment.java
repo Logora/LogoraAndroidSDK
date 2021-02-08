@@ -19,15 +19,15 @@ import java.util.HashMap;
  * This component is responsible for routing and fetches settings and theme to store them
  * for children.
  */
-public class RootFragment extends Fragment implements Router.RouteListener {
+public class LogoraAppFragment extends Fragment implements Router.RouteListener {
     private String applicationName;
 
-    public RootFragment() {
+    public LogoraAppFragment() {
         super(R.layout.fragment_root);
         this.applicationName = "logora-demo";
     }
 
-    public RootFragment(String applicationName) {
+    public LogoraAppFragment(String applicationName) {
         super(R.layout.fragment_root);
         this.applicationName = applicationName;
     }
