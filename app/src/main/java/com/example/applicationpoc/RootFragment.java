@@ -14,20 +14,30 @@ import android.widget.ProgressBar;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
+
 /**
  * Root component which is a {@link Fragment} subclass.
  * This component is responsible for routing and fetches settings and theme to store them
  * for children.
  */
 public class RootFragment extends Fragment implements Router.RouteListener {
+    private String applicationName;
+
     public RootFragment() {
         super(R.layout.fragment_root);
+        this.applicationName = "logora-demo";
+    }
+
+    public RootFragment(String applicationName) {
+        super(R.layout.fragment_root);
+        this.applicationName = applicationName;
     }
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        LogoraApiClient apiClient = LogoraApiClient.getInstance("logora-demo", context);
+        LogoraApiClient apiClient = LogoraApiClient.getInstance(this.applicationName, context);
 
         Router router = Router.getInstance();
         router.setListener(this);
@@ -56,9 +66,19 @@ public class RootFragment extends Fragment implements Router.RouteListener {
     }
 
     @Override
-    public void onRouteChange(String previousRoute, String currentRoute) {
-        getChildFragmentManager().beginTransaction()
-                .replace(R.id.main_fragment, new DebateFragment())
-                .commit();
+    public void onRouteChange(Route previousRoute, Route currentRoute, HashMap<String, String> params,
+                              HashMap<String, String> queryParams) {
+        Log.i("INFO", currentRoute.getName());
+        switch (currentRoute.getName()) {
+            case "DEBATE":
+                getChildFragmentManager().beginTransaction()
+                        .replace(R.id.main_fragment, new DebateFragment(params.get("debateSlug")))
+                        .commit();
+                break;
+            default:
+                getChildFragmentManager().beginTransaction()
+                        .replace(R.id.main_fragment, new IndexFragment())
+                        .commit();
+        }
     }
 }

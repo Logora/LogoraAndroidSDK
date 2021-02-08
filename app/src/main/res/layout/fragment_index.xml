@@ -26,7 +26,9 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@id/trending_debates_header"
-        android:progressBackgroundTint="@android:color/black" />
+        android:indeterminate="true"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="@android:color/black" />
 
     <ListView
         android:id="@+id/trending_debates_list"

@@ -1,8 +1,5 @@
 package com.example.applicationpoc;
 
-import android.app.Activity;
-import android.content.SharedPreferences;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,7 +34,7 @@ public class Settings {
         return null;
     }
 
-    public void store(JSONObject settings) throws JSONException {
+    public void store(JSONObject settings) {
         this.settingsObject = settings;
     }
 

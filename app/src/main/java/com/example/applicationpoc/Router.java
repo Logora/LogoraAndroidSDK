@@ -1,26 +1,43 @@
 package com.example.applicationpoc;
 
-import android.util.Log;
+import android.net.Uri;
+
+import java.util.HashMap;
 
 public class Router {
-    public enum Routes {INDEX, DEBATE};
-
+    private static HashMap<String, Route> routes = new HashMap<>();
     private static Router instance = null;
     private RouteListener routeListener;
-    private String currentRoute;
+    private Route currentRoute;
 
-    public void setCurrentRoute(String currentRoute) {
-        this.currentRoute = currentRoute;
-        if (routeListener != null) routeListener.onRouteChange(currentRoute, currentRoute);
+    private static void defineRoutes() {
+        Route indexRoute = new Route("INDEX", "/", null, null);
+        Router.routes.put(indexRoute.getName(), indexRoute);
+
+        HashMap<String, String> debateRouteParamDef = new HashMap<>();
+        debateRouteParamDef.put("debateSlug", "");
+        Route debateRoute = new Route("DEBATE", "/debat/:debateSlug", debateRouteParamDef, null);
+        Router.routes.put(debateRoute.getName(), debateRoute);
     }
 
-    public String getCurrentRoute() {
+    public static Route getRoute(String routeName) {
+        return routes.get(routeName);
+    }
+
+    public void setCurrentRoute(Route currentRoute, HashMap<String, String> params, HashMap<String, String> queryParams) {
+        Route previousRoute = this.currentRoute;
+        this.currentRoute = currentRoute;
+        if (routeListener != null) routeListener.onRouteChange(previousRoute, this.currentRoute, params, queryParams);
+    }
+
+    public Route getCurrentRoute() {
         return this.currentRoute;
     }
 
     public static Router getInstance() {
         if(Router.instance == null) {
             Router.instance = new Router();
+            Router.defineRoutes();
         }
         return Router.instance;
     }
@@ -28,12 +45,16 @@ public class Router {
     public RouteListener getListener() {
         return routeListener;
     }
-
     public void setListener(RouteListener routeListener) {
         this.routeListener = routeListener;
     }
 
+    public String parse(String url) {
+        Uri parsedUrl = Uri.parse(url);
+        return "";
+    }
+
     public interface RouteListener {
-        void onRouteChange(String previousRoute, String currentRoute);
+        void onRouteChange(Route previousRoute, Route currentRoute, HashMap<String, String> params, HashMap<String, String> queryParams);
     }
 }

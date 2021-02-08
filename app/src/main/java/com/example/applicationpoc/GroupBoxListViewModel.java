@@ -47,6 +47,7 @@ public class GroupBoxListViewModel extends ViewModel {
                         JSONObject groupBoxObject = groupBoxes.getJSONObject(i);
                         GroupBox groupBox = new GroupBox();
                         groupBox.setName(groupBoxObject.getString("name"));
+                        groupBox.setSlug(groupBoxObject.getString("slug"));
                         groupBox.setImageUrl(groupBoxObject.getString("image_url"));
                         groupBoxObjects.add(groupBox);
                     }

@@ -22,10 +22,10 @@ import java.util.Objects;
 
 public class LogoraApiClient {
     RequestQueue queue;
-    String apiUrl = "https://app.logora.fr/api/v1";
-    String authUrl = "https://app.logora.fr/oauth";
-    String userTokenKey = "logora_user_token";
-    String userSessionKey = "logora_session";
+    private final String apiUrl = "https://app.logora.fr/api/v1";
+    private final String authUrl = "https://app.logora.fr/oauth";
+    private String userTokenKey = "logora_user_token";
+    private String userSessionKey = "logora_session";
     private String applicationName = null;
     private String providerToken = null;
     private Context context = null;
@@ -68,13 +68,19 @@ public class LogoraApiClient {
     public void getTrendingDebates(Response.Listener<JSONObject> listener,
                                  Response.ErrorListener errorListener, Integer page,
                                          Integer perPage, String sort, Integer outset) {
-        Log.i("INFO", String.valueOf(this.providerToken));
         HashMap<String, String> queryParams = new HashMap<>();
         queryParams.put("page", String.valueOf(page));
         queryParams.put("perPage", String.valueOf(perPage));
         queryParams.put("sort", sort);
         queryParams.put("outset", String.valueOf(outset));
         String route = "/groups/index/trending";
+        this.client_get(route, queryParams, listener, errorListener);
+    }
+
+    public void getDebate(Response.Listener<JSONObject> listener,
+                                   Response.ErrorListener errorListener, String slug) {
+        HashMap<String, String> queryParams = new HashMap<>();
+        String route = "/groups/" + slug;
         this.client_get(route, queryParams, listener, errorListener);
     }
 

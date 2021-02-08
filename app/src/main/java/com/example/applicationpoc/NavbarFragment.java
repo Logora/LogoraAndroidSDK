@@ -51,7 +51,7 @@ public class NavbarFragment extends Fragment {
 
         navbarButtonView.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                router.setCurrentRoute("myRoute");
+                router.setCurrentRoute(Router.getRoute("INDEX"), null, null);
             }
         });
         return fragmentView;
