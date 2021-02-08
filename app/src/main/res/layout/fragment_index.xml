@@ -2,27 +2,37 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:paddingVertical="5dp"
     android:paddingHorizontal="12dp"
     android:orientation="vertical"
     tools:context=".IndexFragment">
 
     <TextView
+        android:id="@+id/main_debate_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Débat à l'affiche" />
+
+    <TextView
         android:id="@+id/trending_debates_header"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Débats tendances" />
+        android:layout_height="wrap_content"
+        android:text="Débats tendances"
+        android:layout_below="@id/main_debate_header"/>
 
     <ProgressBar
         android:id="@+id/trending_debates_loader"
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:layout_height="50dp"
+        android:layout_below="@id/trending_debates_header"
+        android:progressBackgroundTint="@android:color/black" />
 
     <ListView
         android:id="@+id/trending_debates_list"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:dividerHeight="1dp" />
+        android:layout_below="@id/trending_debates_header"
+        android:dividerHeight="5dp" />
 
 </RelativeLayout>

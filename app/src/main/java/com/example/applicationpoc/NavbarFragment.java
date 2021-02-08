@@ -15,11 +15,14 @@ import androidx.fragment.app.Fragment;
 
 import com.airbnb.paris.Paris;
 
+import org.json.JSONException;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class NavbarFragment extends Fragment {
     private Router router = Router.getInstance();
+    private Settings settings = Settings.getInstance();
     public NavbarFragment() {
         super(R.layout.fragment_navbar);
     }
@@ -37,8 +40,14 @@ public class NavbarFragment extends Fragment {
         Button navbarButtonView = fragmentView.findViewById(R.id.index_button);
         TextView loginLinkView = fragmentView.findViewById(R.id.login_link_button);
 
-        navbarButtonView.setBackgroundColor(Color.parseColor(getPrimaryColor()));
-        loginLinkView.setTextColor(Color.parseColor(getPrimaryColor()));
+        String primaryColor = null;
+        try {
+            primaryColor = getPrimaryColor();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        navbarButtonView.setBackgroundColor(Color.parseColor(primaryColor));
+        loginLinkView.setTextColor(Color.parseColor(primaryColor));
 
         navbarButtonView.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -48,8 +57,7 @@ public class NavbarFragment extends Fragment {
         return fragmentView;
     }
 
-    private String getPrimaryColor() {
-        SharedPreferences sharedPreferences =  this.getActivity().getSharedPreferences("logora_settings", 0);
-        return sharedPreferences.getString("callPrimaryColor", "default");
+    private String getPrimaryColor() throws JSONException {
+        return settings.get("theme.callPrimaryColor");
     }
 }

@@ -1,7 +1,6 @@
 package com.example.applicationpoc;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,12 +10,9 @@ import androidx.fragment.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Root component which is a {@link Fragment} subclass.
@@ -24,8 +20,6 @@ import org.json.JSONObject;
  * for children.
  */
 public class RootFragment extends Fragment implements Router.RouteListener {
-    public Settings settings;
-
     public RootFragment() {
         super(R.layout.fragment_root);
     }
@@ -35,9 +29,6 @@ public class RootFragment extends Fragment implements Router.RouteListener {
         super.onAttach(context);
         LogoraApiClient apiClient = LogoraApiClient.getInstance("logora-demo", context);
 
-        this.settings = Settings.getInstance();
-        this.settings.setApiClient(apiClient);
-        this.settings.setSharedPreferences(this.getActivity());
         Router router = Router.getInstance();
         router.setListener(this);
     }
@@ -45,25 +36,20 @@ public class RootFragment extends Fragment implements Router.RouteListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (savedInstanceState == null) {
-            getChildFragmentManager().beginTransaction()
-                    .add(R.id.navbar_fragment, new NavbarFragment())
-                    .add(R.id.footer_fragment, new FooterFragment())
-                    .commit();
-        }
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NotNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ProgressBar spinner = (ProgressBar) view.findViewById(R.id.root_loader);
+        ProgressBar spinner = view.findViewById(R.id.root_loader);
         spinner.setVisibility(View.VISIBLE);
         SettingsViewModel model = new SettingsViewModel();
         model.getSettings().observe(getViewLifecycleOwner(), settings -> {
             getChildFragmentManager().beginTransaction()
+                    .add(R.id.navbar_fragment, new NavbarFragment())
                     .add(R.id.main_fragment, new IndexFragment())
+                    .add(R.id.footer_fragment, new FooterFragment())
                     .commit();
             spinner.setVisibility(View.GONE);
         });

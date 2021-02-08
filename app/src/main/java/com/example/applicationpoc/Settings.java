@@ -1,35 +1,44 @@
 package com.example.applicationpoc;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Settings {
     private static Settings instance = null;
-    private LogoraApiClient apiClient;
-    private SharedPreferences sharedPreferences;
+    private JSONObject settingsObject;
     private final String settingsKey = "logora_settings";
 
     public String get(String settingsKey) {
-        return "settings";
+        String[] keys = settingsKey.split("\\.");
+        JSONObject current = this.settingsObject;
+        for(int i = 0; i < keys.length; i++) {
+            if(current.has(keys[i])) {
+                if(i == keys.length - 1) {
+
+                    try {
+                        return current.getString(keys[i]);
+                    } catch (JSONException e) {
+                        return null;
+                    }
+                } else {
+                    try {
+                        current = current.getJSONObject(keys[i]);
+                    } catch (JSONException e) {
+                        return null;
+                    }
+                }
+            } else {
+                return null;
+            }
+        }
+        return null;
     }
 
     public void store(JSONObject settings) throws JSONException {
-        SharedPreferences.Editor editor = this.sharedPreferences.edit();
-        editor.putString("callPrimaryColor", settings.getJSONObject("theme").getString("callPrimaryColor"));
-        editor.apply();
-    }
-
-    public void setApiClient(LogoraApiClient apiClient) {
-        this.apiClient = apiClient;
-    }
-
-    public void setSharedPreferences(Activity activity) {
-        this.sharedPreferences = activity.getSharedPreferences(this.settingsKey, 0);
+        this.settingsObject = settings;
     }
 
     public static Settings getInstance() {

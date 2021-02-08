@@ -35,8 +35,8 @@ public class IndexFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ListView listView = (ListView) view.findViewById(R.id.trending_debates_list);
-        ProgressBar spinner = (ProgressBar) view.findViewById(R.id.trending_debates_loader);
+        ListView listView = view.findViewById(R.id.trending_debates_list);
+        ProgressBar spinner = view.findViewById(R.id.trending_debates_loader);
         spinner.setVisibility(View.VISIBLE);
         GroupBoxListViewModel model = new GroupBoxListViewModel();
         model.getGroupBoxList().observe(getViewLifecycleOwner(), groupBoxList -> {
