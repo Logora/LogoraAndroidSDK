@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.logora.logora_android.model.DebateBox;
+import com.logora.logora_android.util.LogoraApiClient;
 
 import org.json.JSONArray;
 import org.json.JSONException;

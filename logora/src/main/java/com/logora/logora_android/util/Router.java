@@ -1,4 +1,4 @@
-package com.logora.logora_android;
+package com.logora.logora_android.util;
 
 import android.net.Uri;
 

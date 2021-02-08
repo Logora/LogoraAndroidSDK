@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 import androidx.fragment.app.Fragment;
 
 import com.logora.logora_android.model.DebateBox;
+import com.logora.logora_android.util.Router;
 
 import java.util.HashMap;
 
