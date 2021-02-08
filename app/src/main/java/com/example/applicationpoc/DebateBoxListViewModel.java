@@ -1,21 +1,12 @@
 package com.example.applicationpoc;
 
-import android.app.Activity;
-import android.content.Context;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.TextView;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.NetworkImageView;
-import com.example.applicationpoc.model.GroupBox;
+import com.example.applicationpoc.model.DebateBox;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,11 +15,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GroupBoxListViewModel extends ViewModel {
-    private String TAG = GroupBoxListViewModel.class.getSimpleName();
-    private MutableLiveData<List<GroupBox>> groupBoxList;
+public class DebateBoxListViewModel extends ViewModel {
+    private String TAG = DebateBoxListViewModel.class.getSimpleName();
+    private MutableLiveData<List<DebateBox>> groupBoxList;
 
-    LiveData<List<GroupBox>> getGroupBoxList() {
+    LiveData<List<DebateBox>> getGroupBoxList() {
         if (groupBoxList == null) {
             groupBoxList = new MutableLiveData<>();
             loadGroupBoxList();
@@ -42,16 +33,16 @@ public class GroupBoxListViewModel extends ViewModel {
             response -> {
                 try {
                     JSONArray groupBoxes = response.getJSONArray("data");
-                    List<GroupBox> groupBoxObjects = new ArrayList<>();
+                    List<DebateBox> debateBoxObjects = new ArrayList<>();
                     for (int i = 0; i < groupBoxes.length(); i++) {
                         JSONObject groupBoxObject = groupBoxes.getJSONObject(i);
-                        GroupBox groupBox = new GroupBox();
-                        groupBox.setName(groupBoxObject.getString("name"));
-                        groupBox.setSlug(groupBoxObject.getString("slug"));
-                        groupBox.setImageUrl(groupBoxObject.getString("image_url"));
-                        groupBoxObjects.add(groupBox);
+                        DebateBox debateBox = new DebateBox();
+                        debateBox.setName(groupBoxObject.getString("name"));
+                        debateBox.setSlug(groupBoxObject.getString("slug"));
+                        debateBox.setImageUrl(groupBoxObject.getString("image_url"));
+                        debateBoxObjects.add(debateBox);
                     }
-                    groupBoxList.setValue(groupBoxObjects);
+                    groupBoxList.setValue(debateBoxObjects);
                 } catch (JSONException e) {
                     e.printStackTrace();
                     groupBoxList.setValue(new ArrayList<>());

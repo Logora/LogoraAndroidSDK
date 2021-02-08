@@ -1,14 +1,14 @@
 package com.example.applicationpoc.model;
 
-public class GroupBox {
+public class DebateBox {
     private String name;
     private String imageUrl;
     private String slug;
 
-    public GroupBox() {
+    public DebateBox() {
     }
 
-    public GroupBox(String name, String slug, String imageUrl) {
+    public DebateBox(String name, String slug, String imageUrl) {
         this.name = name;
         this.slug = slug;
         this.imageUrl = imageUrl;

@@ -4,40 +4,36 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.applicationpoc.model.GroupBox;
+import com.example.applicationpoc.model.DebateBox;
 
-import java.util.HashMap;
 import java.util.List;
 
-public class GroupBoxListAdapter extends BaseAdapter {
+public class DebateBoxListAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
-    private List<GroupBox> groupBoxItems;
+    private List<DebateBox> debateBoxItems;
 
-    public GroupBoxListAdapter(Activity activity, List<GroupBox> groupBoxItems) {
+    public DebateBoxListAdapter(Activity activity, List<DebateBox> debateBoxItems) {
         this.activity = activity;
-        this.groupBoxItems = groupBoxItems;
+        this.debateBoxItems = debateBoxItems;
     }
 
     @Override
     public int getCount() {
-        return groupBoxItems.size();
+        return debateBoxItems.size();
     }
 
     @Override
-    public GroupBox getItem(int location) {
-        return groupBoxItems.get(location);
+    public DebateBox getItem(int location) {
+        return debateBoxItems.get(location);
     }
 
     @Override
@@ -57,13 +53,12 @@ public class GroupBoxListAdapter extends BaseAdapter {
         ImageView image = (ImageView) convertView.findViewById(R.id.group_box_image);
         TextView name = (TextView) convertView.findViewById(R.id.group_box_name);
 
-        // getting movie data for the row
-        GroupBox groupBox = groupBoxItems.get(position);
+        DebateBox debateBox = debateBoxItems.get(position);
 
         Glide.with(this.activity.getApplicationContext())
-                .load(Uri.parse(groupBox.getImageUrl()))
+                .load(Uri.parse(debateBox.getImageUrl()))
                 .into(image);
-        name.setText(groupBox.getName());
+        name.setText(debateBox.getName());
         return convertView;
     }
 }
