@@ -1,6 +1,4 @@
-package com.example.applicationpoc;
-
-import android.net.Uri;
+package com.logora.logora_android;
 
 import java.util.HashMap;
 import java.util.Map;

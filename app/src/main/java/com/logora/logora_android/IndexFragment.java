@@ -1,4 +1,4 @@
-package com.example.applicationpoc;
+package com.logora.logora_android;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -9,7 +9,7 @@ import android.widget.ProgressBar;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.applicationpoc.model.DebateBox;
+import com.logora.logora_android.model.DebateBox;
 
 import java.util.HashMap;
 

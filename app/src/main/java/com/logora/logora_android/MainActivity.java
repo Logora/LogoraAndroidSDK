@@ -1,4 +1,4 @@
-package com.example.applicationpoc;
+package com.logora.logora_android;
 
 import androidx.appcompat.app.AppCompatActivity;
 

@@ -1,4 +1,4 @@
-package com.example.applicationpoc;
+package com.logora.logora_android;
 
 import android.util.Log;
 
@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.applicationpoc.model.DebateBox;
+import com.logora.logora_android.model.DebateBox;
 
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -1,4 +1,4 @@
-package com.example.applicationpoc;
+package com.logora.logora_android;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.applicationpoc.model.DebateBox;
+import com.logora.logora_android.model.DebateBox;
 
 import java.util.List;
 
