@@ -20,13 +20,9 @@ import org.json.JSONException;
 public class NavbarFragment extends Fragment {
     private Router router = Router.getInstance();
     private Settings settings = Settings.getInstance();
+
     public NavbarFragment() {
         super(R.layout.fragment_navbar);
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override

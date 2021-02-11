@@ -46,11 +46,6 @@ public class LogoraAppFragment extends Fragment implements Router.RouteListener 
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public void onViewCreated(@NotNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -70,7 +65,6 @@ public class LogoraAppFragment extends Fragment implements Router.RouteListener 
     @Override
     public void onRouteChange(Route previousRoute, Route currentRoute, HashMap<String, String> params,
                               HashMap<String, String> queryParams) {
-        Log.i("INFO", currentRoute.getName());
         switch (currentRoute.getName()) {
             case "DEBATE":
                 getChildFragmentManager().beginTransaction()

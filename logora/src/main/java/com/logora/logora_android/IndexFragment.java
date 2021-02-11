@@ -12,13 +12,15 @@ import androidx.fragment.app.Fragment;
 import com.logora.logora_android.model.DebateBox;
 import com.logora.logora_android.util.Router;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class IndexFragment extends Fragment {
-    private Router router = Router.getInstance();
+    private final Router router = Router.getInstance();
     private ListView listView;
 
     public IndexFragment() {
@@ -26,7 +28,7 @@ public class IndexFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NotNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         ListView listView = view.findViewById(R.id.trending_debates_list);
@@ -37,18 +39,12 @@ public class IndexFragment extends Fragment {
             DebateBoxListAdapter adapter = new DebateBoxListAdapter(this.getActivity(), groupBoxList);
             listView.setAdapter(adapter);
 
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView,
-                                        View view, int position, long id) {
-                    DebateBox debateBox = (DebateBox) adapterView.getItemAtPosition(position);
-                    Log.i("INFO", debateBox.getName());
-                    HashMap<String, String> routeParams = new HashMap<>();
-                    routeParams.put("debateSlug", debateBox.getSlug());
-                    router.setCurrentRoute(Router.getRoute("DEBATE"), routeParams, null);
-                }
+            listView.setOnItemClickListener((adapterView, view1, position, id) -> {
+                DebateBox debateBox = (DebateBox) adapterView.getItemAtPosition(position);
+                HashMap<String, String> routeParams = new HashMap<>();
+                routeParams.put("debateSlug", debateBox.getSlug());
+                router.setCurrentRoute(Router.getRoute("DEBATE"), routeParams, null);
             });
-
             spinner.setVisibility(View.GONE);
         });
     }
