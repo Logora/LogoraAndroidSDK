@@ -10,47 +10,40 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.logora.logora_android.util.Router;
+import com.logora.logora_android.utils.Router;
+import com.logora.logora_android.utils.Settings;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 
 /**
- * A simple {@link Fragment} subclass.
+ * A {@link Fragment} subclass containing the debate space navbar.
  */
 public class NavbarFragment extends Fragment {
     private Router router = Router.getInstance();
-    private Settings settings = Settings.getInstance();
+    private final Settings settings = Settings.getInstance();
 
     public NavbarFragment() {
         super(R.layout.fragment_navbar);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View fragmentView = inflater.inflate(R.layout.fragment_navbar, container, false);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        Button navbarButtonView = getView().findViewById(R.id.index_button);
+        TextView loginLinkView = getView().findViewById(R.id.login_link_button);
 
-        Button navbarButtonView = fragmentView.findViewById(R.id.index_button);
-        TextView loginLinkView = fragmentView.findViewById(R.id.login_link_button);
-
-        String primaryColor = null;
-        try {
-            primaryColor = getPrimaryColor();
-        } catch (JSONException e) {
-            e.printStackTrace();
+        String buttonText = settings.get("layout.infoAllDebates");
+        if(buttonText != null) {
+            navbarButtonView.setText(buttonText);
         }
-        navbarButtonView.setBackgroundColor(Color.parseColor(primaryColor));
+        String primaryColor = settings.get("theme.callPrimaryColor");
         loginLinkView.setTextColor(Color.parseColor(primaryColor));
+        navbarButtonView.setBackgroundColor(Color.parseColor(primaryColor));
 
         navbarButtonView.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 router.setCurrentRoute(Router.getRoute("INDEX"), null, null);
             }
         });
-        return fragmentView;
-    }
-
-    private String getPrimaryColor() throws JSONException {
-        return settings.get("theme.callPrimaryColor");
     }
 }

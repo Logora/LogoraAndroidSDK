@@ -1,34 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".LogoraAppFragment"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
-    <FrameLayout
-        android:id="@+id/navbar_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="60dp" />
-
-    <ProgressBar
-        android:id="@+id/root_loader"
-        android:layout_below="@id/navbar_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:indeterminate="true"
-        android:indeterminateTintMode="src_atop"
-        android:indeterminateTint="@android:color/black" />
-
-    <FrameLayout
-        android:id="@+id/main_fragment"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/navbar_fragment" />
+        tools:context=".LogoraAppFragment"
+        android:orientation="vertical">
 
-    <FrameLayout
-        android:id="@+id/footer_fragment"
-        android:layout_below="@id/main_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="60dp" />
-</RelativeLayout>
+        <FrameLayout
+            android:id="@+id/navbar_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="60dp" />
+
+        <ProgressBar
+            android:id="@+id/root_loader"
+            android:layout_below="@id/navbar_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:indeterminate="true"
+            android:indeterminateTintMode="src_atop"
+            android:indeterminateTint="@android:color/black" />
+
+        <FrameLayout
+            android:id="@+id/main_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/navbar_fragment" />
+
+        <FrameLayout
+            android:id="@+id/footer_fragment"
+            android:layout_below="@id/main_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="60dp" />
+    </RelativeLayout>
+</ScrollView>

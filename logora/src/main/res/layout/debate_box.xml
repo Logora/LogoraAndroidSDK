@@ -6,7 +6,7 @@
     android:background="@drawable/box_background">
 
     <ImageView
-        android:id="@+id/group_box_image"
+        android:id="@+id/debate_box_image"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_alignParentTop="true" />
@@ -14,12 +14,12 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_below="@+id/group_box_image"
+        android:layout_below="@+id/debate_box_image"
         android:paddingHorizontal="15dp"
         android:paddingVertical="8dp">
 
         <TextView
-            android:id="@+id/group_box_name"
+            android:id="@+id/debate_box_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"

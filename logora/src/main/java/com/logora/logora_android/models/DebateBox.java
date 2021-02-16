@@ -1,4 +1,7 @@
-package com.logora.logora_android.model;
+package com.logora.logora_android.models;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class DebateBox {
     private String name;
@@ -12,6 +15,19 @@ public class DebateBox {
         this.name = name;
         this.slug = slug;
         this.imageUrl = imageUrl;
+    }
+
+    public static DebateBox objectFromJson(JSONObject jsonObject) {
+        DebateBox debateBox = new DebateBox();
+        try {
+            debateBox.setName(jsonObject.getString("name"));
+            debateBox.setSlug(jsonObject.getString("slug"));
+            debateBox.setImageUrl(jsonObject.getString("image_url"));
+            return debateBox;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public String getName() {

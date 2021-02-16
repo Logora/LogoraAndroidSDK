@@ -1,4 +1,4 @@
-package com.logora.logora_android.util;
+package com.logora.logora_android.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -19,8 +19,8 @@ import java.util.Objects;
 
 public class LogoraApiClient {
     RequestQueue queue;
-    private final String apiUrl = "https://app.logora.fr/api/v1";
-    private final String authUrl = "https://app.logora.fr/oauth";
+    private final String apiUrl = "https://staging.logora.fr/api/v1";
+    private final String authUrl = "https://staging.logora.fr/oauth";
     private String userTokenKey = "logora_user_token";
     private String userSessionKey = "logora_session";
     private String applicationName = null;
@@ -67,7 +67,7 @@ public class LogoraApiClient {
                                          Integer perPage, String sort, Integer outset) {
         HashMap<String, String> queryParams = new HashMap<>();
         queryParams.put("page", String.valueOf(page));
-        queryParams.put("perPage", String.valueOf(perPage));
+        queryParams.put("per_page", String.valueOf(perPage));
         queryParams.put("sort", sort);
         queryParams.put("outset", String.valueOf(outset));
         String route = "/groups/index/trending";
@@ -137,6 +137,7 @@ public class LogoraApiClient {
         queryParams.put("provider_token", this.providerToken);
         String paramsString = this.paramstoQueryString(queryParams);
         String requestUrl = this.apiUrl + route + paramsString;
+        Log.i("GET", requestUrl);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
             requestUrl, null, listener, errorListener
         ) {

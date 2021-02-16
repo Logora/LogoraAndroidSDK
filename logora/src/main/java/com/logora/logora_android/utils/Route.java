@@ -1,4 +1,4 @@
-package com.logora.logora_android.util;
+package com.logora.logora_android.utils;
 
 import java.util.HashMap;
 import java.util.Map;

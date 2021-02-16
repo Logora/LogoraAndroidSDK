@@ -1,4 +1,4 @@
-package com.logora.logora_android.model;
+package com.logora.logora_android.models;
 
 public class Debate {
     private String name;

@@ -1,6 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="ButtonPrimary" parent="">
-        <item name="android:textColor">#00FF0A</item>
-        <item name="android:backgroundTint">#FFFFFF</item>
+    <style name="PrimaryButton">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textAlignment">center</item>
     </style>
 </resources>

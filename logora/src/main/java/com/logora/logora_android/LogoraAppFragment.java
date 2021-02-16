@@ -6,13 +6,13 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
-import com.logora.logora_android.util.LogoraApiClient;
-import com.logora.logora_android.util.Route;
-import com.logora.logora_android.util.Router;
+import com.logora.logora_android.utils.LogoraApiClient;
+import com.logora.logora_android.utils.Route;
+import com.logora.logora_android.utils.Router;
+import com.logora.logora_android.view_models.SettingsViewModel;
 
 import org.jetbrains.annotations.NotNull;
 

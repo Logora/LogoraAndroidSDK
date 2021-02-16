@@ -1,4 +1,4 @@
-package com.logora.logora_android;
+package com.logora.logora_android.view_models;
 
 import android.util.Log;
 
@@ -6,8 +6,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.logora.logora_android.model.Debate;
-import com.logora.logora_android.util.LogoraApiClient;
+import com.logora.logora_android.models.Debate;
+import com.logora.logora_android.utils.LogoraApiClient;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,7 +16,7 @@ public class DebateShowViewModel extends ViewModel {
     private String TAG = DebateShowViewModel.class.getSimpleName();
     private MutableLiveData<Debate> debate;
 
-    LiveData<Debate> getDebate(String slug) {
+    public LiveData<Debate> getDebate(String slug) {
         if (debate == null) {
             debate = new MutableLiveData<>();
             loadDebate(slug);

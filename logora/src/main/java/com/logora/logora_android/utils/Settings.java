@@ -1,4 +1,4 @@
-package com.logora.logora_android;
+package com.logora.logora_android.utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -6,7 +6,6 @@ import org.json.JSONObject;
 public class Settings {
     private static Settings instance = null;
     private JSONObject settingsObject;
-    private final String settingsKey = "logora_settings";
 
     public String get(String settingsKey) {
         String[] keys = settingsKey.split("\\.");
@@ -34,9 +33,7 @@ public class Settings {
         return null;
     }
 
-    public void store(JSONObject settings) {
-        this.settingsObject = settings;
-    }
+    public void store(JSONObject settings) { this.settingsObject = settings; }
 
     public static Settings getInstance() {
         if(Settings.instance == null) {

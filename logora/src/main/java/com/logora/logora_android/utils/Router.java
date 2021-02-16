@@ -1,11 +1,11 @@
-package com.logora.logora_android.util;
+package com.logora.logora_android.utils;
 
 import android.net.Uri;
 
 import java.util.HashMap;
 
 public class Router {
-    private static HashMap<String, Route> routes = new HashMap<>();
+    private static final HashMap<String, Route> routes = new HashMap<>();
     private static Router instance = null;
     private RouteListener routeListener;
     private Route currentRoute;

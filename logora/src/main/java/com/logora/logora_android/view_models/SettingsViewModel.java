@@ -1,4 +1,4 @@
-package com.logora.logora_android;
+package com.logora.logora_android.view_models;
 
 import android.util.Log;
 
@@ -6,7 +6,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.logora.logora_android.util.LogoraApiClient;
+import com.logora.logora_android.utils.Settings;
+import com.logora.logora_android.utils.LogoraApiClient;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,7 +16,7 @@ public class SettingsViewModel extends ViewModel {
     private String TAG = SettingsViewModel.class.getSimpleName();
     private MutableLiveData<Settings> settings;
 
-    LiveData<Settings> getSettings() {
+    public LiveData<Settings> getSettings() {
         if (settings == null) {
             settings = new MutableLiveData<>();
             loadSettings();
