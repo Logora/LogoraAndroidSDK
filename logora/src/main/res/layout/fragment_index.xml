@@ -9,17 +9,19 @@
     android:orientation="vertical"
     tools:context=".IndexFragment">
 
-    <TextView
+    <com.logora.logora_android.TextWrapper
         android:id="@+id/main_debate_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Débat à l'affiche" />
+        app:textKey="headerMainDebate"
+        android:text="@string/headerMainDebate" />
 
-    <TextView
+    <com.logora.logora_android.TextWrapper
         android:id="@+id/trending_debates_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Débats tendances"
+        app:textKey="headerTrendingDebates"
+        android:text="@string/headerTrendingDebates"
         android:layout_below="@id/main_debate_header"/>
 
     <Spinner

@@ -25,15 +25,5 @@ public class PrimaryButton extends androidx.appcompat.widget.AppCompatButton {
 
     public PrimaryButton(final Context context, final AttributeSet attrs, final int defStyle) {
         super(context, attrs, defStyle);
-
-        final TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PrimaryButton, defStyle, 0);
-        String buttonTextKey = a.getString(R.styleable.PrimaryButton_buttonTextKey);
-
-        String buttonText = settings.get("layout." + buttonTextKey);
-        if(buttonText != null) {
-            this.setText(buttonText);
-        }
-        String primaryColor = settings.get("theme.callPrimaryColor");
-        a.recycle();
     }
 }
