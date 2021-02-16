@@ -62,15 +62,15 @@ public class LogoraApiClient {
         this.client_post(route, queryParams, null, listener, errorListener);
     }
 
-    public void getTrendingDebates(Response.Listener<JSONObject> listener,
-                                 Response.ErrorListener errorListener, Integer page,
-                                         Integer perPage, String sort, Integer outset) {
+    public void getList(Response.Listener<JSONObject> listener,
+                                   Response.ErrorListener errorListener, String resourceName, Integer page,
+                                   Integer perPage, String sort, Integer outset) {
         HashMap<String, String> queryParams = new HashMap<>();
         queryParams.put("page", String.valueOf(page));
         queryParams.put("per_page", String.valueOf(perPage));
         queryParams.put("sort", sort);
         queryParams.put("outset", String.valueOf(outset));
-        String route = "/groups/index/trending";
+        String route = "/" + resourceName;
         this.client_get(route, queryParams, listener, errorListener);
     }
 

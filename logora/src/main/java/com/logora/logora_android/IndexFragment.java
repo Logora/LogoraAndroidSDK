@@ -1,7 +1,6 @@
 package com.logora.logora_android;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -11,8 +10,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.logora.logora_android.adapters.DebateBoxListAdapter;
+import com.logora.logora_android.adapters.ListAdapter;
 import com.logora.logora_android.utils.Router;
-import com.logora.logora_android.view_models.DebateBoxListViewModel;
+import com.logora.logora_android.view_models.ListViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -40,9 +41,9 @@ public class IndexFragment extends Fragment {
         sortSelect = view.findViewById(R.id.sort_select);
 
         spinner.setVisibility(View.VISIBLE);
-        DebateBoxListViewModel model = new DebateBoxListViewModel();
-        model.getDebateBoxList().observe(getViewLifecycleOwner(), debateBoxList -> {
-            ListAdapter debateBoxListAdapter = new ListAdapter(debateBoxList, R.layout.debate_box);
+        ListViewModel viewModel = new ListViewModel("groups/index/trending");
+        viewModel.getList().observe(getViewLifecycleOwner(), itemList -> {
+            DebateBoxListAdapter debateBoxListAdapter = new DebateBoxListAdapter(itemList);
             recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
             recyclerView.setAdapter(debateBoxListAdapter);
             /*
@@ -61,9 +62,8 @@ public class IndexFragment extends Fragment {
             public void onClick(View v) {
                 spinner.setVisibility(View.VISIBLE);
                 paginationButton.setVisibility(View.GONE);
-                model.incrementCurrentPage();
-                model.updateDebateBoxList().observe(getViewLifecycleOwner(), groupBoxList -> {
-                    Log.i("INFO", String.valueOf(groupBoxList));
+                viewModel.incrementCurrentPage();
+                viewModel.updateList().observe(getViewLifecycleOwner(), debateBoxList -> {
                     spinner.setVisibility(View.GONE);
                 });
             }

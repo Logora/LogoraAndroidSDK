@@ -24,12 +24,7 @@ import java.util.HashMap;
  * for children.
  */
 public class LogoraAppFragment extends Fragment implements Router.RouteListener {
-    private String applicationName;
-
-    public LogoraAppFragment() {
-        super(R.layout.fragment_root);
-        this.applicationName = "logora-demo";
-    }
+    private final String applicationName;
 
     public LogoraAppFragment(String applicationName) {
         super(R.layout.fragment_root);

@@ -3,13 +3,12 @@ package com.logora.logora_android.models;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class DebateBox {
+public class DebateBox extends Model {
     private String name;
     private String imageUrl;
     private String slug;
 
-    public DebateBox() {
-    }
+    public DebateBox() {}
 
     public DebateBox(String name, String slug, String imageUrl) {
         this.name = name;

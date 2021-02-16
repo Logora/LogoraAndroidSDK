@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.logora.logora_android.models.DebateBox;
+import com.logora.logora_android.models.Model;
 import com.logora.logora_android.utils.LogoraApiClient;
 
 import org.json.JSONArray;
@@ -16,13 +17,18 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DebateBoxListViewModel extends ViewModel {
-    private String TAG = DebateBoxListViewModel.class.getSimpleName();
-    private MutableLiveData<List<DebateBox>> debateBoxLiveData;
-    private List<DebateBox> debateBoxList = new ArrayList<>();
+public class ListViewModel extends ViewModel {
+    private String TAG = ListViewModel.class.getSimpleName();
+    private final String resourceName;
+    private MutableLiveData<List<JSONObject>> itemsLiveData;
+    private final List<JSONObject> items = new ArrayList<>();
     private Integer currentPage = 1;
     private Integer perPage = 3;
     private String sort = "-created_at";
+
+    public ListViewModel(String resourceName) {
+        this.resourceName = resourceName;
+    }
 
     public void setCurrentPage(Integer currentPage) {
         this.currentPage = currentPage;
@@ -44,39 +50,37 @@ public class DebateBoxListViewModel extends ViewModel {
         this.sort = sort;
     }
 
-    public LiveData<List<DebateBox>> getDebateBoxList() {
-        if (debateBoxLiveData == null) {
-            debateBoxLiveData = new MutableLiveData<>();
-            loadDebateBoxList();
+    public LiveData<List<JSONObject>> getList() {
+        if (itemsLiveData == null) {
+            itemsLiveData = new MutableLiveData<>();
+            loadItems();
         }
-        return debateBoxLiveData;
+        return itemsLiveData;
     }
 
-    public LiveData<List<DebateBox>> updateDebateBoxList() {
-        loadDebateBoxList();
-        return debateBoxLiveData;
+    public LiveData<List<JSONObject>> updateList() {
+        loadItems();
+        return itemsLiveData;
     }
 
-    private void loadDebateBoxList() {
+    private void loadItems() {
         LogoraApiClient apiClient = LogoraApiClient.getInstance();
-        apiClient.getTrendingDebates(
+        apiClient.getList(
             response -> {
                 try {
-                    JSONArray groupBoxes = response.getJSONArray("data");
-                    for (int i = 0; i < groupBoxes.length(); i++) {
-                        JSONObject groupBoxObject = groupBoxes.getJSONObject(i);
-                        DebateBox debateBox = DebateBox.objectFromJson(groupBoxObject);
-                        this.debateBoxList.add(debateBox);
+                    JSONArray itemsJson = response.getJSONArray("data");
+                    for (int i = 0; i < itemsJson.length(); i++) {
+                        this.items.add(itemsJson.getJSONObject(i));
                     }
-                    debateBoxLiveData.setValue(this.debateBoxList);
+                    itemsLiveData.setValue(this.items);
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    debateBoxLiveData.setValue(new ArrayList<>());
+                    itemsLiveData.setValue(new ArrayList<>());
                 }
             },
             error -> {
                 Log.i("ERROR", String.valueOf(error));
-                debateBoxLiveData.setValue(new ArrayList<>());
-            }, this.currentPage, this.perPage, this.sort, 0);
+                itemsLiveData.setValue(new ArrayList<>());
+            }, this.resourceName, this.currentPage, this.perPage, this.sort, 0);
     }
 }
