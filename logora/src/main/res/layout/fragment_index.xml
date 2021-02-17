@@ -16,19 +16,17 @@
         app:textKey="headerMainDebate"
         android:text="@string/headerMainDebate" />
 
-    <com.logora.logora_android.TextWrapper
-        android:id="@+id/trending_debates_header"
+    <View
+        android:id="@+id/main_debate_box"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:textKey="headerTrendingDebates"
-        android:text="@string/headerTrendingDebates"
-        android:layout_below="@id/main_debate_header"/>
+        android:layout_height="wrap_content">
+    </View>
 
     <Spinner
         android:id="@+id/sort_select"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/trending_debates_header" />
+        android:layout_below="@id/main_debate_header" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/trending_debates_list"
@@ -45,7 +43,7 @@
         android:layout_below="@+id/trending_debates_list"
         android:layout_centerHorizontal="true"
         android:visibility="gone"
-        android:text="Voir plus de débats" />
+        android:text="@string/infoSeeMoreDebates" />
 
     <ProgressBar
         android:id="@+id/trending_debates_loader"

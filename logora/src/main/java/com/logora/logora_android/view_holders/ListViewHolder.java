@@ -12,5 +12,5 @@ public abstract class ListViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
     }
 
-    public abstract void updateWithObject(JSONObject jsonObject);
+    public abstract void updateWithObject(Object object);
 }

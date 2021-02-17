@@ -22,6 +22,8 @@ public class ListViewModel extends ViewModel {
     private final String resourceName;
     private MutableLiveData<List<JSONObject>> itemsLiveData;
     private final List<JSONObject> items = new ArrayList<>();
+    private Integer total;
+    private Integer totalPages;
     private Integer currentPage = 1;
     private Integer perPage = 3;
     private String sort = "-created_at";
@@ -50,6 +52,8 @@ public class ListViewModel extends ViewModel {
         this.sort = sort;
     }
 
+    public Boolean isLastPage() { return this.currentPage.equals(this.totalPages); }
+
     public LiveData<List<JSONObject>> getList() {
         if (itemsLiveData == null) {
             itemsLiveData = new MutableLiveData<>();
@@ -68,10 +72,15 @@ public class ListViewModel extends ViewModel {
         apiClient.getList(
             response -> {
                 try {
-                    JSONArray itemsJson = response.getJSONArray("data");
+                    JSONArray itemsJson = response.getJSONObject("data").getJSONArray("data");
                     for (int i = 0; i < itemsJson.length(); i++) {
                         this.items.add(itemsJson.getJSONObject(i));
                     }
+
+                    JSONObject headers = response.getJSONObject("headers");
+                    this.total = headers.getInt("Total");
+                    this.totalPages = headers.getInt("Total-Pages");
+
                     itemsLiveData.setValue(this.items);
                 } catch (JSONException e) {
                     e.printStackTrace();

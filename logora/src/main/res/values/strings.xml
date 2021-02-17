@@ -2,4 +2,7 @@
     <string name="app_name">LogoraAndroid</string>
     <string name="headerMainDebate">Débat à l\'affiche</string>
     <string name="headerTrendingDebates">Débats tendances</string>
+    <string name="infoSeeMoreDebates">Voir plus de débats</string>
+    <string name="infoAllDebates">Tous les débats</string>
+    <string name="actionSignInIn">Connexion</string>
 </resources>

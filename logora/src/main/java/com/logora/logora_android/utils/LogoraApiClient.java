@@ -4,15 +4,20 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -137,7 +142,6 @@ public class LogoraApiClient {
         queryParams.put("provider_token", this.providerToken);
         String paramsString = this.paramstoQueryString(queryParams);
         String requestUrl = this.apiUrl + route + paramsString;
-        Log.i("GET", requestUrl);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
             requestUrl, null, listener, errorListener
         ) {
@@ -147,6 +151,22 @@ public class LogoraApiClient {
                 params.put("Content-Type", "application/json");
                 params.put("Origin", "https://logora.fr");
                 return params;
+            }
+
+            @Override
+            protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+                try {
+                    String jsonString = new String(response.data,
+                            HttpHeaderParser.parseCharset(response.headers, PROTOCOL_CHARSET));
+
+                    JSONObject jsonResponse = new JSONObject();
+                    jsonResponse.put("data", new JSONObject(jsonString));
+                    jsonResponse.put("headers", new JSONObject(response.headers));
+
+                    return Response.success(jsonResponse, HttpHeaderParser.parseCacheHeaders(response));
+                } catch (UnsupportedEncodingException | JSONException e) {
+                    return Response.error(new ParseError(e));
+                }
             }
         };
         this.queue.add(request);
