@@ -33,8 +33,8 @@ public class DebateFragment extends Fragment {
         ProgressBar spinner = view.findViewById(R.id.debate_loader);
         TextView textView = view.findViewById(R.id.debate_header);
         spinner.setVisibility(View.VISIBLE);
-        DebateShowViewModel model = new DebateShowViewModel();
-        model.getDebate(this.debateSlug).observe(getViewLifecycleOwner(), debate -> {
+        DebateShowViewModel debateShowViewModel = new DebateShowViewModel();
+        debateShowViewModel.getDebate(this.debateSlug).observe(getViewLifecycleOwner(), debate -> {
             textView.setText(debate.getName());
             spinner.setVisibility(View.GONE);
         });

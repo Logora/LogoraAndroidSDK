@@ -29,7 +29,7 @@ public class DebateShowViewModel extends ViewModel {
         apiClient.getDebate(
             response -> {
                 try {
-                    JSONObject responseData = response.getJSONObject("data").getJSONObject("resource");
+                    JSONObject responseData = response.getJSONObject("data").getJSONObject("data").getJSONObject("resource");
                     Debate debateObject = new Debate();
                     debateObject.setName(responseData.getString("name"));
                     debate.setValue(debateObject);

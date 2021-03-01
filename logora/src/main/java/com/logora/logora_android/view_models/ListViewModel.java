@@ -27,6 +27,7 @@ public class ListViewModel extends ViewModel {
     private Integer currentPage = 1;
     private Integer perPage = 3;
     private String sort = "-created_at";
+    private String query = null;
 
     public ListViewModel(String resourceName) {
         this.resourceName = resourceName;
@@ -51,6 +52,8 @@ public class ListViewModel extends ViewModel {
     public void setSort(String sort) {
         this.sort = sort;
     }
+
+    public void setQuery(String query) { this.query = query; }
 
     public Boolean isLastPage() { return this.currentPage.equals(this.totalPages); }
 
@@ -90,6 +93,6 @@ public class ListViewModel extends ViewModel {
             error -> {
                 Log.i("ERROR", String.valueOf(error));
                 itemsLiveData.setValue(new ArrayList<>());
-            }, this.resourceName, this.currentPage, this.perPage, this.sort, 0);
+            }, this.resourceName, this.currentPage, this.perPage, this.sort, 0, this.query);
     }
 }

@@ -23,7 +23,7 @@ import org.json.JSONException;
  * A {@link Fragment} subclass containing the debate space navbar.
  */
 public class NavbarFragment extends Fragment {
-    private Router router = Router.getInstance();
+    private final Router router = Router.getInstance();
     private final Settings settings = Settings.getInstance();
     private ImageView searchIconView;
     private RelativeLayout navbarRightContainer;
@@ -50,10 +50,8 @@ public class NavbarFragment extends Fragment {
         loginLinkView.setTextColor(Color.parseColor(primaryColor));
         indexButtonView.setBackgroundColor(Color.parseColor(primaryColor));
 
-        indexButtonView.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                router.setCurrentRoute(Router.getRoute("INDEX"), null, null);
-            }
+        indexButtonView.setOnClickListener(v -> {
+            router.setCurrentRoute(Router.getRoute("INDEX"), null, null);
         });
 
         searchIconView.setOnClickListener(v -> {

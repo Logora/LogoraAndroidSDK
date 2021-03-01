@@ -69,12 +69,13 @@ public class LogoraApiClient {
 
     public void getList(Response.Listener<JSONObject> listener,
                                    Response.ErrorListener errorListener, String resourceName, Integer page,
-                                   Integer perPage, String sort, Integer outset) {
+                                   Integer perPage, String sort, Integer outset, String query) {
         HashMap<String, String> queryParams = new HashMap<>();
         queryParams.put("page", String.valueOf(page));
         queryParams.put("per_page", String.valueOf(perPage));
         queryParams.put("sort", sort);
         queryParams.put("outset", String.valueOf(outset));
+        queryParams.put("query", String.valueOf(query));
         String route = "/" + resourceName;
         this.client_get(route, queryParams, listener, errorListener);
     }
@@ -83,6 +84,13 @@ public class LogoraApiClient {
                                    Response.ErrorListener errorListener, String slug) {
         HashMap<String, String> queryParams = new HashMap<>();
         String route = "/groups/" + slug;
+        this.client_get(route, queryParams, listener, errorListener);
+    }
+
+    public void getUser(Response.Listener<JSONObject> listener,
+                          Response.ErrorListener errorListener, String slug) {
+        HashMap<String, String> queryParams = new HashMap<>();
+        String route = "/users/" + slug;
         this.client_get(route, queryParams, listener, errorListener);
     }
 

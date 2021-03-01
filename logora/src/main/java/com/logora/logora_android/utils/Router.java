@@ -18,6 +18,11 @@ public class Router {
         debateRouteParamDef.put("debateSlug", "");
         Route debateRoute = new Route("DEBATE", "/debat/:debateSlug", debateRouteParamDef, null);
         Router.routes.put(debateRoute.getName(), debateRoute);
+
+        HashMap<String, String> searchRouteQueryParamDef = new HashMap<>();
+        searchRouteQueryParamDef.put("q", "");
+        Route searchRoute = new Route("SEARCH", "/recherche", null, searchRouteQueryParamDef);
+        Router.routes.put(searchRoute.getName(), searchRoute);
     }
 
     public static Route getRoute(String routeName) {

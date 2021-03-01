@@ -50,7 +50,7 @@ public class LogoraAppFragment extends Fragment implements Router.RouteListener 
         model.getSettings().observe(getViewLifecycleOwner(), settings -> {
             getChildFragmentManager().beginTransaction()
                     .add(R.id.navbar_fragment, new NavbarFragment())
-                    .add(R.id.main_fragment, new IndexFragment())
+                    .add(R.id.main_fragment, new UserFragment("henry-boisgibault"))
                     .add(R.id.footer_fragment, new FooterFragment())
                     .commit();
             spinner.setVisibility(View.GONE);
@@ -64,6 +64,16 @@ public class LogoraAppFragment extends Fragment implements Router.RouteListener 
             case "DEBATE":
                 getChildFragmentManager().beginTransaction()
                         .replace(R.id.main_fragment, new DebateFragment(params.get("debateSlug")))
+                        .commit();
+                break;
+            case "USER":
+                getChildFragmentManager().beginTransaction()
+                        .replace(R.id.main_fragment, new UserFragment(params.get("userSlug")))
+                        .commit();
+                break;
+            case "SEARCH":
+                getChildFragmentManager().beginTransaction()
+                        .replace(R.id.main_fragment, new SearchFragment(queryParams.get("q")))
                         .commit();
                 break;
             default:
