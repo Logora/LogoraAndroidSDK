@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@drawable/round_image_background">
+    android:background="@drawable/box_background">
 
     <ImageView
         android:id="@+id/debate_box_image"
@@ -17,42 +18,63 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/debate_box_image"
         android:paddingHorizontal="10dp"
-        android:paddingVertical="10dp">
+        android:paddingVertical="5dp">
 
         <TextView
             android:id="@+id/debate_box_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
+            android:layout_marginBottom="15dp"
             android:textStyle="bold"
             android:textColor="@color/text_primary"
             android:textSize="20sp"
-            android:text="@string/debate_box_title" />
+            android:text="@string/debate_box_title"
+            android:ellipsize="end"
+            android:maxLines="2" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/debate_box_name"
+            android:paddingVertical="8dp"
             android:orientation="horizontal">
 
-            <TextView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/debate_user_list"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Utilisateurs" />
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:foregroundGravity="center_vertical"
+                android:nestedScrollingEnabled="false"
+                android:layoutDirection="inherit" />
+
+            <com.logora.logora_android.TextWrapper
+                android:id="@+id/debate_user_list_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toEndOf="@+id/debate_user_list"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                app:textKey="fallbackNoParticipants"
+                android:text="@string/debate_box_user_list_empty"
+                android:textStyle="italic"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/debate_vote"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
                 android:textColor="@color/text_primary"
                 android:text="@string/debate_box_vote_percentage"
                 tools:ignore="RelativeOverlap" />
-
         </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

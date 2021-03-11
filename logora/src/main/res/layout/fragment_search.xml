@@ -11,14 +11,6 @@
         android:layout_height="wrap_content"
         android:text="Recherche" />
 
-    <ProgressBar
-        android:id="@+id/loader"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:indeterminate="true"
-        android:indeterminateTintMode="src_atop"
-        android:indeterminateTint="@android:color/black" />
-
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
@@ -34,12 +26,10 @@
         android:paddingVertical="5dp"
         android:paddingHorizontal="12dp">
 
-        <androidx.recyclerview.widget.RecyclerView
+        <FrameLayout
             android:id="@+id/debate_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:nestedScrollingEnabled="false"
-            android:dividerHeight="5dp" />
+            android:layout_height="wrap_content" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -52,11 +42,9 @@
         android:paddingVertical="5dp"
         android:paddingHorizontal="12dp">
 
-        <androidx.recyclerview.widget.RecyclerView
+        <FrameLayout
             android:id="@+id/user_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:nestedScrollingEnabled="false"
-            android:dividerHeight="5dp" />
+            android:layout_height="wrap_content" />
     </RelativeLayout>
 </RelativeLayout>

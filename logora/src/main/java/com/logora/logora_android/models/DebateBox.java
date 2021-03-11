@@ -1,5 +1,7 @@
 package com.logora.logora_android.models;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,7 +14,7 @@ public class DebateBox extends Model {
     private String name;
     private String imageUrl;
     private String slug;
-    private List<UserIcon> userIconList;
+    private List<JSONObject> userList;
     private Integer usersCount;
     private Integer votePercentage;
     private String votePosition;
@@ -34,13 +36,12 @@ public class DebateBox extends Model {
             debateBox.setUsersCount(jsonObject.getInt("participants_count"));
 
             JSONArray userObjects = jsonObject.getJSONArray("participants");
-            List<UserIcon> userIcons = new ArrayList<>();
-            for (int i = 0 ; i < userObjects.length(); i++) {
-                JSONObject user = userObjects.getJSONObject(i);
-                UserIcon userIcon = UserIcon.objectFromJson(user);
-                userIcons.add(userIcon);
+            Log.i("INFO", String.valueOf(userObjects));
+            List<JSONObject> userList = new ArrayList<>();
+            for (int i=0; i < userObjects.length(); i++){
+                userList.add(userObjects.getJSONObject(i));
             }
-            debateBox.setUserIconList(userIcons);
+            debateBox.setUserList(userList);
 
             JSONArray debatePositions = jsonObject.getJSONObject("group_context").getJSONArray("positions");
             JSONObject votesCount = jsonObject.getJSONObject("votes_count");
@@ -96,9 +97,9 @@ public class DebateBox extends Model {
 
     public void setUsersCount(Integer usersCount) { this.usersCount = usersCount; }
 
-    public List<UserIcon> getUserIconList() { return userIconList; }
+    public List<JSONObject> getUserList() { return userList; }
 
-    public void setUserIconList(List<UserIcon> userIconList) { this.userIconList = userIconList; }
+    public void setUserList(List<JSONObject> userList) { this.userList = userList; }
 
     public String getVotePosition() { return votePosition; }
 

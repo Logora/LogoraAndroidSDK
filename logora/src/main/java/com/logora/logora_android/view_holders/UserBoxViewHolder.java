@@ -20,10 +20,6 @@ public class UserBoxViewHolder extends ListViewHolder {
         userImageView = itemView.findViewById(R.id.user_image);
     }
 
-    public String getUserSlug() {
-        return userBox.getSlug();
-    }
-
     @Override
     public void updateWithObject(Object object) {
         UserBox userBox = (UserBox) object;

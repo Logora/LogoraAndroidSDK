@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.tabs.TabLayout;
 import com.logora.logora_android.adapters.DebateBoxListAdapter;
 import com.logora.logora_android.adapters.UserBoxListAdapter;
+import com.logora.logora_android.models.UserBox;
 import com.logora.logora_android.view_models.DebateShowViewModel;
 import com.logora.logora_android.view_models.ListViewModel;
 
@@ -26,8 +27,6 @@ import org.jetbrains.annotations.NotNull;
 public class SearchFragment extends Fragment {
     private String query;
     private TabLayout tabLayout;
-    private RecyclerView debateListView;
-    private RecyclerView userListView;
     private RelativeLayout debateResultsContainer;
     private RelativeLayout userResultsContainer;
 
@@ -48,31 +47,17 @@ public class SearchFragment extends Fragment {
         tabLayout.addTab(tabLayout.newTab().setText("Débats"));
         tabLayout.addTab(tabLayout.newTab().setText("Débatteurs"));
 
-        debateListView = view.findViewById(R.id.debate_list);
-        userListView = view.findViewById(R.id.user_list);
         debateResultsContainer = view.findViewById(R.id.debate_results_container);
         userResultsContainer = view.findViewById(R.id.user_results_container);
 
-        ProgressBar loader = view.findViewById(R.id.loader);
-        loader.setVisibility(View.VISIBLE);
+        DebateBoxListAdapter debateListAdapter = new DebateBoxListAdapter();
+        UserBoxListAdapter userListAdapter = new UserBoxListAdapter();
 
-        ListViewModel debateViewModel = new ListViewModel("groups");
-        debateViewModel.setQuery(query);
-        debateViewModel.getList().observe(getViewLifecycleOwner(), itemList -> {
-            DebateBoxListAdapter debateBoxListAdapter = new DebateBoxListAdapter(itemList);
-            debateListView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-            debateListView.setAdapter(debateBoxListAdapter);
-            loader.setVisibility(View.GONE);
-        });
-
-        ListViewModel userViewModel = new ListViewModel("users");
-        userViewModel.setQuery(query);
-        userViewModel.getList().observe(getViewLifecycleOwner(), itemList -> {
-            UserBoxListAdapter userBoxListAdapter = new UserBoxListAdapter(itemList);
-            userListView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-            userListView.setAdapter(userBoxListAdapter);
-            loader.setVisibility(View.GONE);
-        });
+        getChildFragmentManager()
+                .beginTransaction()
+                .add(R.id.debate_list, new PaginatedListFragment("groups", debateListAdapter))
+                .add(R.id.user_list, new PaginatedListFragment("users", userListAdapter))
+                .commit();
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
