@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    tools:context=".PaginatedListFragment">
+
+    <TextView
+        android:id="@+id/empty_list_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/list_empty"
+        android:visibility="gone"
+    />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:nestedScrollingEnabled="false"
+        android:layoutDirection="inherit"
+        android:dividerHeight="10dp" />
+
+    <ProgressBar
+        android:id="@+id/loader"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/recycler_view"
+        android:indeterminate="true"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="@android:color/black"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/pagination_button"
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/loader"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:text="@string/infoSeeMoreDebates" />
+
+</RelativeLayout>

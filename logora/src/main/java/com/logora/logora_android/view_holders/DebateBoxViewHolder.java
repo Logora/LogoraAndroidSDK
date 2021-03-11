@@ -15,11 +15,13 @@ public class DebateBoxViewHolder extends ListViewHolder {
     DebateBox debateBox;
     TextView debateNameView;
     ImageView debateImageView;
+    TextView debateVoteView;
 
     public DebateBoxViewHolder(View itemView) {
         super(itemView);
         debateNameView = itemView.findViewById(R.id.debate_box_name);
         debateImageView = itemView.findViewById(R.id.debate_box_image);
+        debateVoteView = itemView.findViewById(R.id.debate_vote);
     }
 
     public String getDebateSlug() {
@@ -34,5 +36,8 @@ public class DebateBoxViewHolder extends ListViewHolder {
         Glide.with(debateImageView.getContext())
                 .load(Uri.parse(debateBox.getImageUrl()))
                 .into(debateImageView);
+
+        String debateVote = String.valueOf(debateBox.getVotePercentage()) + "%" + " " + debateBox.getVotePosition();
+        debateVoteView.setText(debateVote);
     }
 }

@@ -22,7 +22,10 @@ import java.util.HashMap;
 import java.util.List;
 
 public class UserBoxListAdapter extends ListAdapter {
-    private Router router = Router.getInstance();
+    private final Router router = Router.getInstance();
+
+    public UserBoxListAdapter() {}
+
     public UserBoxListAdapter(List<JSONObject> items) {
         super(items);
     }

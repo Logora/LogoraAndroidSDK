@@ -6,7 +6,7 @@
                 android:width="1dp"
                 android:color="@color/border_light" >
             </stroke>
-            <corners android:radius="6px" />
+            <corners android:radius="50px" />
         </shape>
     </item>
 </layer-list>

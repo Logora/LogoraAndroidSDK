@@ -13,7 +13,9 @@ import org.json.JSONObject;
 import java.util.List;
 
 public abstract class ListAdapter extends RecyclerView.Adapter<ListViewHolder> {
-    protected final List<JSONObject> items;
+    protected List<JSONObject> items;
+
+    public ListAdapter() {}
 
     public ListAdapter(List<JSONObject> items) {
         this.items = items;
@@ -31,4 +33,8 @@ public abstract class ListAdapter extends RecyclerView.Adapter<ListViewHolder> {
     public int getItemCount() {
         return this.items.size();
     }
+
+    public List<JSONObject> getItems() { return this.items; }
+
+    public void setItems(List<JSONObject> items) { this.items = items; }
 }

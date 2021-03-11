@@ -23,6 +23,9 @@ import java.util.List;
 
 public class DebateBoxListAdapter extends ListAdapter {
     private final Router router = Router.getInstance();
+
+    public DebateBoxListAdapter() {}
+
     public DebateBoxListAdapter(List<JSONObject> items) {
         super(items);
     }

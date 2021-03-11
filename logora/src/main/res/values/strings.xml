@@ -5,4 +5,9 @@
     <string name="infoSeeMoreDebates">Voir plus de débats</string>
     <string name="infoAllDebates">Tous les débats</string>
     <string name="actionSignInIn">Connexion</string>
+    <string name="debate_box_title">Titre du débat</string>
+    <string name="debate_box_image_content_description">Image du débat</string>
+    <string name="debate_box_vote_percentage">50% Oui</string>
+    <string name="user_icon_content_description">Image du participant</string>
+    <string name="list_empty">Aucun élément pour l\'instant</string>
 </resources>

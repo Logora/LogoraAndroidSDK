@@ -28,30 +28,24 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/main_debate_header" />
 
-    <androidx.recyclerview.widget.RecyclerView
+    <FrameLayout
         android:id="@+id/trending_debates_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/sort_select"
-        android:nestedScrollingEnabled="false"
-        android:dividerHeight="5dp" />
+        android:layout_below="@id/sort_select" />
 
-    <Button
-        android:id="@+id/pagination_button"
-        android:layout_height="match_parent"
-        android:layout_width="wrap_content"
-        android:layout_below="@+id/trending_debates_list"
-        android:layout_centerHorizontal="true"
-        android:visibility="gone"
-        android:text="@string/infoSeeMoreDebates" />
-
-    <ProgressBar
-        android:id="@+id/trending_debates_loader"
+    <com.logora.logora_android.TextWrapper
+        android:id="@+id/trending_users_header"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@id/pagination_button"
-        android:indeterminate="true"
-        android:indeterminateTintMode="src_atop"
-        android:indeterminateTint="@android:color/black" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/trending_debates_list"
+        app:textKey="headerMainDebate"
+        android:text="Débatteurs de la semaine" />
+
+    <FrameLayout
+        android:id="@+id/trending_users_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/trending_users_header" />
 
 </RelativeLayout>
