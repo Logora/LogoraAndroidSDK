@@ -48,7 +48,7 @@ public class DebateBox extends Model {
             JSONArray votesCountKeys = votesCount.names();
             int maxPercentage = 0;
             Integer maxId = null;
-            if(votesCountKeys.length() == 0) {
+            if(votesCountKeys == null || votesCountKeys.length() == 0) {
                 maxPercentage = 50;
                 maxId = null;
             } else {

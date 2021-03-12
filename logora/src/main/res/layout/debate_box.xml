@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:layout_marginVertical="10dp"
     android:background="@drawable/box_background">
 
     <ImageView
@@ -21,7 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/debate_box_image"
         android:paddingHorizontal="10dp"
-        android:paddingVertical="5dp">
+        android:paddingVertical="2dp">
 
         <TextView
             android:id="@+id/debate_box_name"
@@ -29,6 +30,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:layout_marginBottom="15dp"
+            android:layout_marginTop="8dp"
             android:textStyle="bold"
             android:textColor="@color/text_primary"
             android:textSize="20sp"
@@ -40,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/debate_box_name"
-            android:paddingVertical="8dp"
+            android:paddingVertical="6dp"
             android:orientation="horizontal">
 
             <androidx.recyclerview.widget.RecyclerView

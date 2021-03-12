@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="call_primary">@android:color/holo_red_dark</color>
+    <color name="call_primary">#434343</color>
     <color name="for_position">#FF757575</color>
     <color name="against_position">#FF757575</color>
     <color name="border_light">#072A441A</color>

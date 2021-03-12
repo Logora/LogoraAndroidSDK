@@ -1,32 +1,30 @@
 package com.logora.logora_android;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.tabs.TabLayout;
 import com.logora.logora_android.adapters.DebateBoxListAdapter;
 import com.logora.logora_android.adapters.UserBoxListAdapter;
-import com.logora.logora_android.models.UserBox;
-import com.logora.logora_android.view_models.DebateShowViewModel;
-import com.logora.logora_android.view_models.ListViewModel;
-
+import com.logora.logora_android.utils.Settings;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * A {@link Fragment} subclass containing the debate space search page.
  */
 public class SearchFragment extends Fragment {
+    private Settings settings = Settings.getInstance();
     private String query;
+    private TextView textHeader;
     private TabLayout tabLayout;
+    private TabLayout.Tab debateTab;
+    private TabLayout.Tab userTab;
     private RelativeLayout debateResultsContainer;
     private RelativeLayout userResultsContainer;
 
@@ -43,9 +41,24 @@ public class SearchFragment extends Fragment {
     public void onViewCreated(@NotNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        textHeader = view.findViewById(R.id.search_header);
+        String newHeader = textHeader.getText().toString() + ' ' + '"' + query + '"';
+        textHeader.setText(newHeader);
+
         tabLayout = view.findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("Débats"));
-        tabLayout.addTab(tabLayout.newTab().setText("Débatteurs"));
+        debateTab = tabLayout.getTabAt(0);
+        userTab = tabLayout.getTabAt(1);
+
+        String debateTabText = settings.get("infoDebate");
+        String userTabText = settings.get("infoDebaters");
+        if(debateTabText != null) {
+            debateTab.setText(debateTabText);
+        }
+        if(userTabText != null) {
+            userTab.setText(userTabText);
+        }
+
+        setStyles();
 
         debateResultsContainer = view.findViewById(R.id.debate_results_container);
         userResultsContainer = view.findViewById(R.id.user_results_container);
@@ -53,10 +66,15 @@ public class SearchFragment extends Fragment {
         DebateBoxListAdapter debateListAdapter = new DebateBoxListAdapter();
         UserBoxListAdapter userListAdapter = new UserBoxListAdapter();
 
+        PaginatedListFragment debateListFragment = new PaginatedListFragment("groups", debateListAdapter);
+        debateListFragment.setQuery(query);
+        PaginatedListFragment userListFragment = new PaginatedListFragment("users", userListAdapter);
+        userListFragment.setQuery(query);
+
         getChildFragmentManager()
                 .beginTransaction()
-                .add(R.id.debate_list, new PaginatedListFragment("groups", debateListAdapter))
-                .add(R.id.user_list, new PaginatedListFragment("users", userListAdapter))
+                .add(R.id.debate_list, debateListFragment)
+                .add(R.id.user_list, userListFragment)
                 .commit();
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -78,5 +96,10 @@ public class SearchFragment extends Fragment {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {}
         });
+    }
+
+    private void setStyles() {
+        String primaryColor = settings.get("theme.callPrimaryColor");
+        tabLayout.setSelectedTabIndicatorColor(Color.parseColor(primaryColor));
     }
 }

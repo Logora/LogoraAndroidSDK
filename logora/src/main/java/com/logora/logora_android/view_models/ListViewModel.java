@@ -22,7 +22,7 @@ public class ListViewModel extends ViewModel {
     private Integer total;
     private Integer totalPages;
     private Integer currentPage = 1;
-    private Integer perPage = 3;
+    private Integer perPage = 10;
     private String sort = "-created_at";
     private String query = null;
 
@@ -73,6 +73,7 @@ public class ListViewModel extends ViewModel {
             response -> {
                 try {
                     JSONArray itemsJson = response.getJSONObject("data").getJSONArray("data");
+                    Log.i("RESULT", String.valueOf(response));
                     for (int i = 0; i < itemsJson.length(); i++) {
                         this.items.add(itemsJson.getJSONObject(i));
                     }

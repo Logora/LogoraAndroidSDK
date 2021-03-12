@@ -39,8 +39,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/trending_debates_list"
-        app:textKey="headerMainDebate"
-        android:text="Débatteurs de la semaine" />
+        android:layout_marginVertical="10dp"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        app:textKey="headerBestUsers"
+        android:text="@string/headerBestUsers" />
 
     <FrameLayout
         android:id="@+id/trending_users_list"

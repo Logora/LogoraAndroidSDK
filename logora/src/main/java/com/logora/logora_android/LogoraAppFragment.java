@@ -50,7 +50,7 @@ public class LogoraAppFragment extends Fragment implements Router.RouteListener 
         model.getSettings().observe(getViewLifecycleOwner(), settings -> {
             getChildFragmentManager().beginTransaction()
                     .add(R.id.navbar_fragment, new NavbarFragment())
-                    .add(R.id.main_fragment, new UserFragment("henry-boisgibault"))
+                    .add(R.id.main_fragment, new SearchFragment("cigarette"))
                     .add(R.id.footer_fragment, new FooterFragment())
                     .commit();
             spinner.setVisibility(View.GONE);

@@ -31,10 +31,15 @@ public class PaginatedListFragment extends Fragment {
         super(R.layout.fragment_paginated_list);
         this.resourceName = resourceName;
         this.listAdapter = listAdapter;
+        listViewModel = new ListViewModel(resourceName);
     }
 
     public void setSort(String sort) {
         this.listViewModel.setSort(sort);
+    }
+
+    public void setQuery(String query) {
+        this.listViewModel.setQuery(query);
     }
 
     public String getResourceName() { return this.resourceName; }
@@ -51,7 +56,6 @@ public class PaginatedListFragment extends Fragment {
     public void onViewCreated(@NotNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        listViewModel = new ListViewModel(resourceName);
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setAdapter(listAdapter);
         emptyView = view.findViewById(R.id.empty_list_text);

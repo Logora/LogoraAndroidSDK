@@ -8,6 +8,7 @@ import android.widget.Spinner;
 import androidx.fragment.app.Fragment;
 
 import com.logora.logora_android.adapters.DebateBoxListAdapter;
+import com.logora.logora_android.adapters.UserBoxListAdapter;
 import com.logora.logora_android.utils.Router;
 
 import org.jetbrains.annotations.NotNull;
@@ -30,12 +31,16 @@ public class IndexFragment extends Fragment {
         sortSelect = view.findViewById(R.id.sort_select);
         mainDebateView = view.findViewById(R.id.main_debate_box);
 
-        String resourceName = "groups/index/trending";
-        DebateBoxListAdapter listAdapter = new DebateBoxListAdapter();
+        String debateResourceName = "groups/index/trending";
+        DebateBoxListAdapter debateListAdapter = new DebateBoxListAdapter();
+
+        String userResourceName = "users/index/trending";
+        UserBoxListAdapter userListAdapter = new UserBoxListAdapter();
 
         getChildFragmentManager()
                 .beginTransaction()
-                .add(R.id.trending_debates_list, new PaginatedListFragment(resourceName, listAdapter))
+                .add(R.id.trending_debates_list, new PaginatedListFragment(debateResourceName, debateListAdapter))
+                .add(R.id.trending_users_list, new PaginatedListFragment(userResourceName, userListAdapter))
                 .commit();
     }
 }

@@ -19,6 +19,11 @@ public class Router {
         Route debateRoute = new Route("DEBATE", "/debat/:debateSlug", debateRouteParamDef, null);
         Router.routes.put(debateRoute.getName(), debateRoute);
 
+        HashMap<String, String> userRouteParamDef = new HashMap<>();
+        debateRouteParamDef.put("userSlug", "");
+        Route userRoute = new Route("USER", "/utilisateur/:userSlug", userRouteParamDef, null);
+        Router.routes.put(userRoute.getName(), userRoute);
+
         HashMap<String, String> searchRouteQueryParamDef = new HashMap<>();
         searchRouteQueryParamDef.put("q", "");
         Route searchRoute = new Route("SEARCH", "/recherche", null, searchRouteQueryParamDef);

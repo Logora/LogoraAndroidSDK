@@ -2,6 +2,7 @@
     <string name="app_name">LogoraAndroid</string>
     <string name="headerMainDebate">Débat à l\'affiche</string>
     <string name="headerTrendingDebates">Débats tendances</string>
+    <string name="headerBestUsers">Débatteurs de la semaine</string>
     <string name="infoSeeMoreDebates">Voir plus de débats</string>
     <string name="infoAllDebates">Tous les débats</string>
     <string name="actionSignInIn">Connexion</string>
@@ -10,5 +11,11 @@
     <string name="debate_box_vote_percentage">50% Oui</string>
     <string name="debate_box_user_list_empty">Aucun participant</string>
     <string name="user_icon_content_description">Image du participant</string>
+    <string name="user_box_full_name">Nom du débatteur</string>
+    <string name="user_box_level">Niveau</string>
+    <string name="user_box_level_content_description">Icône de niveau</string>
+    <string name="search_debate_tab">Débats</string>
+    <string name="search_user_tab">Débatteurs</string>
     <string name="list_empty">Aucun élément pour l\'instant</string>
+    <string name="search_header">Résultats pour</string>
 </resources>

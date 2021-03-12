@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
     tools:context=".PaginatedListFragment">
 
     <TextView
@@ -10,6 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:layout_marginVertical="16dp"
         android:text="@string/list_empty"
         android:visibility="gone"
     />
@@ -18,9 +20,7 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:nestedScrollingEnabled="false"
-        android:layoutDirection="inherit"
-        android:dividerHeight="10dp" />
+        android:nestedScrollingEnabled="false" />
 
     <ProgressBar
         android:id="@+id/loader"
@@ -38,6 +38,9 @@
         android:layout_width="wrap_content"
         android:layout_below="@+id/loader"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="14sp"
         android:visibility="gone"
         android:text="@string/infoSeeMoreDebates" />
 

@@ -13,11 +13,13 @@ public class UserBoxViewHolder extends ListViewHolder {
     UserBox userBox;
     TextView userFullNameView;
     ImageView userImageView;
+    ImageView userLevelIconView;
 
     public UserBoxViewHolder(View itemView) {
         super(itemView);
-        userFullNameView = itemView.findViewById(R.id.user_full_name);
-        userImageView = itemView.findViewById(R.id.user_image);
+        userFullNameView = itemView.findViewById(R.id.user_box_full_name);
+        userImageView = itemView.findViewById(R.id.user_box_image);
+        userLevelIconView = itemView.findViewById(R.id.user_box_level_icon);
     }
 
     @Override
@@ -28,5 +30,9 @@ public class UserBoxViewHolder extends ListViewHolder {
         Glide.with(userImageView.getContext())
                 .load(Uri.parse(userBox.getImageUrl()))
                 .into(userImageView);
+
+        Glide.with(userLevelIconView.getContext())
+                .load(Uri.parse(userBox.getLevelIconUrl()))
+                .into(userLevelIconView);
     }
 }
