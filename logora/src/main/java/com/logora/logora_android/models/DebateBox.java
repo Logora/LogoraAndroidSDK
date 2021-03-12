@@ -36,7 +36,6 @@ public class DebateBox extends Model {
             debateBox.setUsersCount(jsonObject.getInt("participants_count"));
 
             JSONArray userObjects = jsonObject.getJSONArray("participants");
-            Log.i("INFO", String.valueOf(userObjects));
             List<JSONObject> userList = new ArrayList<>();
             for (int i=0; i < userObjects.length(); i++){
                 userList.add(userObjects.getJSONObject(i));

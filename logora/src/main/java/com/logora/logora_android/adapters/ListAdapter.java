@@ -1,11 +1,7 @@
 package com.logora.logora_android.adapters;
 
-import android.view.View;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.logora.logora_android.models.DebateBox;
 import com.logora.logora_android.view_holders.ListViewHolder;
 
 import org.json.JSONObject;

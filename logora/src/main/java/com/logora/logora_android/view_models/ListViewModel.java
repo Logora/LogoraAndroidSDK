@@ -50,6 +50,8 @@ public class ListViewModel extends ViewModel {
         this.sort = sort;
     }
 
+    public String getSort() { return sort; }
+
     public void setQuery(String query) { this.query = query; }
 
     public Boolean isLastPage() { return this.currentPage.equals(this.totalPages); }

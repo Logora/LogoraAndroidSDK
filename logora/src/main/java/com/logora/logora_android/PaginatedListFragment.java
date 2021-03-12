@@ -42,16 +42,6 @@ public class PaginatedListFragment extends Fragment {
         this.listViewModel.setQuery(query);
     }
 
-    public String getResourceName() { return this.resourceName; }
-
-    public void setResourceName(String resourceName) {
-        this.resourceName = resourceName;
-    }
-
-    public void setListAdapter(ListAdapter listAdapter) {
-        this.listAdapter = listAdapter;
-    }
-
     @Override
     public void onViewCreated(@NotNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -61,6 +51,7 @@ public class PaginatedListFragment extends Fragment {
         emptyView = view.findViewById(R.id.empty_list_text);
         paginationButton = view.findViewById(R.id.pagination_button);
         loader = view.findViewById(R.id.loader);
+
         loader.setVisibility(View.VISIBLE);
 
         listViewModel.getList().observe(getViewLifecycleOwner(), itemList -> {
@@ -84,6 +75,27 @@ public class PaginatedListFragment extends Fragment {
             listViewModel.updateList().observe(getViewLifecycleOwner(), itemList -> {
                 loader.setVisibility(View.GONE);
             });
+        });
+    }
+
+    public void update() {
+        loader.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
+        paginationButton.setVisibility(View.GONE);
+
+        listViewModel.updateList().observe(getViewLifecycleOwner(), itemList -> {
+            if(itemList.size() == 0) {
+                loader.setVisibility(View.GONE);
+                emptyView.setVisibility(View.VISIBLE);
+            } else {
+                listAdapter.setItems(itemList);
+                listAdapter.notifyDataSetChanged();
+                recyclerView.setVisibility(View.VISIBLE);
+                loader.setVisibility(View.GONE);
+                if(!listViewModel.isLastPage()) {
+                    paginationButton.setVisibility(View.VISIBLE);
+                }
+            }
         });
     }
 }

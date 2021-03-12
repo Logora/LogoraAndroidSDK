@@ -18,4 +18,7 @@
     <string name="search_user_tab">Débatteurs</string>
     <string name="list_empty">Aucun élément pour l\'instant</string>
     <string name="search_header">Résultats pour</string>
+    <string name="index_sort_trending_option">Le plus pertinent</string>
+    <string name="index_sort_recent_option">Le plus récent</string>
+    <string name="index_sort_old_option">Le plus ancien</string>
 </resources>
