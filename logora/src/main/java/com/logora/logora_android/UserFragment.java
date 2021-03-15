@@ -1,5 +1,6 @@
 package com.logora.logora_android;
 
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -16,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
 import com.logora.logora_android.adapters.DebateBoxListAdapter;
+import com.logora.logora_android.adapters.UserBoxListAdapter;
+import com.logora.logora_android.utils.Settings;
 import com.logora.logora_android.view_models.DebateShowViewModel;
 import com.logora.logora_android.view_models.ListViewModel;
 import com.logora.logora_android.view_models.UserShowViewModel;
@@ -26,12 +30,17 @@ import org.jetbrains.annotations.NotNull;
  * A {@link Fragment} subclass containing the user profile page.
  */
 public class UserFragment extends Fragment {
+    private final Settings settings = Settings.getInstance();
     private String userSlug;
     private TabLayout tabLayout;
-    private LinearLayout userArgumentsContainer;
-    private LinearLayout userBadgesContainer;
-    private LinearLayout userMentorsContainer;
-    private LinearLayout userDisciplesContainer;
+    private TabLayout.Tab argumentsTab;
+    private TabLayout.Tab badgesTab;
+    private TabLayout.Tab disciplesTab;
+    private TabLayout.Tab mentorsTab;
+    private RelativeLayout userArgumentsContainer;
+    private RelativeLayout userBadgesContainer;
+    private RelativeLayout userMentorsContainer;
+    private RelativeLayout userDisciplesContainer;
 
     public UserFragment() {
         super(R.layout.fragment_user);
@@ -48,16 +57,15 @@ public class UserFragment extends Fragment {
 
         TextView userFullNameView = view.findViewById(R.id.user_full_name);
         ImageView userImageView = view.findViewById(R.id.user_image);
-        userArgumentsContainer = view.findViewById(R.id.user_arguments_container);
-        userBadgesContainer = view.findViewById(R.id.user_badges_container);
-        userMentorsContainer = view.findViewById(R.id.user_mentors_container);
-        userDisciplesContainer = view.findViewById(R.id.user_disciples_container);
+        this.findViews(view);
 
-        tabLayout = view.findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("Arguments"));
-        tabLayout.addTab(tabLayout.newTab().setText("Badges"));
-        tabLayout.addTab(tabLayout.newTab().setText("Mentors"));
-        tabLayout.addTab(tabLayout.newTab().setText("Disciples"));
+        argumentsTab = tabLayout.getTabAt(0);
+        badgesTab = tabLayout.getTabAt(1);
+        disciplesTab = tabLayout.getTabAt(2);
+        mentorsTab = tabLayout.getTabAt(3);
+
+        setTabsText();
+        setStyles();
 
         ProgressBar spinner = view.findViewById(R.id.loader);
         spinner.setVisibility(View.VISIBLE);
@@ -70,6 +78,18 @@ public class UserFragment extends Fragment {
                     .load(Uri.parse(user.getImageUrl()))
                     .into(userImageView);
         });
+
+        UserBoxListAdapter userDisciplesListAdapter = new UserBoxListAdapter();
+        UserBoxListAdapter userMentorsListAdapter = new UserBoxListAdapter();
+
+        PaginatedListFragment userDisciplesFragment = new PaginatedListFragment("users/" + userSlug + "/disciples", userDisciplesListAdapter);
+        PaginatedListFragment userMentorsFragment = new PaginatedListFragment("users/" + userSlug + "/mentors", userMentorsListAdapter);
+
+        getChildFragmentManager()
+                .beginTransaction()
+                .add(R.id.user_disciples_list, userDisciplesFragment)
+                .add(R.id.user_mentors_list, userMentorsFragment)
+                .commit();
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -104,5 +124,38 @@ public class UserFragment extends Fragment {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {}
         });
+    }
+
+    private void setStyles() {
+        String primaryColor = settings.get("theme.callPrimaryColor");
+        tabLayout.setSelectedTabIndicatorColor(Color.parseColor(primaryColor));
+    }
+
+    private void findViews(View view) {
+        userArgumentsContainer = view.findViewById(R.id.user_arguments_container);
+        userBadgesContainer = view.findViewById(R.id.user_badges_container);
+        userMentorsContainer = view.findViewById(R.id.user_mentors_container);
+        userDisciplesContainer = view.findViewById(R.id.user_disciples_container);
+
+        tabLayout = view.findViewById(R.id.tab_layout);
+    }
+
+    private void setTabsText() {
+        String argumentsTabText = settings.get("userPluralArguments");
+        String badgesTabText = settings.get("userBadges");
+        String disciplesTabText = settings.get("userPluralDisciples");
+        String mentorsTabText = settings.get("userMentors");
+        if(argumentsTabText != null) {
+            argumentsTab.setText(argumentsTabText);
+        }
+        if(badgesTabText != null) {
+            badgesTab.setText(badgesTabText);
+        }
+        if(disciplesTabText != null) {
+            disciplesTab.setText(disciplesTabText);
+        }
+        if(mentorsTabText != null) {
+            mentorsTab.setText(mentorsTabText);
+        }
     }
 }

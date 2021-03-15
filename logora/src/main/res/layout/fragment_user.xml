@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".UserFragment">
 
     <ProgressBar
@@ -11,7 +12,7 @@
         android:layout_height="50dp"
         android:progressBackgroundTint="@android:color/black" />
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/user_presentation_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,9 +28,9 @@
             android:id="@+id/user_full_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-    </LinearLayout>
+    </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/user_content_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,69 +39,108 @@
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
-            android:layout_width="wrap_content"
-            android:isScrollContainer="true"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="12dp"
+            app:tabPaddingStart="16dp"
+            app:tabPaddingEnd="16dp"
+            app:tabMode="fixed"
+            app:tabGravity="start"
+            app:tabIndicatorColor="@color/call_primary"
+            app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+            app:tabTextColor="@color/text_primary">
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/user_arguments_tab"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:paddingHorizontal="6dp"
+                android:text="@string/user_arguments_tab" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/user_badges_tabs"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:paddingHorizontal="6dp"
+                android:text="@string/user_badges_tab" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/user_disciples_tabs"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:paddingHorizontal="6dp"
+                android:text="@string/user_disciples_tab" />
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/user_mentors_tabs"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:paddingHorizontal="6dp"
+                android:text="@string/user_mentors_tab" />
         </com.google.android.material.tabs.TabLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/user_arguments_container"
-            android:layout_below="@id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_below="@+id/tab_layout"
+            android:orientation="vertical"
+            android:paddingVertical="5dp"
+            android:paddingHorizontal="12dp"
+            android:visibility="gone">
 
-            <TextView
+            <FrameLayout
+                android:id="@+id/user_arguments_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="arguments" />
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
 
-        </LinearLayout>
-
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/user_badges_container"
-            android:layout_below="@id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_below="@+id/tab_layout"
+            android:orientation="vertical"
+            android:paddingVertical="5dp"
+            android:paddingHorizontal="12dp"
             android:visibility="gone">
 
-            <TextView
+            <FrameLayout
+                android:id="@+id/user_badges_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="badges" />
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/user_mentors_container"
-            android:layout_below="@id/tab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="mentors" />
-
-        </LinearLayout>
-
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/user_disciples_container"
-            android:layout_below="@id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_below="@+id/tab_layout"
+            android:orientation="vertical"
+            android:paddingVertical="5dp"
+            android:paddingHorizontal="12dp"
             android:visibility="gone">
 
-            <TextView
+            <FrameLayout
+                android:id="@+id/user_disciples_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="disciples" />
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
 
-        </LinearLayout>
-    </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/user_mentors_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tab_layout"
+            android:orientation="vertical"
+            android:paddingVertical="5dp"
+            android:paddingHorizontal="12dp"
+            android:visibility="gone">
 
+            <FrameLayout
+                android:id="@+id/user_mentors_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+    </RelativeLayout>
 </RelativeLayout>

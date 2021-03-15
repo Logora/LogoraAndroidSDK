@@ -78,12 +78,12 @@ public class PaginatedListFragment extends Fragment {
         });
     }
 
-    public void update() {
-        loader.setVisibility(View.VISIBLE);
+    public void updateSort() {
         recyclerView.setVisibility(View.GONE);
         paginationButton.setVisibility(View.GONE);
+        loader.setVisibility(View.VISIBLE);
 
-        listViewModel.updateList().observe(getViewLifecycleOwner(), itemList -> {
+        listViewModel.resetList().observe(getViewLifecycleOwner(), itemList -> {
             if(itemList.size() == 0) {
                 loader.setVisibility(View.GONE);
                 emptyView.setVisibility(View.VISIBLE);

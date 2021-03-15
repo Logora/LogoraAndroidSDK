@@ -60,7 +60,7 @@ public class IndexFragment extends Fragment {
                 } else if(position == 2) {
                     debateList.setSort("+created_at");
                 }
-                debateList.update();
+                debateList.updateSort();
             }
 
             @Override

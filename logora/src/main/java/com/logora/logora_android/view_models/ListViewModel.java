@@ -18,7 +18,7 @@ public class ListViewModel extends ViewModel {
     private String TAG = ListViewModel.class.getSimpleName();
     private final String resourceName;
     private MutableLiveData<List<JSONObject>> itemsLiveData;
-    private final List<JSONObject> items = new ArrayList<>();
+    private List<JSONObject> items = new ArrayList<>();
     private Integer total;
     private Integer totalPages;
     private Integer currentPage = 1;
@@ -69,13 +69,19 @@ public class ListViewModel extends ViewModel {
         return itemsLiveData;
     }
 
+    public LiveData<List<JSONObject>> resetList() {
+        this.items = new ArrayList<>();
+        this.resetCurrentPage();
+        loadItems();
+        return itemsLiveData;
+    }
+
     private void loadItems() {
         LogoraApiClient apiClient = LogoraApiClient.getInstance();
         apiClient.getList(
             response -> {
                 try {
                     JSONArray itemsJson = response.getJSONObject("data").getJSONArray("data");
-                    Log.i("RESULT", String.valueOf(response));
                     for (int i = 0; i < itemsJson.length(); i++) {
                         this.items.add(itemsJson.getJSONObject(i));
                     }
