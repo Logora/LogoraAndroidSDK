@@ -7,10 +7,15 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.logora.logora_android.models.Debate;
+import com.logora.logora_android.models.Tag;
 import com.logora.logora_android.utils.LogoraApiClient;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DebateShowViewModel extends ViewModel {
     private String TAG = DebateShowViewModel.class.getSimpleName();
@@ -32,6 +37,17 @@ public class DebateShowViewModel extends ViewModel {
                     JSONObject responseData = response.getJSONObject("data").getJSONObject("data").getJSONObject("resource");
                     Debate debateObject = new Debate();
                     debateObject.setName(responseData.getString("name"));
+                    debateObject.setId(responseData.getString("id"));
+                    debateObject.setSlug(responseData.getString("slug"));
+                    debateObject.setPublishedDate(responseData.getString("created_at"));
+                    debateObject.setUsersCount(responseData.getInt("participants_count"));
+
+                    JSONArray tagObjects = responseData.getJSONObject("group_context").getJSONArray("tags");
+                    List<JSONObject> tagList = new ArrayList<>();
+                    for(int i=0; i < tagObjects.length(); i++) {
+                        tagList.add(tagObjects.getJSONObject(i));
+                    }
+                    debateObject.setTagList(tagList);
                     debate.setValue(debateObject);
                 } catch (JSONException e) {
                     e.printStackTrace();

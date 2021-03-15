@@ -3,19 +3,29 @@ package com.logora.logora_android;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.logora.logora_android.adapters.TagListAdapter;
 import com.logora.logora_android.view_models.DebateShowViewModel;
 
 import org.jetbrains.annotations.NotNull;
+import org.w3c.dom.Text;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class DebateFragment extends Fragment {
     private String debateSlug;
+    private ProgressBar loader;
+    private RelativeLayout debatePresentationContainerView;
+    private TextView debatePublishedDateView;
+    private TextView debateNameView;
+    private RecyclerView debateTagList;
 
     public DebateFragment() {
         super(R.layout.fragment_debate);
@@ -29,14 +39,30 @@ public class DebateFragment extends Fragment {
     @Override
     public void onViewCreated(@NotNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        findViews(view);
 
-        ProgressBar spinner = view.findViewById(R.id.debate_loader);
-        TextView textView = view.findViewById(R.id.debate_header);
-        spinner.setVisibility(View.VISIBLE);
+        TagListAdapter debateTagListAdapter = new TagListAdapter();
+
+        debatePresentationContainerView.setVisibility(View.GONE);
+        loader.setVisibility(View.VISIBLE);
+
         DebateShowViewModel debateShowViewModel = new DebateShowViewModel();
         debateShowViewModel.getDebate(this.debateSlug).observe(getViewLifecycleOwner(), debate -> {
-            textView.setText(debate.getName());
-            spinner.setVisibility(View.GONE);
+            debateNameView.setText(debate.getName());
+            debatePublishedDateView.setText(debate.getPublishedDate());
+            debateTagListAdapter.setItems(debate.getTagList());
+            debateTagList.setAdapter(debateTagListAdapter);
+            loader.setVisibility(View.GONE);
+            debatePresentationContainerView.setVisibility(View.VISIBLE);
         });
+    }
+
+    private void findViews(View view) {
+        loader = view.findViewById(R.id.loader);
+        debatePresentationContainerView = view.findViewById(R.id.debate_presentation_container);
+        debatePublishedDateView = view.findViewById(R.id.debate_published_date);
+        debateNameView = view.findViewById(R.id.debate_name);
+        debateTagList = view.findViewById(R.id.debate_tag_list);
+        debateTagList.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.HORIZONTAL, false));
     }
 }

@@ -7,11 +7,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.logora.logora_android.R;
 import com.logora.logora_android.models.NextBadgeBox;
-
-import jp.wasabeef.glide.transformations.BlurTransformation;
 
 public class NextBadgeBoxViewHolder extends ListViewHolder {
     NextBadgeBox nextBadgeBox;

@@ -1,9 +1,28 @@
 package com.logora.logora_android.models;
 
+import org.json.JSONObject;
+
+import java.util.List;
+
 public class Debate {
+    private String id;
     private String name;
+    private String slug;
+    private String publishedDate;
+    private String votesCount;
+    private Integer usersCount;
+    private Integer argumentsCount;
+    private List<JSONObject> tagList;
 
     public Debate() {}
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -11,5 +30,45 @@ public class Debate {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
+
+    public String getPublishedDate() {
+        return publishedDate;
+    }
+
+    public void setPublishedDate(String publishedDate) {
+        this.publishedDate = publishedDate;
+    }
+
+    public Integer getUsersCount() {
+        return usersCount;
+    }
+
+    public void setUsersCount(Integer usersCount) {
+        this.usersCount = usersCount;
+    }
+
+    public Integer getArgumentsCount() {
+        return argumentsCount;
+    }
+
+    public void setArgumentsCount(Integer argumentsCount) {
+        this.argumentsCount = argumentsCount;
+    }
+
+    public List<JSONObject> getTagList() {
+        return tagList;
+    }
+
+    public void setTagList(List<JSONObject> tagList) {
+        this.tagList = tagList;
     }
 }
