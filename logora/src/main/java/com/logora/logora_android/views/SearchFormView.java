@@ -37,6 +37,12 @@ public class SearchFormView extends RelativeLayout {
         inflate(getContext(), R.layout.search_form, this);
         searchSubmit = this.findViewById(R.id.search_submit);
         searchInput = this.findViewById(R.id.search_input);
+        backIconView = this.findViewById(R.id.search_back_icon);
+
+        backIconView.setOnClickListener(v -> {
+            Log.i("INFO", "BACK SEARCH");
+            this.setVisibility(GONE);
+        });
 
         searchSubmit.setOnClickListener(v -> {
             String searchQuery = searchInput.getText().toString();
@@ -44,5 +50,9 @@ public class SearchFormView extends RelativeLayout {
             queryParams.put("q", searchQuery);
             router.setCurrentRoute(Router.getRoute("SEARCH"), null, queryParams);
         });
+    }
+
+    private void setStyles() {
+
     }
 }

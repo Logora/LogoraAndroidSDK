@@ -32,6 +32,12 @@ import org.jetbrains.annotations.NotNull;
 public class UserFragment extends Fragment {
     private final Settings settings = Settings.getInstance();
     private String userSlug;
+    private TextView userDebatesCountValue;
+    private TextView userDebatesCountText;
+    private TextView userVotesCountValue;
+    private TextView userVotesCountText;
+    private TextView userDisciplesCountValue;
+    private TextView userDisciplesCountText;
     private TabLayout tabLayout;
     private TabLayout.Tab argumentsTab;
     private TabLayout.Tab badgesTab;
@@ -59,12 +65,8 @@ public class UserFragment extends Fragment {
         ImageView userImageView = view.findViewById(R.id.user_image);
         this.findViews(view);
 
-        argumentsTab = tabLayout.getTabAt(0);
-        badgesTab = tabLayout.getTabAt(1);
-        disciplesTab = tabLayout.getTabAt(2);
-        mentorsTab = tabLayout.getTabAt(3);
-
         setTabsText();
+
         setStyles();
 
         ProgressBar spinner = view.findViewById(R.id.loader);
@@ -72,6 +74,9 @@ public class UserFragment extends Fragment {
         UserShowViewModel userViewModel = new UserShowViewModel();
         userViewModel.getUser(this.userSlug).observe(getViewLifecycleOwner(), user -> {
             userFullNameView.setText(user.getFullName());
+            userDebatesCountValue.setText(String.valueOf(user.getDebatesCount()));
+            userVotesCountValue.setText(String.valueOf(user.getVotesCount()));
+            userDisciplesCountValue.setText(String.valueOf(user.getDisciplesCount()));
             spinner.setVisibility(View.GONE);
 
             Glide.with(userImageView.getContext())
@@ -82,6 +87,8 @@ public class UserFragment extends Fragment {
         UserBoxListAdapter userDisciplesListAdapter = new UserBoxListAdapter();
         UserBoxListAdapter userMentorsListAdapter = new UserBoxListAdapter();
 
+        PaginatedListFragment userArgumentsFragment = new PaginatedListFragment("users/" + userSlug + "/arguments", userDisciplesListAdapter);
+        PaginatedListFragment userBadgesFragment = new PaginatedListFragment("users/" + userSlug + "/badges", userDisciplesListAdapter);
         PaginatedListFragment userDisciplesFragment = new PaginatedListFragment("users/" + userSlug + "/disciples", userDisciplesListAdapter);
         PaginatedListFragment userMentorsFragment = new PaginatedListFragment("users/" + userSlug + "/mentors", userMentorsListAdapter);
 
@@ -132,12 +139,23 @@ public class UserFragment extends Fragment {
     }
 
     private void findViews(View view) {
+        userDebatesCountValue = view.findViewById(R.id.user_debates_count_value);
+        userDebatesCountText = view.findViewById(R.id.user_debates_count_text);
+        userVotesCountValue = view.findViewById(R.id.user_votes_count_value);
+        userVotesCountText = view.findViewById(R.id.user_votes_count_text);
+        userDisciplesCountValue = view.findViewById(R.id.user_disciples_count_value);
+        userDisciplesCountText = view.findViewById(R.id.user_disciples_count_text);
+
         userArgumentsContainer = view.findViewById(R.id.user_arguments_container);
         userBadgesContainer = view.findViewById(R.id.user_badges_container);
         userMentorsContainer = view.findViewById(R.id.user_mentors_container);
         userDisciplesContainer = view.findViewById(R.id.user_disciples_container);
 
         tabLayout = view.findViewById(R.id.tab_layout);
+        argumentsTab = tabLayout.getTabAt(0);
+        badgesTab = tabLayout.getTabAt(1);
+        disciplesTab = tabLayout.getTabAt(2);
+        mentorsTab = tabLayout.getTabAt(3);
     }
 
     private void setTabsText() {

@@ -55,8 +55,6 @@ public class NavbarFragment extends Fragment {
         });
 
         searchIconView.setOnClickListener(v -> {
-            this.navbarRightContainer.setVisibility(View.GONE);
-            this.indexButtonView.setVisibility(View.GONE);
             this.searchFormView.setVisibility(View.VISIBLE);
         });
     }

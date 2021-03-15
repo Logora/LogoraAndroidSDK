@@ -35,6 +35,9 @@ public class UserShowViewModel extends ViewModel {
                     userObject.setSlug(responseData.getString("slug"));
                     userObject.setUid(responseData.getString("uid"));
                     userObject.setImageUrl(responseData.getString("image_url"));
+                    userObject.setDebatesCount(responseData.getInt("debates_count"));
+                    userObject.setVotesCount(responseData.getInt("debates_votes_count"));
+                    userObject.setDisciplesCount(responseData.getInt("followers_count"));
                     user.setValue(userObject);
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -21,6 +21,14 @@
     <string name="index_sort_trending_option">Le plus pertinent</string>
     <string name="index_sort_recent_option">Le plus récent</string>
     <string name="index_sort_old_option">Le plus ancien</string>
+    <string name="user_image_content_description">Image de profile du débatteur</string>
+    <string name="user_debates_count_value">0</string>
+    <string name="user_debates_count_text">débats</string>
+    <string name="user_votes_count_value">0</string>
+    <string name="user_votes_count_text">votes</string>
+    <string name="user_disciples_count_value">0</string>
+    <string name="user_disciples_count_text">disciples</string>
+    <string name="user_tags_header">Intérêts</string>
     <string name="user_arguments_tab">Arguments</string>
     <string name="user_badges_tab">Badges</string>
     <string name="user_mentors_tab">Mentors</string>
