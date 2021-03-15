@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingVertical="5dp"
+    tools:context=".BadgeTabFragment"
+    android:orientation="vertical">
+
+    <com.logora.logora_android.TextWrapper
+        android:id="@+id/user_next_badges_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="6dp"
+        app:textKey="headerNextBadgesBoxTitle"
+        android:text="@string/user_next_badges_header"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/next_badges_empty_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginVertical="16dp"
+        android:layout_below="@+id/user_next_badges_header"
+        android:text="@string/list_empty"
+        android:visibility="gone"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/next_badges_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/next_badges_empty_list"
+        android:nestedScrollingEnabled="false" />
+
+    <ProgressBar
+        android:id="@+id/next_badges_loader"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/next_badges_list"
+        android:indeterminate="true"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="@android:color/black"
+        android:visibility="gone" />
+
+    <com.logora.logora_android.TextWrapper
+        android:id="@+id/user_badges_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/next_badges_loader"
+        android:layout_marginVertical="6dp"
+        app:textKey="headerBadgesBoxTitle"
+        android:text="@string/user_badges_header"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/badges_empty_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginVertical="16dp"
+        android:layout_below="@id/user_badges_header"
+        android:text="@string/list_empty"
+        android:visibility="gone"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/badges_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/badges_empty_list"
+        android:nestedScrollingEnabled="false" />
+
+    <ProgressBar
+        android:id="@+id/badges_loader"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/badges_list"
+        android:indeterminate="true"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="@android:color/black"
+        android:visibility="gone" />
+</RelativeLayout>

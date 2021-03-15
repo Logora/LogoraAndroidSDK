@@ -38,6 +38,7 @@ public class UserFragment extends Fragment {
     private TextView userVotesCountText;
     private TextView userDisciplesCountValue;
     private TextView userDisciplesCountText;
+    private RecyclerView userTagsList;
     private TabLayout tabLayout;
     private TabLayout.Tab argumentsTab;
     private TabLayout.Tab badgesTab;
@@ -66,7 +67,6 @@ public class UserFragment extends Fragment {
         this.findViews(view);
 
         setTabsText();
-
         setStyles();
 
         ProgressBar spinner = view.findViewById(R.id.loader);
@@ -88,12 +88,13 @@ public class UserFragment extends Fragment {
         UserBoxListAdapter userMentorsListAdapter = new UserBoxListAdapter();
 
         PaginatedListFragment userArgumentsFragment = new PaginatedListFragment("users/" + userSlug + "/arguments", userDisciplesListAdapter);
-        PaginatedListFragment userBadgesFragment = new PaginatedListFragment("users/" + userSlug + "/badges", userDisciplesListAdapter);
+        BadgeTabFragment userBadgesFragment = new BadgeTabFragment(userSlug);
         PaginatedListFragment userDisciplesFragment = new PaginatedListFragment("users/" + userSlug + "/disciples", userDisciplesListAdapter);
         PaginatedListFragment userMentorsFragment = new PaginatedListFragment("users/" + userSlug + "/mentors", userMentorsListAdapter);
 
         getChildFragmentManager()
                 .beginTransaction()
+                .add(R.id.user_badges_list, userBadgesFragment)
                 .add(R.id.user_disciples_list, userDisciplesFragment)
                 .add(R.id.user_mentors_list, userMentorsFragment)
                 .commit();
@@ -145,6 +146,7 @@ public class UserFragment extends Fragment {
         userVotesCountText = view.findViewById(R.id.user_votes_count_text);
         userDisciplesCountValue = view.findViewById(R.id.user_disciples_count_value);
         userDisciplesCountText = view.findViewById(R.id.user_disciples_count_text);
+        userTagsList = view.findViewById(R.id.user_tags_list);
 
         userArgumentsContainer = view.findViewById(R.id.user_arguments_container);
         userBadgesContainer = view.findViewById(R.id.user_badges_container);

@@ -29,8 +29,15 @@
     <string name="user_disciples_count_value">0</string>
     <string name="user_disciples_count_text">disciples</string>
     <string name="user_tags_header">Intérêts</string>
+    <string name="user_tags_empty">Pas assez d\'activité</string>
     <string name="user_arguments_tab">Arguments</string>
     <string name="user_badges_tab">Badges</string>
     <string name="user_mentors_tab">Mentors</string>
     <string name="user_disciples_tab">Disciples</string>
+    <string name="user_next_badges_header">Prochains badges à obtenir</string>
+    <string name="user_badges_header">Salle des badges</string>
+    <string name="badge_icon_content_description">Icône du badge</string>
+    <string name="next_badge_icon_content_description">Icône du badge</string>
+    <string name="badge_box_title">Nom du badge</string>
+    <string name="badge_box_description">Description du badge</string>
 </resources>

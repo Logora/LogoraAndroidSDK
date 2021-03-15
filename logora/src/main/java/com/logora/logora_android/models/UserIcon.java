@@ -4,7 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class UserIcon extends Model {
-    private String full_name;
+    private String fullName;
     private String imageUrl;
     private String slug;
 
@@ -24,11 +24,11 @@ public class UserIcon extends Model {
     }
 
     public String getFullName() {
-        return full_name;
+        return fullName;
     }
 
-    public void setFullName(String full_name) {
-        this.full_name = full_name;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public String getSlug() { return slug; }
