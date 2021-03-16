@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.logora.logora_android.utils.Auth;
 import com.logora.logora_android.utils.LogoraApiClient;
 import com.logora.logora_android.utils.Route;
 import com.logora.logora_android.utils.Router;
@@ -25,19 +26,25 @@ import java.util.HashMap;
  */
 public class LogoraAppFragment extends Fragment implements Router.RouteListener {
     private final String applicationName;
+    private String authAssertion;
 
-    public LogoraAppFragment(String applicationName) {
+    public LogoraAppFragment(String applicationName, String authAssertion) {
         super(R.layout.fragment_root);
         this.applicationName = applicationName;
+        this.authAssertion = authAssertion;
     }
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        LogoraApiClient apiClient = LogoraApiClient.getInstance(this.applicationName, context);
+        LogoraApiClient apiClient = LogoraApiClient.getInstance(this.applicationName,
+                this.authAssertion, context);
 
         Router router = Router.getInstance();
         router.setListener(this);
+
+        Auth auth = Auth.getInstance();
+        auth.authenticate();
     }
 
     @Override

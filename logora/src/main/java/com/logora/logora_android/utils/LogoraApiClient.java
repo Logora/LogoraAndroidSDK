@@ -29,24 +29,29 @@ public class LogoraApiClient {
     private String userTokenKey = "logora_user_token";
     private String userSessionKey = "logora_session";
     private String applicationName = null;
+    private String authAssertion = null;
     private String providerToken = null;
     private Context context = null;
     private static LogoraApiClient instance = null;
 
     public LogoraApiClient() {}
 
-    public LogoraApiClient(String applicationName, Context context) {
+    public LogoraApiClient(String applicationName, String authAssertion, Context context) {
         this.queue = Volley.newRequestQueue(context);
         this.applicationName = applicationName;
+        this.authAssertion = authAssertion;
         this.context = context;
     }
 
     public void setProviderToken(String providerToken) { this.providerToken = providerToken; }
     public String getProviderToken() { return this.providerToken; }
 
-    public static LogoraApiClient getInstance(String applicationName, Context context) {
+    public void setAuthAssertion(String authAssertion) { this.authAssertion = authAssertion; }
+    public String getAuthAssertion() { return this.authAssertion; }
+
+    public static LogoraApiClient getInstance(String applicationName, String authAssertion, Context context) {
         if(LogoraApiClient.instance == null) {
-            LogoraApiClient.instance = new LogoraApiClient(applicationName, context);
+            LogoraApiClient.instance = new LogoraApiClient(applicationName, authAssertion, context);
         }
         return LogoraApiClient.instance;
     }
@@ -94,33 +99,30 @@ public class LogoraApiClient {
         this.client_get(route, queryParams, listener, errorListener);
     }
 
+    /* USER METHODS */
+    public void getCurrentUser(Response.Listener<JSONObject> listener,
+                               Response.ErrorListener errorListener) {
+        HashMap<String, String> queryParams = new HashMap<>();
+        String route = "/me";
+        this.user_get(route, queryParams, listener, errorListener);
+    }
+
     /* AUTH METHODS */
-    public void userAuth() {
+    public void userAuth(Response.Listener<JSONObject> listener,
+                         Response.ErrorListener errorListener) {
         HashMap<String, String> bodyParams = new HashMap<>();
         bodyParams.put("grant_type", "assertion");
-        bodyParams.put("assertion", "assertion");
-        bodyParams.put("assertion_type", "oauth2");
+        bodyParams.put("assertion", this.authAssertion);
+        bodyParams.put("assertion_type", "signature_jwt");
         bodyParams.put("provider", this.applicationName);
         String requestUrl = this.authUrl + "/token";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
-                requestUrl, null,
-                response -> {
-                    Log.i("INFO", "LOGGING User");
-                },
-                error -> {
-                    Log.i("ERROR", String.valueOf(error));
-                })
-        {
+                requestUrl, new JSONObject(bodyParams), listener, errorListener) {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String>  params = new HashMap<>();
                 params.put("Content-Type", "application/json");
                 return params;
-            }
-
-            @Override
-            protected Map<String,String> getParams() {
-                return bodyParams;
             }
         };
         this.queue.add(request);
@@ -130,20 +132,9 @@ public class LogoraApiClient {
         return;
     }
 
-    private void setUserToken(HashMap<String, String> token) {
-        Integer expiresAt = Integer.parseInt(Objects.requireNonNull(token.get("created_at"))) + Integer.parseInt(Objects.requireNonNull(token.get("expires_in")));
-        token.put("expires_at", String.valueOf(expiresAt));
-        this.setStorageItem(this.userTokenKey, new JSONObject(token));
-    }
-
-    private String getUserToken() {
-        return "token";
-    }
-
     /* GENERIC REQUEST METHODS */
 
     /* CLIENT METHODS */
-
     private void client_get(String route, HashMap<String, String> queryParams,
                      Response.Listener<JSONObject> listener,
                      Response.ErrorListener errorListener) {
@@ -192,6 +183,7 @@ public class LogoraApiClient {
             public Map<String, String> getHeaders() {
                 Map<String, String>  params = new HashMap<>();
                 params.put("Content-Type", "application/json");
+                params.put("Origin", "https://logora.fr");
                 return params;
             }
 
@@ -204,7 +196,6 @@ public class LogoraApiClient {
     }
 
     /* USER METHODS */
-
     private void user_get(String route, HashMap<String, String> params,
                             Response.Listener<JSONObject> listener,
                             Response.ErrorListener errorListener) {
@@ -233,7 +224,7 @@ public class LogoraApiClient {
         String requestUrl = this.apiUrl + route + paramsString;
         String userAuthorizationHeader = this.getUserAuthorizationHeader();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
-                requestUrl, null, listener, errorListener
+                requestUrl, new JSONObject(bodyParams), listener, errorListener
         ) {
             @Override
             public Map<String, String> getHeaders() {
@@ -241,11 +232,6 @@ public class LogoraApiClient {
                 params.put("Content-Type", "application/json");
                 params.put("Authorization", userAuthorizationHeader);
                 return params;
-            }
-
-            @Override
-            protected Map<String,String> getParams() {
-                return bodyParams;
             }
         };
         this.queue.add(request);
@@ -270,6 +256,34 @@ public class LogoraApiClient {
         return sb.toString();
     }
 
+    /* TOKEN FUNCTIONS */
+    public void setUserToken(JSONObject token) {
+        try {
+            Integer expiresAt = Integer.parseInt(Objects.requireNonNull(token.getString("created_at"))) + Integer.parseInt(Objects.requireNonNull(token.getString("expires_in")));
+            token.put("expires_at", String.valueOf(expiresAt));
+            this.setStorageItem(this.userTokenKey, token);
+        } catch(JSONException e) {
+            Log.i("ERROR", "Token object parsing error.");
+        }
+    }
+
+    public String getUserToken() {
+        JSONObject tokenObject = this.getUserTokenObject();
+        try {
+            return tokenObject.getString("access_token");
+        } catch(JSONException e) {
+            return null;
+        }
+    }
+
+    public JSONObject getUserTokenObject() {
+        return this.getStorageItem(this.userTokenKey);
+    }
+
+    public void deleteUserToken() {
+        this.deleteStorageItem(this.userTokenKey);
+    }
+
     /* STORAGE FUNCTIONS */
     private void setStorageItem(String key, JSONObject value) {
         SharedPreferences sharedPreferences = this.context.getSharedPreferences("logora_settings", 0);
@@ -287,5 +301,12 @@ public class LogoraApiClient {
         } catch (JSONException e) {
             return null;
         }
+    }
+
+    private void deleteStorageItem(String key) {
+        SharedPreferences sharedPreferences = this.context.getSharedPreferences("logora_settings", 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove(key);
+        editor.apply();
     }
 }

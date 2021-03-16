@@ -16,7 +16,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        LogoraAppFragment fragment = new LogoraAppFragment("logora-demo");
+
+        String applicationName = "logora-demo";
+        String authAssertion = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiZmlyc3RfbmFtZSI6IlZpdGFsaWsiLCJsYXN0X25hbWUiOiJCdXRlcmluIiwiZW1haWwiOiJ2aXRhbGlrQGJ1dGVyaW4uY29tIiwidWlkIjoiMTIzNDI0IiwiaWF0IjoxNTE2MjM5MDIyfQ.KEQ6fHyFHu34-dGLYGnbBR_LF6BdOWnz2P9GyYZPJBg";
+
+        LogoraAppFragment fragment = new LogoraAppFragment(applicationName, authAssertion);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.fragment_container_view, fragment)
                 .commit();
