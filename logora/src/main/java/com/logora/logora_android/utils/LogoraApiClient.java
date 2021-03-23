@@ -107,6 +107,27 @@ public class LogoraApiClient {
         this.user_get(route, queryParams, listener, errorListener);
     }
 
+    public void getDebateFollow(Response.Listener<JSONObject> listener,
+                               Response.ErrorListener errorListener, Integer groupId) {
+        HashMap<String, String> queryParams = new HashMap<>();
+        String route = "/group_followings/" + groupId;
+        this.user_get(route, queryParams, listener, errorListener);
+    }
+
+    public void followDebate(Response.Listener<JSONObject> listener,
+                             Response.ErrorListener errorListener, String debateSlug) {
+        HashMap<String, String> queryParams = new HashMap<>();
+        String route = "/groups/" + debateSlug + "/follow";
+        this.user_post(route, queryParams, null, listener, errorListener);
+    }
+
+    public void unfollowDebate(Response.Listener<JSONObject> listener,
+                             Response.ErrorListener errorListener, String debateSlug) {
+        HashMap<String, String> queryParams = new HashMap<>();
+        String route = "/groups/" + debateSlug + "/unfollow";
+        this.user_post(route, queryParams, null, listener, errorListener);
+    }
+
     /* AUTH METHODS */
     public void userAuth(Response.Listener<JSONObject> listener,
                          Response.ErrorListener errorListener) {
@@ -177,19 +198,18 @@ public class LogoraApiClient {
                             Response.ErrorListener errorListener) {
         String paramsString = this.paramstoQueryString(queryParams);
         String requestUrl = this.apiUrl + route + paramsString;
+        JSONObject bodyJson = new JSONObject();
+        if(bodyParams != null) {
+            bodyJson = new JSONObject(bodyParams);
+        }
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
-                requestUrl, null, listener, errorListener)  {
+                requestUrl, bodyJson, listener, errorListener)  {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String>  params = new HashMap<>();
                 params.put("Content-Type", "application/json");
                 params.put("Origin", "https://logora.fr");
                 return params;
-            }
-
-            @Override
-            protected Map<String,String> getParams() {
-                return bodyParams;
             }
         };
         this.queue.add(request);
@@ -222,13 +242,17 @@ public class LogoraApiClient {
                           Response.ErrorListener errorListener) {
         String paramsString = this.paramstoQueryString(params);
         String requestUrl = this.apiUrl + route + paramsString;
+        JSONObject bodyJson = new JSONObject();
+        if(bodyParams != null) {
+            bodyJson = new JSONObject(bodyParams);
+        }
         String userAuthorizationHeader = this.getUserAuthorizationHeader();
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
-                requestUrl, new JSONObject(bodyParams), listener, errorListener
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
+                requestUrl, bodyJson, listener, errorListener
         ) {
             @Override
             public Map<String, String> getHeaders() {
-                Map<String, String>  params = new HashMap<>();
+                Map<String, String> params = new HashMap<>();
                 params.put("Content-Type", "application/json");
                 params.put("Authorization", userAuthorizationHeader);
                 return params;

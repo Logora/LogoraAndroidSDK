@@ -44,8 +44,8 @@ public class LogoraAppFragment extends Fragment implements Router.RouteListener 
         Router router = Router.getInstance();
         router.setListener(this);
 
-        //Auth auth = Auth.getInstance();
-        //auth.authenticate();
+        Auth auth = Auth.getInstance();
+        auth.authenticate();
     }
 
     @Override
@@ -56,7 +56,6 @@ public class LogoraAppFragment extends Fragment implements Router.RouteListener 
         spinner.setVisibility(View.VISIBLE);
         SettingsViewModel model = new SettingsViewModel();
         model.getSettings().observe(getViewLifecycleOwner(), settings -> {
-            Log.i("HJH", String.valueOf(settings));
             getChildFragmentManager().beginTransaction()
                     .add(R.id.navbar_fragment, new NavbarFragment())
                     .add(R.id.main_fragment, new IndexFragment())

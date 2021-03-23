@@ -40,7 +40,6 @@ public class SearchFormView extends RelativeLayout {
         backIconView = this.findViewById(R.id.search_back_icon);
 
         backIconView.setOnClickListener(v -> {
-            Log.i("INFO", "BACK SEARCH");
             this.setVisibility(GONE);
         });
 
