@@ -42,10 +42,18 @@
     <string name="badge_box_description">Description du badge</string>
     <string name="debate_name">Titre du débat</string>
     <string name="debate_published_date">Date de publication du débat</string>
+    <string name="debate_first_position">Oui</string>
+    <string name="debate_second_position">Non</string>
+    <string name="debate_votes_count">0 votes</string>
+    <string name="debate_edit_vote">Modifier</string>
     <string name="search_icon_content_description">Icône de recherche</string>
     <string name="search_back_icon_content_description">Icône de retour</string>
     <string name="search_submit_icon_content_description">Icône de recherche</string>
     <string name="notification_icon_content_description">Icône de notification</string>
     <string name="debate_follow_inactive">Suivre</string>
     <string name="debate_follow_active">Débat suivi</string>
+    <string name="share_link_icon_content_description">Icône de copie dans le presse-papier</string>
+    <string name="share_email_icon_content_description">Icône de partage par email</string>
+    <string name="share_facebook_icon_content_description">Icône de partage par Facebook</string>
+    <string name="share_twitter_icon_content_description">Icône de partage par Twitter</string>
 </resources>

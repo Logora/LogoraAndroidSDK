@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="call_primary">#417EC7</color>
-    <color name="for_position">#C24D50</color>
-    <color name="against_position">#7980BB</color>
+    <color name="first_position_primary">#C24D50</color>
+    <color name="second_position_primary">#7980BB</color>
     <color name="border_light">#072A441A</color>
     <color name="text_primary">#222222</color>
     <color name="text_secondary">#777777</color>
     <color name="text_tertiary">#FAFAFA</color>
+    <color name="progress_background">#e9ecef</color>
 </resources>

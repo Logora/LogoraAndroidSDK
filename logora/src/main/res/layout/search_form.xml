@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/search_form_container"
     android:layout_width="match_parent"
@@ -18,7 +19,8 @@
         android:layout_centerVertical="true"
         android:clickable="true"
         android:focusable="true"
-        android:contentDescription="@string/search_back_icon_content_description" />
+        android:contentDescription="@string/search_back_icon_content_description"
+        app:tint="@color/text_secondary" />
 
     <EditText
         android:id="@+id/search_input"
@@ -41,5 +43,6 @@
         android:layout_centerVertical="true"
         android:clickable="true"
         android:focusable="true"
-        android:contentDescription="@string/search_submit_icon_content_description" />
+        android:contentDescription="@string/search_submit_icon_content_description"
+        app:tint="@color/text_secondary" />
 </RelativeLayout>

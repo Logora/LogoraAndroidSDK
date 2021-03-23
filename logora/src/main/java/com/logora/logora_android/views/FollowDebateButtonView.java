@@ -104,10 +104,9 @@ public class FollowDebateButtonView extends androidx.appcompat.widget.AppCompatB
         this.apiClient.getDebateFollow(
             response -> {
                 try {
-                    Log.i("FOLLOW", String.valueOf(response));
                     boolean success = response.getBoolean("success");
-                    JSONObject resource = response.getJSONObject("data").getJSONObject("resource");
-                    if(success && resource.length() > 0) {
+                    boolean follow = response.getJSONObject("data").getBoolean("follow");
+                    if(success && follow) {
                         setActive();
                     }
                 } catch (JSONException e) {

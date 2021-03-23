@@ -9,10 +9,11 @@ public class Debate {
     private String name;
     private String slug;
     private String publishedDate;
-    private String votesCount;
+    private Integer votesCount;
     private Integer usersCount;
     private Integer argumentsCount;
     private List<JSONObject> tagList;
+    private List<Position> positionList;
 
     public Debate() {}
 
@@ -64,11 +65,27 @@ public class Debate {
         this.argumentsCount = argumentsCount;
     }
 
+    public Integer getVotesCount() {
+        return votesCount;
+    }
+
+    public void setVotesCount(Integer votesCount) {
+        this.votesCount = votesCount;
+    }
+
     public List<JSONObject> getTagList() {
         return tagList;
     }
 
     public void setTagList(List<JSONObject> tagList) {
         this.tagList = tagList;
+    }
+
+    public List<Position> getPositionList() {
+        return positionList;
+    }
+
+    public void setPositionList(List<Position> positionList) {
+        this.positionList = positionList;
     }
 }

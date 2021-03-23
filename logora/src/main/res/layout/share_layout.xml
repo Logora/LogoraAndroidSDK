@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/share_layout_container"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -10,45 +11,49 @@
 
     <ImageView
         android:id="@+id/link_share_button"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
         android:src="@drawable/ic_link"
         android:layout_marginHorizontal="6dp"
         android:gravity="center"
         android:clickable="true"
         android:focusable="true"
-        android:contentDescription="TODO" />
+        android:contentDescription="@string/share_link_icon_content_description"
+        app:tint="@color/text_secondary" />
 
     <ImageView
         android:id="@+id/email_share_button"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
         android:src="@drawable/ic_email"
         android:layout_marginHorizontal="6dp"
         android:gravity="center"
         android:clickable="true"
         android:focusable="true"
-        android:contentDescription="TODO" />
+        android:contentDescription="@string/share_email_icon_content_description"
+        app:tint="@color/text_secondary" />
 
     <ImageView
         android:id="@+id/facebook_share_button"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
         android:src="@drawable/ic_facebook"
         android:layout_marginHorizontal="6dp"
         android:gravity="center"
         android:clickable="true"
         android:focusable="true"
-        android:contentDescription="TODO" />
+        android:contentDescription="@string/share_facebook_icon_content_description"
+        app:tint="@color/text_secondary" />
 
     <ImageView
         android:id="@+id/twitter_share_button"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
         android:src="@drawable/ic_twitter"
         android:layout_marginHorizontal="6dp"
         android:gravity="center"
         android:clickable="true"
         android:focusable="true"
-        android:contentDescription="TODO" />
+        android:contentDescription="@string/share_twitter_icon_content_description"
+        app:tint="@color/text_secondary" />
 </LinearLayout>

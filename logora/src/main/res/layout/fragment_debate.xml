@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="12dp"
+    android:layout_marginHorizontal="12dp"
     tools:context=".DebateFragment">
 
     <ProgressBar
@@ -21,8 +21,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/box_background"
         android:layout_marginVertical="12dp"
-        android:paddingTop="16dp"
-        android:paddingHorizontal="12dp">
+        android:paddingTop="16dp">
 
         <TextView
             android:id="@+id/debate_published_date"
@@ -30,6 +29,7 @@
             android:layout_height="wrap_content"
             android:text="@string/debate_published_date"
             android:textColor="@color/text_secondary"
+            android:paddingHorizontal="12dp"
             android:textSize="14sp" />
 
         <TextView
@@ -38,6 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/debate_published_date"
             android:layout_marginVertical="12dp"
+            android:paddingHorizontal="12dp"
             android:text="@string/debate_name"
             android:textColor="@color/text_primary"
             android:textSize="26sp"
@@ -49,12 +50,21 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/debate_name"
             android:layout_marginVertical="6dp"
+            android:paddingHorizontal="12dp"
             android:nestedScrollingEnabled="false" />
+
+        <com.logora.logora_android.views.VoteBoxView
+            android:id="@+id/debate_vote_box"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/debate_tag_list" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/debate_tag_list">
+            android:paddingHorizontal="12dp"
+            android:layout_marginVertical="8dp"
+            android:layout_below="@+id/debate_vote_box">
 
             <com.logora.logora_android.views.ShareView
                 android:id="@+id/debate_share"
@@ -71,7 +81,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerInParent="true"
-                android:text="@string/debate_follow_inactive" />
+                android:text="@string/debate_follow_inactive"
+                tools:ignore="RelativeOverlap" />
 
         </RelativeLayout>
     </RelativeLayout>

@@ -107,6 +107,42 @@ public class LogoraApiClient {
         this.user_get(route, queryParams, listener, errorListener);
     }
 
+    public void getGroupVote(Response.Listener<JSONObject> listener,
+                                Response.ErrorListener errorListener, Integer groupId) {
+        HashMap<String, String> queryParams = new HashMap<>();
+        String route = "/users/group/" + groupId + "/vote";
+        this.user_get(route, queryParams, listener, errorListener);
+    }
+
+    public void createVote(Response.Listener<JSONObject> listener,
+                           Response.ErrorListener errorListener,
+                           Integer voteableId, String voteableType, Integer positionId) {
+        HashMap<String, String> queryParams = new HashMap<>();
+        HashMap<String, String> bodyParams = new HashMap<>();
+        bodyParams.put("voteable_id", String.valueOf(voteableId));
+        bodyParams.put("voteable_type", voteableType);
+        bodyParams.put("position_id", String.valueOf(positionId));
+        String route = "/votes";
+        this.user_post(route, queryParams, bodyParams, listener, errorListener);
+    }
+
+    public void updateVote(Response.Listener<JSONObject> listener,
+                           Response.ErrorListener errorListener,
+                           Integer voteId, Integer positionId) {
+        HashMap<String, String> queryParams = new HashMap<>();
+        HashMap<String, String> bodyParams = new HashMap<>();
+        bodyParams.put("position_id", String.valueOf(positionId));
+        String route = "/votes/" + voteId;
+        this.user_patch(route, queryParams, bodyParams, listener, errorListener);
+    }
+
+    public void deleteVote(Response.Listener<JSONObject> listener,
+               Response.ErrorListener errorListener, Integer voteId) {
+        HashMap<String, String> queryParams = new HashMap<>();
+        String route = "/votes/" + voteId;
+        this.user_delete(route, queryParams, listener, errorListener);
+    }
+
     public void getDebateFollow(Response.Listener<JSONObject> listener,
                                Response.ErrorListener errorListener, Integer groupId) {
         HashMap<String, String> queryParams = new HashMap<>();
@@ -249,6 +285,51 @@ public class LogoraApiClient {
         String userAuthorizationHeader = this.getUserAuthorizationHeader();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
                 requestUrl, bodyJson, listener, errorListener
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<>();
+                params.put("Content-Type", "application/json");
+                params.put("Authorization", userAuthorizationHeader);
+                return params;
+            }
+        };
+        this.queue.add(request);
+    }
+
+    private void user_patch(String route, HashMap<String, String> params,
+                           HashMap<String, String> bodyParams,
+                           Response.Listener<JSONObject> listener,
+                           Response.ErrorListener errorListener) {
+        String paramsString = this.paramstoQueryString(params);
+        String requestUrl = this.apiUrl + route + paramsString;
+        JSONObject bodyJson = new JSONObject();
+        if(bodyParams != null) {
+            bodyJson = new JSONObject(bodyParams);
+        }
+        String userAuthorizationHeader = this.getUserAuthorizationHeader();
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
+                requestUrl, bodyJson, listener, errorListener
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<>();
+                params.put("Content-Type", "application/json");
+                params.put("Authorization", userAuthorizationHeader);
+                return params;
+            }
+        };
+        this.queue.add(request);
+    }
+
+    private void user_delete(String route, HashMap<String, String> params,
+                           Response.Listener<JSONObject> listener,
+                           Response.ErrorListener errorListener) {
+        String paramsString = this.paramstoQueryString(params);
+        String requestUrl = this.apiUrl + route + paramsString;
+        String userAuthorizationHeader = this.getUserAuthorizationHeader();
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.DELETE,
+                requestUrl, null, listener, errorListener
         ) {
             @Override
             public Map<String, String> getHeaders() {

@@ -14,6 +14,7 @@ import com.logora.logora_android.adapters.TagListAdapter;
 import com.logora.logora_android.view_models.DebateShowViewModel;
 import com.logora.logora_android.views.FollowDebateButtonView;
 import com.logora.logora_android.views.ShareView;
+import com.logora.logora_android.views.VoteBoxView;
 
 import org.jetbrains.annotations.NotNull;
 import org.w3c.dom.Text;
@@ -28,6 +29,7 @@ public class DebateFragment extends Fragment {
     private TextView debatePublishedDateView;
     private TextView debateNameView;
     private RecyclerView debateTagList;
+    private VoteBoxView voteBoxView;
     private ShareView shareView;
     private FollowDebateButtonView followDebateButtonView;
 
@@ -56,6 +58,9 @@ public class DebateFragment extends Fragment {
             debatePublishedDateView.setText(debate.getPublishedDate());
             debateTagListAdapter.setItems(debate.getTagList());
             debateTagList.setAdapter(debateTagListAdapter);
+
+            voteBoxView.init(debate);
+
             followDebateButtonView.init(Integer.parseInt(debate.getId()), debate.getSlug());
             shareView.setShareText(debate.getName());
             loader.setVisibility(View.GONE);
@@ -69,6 +74,7 @@ public class DebateFragment extends Fragment {
         debatePublishedDateView = view.findViewById(R.id.debate_published_date);
         debateNameView = view.findViewById(R.id.debate_name);
         debateTagList = view.findViewById(R.id.debate_tag_list);
+        voteBoxView = view.findViewById(R.id.debate_vote_box);
         followDebateButtonView = view.findViewById(R.id.debate_follow_button);
         shareView = view.findViewById(R.id.debate_share);
         debateTagList.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.HORIZONTAL, false));

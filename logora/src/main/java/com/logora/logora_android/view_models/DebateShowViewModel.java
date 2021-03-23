@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.logora.logora_android.models.Debate;
+import com.logora.logora_android.models.Position;
 import com.logora.logora_android.models.Tag;
 import com.logora.logora_android.utils.LogoraApiClient;
 
@@ -48,6 +49,14 @@ public class DebateShowViewModel extends ViewModel {
                         tagList.add(tagObjects.getJSONObject(i));
                     }
                     debateObject.setTagList(tagList);
+
+                    JSONArray positionObjects = responseData.getJSONObject("group_context").getJSONArray("positions");
+                    List<Position> positionList = new ArrayList<>();
+                    for(int i=0; i < positionObjects.length(); i++) {
+                        positionList.add(Position.objectFromJson(positionObjects.getJSONObject(i)));
+                    }
+                    debateObject.setPositionList(positionList);
+
                     debate.setValue(debateObject);
                 } catch (JSONException e) {
                     e.printStackTrace();
