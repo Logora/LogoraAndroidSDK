@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -26,7 +27,7 @@ import java.util.HashMap;
  */
 public class LogoraAppFragment extends Fragment implements Router.RouteListener {
     private final String applicationName;
-    private String authAssertion;
+    private final String authAssertion;
 
     public LogoraAppFragment(String applicationName, String authAssertion) {
         super(R.layout.fragment_root);
@@ -43,8 +44,8 @@ public class LogoraAppFragment extends Fragment implements Router.RouteListener 
         Router router = Router.getInstance();
         router.setListener(this);
 
-        Auth auth = Auth.getInstance();
-        auth.authenticate();
+        //Auth auth = Auth.getInstance();
+        //auth.authenticate();
     }
 
     @Override
@@ -55,6 +56,7 @@ public class LogoraAppFragment extends Fragment implements Router.RouteListener 
         spinner.setVisibility(View.VISIBLE);
         SettingsViewModel model = new SettingsViewModel();
         model.getSettings().observe(getViewLifecycleOwner(), settings -> {
+            Log.i("HJH", String.valueOf(settings));
             getChildFragmentManager().beginTransaction()
                     .add(R.id.navbar_fragment, new NavbarFragment())
                     .add(R.id.main_fragment, new IndexFragment())

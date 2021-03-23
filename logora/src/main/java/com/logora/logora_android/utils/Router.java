@@ -59,11 +59,6 @@ public class Router {
         this.routeListener = routeListener;
     }
 
-    public String parse(String url) {
-        Uri parsedUrl = Uri.parse(url);
-        return "";
-    }
-
     public interface RouteListener {
         void onRouteChange(Route previousRoute, Route currentRoute, HashMap<String, String> params, HashMap<String, String> queryParams);
     }

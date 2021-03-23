@@ -42,4 +42,8 @@
     <string name="badge_box_description">Description du badge</string>
     <string name="debate_name">Titre du débat</string>
     <string name="debate_published_date">Date de publication du débat</string>
+    <string name="search_icon_content_description">Icône de recherche</string>
+    <string name="search_back_icon_content_description">Icône de retour</string>
+    <string name="search_submit_icon_content_description">Icône de recherche</string>
+    <string name="notification_icon_content_description">Icône de notification</string>
 </resources>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/search_form_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:backgroundTint="@android:color/white"
+    android:background="@drawable/box_background">
+
+    <ImageView
+        android:id="@+id/link_share_button"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:src="@drawable/ic_arrow_left"
+        android:layout_marginHorizontal="6dp"
+        android:gravity="center"
+        android:clickable="true"
+        android:focusable="true"
+        android:contentDescription="TODO" />
+
+    <ImageView
+        android:id="@+id/email_share_button"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:src="@drawable/ic_arrow_left"
+        android:layout_marginHorizontal="6dp"
+        android:gravity="center"
+        android:clickable="true"
+        android:focusable="true"
+        android:contentDescription="TODO" />
+
+    <ImageView
+        android:id="@+id/facebook_share_button"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:src="@drawable/ic_arrow_left"
+        android:layout_marginHorizontal="6dp"
+        android:gravity="center"
+        android:clickable="true"
+        android:focusable="true"
+        android:contentDescription="TODO" />
+
+    <ImageView
+        android:id="@+id/twitter_share_button"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:src="@drawable/ic_arrow_left"
+        android:layout_marginHorizontal="6dp"
+        android:gravity="center"
+        android:clickable="true"
+        android:focusable="true"
+        android:contentDescription="TODO" />
+</LinearLayout>
