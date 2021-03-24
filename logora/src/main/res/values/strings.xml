@@ -46,6 +46,8 @@
     <string name="debate_second_position">Non</string>
     <string name="debate_votes_count">0 votes</string>
     <string name="debate_edit_vote">Modifier</string>
+    <string name="debate_first_position_progress_text">50%</string>
+    <string name="debate_second_position_progress_text">50%</string>
     <string name="search_icon_content_description">Icône de recherche</string>
     <string name="search_back_icon_content_description">Icône de retour</string>
     <string name="search_submit_icon_content_description">Icône de recherche</string>

@@ -14,6 +14,8 @@ import com.logora.logora_android.view_models.ListViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
+
 public class PaginatedListFragment extends Fragment {
     private String resourceName;
     private RecyclerView recyclerView;
@@ -25,11 +27,14 @@ public class PaginatedListFragment extends Fragment {
 
     public PaginatedListFragment() { super(R.layout.fragment_paginated_list); }
 
-    public PaginatedListFragment(String resourceName, ListAdapter listAdapter) {
+    public PaginatedListFragment(String resourceName, ListAdapter listAdapter, HashMap<String,String> extraArguments) {
         super(R.layout.fragment_paginated_list);
         this.resourceName = resourceName;
         this.listAdapter = listAdapter;
         listViewModel = new ListViewModel(resourceName);
+        if(extraArguments != null) {
+            listViewModel.setExtraArguments(extraArguments);
+        }
     }
 
     public void setSort(String sort) {

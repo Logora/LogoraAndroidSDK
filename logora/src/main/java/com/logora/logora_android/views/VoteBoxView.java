@@ -30,10 +30,13 @@ public class VoteBoxView extends RelativeLayout {
     private Boolean active = false;
     private LinearLayout voteContainer;
     private LinearLayout voteResultsContainer;
+    private TextView votesCountView;
     private Button voteFirstPositionButton;
     private Button voteSecondPositionButton;
     private TextView voteFirstPositionResultText;
     private TextView voteSecondPositionResultText;
+    private Integer voteFirstPositionProgressPercentage;
+    private Integer voteSecondPositionProgressPercentage;
     private TextView voteResultsCountView;
     private TextView voteEditView;
 
@@ -57,21 +60,28 @@ public class VoteBoxView extends RelativeLayout {
         findViews();
 
         voteFirstPositionButton.setOnClickListener(v -> {
-            this.vote(12);
+            this.vote(debate.getPositionList().get(0).getId());
         });
 
         voteSecondPositionButton.setOnClickListener(v -> {
-            this.vote(12);
+            this.vote(debate.getPositionList().get(1).getId());
+        });
+
+        voteEditView.setOnClickListener(v -> {
+            this.showButtons();
         });
     }
 
     private void findViews() {
         voteContainer = findViewById(R.id.vote_box_buttons_container);
         voteResultsContainer = findViewById(R.id.vote_box_results_container);
+        votesCountView = findViewById(R.id.vote_total);
         voteFirstPositionButton = findViewById(R.id.vote_first_position_button);
         voteSecondPositionButton = findViewById(R.id.vote_second_position_button);
         voteFirstPositionResultText = findViewById(R.id.vote_first_position_result_text);
         voteSecondPositionResultText = findViewById(R.id.vote_second_position_result_text);
+        voteResultsCountView = findViewById(R.id.vote_results_count);
+        voteEditView = findViewById(R.id.vote_edit);
     }
 
     public void init(Debate debate) {
@@ -135,6 +145,7 @@ public class VoteBoxView extends RelativeLayout {
     }
 
     private void showButtons() {
+        this.active = false;
         voteResultsContainer.setVisibility(GONE);
         voteContainer.setVisibility(VISIBLE);
         String firstPositionPrimaryColor = settings.get("theme.firstPositionPrimaryColor");
@@ -147,13 +158,18 @@ public class VoteBoxView extends RelativeLayout {
         }
         voteFirstPositionButton.setText(this.debate.getPositionList().get(0).getName());
         voteSecondPositionButton.setText(this.debate.getPositionList().get(1).getName());
+
+        votesCountView.setText(String.valueOf(debate.getVotesCount()));
     }
 
     private void showResults() {
+        this.active = true;
         voteContainer.setVisibility(GONE);
         voteResultsContainer.setVisibility(VISIBLE);
 
         voteFirstPositionResultText.setText(this.debate.getPositionList().get(0).getName());
         voteSecondPositionResultText.setText(this.debate.getPositionList().get(1).getName());
+
+        voteResultsCountView.setText(String.valueOf(debate.getVotesCount()));
     }
 }

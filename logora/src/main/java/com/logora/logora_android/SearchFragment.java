@@ -66,9 +66,9 @@ public class SearchFragment extends Fragment {
         DebateBoxListAdapter debateListAdapter = new DebateBoxListAdapter();
         UserBoxListAdapter userListAdapter = new UserBoxListAdapter();
 
-        PaginatedListFragment debateListFragment = new PaginatedListFragment("groups", debateListAdapter);
+        PaginatedListFragment debateListFragment = new PaginatedListFragment("groups", debateListAdapter, null);
         debateListFragment.setQuery(query);
-        PaginatedListFragment userListFragment = new PaginatedListFragment("users", userListAdapter);
+        PaginatedListFragment userListFragment = new PaginatedListFragment("users", userListAdapter, null);
         userListFragment.setQuery(query);
 
         getChildFragmentManager()

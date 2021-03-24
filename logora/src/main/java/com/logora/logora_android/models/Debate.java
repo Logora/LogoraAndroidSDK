@@ -73,6 +73,14 @@ public class Debate {
         this.votesCount = votesCount;
     }
 
+    public void incrementVotesCount() {
+        this.votesCount += 1;
+    }
+
+    public void decrementVotesCount() {
+        this.votesCount -= 1;
+    }
+
     public List<JSONObject> getTagList() {
         return tagList;
     }

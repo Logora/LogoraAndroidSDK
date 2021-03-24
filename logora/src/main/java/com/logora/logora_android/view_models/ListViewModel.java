@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ListViewModel extends ViewModel {
@@ -25,6 +26,7 @@ public class ListViewModel extends ViewModel {
     private Integer perPage = 10;
     private String sort = "-created_at";
     private String query = null;
+    private HashMap<String,String> extraArguments;
 
     public ListViewModel(String resourceName) {
         this.resourceName = resourceName;
@@ -51,6 +53,10 @@ public class ListViewModel extends ViewModel {
     }
 
     public String getSort() { return sort; }
+
+    public void setExtraArguments(HashMap<String,String> extraArguments) {
+        this.extraArguments = extraArguments;
+    }
 
     public void setQuery(String query) { this.query = query; }
 
@@ -99,6 +105,6 @@ public class ListViewModel extends ViewModel {
             error -> {
                 Log.i("ERROR", String.valueOf(error));
                 itemsLiveData.setValue(new ArrayList<>());
-            }, this.resourceName, this.currentPage, this.perPage, this.sort, 0, this.query);
+            }, this.resourceName, this.currentPage, this.perPage, this.sort, 0, this.query, this.extraArguments);
     }
 }

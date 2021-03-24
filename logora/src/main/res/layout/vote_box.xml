@@ -64,16 +64,33 @@
             android:textSize="20sp"
             android:text="@string/debate_first_position" />
 
-        <ProgressBar
-            android:id="@+id/vote_first_position_result"
-            style="@android:style/Widget.ProgressBar.Horizontal"
-            android:progressBackgroundTint="@color/progress_background"
-            android:progressTint="@color/first_position_primary"
-            android:layout_width="match_parent"
-            android:layout_height="26dp"
-            android:layout_marginVertical="6dp"
-            android:max="100"
-            android:progress="25"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ProgressBar
+                android:id="@+id/vote_first_position_result"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:progressBackgroundTint="@color/progress_background"
+                android:progressTint="@color/first_position_primary"
+                android:layout_width="match_parent"
+                android:layout_height="26dp"
+                android:layout_marginVertical="6dp"
+                android:max="100"
+                android:progress="25"/>
+
+            <TextView
+                android:id="@+id/vote_first_position_progress_percentage"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:paddingHorizontal="4dp"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:text="@string/debate_first_position_progress_text" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/vote_second_position_result_text"
@@ -83,16 +100,32 @@
             android:textSize="20sp"
             android:text="@string/debate_second_position" />
 
-        <ProgressBar
-            android:id="@+id/vote_second_position_result"
-            style="@android:style/Widget.ProgressBar.Horizontal"
-            android:progressBackgroundTint="@color/progress_background"
-            android:progressTint="@color/second_position_primary"
-            android:layout_width="match_parent"
-            android:layout_height="26dp"
-            android:layout_marginVertical="6dp"
-            android:max="100"
-            android:progress="25"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ProgressBar
+                android:id="@+id/vote_second_position_result"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:progressBackgroundTint="@color/progress_background"
+                android:progressTint="@color/second_position_primary"
+                android:layout_width="match_parent"
+                android:layout_height="26dp"
+                android:layout_marginVertical="6dp"
+                android:max="100"
+                android:progress="25"/>
+
+            <TextView
+                android:id="@+id/vote_second_position_progress_percentage"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:paddingHorizontal="4dp"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:text="@string/debate_second_position_progress_text" />
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/vote_results_footer"
@@ -106,6 +139,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:textColor="@color/text_secondary"
+                android:textSize="16sp"
                 android:text="@string/debate_votes_count" />
 
             <TextView
@@ -114,6 +148,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:textColor="@color/text_secondary"
+                android:textSize="16sp"
                 android:text="@string/debate_edit_vote" />
         </RelativeLayout>
     </LinearLayout>

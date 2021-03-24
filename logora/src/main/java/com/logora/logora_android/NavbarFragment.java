@@ -43,6 +43,7 @@ public class NavbarFragment extends Fragment implements Auth.AuthListener {
     private Button indexButtonView;
     private TextView loginLinkView;
     private ImageView userProfileIconView;
+    private ImageView userSearchIconView;
 
     public NavbarFragment() {
         super(R.layout.fragment_navbar);
@@ -77,6 +78,10 @@ public class NavbarFragment extends Fragment implements Auth.AuthListener {
             this.searchFormView.setVisibility(View.VISIBLE);
         });
 
+        userSearchIconView.setOnClickListener(v -> {
+            this.searchFormView.setVisibility(View.VISIBLE);
+        });
+
         userProfileIconView.setOnClickListener(v -> {
             HashMap<String, String> routeParams = new HashMap<>();
             routeParams.put("userSlug", auth.getCurrentUser().getSlug());
@@ -92,6 +97,7 @@ public class NavbarFragment extends Fragment implements Auth.AuthListener {
         navbarRightUserContainer = getView().findViewById(R.id.navbar_right_user_container);
         searchFormView = getView().findViewById(R.id.search_form_container);
         userProfileIconView = getView().findViewById(R.id.user_profile_icon);
+        userSearchIconView = getView().findViewById(R.id.search_user_icon);
     }
 
     public void setStyles() {

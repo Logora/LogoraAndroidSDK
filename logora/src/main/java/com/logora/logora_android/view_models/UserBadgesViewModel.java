@@ -44,6 +44,6 @@ public class UserBadgesViewModel extends ViewModel {
             error -> {
                 Log.i("ERROR", String.valueOf(error));
                 userBadges.setValue(null);
-            }, resourceName, 1, 10, null, 0, null);
+            }, resourceName, 1, 10, null, 0, null, null);
     }
 }

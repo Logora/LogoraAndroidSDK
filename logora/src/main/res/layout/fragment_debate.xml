@@ -86,4 +86,17 @@
 
         </RelativeLayout>
     </RelativeLayout>
+
+    <Spinner
+        android:id="@+id/argument_sort"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/debate_presentation_container"
+        android:spinnerMode="dropdown" />
+
+    <FrameLayout
+        android:id="@+id/argument_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/argument_sort" />
 </RelativeLayout>
