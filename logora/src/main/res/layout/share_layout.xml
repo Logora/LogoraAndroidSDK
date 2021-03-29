@@ -22,38 +22,14 @@
         app:tint="@color/text_secondary" />
 
     <ImageView
-        android:id="@+id/email_share_button"
+        android:id="@+id/mobile_share_button"
         android:layout_width="22dp"
         android:layout_height="22dp"
-        android:src="@drawable/ic_email"
+        android:src="@drawable/ic_share"
         android:layout_marginHorizontal="6dp"
         android:gravity="center"
         android:clickable="true"
         android:focusable="true"
-        android:contentDescription="@string/share_email_icon_content_description"
-        app:tint="@color/text_secondary" />
-
-    <ImageView
-        android:id="@+id/facebook_share_button"
-        android:layout_width="22dp"
-        android:layout_height="22dp"
-        android:src="@drawable/ic_facebook"
-        android:layout_marginHorizontal="6dp"
-        android:gravity="center"
-        android:clickable="true"
-        android:focusable="true"
-        android:contentDescription="@string/share_facebook_icon_content_description"
-        app:tint="@color/text_secondary" />
-
-    <ImageView
-        android:id="@+id/twitter_share_button"
-        android:layout_width="22dp"
-        android:layout_height="22dp"
-        android:src="@drawable/ic_twitter"
-        android:layout_marginHorizontal="6dp"
-        android:gravity="center"
-        android:clickable="true"
-        android:focusable="true"
-        android:contentDescription="@string/share_twitter_icon_content_description"
+        android:contentDescription="@string/share_icon_content_description"
         app:tint="@color/text_secondary" />
 </LinearLayout>

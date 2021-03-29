@@ -16,9 +16,7 @@ public class ShareView extends LinearLayout {
     private Context context;
     private String shareText;
     private ImageView linkShareView;
-    private ImageView emailShareView;
-    private ImageView facebookShareView;
-    private ImageView twitterShareView;
+    private ImageView mobileShareView;
 
     public ShareView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -41,17 +39,15 @@ public class ShareView extends LinearLayout {
     private void initView() {
         inflate(getContext(), R.layout.share_layout, this);
         linkShareView = this.findViewById(R.id.link_share_button);
-        emailShareView = this.findViewById(R.id.email_share_button);
-        facebookShareView = this.findViewById(R.id.facebook_share_button);
-        twitterShareView = this.findViewById(R.id.twitter_share_button);
+        mobileShareView = this.findViewById(R.id.mobile_share_button);
 
         linkShareView.setOnClickListener(v -> {
             this.copyToClipboard(this.shareText);
             this.showSuccessMessage("Lien copié !");
         });
 
-        emailShareView.setOnClickListener(v -> {
-            this.sendEmail("Voici un débat intéressant");
+        mobileShareView.setOnClickListener(v -> {
+            this.openShareDialog("Voici un débat intéressant");
         });
     }
 
@@ -65,13 +61,11 @@ public class ShareView extends LinearLayout {
         clipboard.setPrimaryClip(clip);
     }
 
-    private void sendEmail(String subject) {
-        Intent intent = new Intent(Intent.ACTION_SENDTO);
-        intent.setData(Uri.parse("mailto:"));
-        intent.putExtra(Intent.EXTRA_SUBJECT, subject);
-        if (intent.resolveActivity(this.context.getPackageManager()) != null) {
-            this.context.startActivity(intent);
-        }
+    private void openShareDialog(String subject) {
+        Intent share = new Intent(Intent.ACTION_SEND);
+        share.setType("text/plain");
+        share.putExtra(Intent.EXTRA_TEXT, subject);
+        this.context.startActivity(Intent.createChooser(share, "Partager le débat"));
     }
 
     private void showSuccessMessage(String message) {
