@@ -54,6 +54,7 @@
     <string name="notification_icon_content_description">Icône de notification</string>
     <string name="debate_follow_inactive">Suivre</string>
     <string name="debate_follow_active">Débat suivi</string>
+    <string name="share_icon_content_description">Icône de partage</string>
     <string name="share_link_icon_content_description">Icône de copie dans le presse-papier</string>
     <string name="share_email_icon_content_description">Icône de partage par email</string>
     <string name="share_facebook_icon_content_description">Icône de partage par Facebook</string>

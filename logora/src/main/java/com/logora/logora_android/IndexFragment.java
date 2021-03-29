@@ -7,6 +7,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.logora.logora_android.adapters.DebateBoxListAdapter;
 import com.logora.logora_android.adapters.UserBoxListAdapter;
 import com.logora.logora_android.utils.Router;
@@ -27,9 +29,7 @@ public class IndexFragment extends Fragment {
     public void onViewCreated(@NotNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        sortSelect = view.findViewById(R.id.sort_select);
-        mainDebateView = view.findViewById(R.id.main_debate_box);
-        sortSelect = view.findViewById(R.id.sort_select);
+        findViews(view);
 
         String[] sortOptions = getSpinnerOptions();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, sortOptions);
@@ -66,6 +66,12 @@ public class IndexFragment extends Fragment {
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {}
         });
+    }
+
+    private void findViews(View view) {
+        sortSelect = view.findViewById(R.id.sort_select);
+        mainDebateView = view.findViewById(R.id.main_debate_box);
+        sortSelect = view.findViewById(R.id.sort_select);
     }
 
     public String[] getSpinnerOptions() {

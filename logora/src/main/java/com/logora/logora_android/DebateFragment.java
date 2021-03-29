@@ -68,7 +68,7 @@ public class DebateFragment extends Fragment {
 
             voteBoxView.init(debate);
 
-            followDebateButtonView.init(Integer.parseInt(debate.getId()), debate.getSlug());
+            followDebateButtonView.init(debate);
             shareView.setShareText(debate.getName());
             loader.setVisibility(View.GONE);
             debatePresentationContainerView.setVisibility(View.VISIBLE);

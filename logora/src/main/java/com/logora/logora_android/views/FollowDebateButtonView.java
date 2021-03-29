@@ -5,10 +5,12 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.core.content.ContextCompat;
 
 import com.logora.logora_android.R;
+import com.logora.logora_android.models.Debate;
 import com.logora.logora_android.utils.LogoraApiClient;
 import com.logora.logora_android.utils.Settings;
 
@@ -19,8 +21,7 @@ public class FollowDebateButtonView extends androidx.appcompat.widget.AppCompatB
     private Settings settings = Settings.getInstance();
     private LogoraApiClient apiClient = LogoraApiClient.getInstance();
     private Context context;
-    private Integer debateId;
-    private String debateSlug;
+    private Debate debate;
     Boolean active = false;
 
     public FollowDebateButtonView(Context context) {
@@ -74,7 +75,7 @@ public class FollowDebateButtonView extends androidx.appcompat.widget.AppCompatB
                 },
                 error -> {
                     setInactive();
-                }, this.debateSlug);
+                }, this.debate.getSlug());
     }
 
     public void unfollow() {
@@ -96,11 +97,11 @@ public class FollowDebateButtonView extends androidx.appcompat.widget.AppCompatB
                 },
                 error -> {
                     setActive();
-                }, this.debateSlug);
+                }, this.debate.getSlug());
     }
 
-    public void init(Integer debateId, String debateSlug) {
-        this.debateSlug = debateSlug;
+    public void init(Debate debate) {
+        this.debate = debate;
         this.apiClient.getDebateFollow(
             response -> {
                 try {
@@ -112,7 +113,7 @@ public class FollowDebateButtonView extends androidx.appcompat.widget.AppCompatB
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            }, Throwable::printStackTrace, debateId);
+            }, Throwable::printStackTrace, Integer.valueOf(debate.getId()));
     }
 
     private void setActive() {
