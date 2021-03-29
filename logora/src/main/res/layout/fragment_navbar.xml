@@ -9,7 +9,7 @@
     android:orientation="horizontal"
     android:background="@drawable/navbar_background">
 
-    <com.logora.logora_android.PrimaryButton
+    <com.logora.logora_android.views.PrimaryButton
         android:id="@+id/index_button"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"

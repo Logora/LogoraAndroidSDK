@@ -32,7 +32,7 @@
         android:indeterminateTint="@android:color/black"
         android:visibility="gone" />
 
-    <com.logora.logora_android.PrimaryButton
+    <com.logora.logora_android.views.PrimaryButton
         android:id="@+id/pagination_button"
         android:layout_marginVertical="4dp"
         android:layout_centerVertical="true"

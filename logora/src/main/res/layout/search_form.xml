@@ -29,7 +29,9 @@
         android:layout_toEndOf="@+id/search_back_icon"
         android:layout_centerVertical="true"
         android:inputType="text"
-        android:autofillHints="Rechercher un débat..."
+        android:autofillHints="@string/search_placeholder"
+        android:backgroundTint="@color/text_secondary"
+        android:textCursorDrawable="@null"
         tools:ignore="LabelFor" />
 
     <ImageView

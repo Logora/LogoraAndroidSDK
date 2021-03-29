@@ -1,4 +1,4 @@
-package com.logora.logora_android;
+package com.logora.logora_android.views;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 
 import androidx.core.content.ContextCompat;
 
+import com.logora.logora_android.R;
 import com.logora.logora_android.utils.Settings;
 
 public class PrimaryButton extends androidx.appcompat.widget.AppCompatButton {

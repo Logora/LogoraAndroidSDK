@@ -1,6 +1,7 @@
 package com.logora.logora_android.views;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.EditText;
@@ -35,9 +36,7 @@ public class SearchFormView extends RelativeLayout {
 
     private void initView() {
         inflate(getContext(), R.layout.search_form, this);
-        searchSubmit = this.findViewById(R.id.search_submit);
-        searchInput = this.findViewById(R.id.search_input);
-        backIconView = this.findViewById(R.id.search_back_icon);
+        findViews();
 
         backIconView.setOnClickListener(v -> {
             this.setVisibility(GONE);
@@ -51,7 +50,9 @@ public class SearchFormView extends RelativeLayout {
         });
     }
 
-    private void setStyles() {
-
+    private void findViews() {
+        searchSubmit = this.findViewById(R.id.search_submit);
+        searchInput = this.findViewById(R.id.search_input);
+        backIconView = this.findViewById(R.id.search_back_icon);
     }
 }
