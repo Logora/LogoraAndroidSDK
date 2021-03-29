@@ -59,4 +59,7 @@
     <string name="share_email_icon_content_description">Icône de partage par email</string>
     <string name="share_facebook_icon_content_description">Icône de partage par Facebook</string>
     <string name="share_twitter_icon_content_description">Icône de partage par Twitter</string>
+    <string name="argument_clap_icon_content_description">Icône du bouton de vote pour l\'argument</string>
+    <string name="argument_reply_icon_content_description">Icône du bouton de réponse de l\'argument</string>
+    <string name="argument_more_icon_content_description">Icône du bouton "plus d'actions" de l\'argument</string>
 </resources>
