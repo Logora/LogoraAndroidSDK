@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".SearchFragment">
 
-    <com.logora.logora_android.TextWrapper
+    <com.logora.logora_android.views.TextWrapper
         android:id="@+id/search_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

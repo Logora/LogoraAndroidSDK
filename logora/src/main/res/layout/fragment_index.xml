@@ -9,7 +9,7 @@
     android:orientation="vertical"
     tools:context=".IndexFragment">
 
-    <com.logora.logora_android.TextWrapper
+    <com.logora.logora_android.views.TextWrapper
         android:id="@+id/main_debate_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/sort_select" />
 
-    <com.logora.logora_android.TextWrapper
+    <com.logora.logora_android.views.TextWrapper
         android:id="@+id/trending_users_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

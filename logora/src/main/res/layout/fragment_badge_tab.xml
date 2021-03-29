@@ -8,7 +8,7 @@
     tools:context=".BadgeTabFragment"
     android:orientation="vertical">
 
-    <com.logora.logora_android.TextWrapper
+    <com.logora.logora_android.views.TextWrapper
         android:id="@+id/user_next_badges_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
         android:indeterminateTint="@android:color/black"
         android:visibility="gone" />
 
-    <com.logora.logora_android.TextWrapper
+    <com.logora.logora_android.views.TextWrapper
         android:id="@+id/user_badges_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -59,7 +59,7 @@ public class NavbarFragment extends Fragment implements Auth.AuthListener {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         findViews(view);
         setStyles();
-        setTexts();
+        //setTexts();
 
         if(auth.getIsLoggedIn()) {
             navbarRightContainer.setVisibility(View.GONE);
@@ -103,14 +103,6 @@ public class NavbarFragment extends Fragment implements Auth.AuthListener {
     public void setStyles() {
         String primaryColor = settings.get("theme.callPrimaryColor");
         loginLinkView.setTextColor(Color.parseColor(primaryColor));
-        indexButtonView.setBackgroundColor(Color.parseColor(primaryColor));
-    }
-
-    public void setTexts() {
-        String buttonText = settings.get("layout.infoAllDebates");
-        if(buttonText != null) {
-            indexButtonView.setText(buttonText);
-        }
     }
 
     @Override

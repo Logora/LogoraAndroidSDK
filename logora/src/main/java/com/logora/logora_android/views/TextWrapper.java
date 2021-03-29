@@ -1,10 +1,11 @@
-package com.logora.logora_android;
+package com.logora.logora_android.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.Log;
 
+import com.logora.logora_android.R;
 import com.logora.logora_android.utils.Settings;
 
 public class TextWrapper extends androidx.appcompat.widget.AppCompatTextView {

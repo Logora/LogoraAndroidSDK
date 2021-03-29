@@ -9,14 +9,14 @@
     android:orientation="horizontal"
     android:background="@drawable/navbar_background">
 
-    <Button
+    <com.logora.logora_android.PrimaryButton
         android:id="@+id/index_button"
-        android:layout_height="match_parent"
-        android:layout_width="wrap_content"
         android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
         android:layout_marginStart="12dp"
-        android:textAlignment="center"
-        android:text="@string/infoAllDebates" />
+        app:textKey="infoAllDebates"
+        android:text="@string/infoAllDebates"
+        style="@style/PrimaryButton" />
 
     <RelativeLayout
         android:id="@+id/navbar_right_container"
@@ -39,7 +39,7 @@
             android:contentDescription="@string/search_icon_content_description"
             app:tint="@color/text_secondary" />
 
-        <com.logora.logora_android.TextWrapper
+        <com.logora.logora_android.views.TextWrapper
             android:id="@+id/login_link_button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
