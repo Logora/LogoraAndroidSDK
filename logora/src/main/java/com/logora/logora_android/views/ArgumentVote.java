@@ -29,6 +29,7 @@ public class ArgumentVote extends LinearLayout {
     private Argument argument;
     private LogoraApiClient apiClient = LogoraApiClient.getInstance();
     private Auth authClient = Auth.getInstance();
+    Integer votesCount = 0;
     Boolean hasVoted = false;
     private ImageView clapButtonView;
     private TextView votesCountView;
@@ -64,7 +65,8 @@ public class ArgumentVote extends LinearLayout {
     public void init(Argument argument) {
         this.argument = argument;
         initHasVoted();
-        votesCountView.setText(String.valueOf(argument.getVotesCount()));
+        votesCount = argument.getVotesCount();
+        votesCountView.setText(String.valueOf(votesCount));
         // votesCountView.setText(argument.getVotesCount());
         // Check if user has voted
     }
@@ -84,22 +86,34 @@ public class ArgumentVote extends LinearLayout {
     }
 
     public void setActive() {
+        String callPrimaryColor = settings.get("theme.callPrimaryColor");
         hasVoted = true;
+        votesCount = votesCount + 1;
+        votesCountView.setText(String.valueOf(votesCount));
         // Check position of argument and add color
+        votesCountView.setTextColor(Color.parseColor(callPrimaryColor));
         clapButtonView.setColorFilter(clapButtonView.getContext().getResources().getColor(R.color.call_primary), PorterDuff.Mode.SRC_ATOP);
     }
 
     public void setInactive() {
         // Remove color and decrement votesCount + API call
         hasVoted = false;
+        votesCount = votesCount - 1;
+        votesCountView.setText(String.valueOf(votesCount));
         clapButtonView.setColorFilter(clapButtonView.getContext().getResources().getColor(R.color.text_secondary), PorterDuff.Mode.SRC_ATOP);
     }
 
     public void toggleVoteAction() {
-        if (hasVoted) {
-            setInactive();
+        if (authClient.getIsLoggedIn() == true) {
+            if (hasVoted) {
+                // API call here
+                setInactive();
+            } else {
+                // API call here
+                setActive();
+            }
         } else {
-            setActive();
+            // Login modal
         }
     }
 }
