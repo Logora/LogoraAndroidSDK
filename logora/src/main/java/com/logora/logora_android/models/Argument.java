@@ -1,5 +1,6 @@
 package com.logora.logora_android.models;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -12,6 +13,9 @@ public class Argument extends Model {
     private UserBox author;
     private Position position;
     private Integer votesCount;
+    private Integer positionIndex;
+    private String publishedDate;
+    private List<Integer> votersIdList;
 
     public Argument() {}
 
@@ -23,6 +27,15 @@ public class Argument extends Model {
             argument.setVotesCount(jsonObject.getInt("upvotes"));
             argument.setContent(jsonObject.getString("content"));
             argument.setPosition(Position.objectFromJson(jsonObject.getJSONObject("position")));
+            argument.setPositionIndex(0); // Add function to compare groupContext positions and argument position
+            argument.setPublishedDate(jsonObject.getString("created_at"));
+
+            JSONArray votesObjects = jsonObject.getJSONArray("votes");
+            List<Integer> idsList = new ArrayList<>();
+            for (int i=0; i < votesObjects.length(); i++){
+                idsList.add(votesObjects.getJSONObject(i).getInt("user_id"));
+            }
+            argument.setVotersIdList(idsList);
             return argument;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -49,4 +62,17 @@ public class Argument extends Model {
     public Position getPosition() { return position; }
 
     public void setPosition(Position position) { this.position = position; }
+
+    public Integer getPositionIndex() { return positionIndex; }
+
+    public void setPositionIndex(Integer positionIndex) { this.positionIndex = positionIndex; }
+
+    public String getPublishedDate() { return publishedDate ;}
+
+    public void setPublishedDate(String publishedDate) { this.publishedDate = publishedDate; }
+
+    public List<Integer> getVotersIdList() { return votersIdList; }
+
+    public void setVotersIdList(List<Integer> votersIdList) { this.votersIdList = votersIdList; }
+
 }

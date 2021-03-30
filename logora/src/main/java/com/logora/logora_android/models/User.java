@@ -4,6 +4,7 @@ public class User {
     private String fullName;
     private String slug;
     private String uid;
+    private Integer id;
     private String imageUrl;
     private Integer debatesCount;
     private Integer votesCount;
@@ -24,6 +25,10 @@ public class User {
     public String getUid() { return uid; }
 
     public void setUid(String uid) { this.uid = uid; }
+
+    public Integer getId() { return id; }
+
+    public void setId(Integer id) { this.id = id; }
 
     public String getImageUrl() { return imageUrl; }
 
