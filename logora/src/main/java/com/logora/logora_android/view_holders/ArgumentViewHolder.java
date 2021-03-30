@@ -1,5 +1,6 @@
 package com.logora.logora_android.view_holders;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,6 +12,7 @@ import com.logora.logora_android.utils.Settings;
 import com.logora.logora_android.views.ArgumentVote;
 
 public class ArgumentViewHolder extends ListViewHolder {
+    private Context context;
     private final Settings settings = Settings.getInstance();
     TextView fullNameView;
     TextView levelNameView;
@@ -19,11 +21,13 @@ public class ArgumentViewHolder extends ListViewHolder {
     TextView dateView;
     ImageView levelIconView;
     ImageView userImageView;
+    ImageView argumentShareButton;
     ArgumentVote argumentVote;
 
 
     public ArgumentViewHolder(View itemView, Context context) {
         super(itemView);
+        this.context = context;
         findViews(itemView);
     }
 
@@ -36,8 +40,15 @@ public class ArgumentViewHolder extends ListViewHolder {
         userImageView = view.findViewById(R.id.user_image);
         dateView = view.findViewById(R.id.argument_date);
         argumentVote = view.findViewById(R.id.argument_vote_container);
+        argumentShareButton = view.findViewById(R.id.argument_share_button);
     }
 
+    private void openShareDialog(String subject) {
+        Intent share = new Intent(Intent.ACTION_SEND);
+        share.setType("text/plain");
+        share.putExtra(Intent.EXTRA_TEXT, subject);
+        this.context.startActivity(Intent.createChooser(share, "Partager l'argument"));
+    }
 
     @Override
     public void updateWithObject(Object object) {
@@ -49,6 +60,9 @@ public class ArgumentViewHolder extends ListViewHolder {
         // Set side label position color dynamically
         contentView.setText(argument.getContent());
         dateView.setText(argument.getPublishedDate());
+        argumentShareButton.setOnClickListener(v -> {
+            openShareDialog("Cet argument devrait vous intéresser.");
+        });
         Glide.with(levelIconView.getContext())
                 .load(Uri.parse(argument.getAuthor().getLevelIconUrl()))
                 .into(levelIconView);

@@ -22,6 +22,7 @@ import com.logora.logora_android.utils.LogoraApiClient;
 import com.logora.logora_android.utils.Settings;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 public class ArgumentVote extends LinearLayout {
     private final Settings settings = Settings.getInstance();
@@ -31,6 +32,7 @@ public class ArgumentVote extends LinearLayout {
     private Auth authClient = Auth.getInstance();
     Integer votesCount = 0;
     Boolean hasVoted = false;
+    Integer voteId = null;
     private ImageView clapButtonView;
     private TextView votesCountView;
 
@@ -106,11 +108,36 @@ public class ArgumentVote extends LinearLayout {
     public void toggleVoteAction() {
         if (authClient.getIsLoggedIn() == true) {
             if (hasVoted) {
-                // API call here
+                this.apiClient.deleteVote(
+                        response -> {
+                            try {
+                                boolean success = response.getBoolean("success");
+                                if(success) {
+                                    setActive();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }, error -> {
+                            Log.i("ERROR", "error");
+                        }, voteId);
                 setInactive();
             } else {
-                // API call here
-                setActive();
+                this.apiClient.createVote(
+                    response -> {
+                        try {
+                            boolean success = response.getBoolean("success");
+                            JSONObject vote = response.getJSONObject("data").getJSONObject("resource");
+                            if(success) {
+                                this.voteId = vote.getInt("id");
+                                setActive();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }, error -> {
+                        Log.i("ERROR", "error");
+                    }, Integer.parseInt(String.valueOf(argument.getId())), "Message", null);
             }
         } else {
             // Login modal

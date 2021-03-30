@@ -125,7 +125,9 @@ public class LogoraApiClient {
         HashMap<String, String> bodyParams = new HashMap<>();
         bodyParams.put("voteable_id", String.valueOf(voteableId));
         bodyParams.put("voteable_type", voteableType);
-        bodyParams.put("position_id", String.valueOf(positionId));
+        if (positionId != null) {
+            bodyParams.put("position_id", String.valueOf(positionId));
+        }
         String route = "/votes";
         this.user_post(route, queryParams, bodyParams, listener, errorListener);
     }
