@@ -69,28 +69,24 @@ public class ArgumentVote extends LinearLayout {
         initHasVoted();
         votesCount = argument.getVotesCount();
         votesCountView.setText(String.valueOf(votesCount));
-        // votesCountView.setText(argument.getVotesCount());
-        // Check if user has voted
     }
 
-    @SuppressLint("LongLogTag")
     public void initHasVoted() {
-        // Check if User is connected and if he has voted
+        setInactive();
         if (authClient.getIsLoggedIn() == true) {
             Integer currentUserId = authClient.getCurrentUser().getId();
-            if(argument.getVotersIdList().contains(currentUserId)) {
-                Log.i("BOOL voterID contains currentUserId : ", String.valueOf(argument.getVotersIdList().contains(currentUserId)));
+            if(argument.getHasUserVoted(currentUserId)) {
+                hasVoted = true;
+                voteId = argument.getUserVoteId(currentUserId);
                 setActive();
             }
-        } else {
-            setInactive();
         }
     }
 
     public void setActive() {
         String callPrimaryColor = settings.get("theme.callPrimaryColor");
         hasVoted = true;
-        votesCount = votesCount + 1;
+        votesCount = argument.getVotesCount();
         votesCountView.setText(String.valueOf(votesCount));
         // Check position of argument and add color
         votesCountView.setTextColor(Color.parseColor(callPrimaryColor));
@@ -98,9 +94,9 @@ public class ArgumentVote extends LinearLayout {
     }
 
     public void setInactive() {
-        // Remove color and decrement votesCount + API call
+        // Remove color
         hasVoted = false;
-        votesCount = votesCount - 1;
+        votesCount = argument.getVotesCount();
         votesCountView.setText(String.valueOf(votesCount));
         clapButtonView.setColorFilter(clapButtonView.getContext().getResources().getColor(R.color.text_secondary), PorterDuff.Mode.SRC_ATOP);
     }
@@ -108,6 +104,7 @@ public class ArgumentVote extends LinearLayout {
     public void toggleVoteAction() {
         if (authClient.getIsLoggedIn() == true) {
             if (hasVoted) {
+                argument.decrementVotesCount();
                 this.apiClient.deleteVote(
                         response -> {
                             try {
@@ -119,10 +116,12 @@ public class ArgumentVote extends LinearLayout {
                                 e.printStackTrace();
                             }
                         }, error -> {
+                            // Increment ?
                             Log.i("ERROR", "error");
                         }, voteId);
                 setInactive();
             } else {
+                argument.incrementVotesCount();
                 this.apiClient.createVote(
                     response -> {
                         try {
@@ -136,6 +135,7 @@ public class ArgumentVote extends LinearLayout {
                             e.printStackTrace();
                         }
                     }, error -> {
+                        // Decrement ?
                         Log.i("ERROR", "error");
                     }, Integer.parseInt(String.valueOf(argument.getId())), "Message", null);
             }

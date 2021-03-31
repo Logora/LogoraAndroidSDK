@@ -15,7 +15,7 @@ public class Argument extends Model {
     private Integer votesCount;
     private Integer positionIndex;
     private String publishedDate;
-    private List<Integer> votersIdList;
+    private List<JSONObject> votesList;
 
     public Argument() {}
 
@@ -31,11 +31,11 @@ public class Argument extends Model {
             argument.setPublishedDate(jsonObject.getString("created_at"));
 
             JSONArray votesObjects = jsonObject.getJSONArray("votes");
-            List<Integer> idsList = new ArrayList<>();
+            List<JSONObject> votesList = new ArrayList<>();
             for (int i=0; i < votesObjects.length(); i++){
-                idsList.add(votesObjects.getJSONObject(i).getInt("user_id"));
+                votesList.add(votesObjects.getJSONObject(i));
             }
-            argument.setVotersIdList(idsList);
+            argument.setVotesList(votesList);
             return argument;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -71,8 +71,42 @@ public class Argument extends Model {
 
     public void setPublishedDate(String publishedDate) { this.publishedDate = publishedDate; }
 
-    public List<Integer> getVotersIdList() { return votersIdList; }
+    public List<JSONObject> getVotesList() { return votesList; }
 
-    public void setVotersIdList(List<Integer> votersIdList) { this.votersIdList = votersIdList; }
+    public void setVotesList(List<JSONObject> votesList) { this.votesList = votesList; }
+
+    public void incrementVotesCount() {
+        this.votesCount += 1;
+    }
+
+    public void decrementVotesCount() {
+        this.votesCount -= 1;
+    }
+
+    public boolean getHasUserVoted(Integer userId) {
+        for (int i = 0; i < this.votesList.size(); i++){
+            try {
+                if(this.votesList.get(i).getInt("user_id") == userId){
+                    return true;
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
+    public int getUserVoteId(Integer userId) {
+        for (int i = 0; i < this.votesList.size(); i++){
+            try {
+                if(this.votesList.get(i).getInt("user_id") == userId){
+                    return votesList.get(i).getInt("id");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return 0;
+    }
 
 }
