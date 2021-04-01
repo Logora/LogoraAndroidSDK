@@ -170,6 +170,19 @@ public class LogoraApiClient {
         this.user_post(route, queryParams, null, listener, errorListener);
     }
 
+    public void createReport(Response.Listener<JSONObject> listener,
+                           Response.ErrorListener errorListener,
+                           Integer reportableId, String reportableType, String classification, String description) {
+        HashMap<String, String> queryParams = new HashMap<>();
+        HashMap<String, String> bodyParams = new HashMap<>();
+        bodyParams.put("reportable_id", String.valueOf(reportableId));
+        bodyParams.put("reportable_type", reportableType);
+        bodyParams.put("classification", classification);
+        bodyParams.put("description", description);
+        String route = "/reports";
+        this.user_post(route, queryParams, bodyParams, listener, errorListener);
+    }
+
     /* AUTH METHODS */
     public void userAuth(Response.Listener<JSONObject> listener,
                          Response.ErrorListener errorListener) {

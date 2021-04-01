@@ -63,4 +63,6 @@
     <string name="argument_clap_icon_content_description">Icône du bouton de vote pour l\'argument</string>
     <string name="argument_reply_icon_content_description">Icône du bouton de réponse de l\'argument</string>
     <string name="argument_more_icon_content_description">Icône du bouton "plus d'actions" de l\'argument</string>
+    <string name="more_actions">Plus d\'actions</string>
+    <string name="report">Signaler</string>
 </resources>
