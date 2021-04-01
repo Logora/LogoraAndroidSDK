@@ -14,6 +14,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
+
 import com.logora.logora_android.R;
 import com.logora.logora_android.models.Argument;
 import com.logora.logora_android.models.Debate;
@@ -76,7 +79,6 @@ public class ArgumentVote extends LinearLayout {
         if (authClient.getIsLoggedIn() == true) {
             Integer currentUserId = authClient.getCurrentUser().getId();
             if(argument.getHasUserVoted(currentUserId)) {
-                hasVoted = true;
                 voteId = argument.getUserVoteId(currentUserId);
                 setActive();
             }
@@ -90,15 +92,16 @@ public class ArgumentVote extends LinearLayout {
         votesCountView.setText(String.valueOf(votesCount));
         // Check position of argument and add color
         votesCountView.setTextColor(Color.parseColor(callPrimaryColor));
-        clapButtonView.setColorFilter(clapButtonView.getContext().getResources().getColor(R.color.call_primary), PorterDuff.Mode.SRC_ATOP);
+        clapButtonView.setColorFilter(Color.parseColor(callPrimaryColor));
     }
 
     public void setInactive() {
-        // Remove color
+        int textSecondaryColor = ResourcesCompat.getColor(getResources(), R.color.text_secondary, null);
         hasVoted = false;
         votesCount = argument.getVotesCount();
         votesCountView.setText(String.valueOf(votesCount));
-        clapButtonView.setColorFilter(clapButtonView.getContext().getResources().getColor(R.color.text_secondary), PorterDuff.Mode.SRC_ATOP);
+        votesCountView.setTextColor(textSecondaryColor);
+        clapButtonView.setColorFilter(textSecondaryColor);
     }
 
     public void toggleVoteAction() {
@@ -106,20 +109,19 @@ public class ArgumentVote extends LinearLayout {
             if (hasVoted) {
                 argument.decrementVotesCount();
                 this.apiClient.deleteVote(
-                        response -> {
-                            try {
-                                boolean success = response.getBoolean("success");
-                                if(success) {
-                                    setActive();
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                    response -> {
+                        try {
+                            boolean success = response.getBoolean("success");
+                            if(success) {
+                                setInactive();
                             }
-                        }, error -> {
-                            // Increment ?
-                            Log.i("ERROR", "error");
-                        }, voteId);
-                setInactive();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }, error -> {
+                        // Increment ?
+                        Log.i("ERROR", "error");
+                    }, voteId);
             } else {
                 argument.incrementVotesCount();
                 this.apiClient.createVote(

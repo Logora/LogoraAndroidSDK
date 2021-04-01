@@ -193,7 +193,7 @@ public class ArgumentViewHolder extends ListViewHolder {
         Argument argument = (Argument) object;
         argumentVote.init(argument);
         fullNameView.setText(argument.getAuthor().getFullName());
-        // Set side label position text
+        sideLabelView.setText(argument.getPosition().getName());
         // Set side label position color dynamically
         contentView.setText(argument.getContent());
         dateView.setText(argument.getPublishedDate());
