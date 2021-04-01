@@ -1,5 +1,7 @@
 package com.logora.logora_android.models;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -100,12 +102,13 @@ public class Debate {
     }
 
     public int getArgumentPositionIndex(Integer index) {
+        List<Position> positionList = this.getPositionList();
         Integer positionIndex = null;
-        for (int i = 0; i < this.positionList.size(); i++){
-            if(this.positionList.get(i).getId() == index){
+        for (int i = 0; i < positionList.size(); i++){
+            if(positionList.get(i).getId() == index){
                 positionIndex = i;
             }
         }
-        return positionIndex;
+        return positionIndex; // Should not return null
     }
 }

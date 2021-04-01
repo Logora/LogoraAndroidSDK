@@ -38,7 +38,7 @@ public class ArgumentViewHolder extends ListViewHolder {
     private Auth authClient = Auth.getInstance();
     private LogoraApiClient apiClient = LogoraApiClient.getInstance();
     private Debate debate;
-    private Integer positionIndex;
+    private Integer positionIndex = 0;
     private final Settings settings = Settings.getInstance();
     TextView fullNameView;
     TextView levelNameView;
