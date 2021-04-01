@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.logora.logora_android.R;
@@ -175,32 +176,14 @@ public class ArgumentViewHolder extends ListViewHolder {
                     boolean success = response.getBoolean("success");
                     JSONObject vote = response.getJSONObject("data").getJSONObject("resource");
                     if(success) {
-                        AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-                        alertDialog.setTitle("Signaler un argument");
-                        alertDialog.setMessage("Votre signalement à bien été envoyé.");
-                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Fermer",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                });
-                        alertDialog.show();
+                        showToastMessage("Votre signalement à bien été envoyé.");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }, error -> {
                 Log.i("ERROR", "error");
-                AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-                alertDialog.setTitle("Signaler un argument");
-                alertDialog.setMessage("Un problème est survenu lors de l'envoi de votre signalement.");
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Fermer",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-                alertDialog.show();
+                showToastMessage("Un problème est survenu lors de l'envoi de votre signalement.");
             }, argumentId, "Message", reportClassification, reportDescription);
     }
 
@@ -226,5 +209,12 @@ public class ArgumentViewHolder extends ListViewHolder {
         Glide.with(userImageView.getContext())
                 .load(Uri.parse(argument.getAuthor().getImageUrl()))
                 .into(userImageView);
+    }
+
+    private void showToastMessage(String message) {
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(this.context, message, duration);
+        toast.show();
     }
 }
