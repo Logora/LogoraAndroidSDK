@@ -1,15 +1,24 @@
 package com.logora.logora_android.views;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.ScaleDrawable;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
 
 import com.logora.logora_android.R;
 import com.logora.logora_android.models.Debate;
@@ -25,6 +34,7 @@ import java.util.HashMap;
 public class VoteBoxView extends RelativeLayout {
     private final Settings settings = Settings.getInstance();
     private final LogoraApiClient apiClient = LogoraApiClient.getInstance();
+    private Context context;
     private Debate debate;
     private Integer voteId;
     private Boolean active = false;
@@ -37,6 +47,8 @@ public class VoteBoxView extends RelativeLayout {
     private TextView voteSecondPositionResultText;
     private Integer voteFirstPositionProgressPercentage;
     private Integer voteSecondPositionProgressPercentage;
+    private ProgressBar voteFirstPositionProgress;
+    private ProgressBar voteSecondPositionProgress;
     private TextView voteResultsCountView;
     private TextView voteEditView;
 
@@ -52,6 +64,7 @@ public class VoteBoxView extends RelativeLayout {
 
     public VoteBoxView(Context context) {
         super(context);
+        this.context = context;
         initView();
     }
 
@@ -82,6 +95,8 @@ public class VoteBoxView extends RelativeLayout {
         voteSecondPositionResultText = findViewById(R.id.vote_second_position_result_text);
         voteResultsCountView = findViewById(R.id.vote_results_count);
         voteEditView = findViewById(R.id.vote_edit);
+        voteFirstPositionProgress = findViewById(R.id.vote_first_position_result);
+        voteSecondPositionProgress = findViewById(R.id.vote_second_position_result);
     }
 
     public void init(Debate debate) {
@@ -148,14 +163,10 @@ public class VoteBoxView extends RelativeLayout {
         this.active = false;
         voteResultsContainer.setVisibility(GONE);
         voteContainer.setVisibility(VISIBLE);
-        String firstPositionPrimaryColor = settings.get("theme.firstPositionPrimaryColor");
-        String secondPositionPrimaryColor = settings.get("theme.secondPositionPrimaryColor");
-        if(firstPositionPrimaryColor != null) {
-            voteFirstPositionButton.setBackgroundColor(Color.parseColor(firstPositionPrimaryColor));
-        }
-        if(secondPositionPrimaryColor != null) {
-            voteSecondPositionButton.setBackgroundColor(Color.parseColor(secondPositionPrimaryColor));
-        }
+        String firstPositionPrimaryColor = settings.get("theme.firstPositionColorPrimary");
+        String secondPositionPrimaryColor = settings.get("theme.secondPositionColorPrimary");
+        voteFirstPositionButton.setBackgroundColor(Color.parseColor(firstPositionPrimaryColor));
+        voteSecondPositionButton.setBackgroundColor(Color.parseColor(secondPositionPrimaryColor));
         voteFirstPositionButton.setText(this.debate.getPositionList().get(0).getName());
         voteSecondPositionButton.setText(this.debate.getPositionList().get(1).getName());
 
@@ -163,6 +174,8 @@ public class VoteBoxView extends RelativeLayout {
     }
 
     private void showResults() {
+        String firstPositionPrimaryColor = settings.get("theme.firstPositionColorPrimary");
+        String secondPositionPrimaryColor = settings.get("theme.secondPositionColorPrimary");
         this.active = true;
         voteContainer.setVisibility(GONE);
         voteResultsContainer.setVisibility(VISIBLE);
@@ -171,5 +184,7 @@ public class VoteBoxView extends RelativeLayout {
         voteSecondPositionResultText.setText(this.debate.getPositionList().get(1).getName());
 
         voteResultsCountView.setText(String.valueOf(debate.getVotesCount()));
+        voteFirstPositionProgress.setProgressTintList(ColorStateList.valueOf(Color.parseColor(firstPositionPrimaryColor)));
+        voteSecondPositionProgress.setProgressTintList(ColorStateList.valueOf(Color.parseColor(secondPositionPrimaryColor)));
     }
 }
