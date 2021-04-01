@@ -1,5 +1,6 @@
 package com.logora.logora_android.models;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -14,6 +15,7 @@ public class Debate {
     private Integer argumentsCount;
     private List<JSONObject> tagList;
     private List<Position> positionList;
+    private Integer argumentPositionIndex;
 
     public Debate() {}
 
@@ -95,5 +97,15 @@ public class Debate {
 
     public void setPositionList(List<Position> positionList) {
         this.positionList = positionList;
+    }
+
+    public int getArgumentPositionIndex(Integer index) {
+        Integer positionIndex = null;
+        for (int i = 0; i < this.positionList.size(); i++){
+            if(this.positionList.get(i).getId() == index){
+                positionIndex = i;
+            }
+        }
+        return positionIndex;
     }
 }

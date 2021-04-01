@@ -74,7 +74,7 @@ public class DebateFragment extends Fragment {
             debatePresentationContainerView.setVisibility(View.VISIBLE);
 
             String argumentResourceName = "groups/" + debate.getSlug() + "/messages";
-            ArgumentListAdapter argumentListAdapter = new ArgumentListAdapter();
+            ArgumentListAdapter argumentListAdapter = new ArgumentListAdapter(debate);
 
             argumentList = new PaginatedListFragment(argumentResourceName, argumentListAdapter, null);
 

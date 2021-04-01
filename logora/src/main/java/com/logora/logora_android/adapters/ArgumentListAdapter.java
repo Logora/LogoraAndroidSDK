@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 
 import com.logora.logora_android.R;
 import com.logora.logora_android.models.Argument;
+import com.logora.logora_android.models.Debate;
 import com.logora.logora_android.utils.Router;
 import com.logora.logora_android.view_holders.ArgumentViewHolder;
 import com.logora.logora_android.view_holders.ListViewHolder;
@@ -19,9 +20,12 @@ import org.json.JSONObject;
 import java.util.List;
 
 public class ArgumentListAdapter extends ListAdapter {
+    private Debate debate;
     private final Router router = Router.getInstance();
 
-    public ArgumentListAdapter() {}
+    public ArgumentListAdapter(Debate debate) {
+        this.debate = debate;
+    }
 
     public ArgumentListAdapter(List<JSONObject> items) {
         super(items);
@@ -33,7 +37,7 @@ public class ArgumentListAdapter extends ListAdapter {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.argument_box, parent, false);
-        return new ArgumentViewHolder(view, parent.getContext());
+        return new ArgumentViewHolder(view, parent.getContext(), debate);
     }
 
     @Override

@@ -109,8 +109,4 @@ public class Argument extends Model {
         return 0;
     }
 
-/*    public int getPositionIndex(Object groupContextPosition) {
-
-    }*/
-
 }

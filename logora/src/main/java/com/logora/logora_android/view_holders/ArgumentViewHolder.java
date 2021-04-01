@@ -3,6 +3,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,9 +18,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
+
 import com.bumptech.glide.Glide;
 import com.logora.logora_android.R;
 import com.logora.logora_android.models.Argument;
+import com.logora.logora_android.models.Debate;
 import com.logora.logora_android.utils.Auth;
 import com.logora.logora_android.utils.LogoraApiClient;
 import com.logora.logora_android.utils.Settings;
@@ -31,6 +37,8 @@ public class ArgumentViewHolder extends ListViewHolder {
     private Context context;
     private Auth authClient = Auth.getInstance();
     private LogoraApiClient apiClient = LogoraApiClient.getInstance();
+    private Debate debate;
+    private Integer positionIndex;
     private final Settings settings = Settings.getInstance();
     TextView fullNameView;
     TextView levelNameView;
@@ -44,9 +52,10 @@ public class ArgumentViewHolder extends ListViewHolder {
     ArgumentVote argumentVote;
 
 
-    public ArgumentViewHolder(View itemView, Context context) {
+    public ArgumentViewHolder(View itemView, Context context, Debate debate) {
         super(itemView);
         this.context = context;
+        this.debate = debate;
         findViews(itemView);
     }
 
@@ -189,12 +198,22 @@ public class ArgumentViewHolder extends ListViewHolder {
 
     @Override
     public void updateWithObject(Object object) {
-        String callPrimaryColor = settings.get("theme.callPrimaryColor");
+        String firstPositionPrimaryColor = settings.get("theme.firstPositionColorPrimary");
+        String secondPositionPrimaryColor = settings.get("theme.secondPositionColorPrimary");
+        LayerDrawable shape= (LayerDrawable) ContextCompat.getDrawable(context, R.drawable.position_background);
         Argument argument = (Argument) object;
+        positionIndex = debate.getArgumentPositionIndex(argument.getPosition().getId());
+        if (positionIndex == 0) {
+            GradientDrawable gradientDrawable = (GradientDrawable) shape.findDrawableByLayerId(R.id.shape);
+            gradientDrawable.setColor(Color.parseColor(firstPositionPrimaryColor));
+        } else {
+            GradientDrawable gradientDrawable = (GradientDrawable) shape.findDrawableByLayerId(R.id.shape);
+            gradientDrawable.setColor(Color.parseColor(secondPositionPrimaryColor));
+        }
+        sideLabelView.setBackground(shape);
         argumentVote.init(argument);
         fullNameView.setText(argument.getAuthor().getFullName());
         sideLabelView.setText(argument.getPosition().getName());
-        // Set side label position color dynamically
         contentView.setText(argument.getContent());
         dateView.setText(argument.getPublishedDate());
         argumentShareButton.setOnClickListener(v -> {
