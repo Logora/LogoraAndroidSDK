@@ -64,7 +64,7 @@ public class PaginatedListFragment extends Fragment {
                 loader.setVisibility(View.GONE);
                 emptyView.setVisibility(View.VISIBLE);
             } else {
-                listAdapter.setItems(itemList);
+                listAdapter.update(itemList);
                 recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
                 loader.setVisibility(View.GONE);
                 if(!listViewModel.isLastPage()) {
@@ -93,8 +93,7 @@ public class PaginatedListFragment extends Fragment {
                 loader.setVisibility(View.GONE);
                 emptyView.setVisibility(View.VISIBLE);
             } else {
-                listAdapter.setItems(itemList);
-                listAdapter.notifyDataSetChanged();
+                listAdapter.update(itemList);
                 recyclerView.setVisibility(View.VISIBLE);
                 loader.setVisibility(View.GONE);
                 if(!listViewModel.isLastPage()) {

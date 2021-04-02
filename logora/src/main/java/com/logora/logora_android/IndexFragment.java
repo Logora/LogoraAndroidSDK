@@ -67,7 +67,6 @@ public class IndexFragment extends Fragment {
                 } else {
                     spinnerSelected = true;
                 }
-
             }
 
             @Override
