@@ -5,13 +5,16 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class Debate {
     private String id;
     private String name;
     private String slug;
-    private String publishedDate;
+    private Date publishedDate;
     private Integer votesCount;
     private Integer usersCount;
     private Integer argumentsCount;
@@ -45,11 +48,11 @@ public class Debate {
         this.slug = slug;
     }
 
-    public String getPublishedDate() {
+    public Date getPublishedDate() {
         return publishedDate;
     }
 
-    public void setPublishedDate(String publishedDate) {
+    public void setPublishedDate(Date publishedDate) {
         this.publishedDate = publishedDate;
     }
 
@@ -105,7 +108,7 @@ public class Debate {
         List<Position> positionList = this.getPositionList();
         Integer positionIndex = null;
         for (int i = 0; i < positionList.size(); i++){
-            if(positionList.get(i).getId() == index){
+            if(positionList.get(i).getId().equals(index)){
                 positionIndex = i;
             }
         }

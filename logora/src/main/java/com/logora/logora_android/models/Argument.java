@@ -1,10 +1,13 @@
 package com.logora.logora_android.models;
 
+import com.logora.logora_android.utils.DateUtil;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Argument extends Model {
@@ -14,7 +17,7 @@ public class Argument extends Model {
     private Position position;
     private Integer votesCount;
     private Integer positionIndex;
-    private String publishedDate;
+    private Date publishedDate;
     private List<JSONObject> votesList;
 
     public Argument() {}
@@ -28,7 +31,9 @@ public class Argument extends Model {
             argument.setContent(jsonObject.getString("content"));
             argument.setPosition(Position.objectFromJson(jsonObject.getJSONObject("position")));
             argument.setPositionIndex(0); // Add function to compare groupContext positions and argument position
-            argument.setPublishedDate(jsonObject.getString("created_at"));
+
+            String publishedDate = jsonObject.getString("created_at");
+            argument.setPublishedDate(DateUtil.parseDate(publishedDate));
 
             JSONArray votesObjects = jsonObject.getJSONArray("votes");
             List<JSONObject> votesList = new ArrayList<>();
@@ -67,9 +72,9 @@ public class Argument extends Model {
 
     public void setPositionIndex(Integer positionIndex) { this.positionIndex = positionIndex; }
 
-    public String getPublishedDate() { return publishedDate ;}
+    public Date getPublishedDate() { return publishedDate ;}
 
-    public void setPublishedDate(String publishedDate) { this.publishedDate = publishedDate; }
+    public void setPublishedDate(Date publishedDate) { this.publishedDate = publishedDate; }
 
     public List<JSONObject> getVotesList() { return votesList; }
 
@@ -108,5 +113,4 @@ public class Argument extends Model {
         }
         return 0;
     }
-
 }

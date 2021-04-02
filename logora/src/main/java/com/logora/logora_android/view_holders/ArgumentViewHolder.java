@@ -25,6 +25,7 @@ import com.logora.logora_android.R;
 import com.logora.logora_android.models.Argument;
 import com.logora.logora_android.models.Debate;
 import com.logora.logora_android.utils.Auth;
+import com.logora.logora_android.utils.DateUtil;
 import com.logora.logora_android.utils.LogoraApiClient;
 import com.logora.logora_android.utils.Settings;
 import com.logora.logora_android.views.ArgumentVote;
@@ -215,7 +216,7 @@ public class ArgumentViewHolder extends ListViewHolder {
         fullNameView.setText(argument.getAuthor().getFullName());
         sideLabelView.setText(argument.getPosition().getName());
         contentView.setText(argument.getContent());
-        dateView.setText(argument.getPublishedDate());
+        dateView.setText(DateUtil.getDateText(argument.getPublishedDate()));
         argumentShareButton.setOnClickListener(v -> {
             openShareDialog("Cet argument devrait vous intéresser.");
         });
