@@ -216,7 +216,7 @@ public class ArgumentViewHolder extends ListViewHolder {
         fullNameView.setText(argument.getAuthor().getFullName());
         sideLabelView.setText(argument.getPosition().getName());
         contentView.setText(argument.getContent());
-        dateView.setText(DateUtil.getDateText(argument.getPublishedDate()));
+        dateView.setText(DateUtil.getTimeAgo(argument.getPublishedDate()));
         argumentShareButton.setOnClickListener(v -> {
             openShareDialog("Cet argument devrait vous intéresser.");
         });
