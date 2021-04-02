@@ -110,7 +110,7 @@
         android:id="@+id/search_form_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingHorizontal="6dp"
         android:elevation="10dp"
+        android:paddingHorizontal="6dp"
         android:visibility="gone" />
 </RelativeLayout>

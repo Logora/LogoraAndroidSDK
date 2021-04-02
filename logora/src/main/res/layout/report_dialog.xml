@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/report_dialog_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerVertical="true"
+    android:paddingHorizontal="25dp"
+    android:paddingVertical="25dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/report_dialog_subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:text="Raison du signalement :" />
+
+    <Spinner
+        android:id="@+id/report_reason_select"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="textStart"
+        android:layout_marginVertical="10dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginBottom="10dp"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
+    <TextView
+        android:id="@+id/report_dialog_input_subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:text="Dites nous en plus :" />
+
+    <EditText
+        android:id="@+id/tell_us_more_input"
+        android:layout_height="wrap_content"
+        android:minHeight="200dp"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="10dp"
+        android:inputType="text"/>
+
+    <com.logora.logora_android.views.PrimaryButton
+        android:id="@+id/report_dialog_submit"
+        app:textKey="submit"
+        android:text="@string/infoAllDebates"
+        style="@style/PrimaryButton" />
+
+</LinearLayout>

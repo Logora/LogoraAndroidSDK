@@ -70,6 +70,7 @@ public class Auth {
                         currentUser.setFullName(currentUserObject.getString("full_name"));
                         currentUser.setSlug(currentUserObject.getString("slug"));
                         currentUser.setImageUrl(currentUserObject.getString("image_url"));
+                        currentUser.setId(currentUserObject.getInt("id"));
                         this.setCurrentUser(currentUser);
                         this.setIsLoggedIn(true);
                         this.setIsLoggingIn(false);

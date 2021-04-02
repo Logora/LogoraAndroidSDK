@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/argument_vote_container"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerVertical="true"
+    android:backgroundTint="@android:color/white"
+    android:background="@drawable/box_background">
+
+    <ImageView
+        android:id="@+id/argument_clap_button"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:src="@drawable/ic_clap"
+        android:layout_marginHorizontal="6dp"
+        android:gravity="center"
+        android:clickable="true"
+        android:focusable="true"
+        android:contentDescription="@string/share_link_icon_content_description"
+        app:tint="@color/text_secondary" />
+
+    <TextView
+        android:id="@+id/argument_votes_count"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="22dp"
+        android:layout_marginHorizontal="6dp"
+        android:gravity="center"
+        android:text="21" />
+
+</LinearLayout>

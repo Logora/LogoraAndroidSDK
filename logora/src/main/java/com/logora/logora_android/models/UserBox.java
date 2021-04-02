@@ -7,6 +7,7 @@ public class UserBox extends Model {
     private String fullName;
     private String imageUrl;
     private String slug;
+    private Integer id;
     private String levelIconUrl;
 
     public UserBox() {}
@@ -18,6 +19,7 @@ public class UserBox extends Model {
             userBox.setSlug(jsonObject.getString("slug"));
             userBox.setImageUrl(jsonObject.getString("image_url"));
             userBox.setLevelIconUrl(jsonObject.getJSONObject("level").getString("icon_url"));
+            userBox.setId(jsonObject.getInt("id"));
             return userBox;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -36,6 +38,10 @@ public class UserBox extends Model {
     public String getSlug() { return slug; }
 
     public void setSlug(String slug) { this.slug = slug; }
+
+    public Integer getId() { return id; }
+
+    public void setId(Integer id) { this.id = id; }
 
     public String getImageUrl() {
         return imageUrl;

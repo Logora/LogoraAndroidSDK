@@ -125,7 +125,9 @@ public class LogoraApiClient {
         HashMap<String, String> bodyParams = new HashMap<>();
         bodyParams.put("voteable_id", String.valueOf(voteableId));
         bodyParams.put("voteable_type", voteableType);
-        bodyParams.put("position_id", String.valueOf(positionId));
+        if (positionId != null) {
+            bodyParams.put("position_id", String.valueOf(positionId));
+        }
         String route = "/votes";
         this.user_post(route, queryParams, bodyParams, listener, errorListener);
     }
@@ -166,6 +168,19 @@ public class LogoraApiClient {
         HashMap<String, String> queryParams = new HashMap<>();
         String route = "/groups/" + debateSlug + "/unfollow";
         this.user_post(route, queryParams, null, listener, errorListener);
+    }
+
+    public void createReport(Response.Listener<JSONObject> listener,
+                           Response.ErrorListener errorListener,
+                           Integer reportableId, String reportableType, String classification, String description) {
+        HashMap<String, String> queryParams = new HashMap<>();
+        HashMap<String, String> bodyParams = new HashMap<>();
+        bodyParams.put("reportable_id", String.valueOf(reportableId));
+        bodyParams.put("reportable_type", reportableType);
+        bodyParams.put("classification", classification);
+        bodyParams.put("description", description);
+        String route = "/reports";
+        this.user_post(route, queryParams, bodyParams, listener, errorListener);
     }
 
     /* AUTH METHODS */

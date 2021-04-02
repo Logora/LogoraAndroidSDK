@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
+    <item android:id="@+id/shape">
         <shape android:shape="rectangle">
             <stroke
-                android:width="2dp"
+                android:width="1dp"
                 android:color="@android:color/transparent" >
             </stroke>
-            <corners android:radius="10px" />
+            <solid android:color="@color/first_position_primary" />
+            <corners
+                android:radius="20px"
+                android:bottomRightRadius="0dp"
+                android:topLeftRadius="0dp"/>
         </shape>
     </item>
 </layer-list>
