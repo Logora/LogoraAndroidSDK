@@ -21,6 +21,7 @@ public class IndexFragment extends Fragment {
     private final Router router = Router.getInstance();
     private View mainDebateView;
     private Spinner sortSelect;
+    private Boolean spinnerSelected = false;
     private PaginatedListFragment debateList;
 
     public IndexFragment() { super(R.layout.fragment_index); }
@@ -35,6 +36,7 @@ public class IndexFragment extends Fragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, sortOptions);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sortSelect.setAdapter(adapter);
+        sortSelect.setSelection(0);
 
         String debateResourceName = "groups/index/trending";
         DebateBoxListAdapter debateListAdapter = new DebateBoxListAdapter();
@@ -53,14 +55,19 @@ public class IndexFragment extends Fragment {
         sortSelect.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                if(position == 0) {
-                    debateList.setSort("-trending");
-                } else if(position == 1) {
-                    debateList.setSort("-created_at");
-                } else if(position == 2) {
-                    debateList.setSort("+created_at");
+                if(spinnerSelected) {
+                    if(position == 0) {
+                        debateList.setSort("-trending");
+                    } else if(position == 1) {
+                        debateList.setSort("-created_at");
+                    } else if(position == 2) {
+                        debateList.setSort("+created_at");
+                    }
+                    debateList.updateSort();
+                } else {
+                    spinnerSelected = true;
                 }
-                debateList.updateSort();
+
             }
 
             @Override
