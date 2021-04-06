@@ -18,6 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -204,8 +205,22 @@ public class LogoraApiClient {
         this.queue.add(request);
     }
 
-    public void userRefresh() {
-        return;
+    public void user_refresh(Response.Listener<JSONObject> listener,
+                             Response.ErrorListener errorListener) {
+        HashMap<String, String> bodyParams = new HashMap<>();
+        bodyParams.put("refresh_token", this.getUserRefreshToken());
+        bodyParams.put("grant_type", "refresh_token");
+        String requestUrl = this.authUrl + "/token";
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, requestUrl,
+                new JSONObject(bodyParams), listener, errorListener) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String>  params = new HashMap<>();
+                params.put("Content-Type", "application/json");
+                return params;
+            }
+        };
+        this.queue.add(request);
     }
 
     /* GENERIC REQUEST METHODS */
@@ -276,6 +291,7 @@ public class LogoraApiClient {
                             Response.ErrorListener errorListener) {
         String paramsString = this.paramstoQueryString(params);
         String requestUrl = this.apiUrl + route + paramsString;
+
         String userAuthorizationHeader = this.getUserAuthorizationHeader();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
                 requestUrl, null, listener, errorListener
@@ -288,7 +304,8 @@ public class LogoraApiClient {
                 return params;
             }
         };
-        this.queue.add(request);
+
+        this.addToQueueWithRefresh(request);
     }
 
     private void user_post(String route, HashMap<String, String> params,
@@ -301,6 +318,7 @@ public class LogoraApiClient {
         if(bodyParams != null) {
             bodyJson = new JSONObject(bodyParams);
         }
+
         String userAuthorizationHeader = this.getUserAuthorizationHeader();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
                 requestUrl, bodyJson, listener, errorListener
@@ -313,7 +331,8 @@ public class LogoraApiClient {
                 return params;
             }
         };
-        this.queue.add(request);
+
+        this.addToQueueWithRefresh(request);
     }
 
     private void user_patch(String route, HashMap<String, String> params,
@@ -326,6 +345,7 @@ public class LogoraApiClient {
         if(bodyParams != null) {
             bodyJson = new JSONObject(bodyParams);
         }
+
         String userAuthorizationHeader = this.getUserAuthorizationHeader();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
                 requestUrl, bodyJson, listener, errorListener
@@ -338,7 +358,7 @@ public class LogoraApiClient {
                 return params;
             }
         };
-        this.queue.add(request);
+        this.addToQueueWithRefresh(request);
     }
 
     private void user_delete(String route, HashMap<String, String> params,
@@ -346,6 +366,7 @@ public class LogoraApiClient {
                            Response.ErrorListener errorListener) {
         String paramsString = this.paramstoQueryString(params);
         String requestUrl = this.apiUrl + route + paramsString;
+
         String userAuthorizationHeader = this.getUserAuthorizationHeader();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.DELETE,
                 requestUrl, null, listener, errorListener
@@ -358,7 +379,18 @@ public class LogoraApiClient {
                 return params;
             }
         };
-        this.queue.add(request);
+        this.addToQueueWithRefresh(request);
+    }
+
+    private void addToQueueWithRefresh(JsonObjectRequest request) {
+        if(this.isTokenExpired()) {
+            this.user_refresh(response -> {
+                this.setUserToken(response);
+                this.queue.add(request);
+            }, error -> {});
+        } else {
+            this.queue.add(request);
+        }
     }
 
     private String getUserAuthorizationHeader() {
@@ -400,12 +432,32 @@ public class LogoraApiClient {
         }
     }
 
+    public String getUserRefreshToken() {
+        JSONObject tokenObject = this.getUserTokenObject();
+        try {
+            return tokenObject.getString("refresh_token");
+        } catch(JSONException e) {
+            return null;
+        }
+    }
+
     public JSONObject getUserTokenObject() {
         return this.getStorageItem(this.userTokenKey);
     }
 
     public void deleteUserToken() {
         this.deleteStorageItem(this.userTokenKey);
+    }
+
+    public Boolean isTokenExpired() {
+        JSONObject tokenObject = this.getUserTokenObject();
+        try {
+            int expiresAt = Integer.parseInt(tokenObject.getString("expires_at"));
+            Date expiresDate = new Date((long) expiresAt * 1000);
+            return expiresDate.before(new Date());
+        } catch(JSONException e) {
+            return true;
+        }
     }
 
     /* STORAGE FUNCTIONS */
