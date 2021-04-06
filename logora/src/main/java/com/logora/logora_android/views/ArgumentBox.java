@@ -92,32 +92,34 @@ public class ArgumentBox extends RelativeLayout {
         String secondPositionPrimaryColor = settings.get("theme.secondPositionColorPrimary");
         LayerDrawable shape = (LayerDrawable) ContextCompat.getDrawable(context, R.drawable.position_background);
         Argument argument = (Argument) object;
-        positionIndex = debate.getArgumentPositionIndex(argument.getPosition().getId());
-        if (positionIndex == 0) {
-            GradientDrawable gradientDrawable = (GradientDrawable) shape.findDrawableByLayerId(R.id.shape);
-            gradientDrawable.setColor(Color.parseColor(firstPositionPrimaryColor));
-        } else {
-            GradientDrawable gradientDrawable = (GradientDrawable) shape.findDrawableByLayerId(R.id.shape);
-            gradientDrawable.setColor(Color.parseColor(secondPositionPrimaryColor));
+        if (argument != null) {
+            positionIndex = debate.getArgumentPositionIndex(argument.getPosition().getId());
+            if (positionIndex == 0) {
+                GradientDrawable gradientDrawable = (GradientDrawable) shape.findDrawableByLayerId(R.id.shape);
+                gradientDrawable.setColor(Color.parseColor(firstPositionPrimaryColor));
+            } else {
+                GradientDrawable gradientDrawable = (GradientDrawable) shape.findDrawableByLayerId(R.id.shape);
+                gradientDrawable.setColor(Color.parseColor(secondPositionPrimaryColor));
+            }
+            sideLabelView.setBackground(shape);
+            argumentVote.init(argument);
+            fullNameView.setText(argument.getAuthor().getFullName());
+            sideLabelView.setText(argument.getPosition().getName());
+            contentView.setText(argument.getContent());
+            dateView.setText(String.valueOf(argument.getPublishedDate()));
+            argumentShareButton.setOnClickListener(v -> {
+                openShareDialog("Cet argument devrait vous intéresser.");
+            });
+            argumentMoreButton.setOnClickListener(v -> {
+                openMoreActionsDialog(argument);
+            });
+            Glide.with(levelIconView.getContext())
+                    .load(Uri.parse(argument.getAuthor().getLevelIconUrl()))
+                    .into(levelIconView);
+            Glide.with(userImageView.getContext())
+                    .load(Uri.parse(argument.getAuthor().getImageUrl()))
+                    .into(userImageView);
         }
-        sideLabelView.setBackground(shape);
-        argumentVote.init(argument);
-        fullNameView.setText(argument.getAuthor().getFullName());
-        sideLabelView.setText(argument.getPosition().getName());
-        contentView.setText(argument.getContent());
-        dateView.setText(argument.getPublishedDate());
-        argumentShareButton.setOnClickListener(v -> {
-            openShareDialog("Cet argument devrait vous intéresser.");
-        });
-        argumentMoreButton.setOnClickListener(v -> {
-            openMoreActionsDialog(argument);
-        });
-        Glide.with(levelIconView.getContext())
-                .load(Uri.parse(argument.getAuthor().getLevelIconUrl()))
-                .into(levelIconView);
-        Glide.with(userImageView.getContext())
-                .load(Uri.parse(argument.getAuthor().getImageUrl()))
-                .into(userImageView);
     }
 
 

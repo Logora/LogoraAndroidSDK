@@ -1,6 +1,5 @@
 package com.logora.logora_android.models;
 
-import com.logora.logora_android.view_holders.UserMessagesViewHolder;
 import com.logora.logora_android.utils.DateUtil;
 import org.json.JSONArray;
 import org.json.JSONException;

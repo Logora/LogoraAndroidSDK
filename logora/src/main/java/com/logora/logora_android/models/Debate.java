@@ -2,6 +2,8 @@ package com.logora.logora_android.models;
 
 import android.util.Log;
 
+import com.logora.logora_android.utils.DateUtil;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,6 +38,8 @@ public class Debate {
             debate.setSlug(jsonObject.getString("slug"));
             debate.setUsersCount(jsonObject.getInt("participants_count"));
             debate.setArgumentsCount(jsonObject.getInt("messages_count"));
+            String publishedDate = jsonObject.getString("created_at");
+            debate.setPublishedDate(DateUtil.parseDate(publishedDate));
 
             JSONArray positionsObject = jsonObject.getJSONObject("group_context").getJSONArray("positions");
             List<Position> positionsList = new ArrayList<>();
