@@ -2,9 +2,11 @@ package com.logora.logora_android.models;
 
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Debate {
@@ -18,8 +20,57 @@ public class Debate {
     private List<JSONObject> tagList;
     private List<Position> positionList;
     private Integer argumentPositionIndex;
+    private String votePosition;
+    private Integer votePercentage;
 
     public Debate() {}
+
+    public static Debate objectFromJson(JSONObject jsonObject) {
+        Debate debate = new Debate();
+        try {
+            debate.setName(jsonObject.getString("name"));
+            debate.setId(jsonObject.getString("id"));
+            debate.setSlug(jsonObject.getString("slug"));
+            debate.setPublishedDate(jsonObject.getString("created_at"));
+            debate.setUsersCount(jsonObject.getInt("participants_count"));
+            debate.setArgumentsCount(jsonObject.getInt("messages_count"));
+
+            JSONArray positionsObject = jsonObject.getJSONObject("group_context").getJSONArray("positions");
+            List<Position> positionsList = new ArrayList<>();
+            for (int i=0; i < positionsObject.length(); i++){
+                positionsList.add(Position.objectFromJson(positionsObject.getJSONObject(i)));
+            }
+            debate.setPositionList(positionsList);
+
+            JSONObject votesCount = jsonObject.getJSONObject("votes_count");
+            JSONArray votesCountKeys = votesCount.names();
+            int maxPercentage = 0;
+            Integer maxId = null;
+            if(votesCountKeys == null || votesCountKeys.length() == 0) {
+                maxPercentage = 50;
+                maxId = null;
+            } else {
+                for (int i = 0; i < votesCountKeys.length(); i++) {
+                    String key = votesCountKeys.getString(i);
+                    if(key.equals("total")) {
+                        continue;
+                    }
+                    int percentage = votesCount.getInt(key);
+                    if(percentage > maxPercentage) {
+                        maxPercentage = percentage;
+                        maxId = Integer.parseInt(key);
+                    }
+                }
+            }
+            debate.setVotePercentage(maxPercentage);
+            debate.setVotePosition(getVotePosition(positionsObject, maxId));
+
+            return debate;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public String getId() {
         return id;
@@ -101,14 +152,37 @@ public class Debate {
         this.positionList = positionList;
     }
 
-    public int getArgumentPositionIndex(Integer index) {
+    public int getArgumentPositionIndex(Integer positionId) {
         List<Position> positionList = this.getPositionList();
         Integer positionIndex = null;
         for (int i = 0; i < positionList.size(); i++){
-            if(positionList.get(i).getId() == index){
+            if(positionList.get(i).getId() == positionId){
                 positionIndex = i;
+                return positionIndex;
             }
         }
-        return positionIndex; // Should not return null
+        return 0; // Should not return null
+    }
+
+    public String getVotePosition() { return votePosition; }
+
+    public void setVotePosition(String votePosition) { this.votePosition = votePosition; }
+
+    public Integer getVotePercentage() { return votePercentage; }
+
+    public void setVotePercentage(Integer votePercentage) { this.votePercentage = votePercentage; }
+
+    private static String getVotePosition(JSONArray positions, Integer id) throws JSONException {
+        for (int i = 0 ; i < positions.length(); i++) {
+            JSONObject position = positions.getJSONObject(i);
+            if(i == 0 && id == null) {
+                return position.getString("name");
+            }
+            Integer positionId = position.getInt("id");
+            if(positionId.equals(id)) {
+                return position.getString("name");
+            }
+        }
+        return "";
     }
 }

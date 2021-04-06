@@ -1,5 +1,7 @@
 package com.logora.logora_android.models;
 
+import com.logora.logora_android.view_holders.UserMessagesViewHolder;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,6 +17,7 @@ public class Argument extends Model {
     private Integer votesCount;
     private Integer positionIndex;
     private String publishedDate;
+    private Debate debate;
     private List<JSONObject> votesList;
 
     public Argument() {}
@@ -29,6 +32,7 @@ public class Argument extends Model {
             argument.setPosition(Position.objectFromJson(jsonObject.getJSONObject("position")));
             argument.setPositionIndex(0); // Add function to compare groupContext positions and argument position
             argument.setPublishedDate(jsonObject.getString("created_at"));
+            argument.setDebate(Debate.objectFromJson(jsonObject.getJSONObject("group")));
 
             JSONArray votesObjects = jsonObject.getJSONArray("votes");
             List<JSONObject> votesList = new ArrayList<>();
@@ -62,6 +66,10 @@ public class Argument extends Model {
     public Position getPosition() { return position; }
 
     public void setPosition(Position position) { this.position = position; }
+
+    public Debate getDebate() { return debate; }
+
+    public void setDebate(Debate debate) { this.debate = debate; }
 
     public Integer getPositionIndex() { return positionIndex; }
 

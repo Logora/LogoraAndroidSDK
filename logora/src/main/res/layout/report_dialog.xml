@@ -47,7 +47,7 @@
     <com.logora.logora_android.views.PrimaryButton
         android:id="@+id/report_dialog_submit"
         app:textKey="submit"
-        android:text="@string/infoAllDebates"
+        android:text="@string/report"
         style="@style/PrimaryButton" />
 
 </LinearLayout>

@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.logora.logora_android.adapters.ListAdapter;
+import com.logora.logora_android.adapters.UserMessagesListAdapter;
 import com.logora.logora_android.view_models.ListViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -25,7 +26,6 @@ public class PaginatedListFragment extends Fragment {
     private ListAdapter listAdapter;
     private TextView emptyView;
 
-    public PaginatedListFragment() { super(R.layout.fragment_paginated_list); }
 
     public PaginatedListFragment(String resourceName, ListAdapter listAdapter, HashMap<String,String> extraArguments) {
         super(R.layout.fragment_paginated_list);

@@ -42,7 +42,9 @@ public class DebateShowViewModel extends ViewModel {
                     debateObject.setSlug(responseData.getString("slug"));
                     debateObject.setPublishedDate(responseData.getString("created_at"));
                     debateObject.setUsersCount(responseData.getInt("participants_count"));
-                    debateObject.setVotesCount(responseData.getJSONObject("votes_count").getInt("total"));
+                    if (responseData.getJSONObject("votes_count").has("total")) {
+                        debateObject.setVotesCount(responseData.getJSONObject("votes_count").getInt("total"));
+                    }
 
                     JSONArray tagObjects = responseData.getJSONObject("group_context").getJSONArray("tags");
                     List<JSONObject> tagList = new ArrayList<>();
