@@ -18,7 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
 import com.logora.logora_android.adapters.DebateBoxListAdapter;
+import com.logora.logora_android.adapters.ListAdapter;
 import com.logora.logora_android.adapters.UserBoxListAdapter;
+import com.logora.logora_android.adapters.UserMessagesListAdapter;
 import com.logora.logora_android.utils.Settings;
 import com.logora.logora_android.view_models.DebateShowViewModel;
 import com.logora.logora_android.view_models.ListViewModel;
@@ -86,14 +88,16 @@ public class UserFragment extends Fragment {
 
         UserBoxListAdapter userDisciplesListAdapter = new UserBoxListAdapter();
         UserBoxListAdapter userMentorsListAdapter = new UserBoxListAdapter();
+        UserMessagesListAdapter userMessagesListAdapter = new UserMessagesListAdapter();
 
-        PaginatedListFragment userArgumentsFragment = new PaginatedListFragment("users/" + userSlug + "/arguments", userDisciplesListAdapter, null);
+        PaginatedListFragment userMessagesFragment = new PaginatedListFragment("users/" + userSlug + "/messages", userMessagesListAdapter, null);
         BadgeTabFragment userBadgesFragment = new BadgeTabFragment(userSlug);
         PaginatedListFragment userDisciplesFragment = new PaginatedListFragment("users/" + userSlug + "/disciples", userDisciplesListAdapter, null);
         PaginatedListFragment userMentorsFragment = new PaginatedListFragment("users/" + userSlug + "/mentors", userMentorsListAdapter, null);
 
         getChildFragmentManager()
                 .beginTransaction()
+                .add(R.id.user_arguments_list, userMessagesFragment)
                 .add(R.id.user_badges_list, userBadgesFragment)
                 .add(R.id.user_disciples_list, userDisciplesFragment)
                 .add(R.id.user_mentors_list, userMentorsFragment)
