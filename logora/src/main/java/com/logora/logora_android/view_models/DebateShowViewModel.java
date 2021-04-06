@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.logora.logora_android.models.Debate;
 import com.logora.logora_android.models.Position;
-import com.logora.logora_android.models.Tag;
+import com.logora.logora_android.utils.DateUtil;
 import com.logora.logora_android.utils.LogoraApiClient;
 
 import org.json.JSONArray;
@@ -40,7 +40,10 @@ public class DebateShowViewModel extends ViewModel {
                     debateObject.setName(responseData.getString("name"));
                     debateObject.setId(responseData.getString("id"));
                     debateObject.setSlug(responseData.getString("slug"));
-                    debateObject.setPublishedDate(responseData.getString("created_at"));
+
+                    String publishedDate = responseData.getString("created_at");
+                    debateObject.setPublishedDate(DateUtil.parseDate(publishedDate));
+
                     debateObject.setUsersCount(responseData.getInt("participants_count"));
                     if (responseData.getJSONObject("votes_count").has("total")) {
                         debateObject.setVotesCount(responseData.getJSONObject("votes_count").getInt("total"));

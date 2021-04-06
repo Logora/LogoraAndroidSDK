@@ -7,13 +7,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class Debate {
     private String id;
     private String name;
     private String slug;
-    private String publishedDate;
+    private Date publishedDate;
     private Integer votesCount;
     private Integer usersCount;
     private Integer argumentsCount;
@@ -31,7 +34,6 @@ public class Debate {
             debate.setName(jsonObject.getString("name"));
             debate.setId(jsonObject.getString("id"));
             debate.setSlug(jsonObject.getString("slug"));
-            debate.setPublishedDate(jsonObject.getString("created_at"));
             debate.setUsersCount(jsonObject.getInt("participants_count"));
             debate.setArgumentsCount(jsonObject.getInt("messages_count"));
 
@@ -96,11 +98,11 @@ public class Debate {
         this.slug = slug;
     }
 
-    public String getPublishedDate() {
+    public Date getPublishedDate() {
         return publishedDate;
     }
 
-    public void setPublishedDate(String publishedDate) {
+    public void setPublishedDate(Date publishedDate) {
         this.publishedDate = publishedDate;
     }
 
@@ -152,11 +154,11 @@ public class Debate {
         this.positionList = positionList;
     }
 
-    public int getArgumentPositionIndex(Integer positionId) {
+    public int getArgumentPositionIndex(Integer index) {
         List<Position> positionList = this.getPositionList();
         Integer positionIndex = null;
         for (int i = 0; i < positionList.size(); i++){
-            if(positionList.get(i).getId() == positionId){
+            if(positionList.get(i).getId().equals(index)){
                 positionIndex = i;
                 return positionIndex;
             }

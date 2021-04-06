@@ -17,6 +17,7 @@ import com.logora.logora_android.adapters.ArgumentListAdapter;
 import com.logora.logora_android.adapters.DebateBoxListAdapter;
 import com.logora.logora_android.adapters.TagListAdapter;
 import com.logora.logora_android.adapters.UserBoxListAdapter;
+import com.logora.logora_android.utils.DateUtil;
 import com.logora.logora_android.view_models.DebateShowViewModel;
 import com.logora.logora_android.views.FollowDebateButtonView;
 import com.logora.logora_android.views.ShareView;
@@ -63,7 +64,8 @@ public class DebateFragment extends Fragment {
         DebateShowViewModel debateShowViewModel = new DebateShowViewModel();
         debateShowViewModel.getDebate(this.debateSlug).observe(getViewLifecycleOwner(), debate -> {
             debateNameView.setText(debate.getName());
-            debatePublishedDateView.setText(debate.getPublishedDate());
+
+            debatePublishedDateView.setText(DateUtil.getDateText(debate.getPublishedDate()));
             debateTagListAdapter.setItems(debate.getTagList());
             debateTagList.setAdapter(debateTagListAdapter);
 

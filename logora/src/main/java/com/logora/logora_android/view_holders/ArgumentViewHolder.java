@@ -25,6 +25,7 @@ import com.logora.logora_android.R;
 import com.logora.logora_android.models.Argument;
 import com.logora.logora_android.models.Debate;
 import com.logora.logora_android.utils.Auth;
+import com.logora.logora_android.utils.DateUtil;
 import com.logora.logora_android.utils.LogoraApiClient;
 import com.logora.logora_android.utils.Settings;
 import com.logora.logora_android.views.ArgumentBox;
@@ -46,8 +47,7 @@ public class ArgumentViewHolder extends ListViewHolder {
         argumentBox = itemView.findViewById(R.id.argument_box_container);
     }
 
-    @Override
-    public void updateWithObject(Object object){
+    public void updateWithObject(Object object) {
         argumentBox.updateWithObject(object, debate, context);
     }
 }

@@ -50,7 +50,7 @@
     <string name="debate_second_position_progress_text">50%</string>
     <string name="search_icon_content_description">Icône de recherche</string>
     <string name="search_back_icon_content_description">Icône de retour</string>
-    <string name="search_placeholder">Rechercher un débat...</string>
+    <string name="search_placeholder">Rechercher un débat…</string>
     <string name="search_submit_icon_content_description">Icône de recherche</string>
     <string name="notification_icon_content_description">Icône de notification</string>
     <string name="debate_follow_inactive">Suivre</string>

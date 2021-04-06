@@ -1,6 +1,7 @@
 package com.logora.logora_android;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -58,11 +59,12 @@ public class PaginatedListFragment extends Fragment {
         loader.setVisibility(View.VISIBLE);
 
         listViewModel.getList().observe(getViewLifecycleOwner(), itemList -> {
+            Log.i("LISTII", String.valueOf(itemList));
             if(itemList.size() == 0) {
                 loader.setVisibility(View.GONE);
                 emptyView.setVisibility(View.VISIBLE);
             } else {
-                listAdapter.setItems(itemList);
+                listAdapter.update(itemList);
                 recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
                 loader.setVisibility(View.GONE);
                 if(!listViewModel.isLastPage()) {
@@ -91,8 +93,7 @@ public class PaginatedListFragment extends Fragment {
                 loader.setVisibility(View.GONE);
                 emptyView.setVisibility(View.VISIBLE);
             } else {
-                listAdapter.setItems(itemList);
-                listAdapter.notifyDataSetChanged();
+                listAdapter.update(itemList);
                 recyclerView.setVisibility(View.VISIBLE);
                 loader.setVisibility(View.GONE);
                 if(!listViewModel.isLastPage()) {

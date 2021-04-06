@@ -36,13 +36,14 @@ public class DebateBoxListAdapter extends ListAdapter {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.debate_box, parent, false);
-        return new DebateBoxViewHolder(view, parent.getContext());
+        return new DebateBoxViewHolder(view, context);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
         DebateBox debateBox = this.getObjectFromJson(this.items.get(position));
         holder.updateWithObject(debateBox);
+
         holder.itemView.setOnClickListener(v -> {
             HashMap<String, String> routeParams = new HashMap<>();
             routeParams.put("debateSlug", debateBox.getSlug());
