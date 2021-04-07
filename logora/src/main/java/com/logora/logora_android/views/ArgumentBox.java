@@ -41,16 +41,16 @@ public class ArgumentBox extends RelativeLayout {
     private Debate debate;
     private Integer positionIndex = 0;
     private final Settings settings = Settings.getInstance();
-    TextView fullNameView;
-    TextView levelNameView;
-    TextView sideLabelView;
-    TextView contentView;
-    TextView dateView;
-    ImageView levelIconView;
-    ImageView userImageView;
-    ImageView argumentShareButton;
-    ImageView argumentMoreButton;
-    ArgumentVote argumentVote;
+    private TextView fullNameView;
+    private TextView levelNameView;
+    private TextView sideLabelView;
+    private TextView contentView;
+    private TextView dateView;
+    private ImageView levelIconView;
+    private ImageView userImageView;
+    private ImageView argumentShareButton;
+    private ImageView argumentMoreButton;
+    private ArgumentVote argumentVote;
 
     public ArgumentBox(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -121,7 +121,6 @@ public class ArgumentBox extends RelativeLayout {
                     .into(userImageView);
         }
     }
-
 
     private void openShareDialog(String subject) {
         Intent share = new Intent(Intent.ACTION_SEND);

@@ -27,7 +27,6 @@ public class PaginatedListFragment extends Fragment {
     private ListAdapter listAdapter;
     private TextView emptyView;
 
-
     public PaginatedListFragment(String resourceName, ListAdapter listAdapter, HashMap<String,String> extraArguments) {
         super(R.layout.fragment_paginated_list);
         this.resourceName = resourceName;
