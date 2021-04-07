@@ -19,6 +19,9 @@ public class Argument extends Model {
     private Debate debate;
     private Date publishedDate;
     private List<JSONObject> votesList;
+    private Boolean isReply;
+    private Integer repliesCount;
+    private Integer parentArgumentId = null;
 
     public Argument() {}
 
@@ -30,8 +33,17 @@ public class Argument extends Model {
             argument.setVotesCount(jsonObject.getInt("upvotes"));
             argument.setContent(jsonObject.getString("content"));
             argument.setPosition(Position.objectFromJson(jsonObject.getJSONObject("position")));
+            argument.setIsReply(jsonObject.getBoolean("is_reply"));
+
+            String replyToId = jsonObject.getString("reply_to_id");
+            if(!replyToId.equals("null")) {
+                argument.setParentArgumentId(Integer.parseInt(replyToId));
+            }
+
+            argument.setRepliesCount(jsonObject.getInt("number_replies"));
             argument.setPositionIndex(0); // Add function to compare groupContext positions and argument position
-            if (jsonObject.has("group") == true) {
+
+            if (jsonObject.has("group")) {
                 argument.setDebate(Debate.objectFromJson(jsonObject.getJSONObject("group")));
             };
             String publishedDate = jsonObject.getString("created_at");
@@ -118,5 +130,29 @@ public class Argument extends Model {
             }
         }
         return 0;
+    }
+
+    public Boolean getIsReply() {
+        return isReply;
+    }
+
+    public void setIsReply(Boolean isReply) {
+        isReply = isReply;
+    }
+
+    public Integer getParentArgumentId() {
+        return parentArgumentId;
+    }
+
+    public void setParentArgumentId(Integer parentArgumentId) {
+        this.parentArgumentId = parentArgumentId;
+    }
+
+    public Integer getRepliesCount() {
+        return repliesCount;
+    }
+
+    public void setRepliesCount(Integer repliesCount) {
+        this.repliesCount = repliesCount;
     }
 }

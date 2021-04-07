@@ -3,6 +3,7 @@ package com.logora.logora_android;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -14,9 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.logora.logora_android.adapters.ArgumentListAdapter;
-import com.logora.logora_android.adapters.DebateBoxListAdapter;
 import com.logora.logora_android.adapters.TagListAdapter;
-import com.logora.logora_android.adapters.UserBoxListAdapter;
 import com.logora.logora_android.utils.DateUtil;
 import com.logora.logora_android.view_models.DebateShowViewModel;
 import com.logora.logora_android.views.FollowDebateButtonView;
@@ -24,12 +23,12 @@ import com.logora.logora_android.views.ShareView;
 import com.logora.logora_android.views.VoteBoxView;
 
 import org.jetbrains.annotations.NotNull;
-import org.w3c.dom.Text;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class DebateFragment extends Fragment {
+    private Boolean spinnerSelected = false;
     private String debateSlug;
     private ProgressBar loader;
     private RelativeLayout debatePresentationContainerView;
@@ -80,6 +79,7 @@ public class DebateFragment extends Fragment {
             ArgumentListAdapter argumentListAdapter = new ArgumentListAdapter(debate);
 
             argumentList = new PaginatedListFragment(argumentResourceName, argumentListAdapter, null);
+            argumentList.setSort("-score");
 
             getChildFragmentManager()
                     .beginTransaction()
@@ -91,6 +91,28 @@ public class DebateFragment extends Fragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, sortOptions);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         argumentSortView.setAdapter(adapter);
+        argumentSortView.setSelection(0);
+
+        argumentSortView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                if(spinnerSelected) {
+                    if(position == 0) {
+                        argumentList.setSort("-score");
+                    } else if(position == 1) {
+                        argumentList.setSort("-created_at");
+                    } else if(position == 2) {
+                        argumentList.setSort("+created_at");
+                    }
+                    argumentList.updateSort();
+                } else {
+                    spinnerSelected = true;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {}
+        });
     }
 
     private void findViews(View view) {
@@ -107,9 +129,9 @@ public class DebateFragment extends Fragment {
     }
 
     public String[] getSpinnerOptions() {
-        String trendingOption = getString(R.string.index_sort_trending_option);
-        String recentOption = getString(R.string.index_sort_recent_option);
-        String oldOption = getString(R.string.index_sort_old_option);
+        String trendingOption = getString(R.string.argument_sort_trending);
+        String recentOption = getString(R.string.argument_sort_recent);
+        String oldOption = getString(R.string.argument_sort_old);
 
         return new String[] { trendingOption, recentOption, oldOption };
     }

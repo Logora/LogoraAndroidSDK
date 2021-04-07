@@ -6,10 +6,11 @@ import com.logora.logora_android.view_holders.ListViewHolder;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ListAdapter extends RecyclerView.Adapter<ListViewHolder> {
-    protected List<JSONObject> items;
+    protected List<JSONObject> items = new ArrayList<>();
 
     public ListAdapter() {}
 
