@@ -64,8 +64,8 @@
 
                 <ImageView
                     android:id="@+id/user_level_icon"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
                     android:layout_toEndOf="@id/user_level"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="4dp"
