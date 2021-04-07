@@ -74,7 +74,7 @@ public class LogoraApiClient {
     }
 
     public void getList(Response.Listener<JSONObject> listener,
-                                   Response.ErrorListener errorListener, String resourceName, Integer page,
+                                   Response.ErrorListener errorListener, String resourceName, String resourceType, Integer page,
                                    Integer perPage, String sort, Integer outset, String query,
                                     HashMap<String, String> extraArguments) {
         HashMap<String, String> queryParams = new HashMap<>();
@@ -87,7 +87,11 @@ public class LogoraApiClient {
             queryParams.putAll(extraArguments);
         }
         String route = "/" + resourceName;
-        this.client_get(route, queryParams, listener, errorListener);
+        if(resourceType.equals("USER")) {
+            this.user_get(route, queryParams, listener, errorListener);
+        } else {
+            this.client_get(route, queryParams, listener, errorListener);
+        }
     }
 
     public void getDebate(Response.Listener<JSONObject> listener,
