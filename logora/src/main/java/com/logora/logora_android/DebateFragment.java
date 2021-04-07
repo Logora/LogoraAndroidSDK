@@ -78,7 +78,7 @@ public class DebateFragment extends Fragment {
             String argumentResourceName = "groups/" + debate.getSlug() + "/messages";
             ArgumentListAdapter argumentListAdapter = new ArgumentListAdapter(debate);
 
-            argumentList = new PaginatedListFragment(argumentResourceName, argumentListAdapter, null);
+            argumentList = new PaginatedListFragment(argumentResourceName, "CLIENT", argumentListAdapter, null);
             argumentList.setSort("-score");
 
             getChildFragmentManager()

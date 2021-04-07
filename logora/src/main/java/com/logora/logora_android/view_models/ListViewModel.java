@@ -18,6 +18,7 @@ import java.util.List;
 public class ListViewModel extends ViewModel {
     private String TAG = ListViewModel.class.getSimpleName();
     private final String resourceName;
+    private final String resourceType;
     private MutableLiveData<List<JSONObject>> itemsLiveData;
     private List<JSONObject> items = new ArrayList<>();
     private Integer total;
@@ -28,8 +29,9 @@ public class ListViewModel extends ViewModel {
     private String query = null;
     private HashMap<String,String> extraArguments;
 
-    public ListViewModel(String resourceName) {
+    public ListViewModel(String resourceName, String resourceType) {
         this.resourceName = resourceName;
+        this.resourceType = resourceType;
     }
 
     public void setCurrentPage(Integer currentPage) {
@@ -105,6 +107,6 @@ public class ListViewModel extends ViewModel {
             error -> {
                 Log.i("ERROR", String.valueOf(error));
                 itemsLiveData.setValue(new ArrayList<>());
-            }, this.resourceName, this.currentPage, this.perPage, this.sort, 0, this.query, this.extraArguments);
+            }, this.resourceName, this.resourceType, this.currentPage, this.perPage, this.sort, 0, this.query, this.extraArguments);
     }
 }

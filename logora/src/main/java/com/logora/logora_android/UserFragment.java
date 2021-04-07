@@ -91,10 +91,10 @@ public class UserFragment extends Fragment {
         UserBoxListAdapter userMentorsListAdapter = new UserBoxListAdapter();
         UserMessagesListAdapter userMessagesListAdapter = new UserMessagesListAdapter();
 
-        PaginatedListFragment userMessagesFragment = new PaginatedListFragment("users/" + userSlug + "/messages", userMessagesListAdapter, null);
+        PaginatedListFragment userMessagesFragment = new PaginatedListFragment("users/" + userSlug + "/messages", "CLIENT", userMessagesListAdapter, null);
         BadgeTabFragment userBadgesFragment = new BadgeTabFragment(userSlug);
-        PaginatedListFragment userDisciplesFragment = new PaginatedListFragment("users/" + userSlug + "/disciples", userDisciplesListAdapter, null);
-        PaginatedListFragment userMentorsFragment = new PaginatedListFragment("users/" + userSlug + "/mentors", userMentorsListAdapter, null);
+        PaginatedListFragment userDisciplesFragment = new PaginatedListFragment("users/" + userSlug + "/disciples", "CLIENT", userDisciplesListAdapter, null);
+        PaginatedListFragment userMentorsFragment = new PaginatedListFragment("users/" + userSlug + "/mentors", "CLIENT", userMentorsListAdapter, null);
 
         getChildFragmentManager()
                 .beginTransaction()

@@ -17,7 +17,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 
 public class PaginatedListFragment extends Fragment {
-    private String resourceName;
     private RecyclerView recyclerView;
     private ProgressBar loader;
     private Button paginationButton;
@@ -25,11 +24,10 @@ public class PaginatedListFragment extends Fragment {
     private ListAdapter listAdapter;
     private TextView emptyView;
 
-    public PaginatedListFragment(String resourceName, ListAdapter listAdapter, HashMap<String,String> extraArguments) {
+    public PaginatedListFragment(String resourceName, String resourceType, ListAdapter listAdapter, HashMap<String,String> extraArguments) {
         super(R.layout.fragment_paginated_list);
-        this.resourceName = resourceName;
         this.listAdapter = listAdapter;
-        listViewModel = new ListViewModel(resourceName);
+        listViewModel = new ListViewModel(resourceName, resourceType);
         if(extraArguments != null) {
             listViewModel.setExtraArguments(extraArguments);
         }

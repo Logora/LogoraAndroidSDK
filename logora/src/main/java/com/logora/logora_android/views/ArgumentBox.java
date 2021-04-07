@@ -136,7 +136,7 @@ public class ArgumentBox extends RelativeLayout {
         String resourceName = "messages/" + argument.getId() + "/replies";
         ArgumentListAdapter repliesListAdapter = new ArgumentListAdapter(debate);
 
-        repliesList = new PaginatedListFragment(resourceName, repliesListAdapter, null);
+        repliesList = new PaginatedListFragment(resourceName, "CLIENT", repliesListAdapter, null);
 
         if(argument.getRepliesCount() > 0) {
             argumentRepliesFooter.setVisibility(VISIBLE);

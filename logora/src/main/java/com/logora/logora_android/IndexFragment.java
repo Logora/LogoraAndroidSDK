@@ -44,12 +44,12 @@ public class IndexFragment extends Fragment {
         String userResourceName = "users/index/trending";
         UserBoxListAdapter userListAdapter = new UserBoxListAdapter();
 
-        debateList = new PaginatedListFragment(debateResourceName, debateListAdapter, null);
+        debateList = new PaginatedListFragment(debateResourceName, "CLIENT", debateListAdapter, null);
 
         getChildFragmentManager()
                 .beginTransaction()
                 .add(R.id.trending_debates_list, debateList)
-                .add(R.id.trending_users_list, new PaginatedListFragment(userResourceName, userListAdapter, null))
+                .add(R.id.trending_users_list, new PaginatedListFragment(userResourceName, "CLIENT", userListAdapter, null))
                 .commit();
 
         sortSelect.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
