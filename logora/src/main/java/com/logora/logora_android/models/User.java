@@ -1,5 +1,14 @@
 package com.logora.logora_android.models;
 
+import com.logora.logora_android.utils.DateUtil;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
     private String fullName;
     private String slug;
@@ -9,8 +18,33 @@ public class User {
     private Integer debatesCount;
     private Integer votesCount;
     private Integer disciplesCount;
+    private Integer notificationsCount;
 
     public User() {}
+
+    public static User objectFromJson(JSONObject jsonObject) {
+        User user = new User();
+        try {
+            user.setUid(jsonObject.getString("uid"));
+            user.setSlug(jsonObject.getString("slug"));
+            user.setId(jsonObject.getInt("id"));
+            user.setImageUrl(jsonObject.getString("image_url"));
+            user.setDebatesCount(jsonObject.getInt("debates_count"));
+            if (jsonObject.has("debates_votes_count") == true) {
+                user.setVotesCount(jsonObject.getInt("debates_votes_count"));
+            }
+            if (jsonObject.has("followers_count") == true) {
+                user.setDisciplesCount(jsonObject.getInt("followers_count"));
+            }
+            if (jsonObject.has("notifications_count") == true) {
+                user.setNotificationsCount(jsonObject.getInt("notifications_count"));
+            }
+            return user;
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public String getFullName() { return fullName; }
 
@@ -56,5 +90,13 @@ public class User {
 
     public void setDisciplesCount(Integer disciplesCount) {
         this.disciplesCount = disciplesCount;
+    }
+
+    public void setNotificationsCount(Integer debatesCount) {
+        this.notificationsCount = notificationsCount;
+    }
+
+    public Integer getNotificationsCount() {
+        return notificationsCount;
     }
 }

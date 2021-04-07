@@ -71,6 +71,7 @@ public class Auth {
                         currentUser.setSlug(currentUserObject.getString("slug"));
                         currentUser.setImageUrl(currentUserObject.getString("image_url"));
                         currentUser.setId(currentUserObject.getInt("id"));
+                        currentUser.setNotificationsCount(currentUserObject.getInt("notifications_count"));
                         this.setCurrentUser(currentUser);
                         this.setIsLoggedIn(true);
                         this.setIsLoggingIn(false);
