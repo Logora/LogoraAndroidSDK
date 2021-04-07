@@ -118,10 +118,12 @@ public class VoteBoxView extends RelativeLayout {
     }
 
     public void vote(Integer positionId) {
-        showResults();
         if(this.voteId != null) {
+            showResults();
             this.updateVote(positionId);
         } else {
+            this.debate.incrementVotesCount();
+            showResults();
             this.createVote(positionId);
         }
     }
