@@ -70,6 +70,7 @@ public class UserFragment extends Fragment {
 
         setTabsText();
         setStyles();
+        userArgumentsContainer.setVisibility(View.VISIBLE);
 
         ProgressBar spinner = view.findViewById(R.id.loader);
         spinner.setVisibility(View.VISIBLE);

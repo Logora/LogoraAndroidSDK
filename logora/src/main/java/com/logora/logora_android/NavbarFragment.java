@@ -44,6 +44,7 @@ public class NavbarFragment extends Fragment implements Auth.AuthListener {
     private TextView loginLinkView;
     private ImageView userProfileIconView;
     private ImageView userSearchIconView;
+    private TextView notificationsBadge;
 
     public NavbarFragment() {
         super(R.layout.fragment_navbar);
@@ -62,12 +63,21 @@ public class NavbarFragment extends Fragment implements Auth.AuthListener {
         //setTexts();
 
         if(auth.getIsLoggedIn()) {
+            Log.e("CURRENT USER", "IS LOGGED IN");
             navbarRightContainer.setVisibility(View.GONE);
             navbarRightUserContainer.setVisibility(View.VISIBLE);
 
             Glide.with(userProfileIconView.getContext())
                     .load(Uri.parse(auth.getCurrentUser().getImageUrl()))
                     .into(userProfileIconView);
+
+            /*if (auth.getCurrentUser().getNotificationsCount() > 0) {
+
+                notificationsBadge.setText(auth.getCurrentUser().getNotificationsCount());
+            } else {
+                Log.e("NOTIFS COUNT", String.valueOf(auth.getCurrentUser().getNotificationsCount()));
+                notificationsBadge.setVisibility(View.GONE);
+            }*/
         }
 
         indexButtonView.setOnClickListener(v -> {
@@ -98,6 +108,7 @@ public class NavbarFragment extends Fragment implements Auth.AuthListener {
         searchFormView = getView().findViewById(R.id.search_form_container);
         userProfileIconView = getView().findViewById(R.id.user_profile_icon);
         userSearchIconView = getView().findViewById(R.id.search_user_icon);
+        notificationsBadge = getView().findViewById(R.id.notification_badge);
     }
 
     public void setStyles() {

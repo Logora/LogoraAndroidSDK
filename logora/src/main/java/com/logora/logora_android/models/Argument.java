@@ -31,7 +31,9 @@ public class Argument extends Model {
             argument.setContent(jsonObject.getString("content"));
             argument.setPosition(Position.objectFromJson(jsonObject.getJSONObject("position")));
             argument.setPositionIndex(0); // Add function to compare groupContext positions and argument position
-            argument.setDebate(Debate.objectFromJson(jsonObject.getJSONObject("group")));
+            if (jsonObject.has("group") == true) {
+                argument.setDebate(Debate.objectFromJson(jsonObject.getJSONObject("group")));
+            };
             String publishedDate = jsonObject.getString("created_at");
             argument.setPublishedDate(DateUtil.parseDate(publishedDate));
 
