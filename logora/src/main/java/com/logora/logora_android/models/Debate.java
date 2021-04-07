@@ -158,7 +158,7 @@ public class Debate {
         this.positionList = positionList;
     }
 
-    public int getArgumentPositionIndex(Integer index) {
+    public int getPositionIndex(Integer index) {
         List<Position> positionList = this.getPositionList();
         Integer positionIndex = null;
         for (int i = 0; i < positionList.size(); i++){

@@ -8,10 +8,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.logora.logora_android.adapters.ListAdapter;
-import com.logora.logora_android.adapters.UserMessagesListAdapter;
 import com.logora.logora_android.view_models.ListViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -50,10 +48,11 @@ public class PaginatedListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setAdapter(listAdapter);
         emptyView = view.findViewById(R.id.empty_list_text);
         paginationButton = view.findViewById(R.id.pagination_button);
         loader = view.findViewById(R.id.loader);
+
+        recyclerView.setAdapter(listAdapter);
 
         loader.setVisibility(View.VISIBLE);
 
@@ -63,7 +62,6 @@ public class PaginatedListFragment extends Fragment {
                 emptyView.setVisibility(View.VISIBLE);
             } else {
                 listAdapter.update(itemList);
-                recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
                 loader.setVisibility(View.GONE);
                 if(!listViewModel.isLastPage()) {
                     paginationButton.setVisibility(View.VISIBLE);

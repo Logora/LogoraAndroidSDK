@@ -16,18 +16,24 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentContainerView;
 
 import com.bumptech.glide.Glide;
+import com.logora.logora_android.PaginatedListFragment;
 import com.logora.logora_android.R;
+import com.logora.logora_android.adapters.ArgumentListAdapter;
 import com.logora.logora_android.models.Argument;
 import com.logora.logora_android.models.Debate;
 import com.logora.logora_android.utils.Auth;
+import com.logora.logora_android.utils.DateUtil;
 import com.logora.logora_android.utils.LogoraApiClient;
 import com.logora.logora_android.utils.Settings;
 
@@ -51,6 +57,10 @@ public class ArgumentBox extends RelativeLayout {
     private ImageView argumentShareButton;
     private ImageView argumentMoreButton;
     private ArgumentVote argumentVote;
+    private LinearLayout argumentRepliesFooter;
+    private LinearLayout argumentRepliesContainer;
+    private FragmentContainerView argumentRepliesList;
+    private PaginatedListFragment repliesList;
 
     public ArgumentBox(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -83,6 +93,9 @@ public class ArgumentBox extends RelativeLayout {
         argumentVote = findViewById(R.id.argument_vote_container);
         argumentShareButton = findViewById(R.id.argument_share_button);
         argumentMoreButton = findViewById(R.id.argument_more_button);
+        argumentRepliesFooter = findViewById(R.id.argument_replies_footer);
+        argumentRepliesContainer = findViewById(R.id.argument_replies_container);
+        argumentRepliesList = findViewById(R.id.argument_replies_list);
     }
 
     public void updateWithObject(Object object, Debate debate, Context context) {
@@ -92,33 +105,48 @@ public class ArgumentBox extends RelativeLayout {
         String secondPositionPrimaryColor = settings.get("theme.secondPositionColorPrimary");
         LayerDrawable shape = (LayerDrawable) ContextCompat.getDrawable(context, R.drawable.position_background);
         Argument argument = (Argument) object;
-        if (argument != null) {
-            positionIndex = debate.getArgumentPositionIndex(argument.getPosition().getId());
-            if (positionIndex == 0) {
-                GradientDrawable gradientDrawable = (GradientDrawable) shape.findDrawableByLayerId(R.id.shape);
-                gradientDrawable.setColor(Color.parseColor(firstPositionPrimaryColor));
-            } else {
-                GradientDrawable gradientDrawable = (GradientDrawable) shape.findDrawableByLayerId(R.id.shape);
-                gradientDrawable.setColor(Color.parseColor(secondPositionPrimaryColor));
-            }
-            sideLabelView.setBackground(shape);
-            argumentVote.init(argument);
-            fullNameView.setText(argument.getAuthor().getFullName());
-            sideLabelView.setText(argument.getPosition().getName());
-            contentView.setText(argument.getContent());
-            dateView.setText(String.valueOf(argument.getPublishedDate()));
-            argumentShareButton.setOnClickListener(v -> {
-                openShareDialog("Cet argument devrait vous intéresser.");
+
+        positionIndex = debate.getPositionIndex(argument.getPosition().getId());
+        if (positionIndex == 0) {
+            GradientDrawable gradientDrawable = (GradientDrawable) shape.findDrawableByLayerId(R.id.shape);
+            gradientDrawable.setColor(Color.parseColor(firstPositionPrimaryColor));
+        } else {
+            GradientDrawable gradientDrawable = (GradientDrawable) shape.findDrawableByLayerId(R.id.shape);
+            gradientDrawable.setColor(Color.parseColor(secondPositionPrimaryColor));
+        }
+        sideLabelView.setBackground(shape);
+        argumentVote.init(argument);
+        fullNameView.setText(argument.getAuthor().getFullName());
+        sideLabelView.setText(argument.getPosition().getName());
+        contentView.setText(argument.getContent());
+        dateView.setText(DateUtil.getTimeAgo(argument.getPublishedDate()));
+        argumentShareButton.setOnClickListener(v -> {
+            openShareDialog("Cet argument devrait vous intéresser.");
+        });
+        argumentMoreButton.setOnClickListener(v -> {
+            openMoreActionsDialog(argument);
+        });
+        Glide.with(levelIconView.getContext())
+                .load(Uri.parse(argument.getAuthor().getLevelIconUrl()))
+                .into(levelIconView);
+        Glide.with(userImageView.getContext())
+                .load(Uri.parse(argument.getAuthor().getImageUrl()))
+                .into(userImageView);
+
+        String resourceName = "messages/" + argument.getId() + "/replies";
+        ArgumentListAdapter repliesListAdapter = new ArgumentListAdapter(debate);
+
+        repliesList = new PaginatedListFragment(resourceName, repliesListAdapter, null);
+
+        if(argument.getRepliesCount() > 0) {
+            argumentRepliesFooter.setVisibility(VISIBLE);
+            argumentRepliesFooter.setOnClickListener(v -> {
+                argumentRepliesContainer.setVisibility(VISIBLE);
+                ((AppCompatActivity) getContext()).getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.argument_replies_list, repliesList)
+                        .commit();
             });
-            argumentMoreButton.setOnClickListener(v -> {
-                openMoreActionsDialog(argument);
-            });
-            Glide.with(levelIconView.getContext())
-                    .load(Uri.parse(argument.getAuthor().getLevelIconUrl()))
-                    .into(levelIconView);
-            Glide.with(userImageView.getContext())
-                    .load(Uri.parse(argument.getAuthor().getImageUrl()))
-                    .into(userImageView);
         }
     }
 

@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import com.logora.logora_android.R;
 import com.logora.logora_android.models.Argument;
 import com.logora.logora_android.models.Debate;
-import com.logora.logora_android.utils.Router;
 import com.logora.logora_android.view_holders.ArgumentViewHolder;
 import com.logora.logora_android.view_holders.ListViewHolder;
 
@@ -21,7 +20,6 @@ import java.util.List;
 
 public class ArgumentListAdapter extends ListAdapter {
     private Debate debate;
-    private final Router router = Router.getInstance();
 
     public ArgumentListAdapter(Debate debate) {
         this.debate = debate;

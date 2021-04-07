@@ -12,7 +12,6 @@ import com.logora.logora_android.R;
 import com.logora.logora_android.models.Argument;
 import com.logora.logora_android.models.Debate;
 import com.logora.logora_android.utils.Router;
-import com.logora.logora_android.view_holders.ArgumentViewHolder;
 import com.logora.logora_android.view_holders.ListViewHolder;
 import com.logora.logora_android.view_holders.UserMessagesViewHolder;
 
