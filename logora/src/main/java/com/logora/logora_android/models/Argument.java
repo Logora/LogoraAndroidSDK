@@ -22,6 +22,7 @@ public class Argument extends Model {
     private Boolean isReply;
     private Integer repliesCount;
     private Integer parentArgumentId = null;
+    private List <UserIcon> repliesAuthorsList;
 
     public Argument() {}
 
@@ -55,6 +56,18 @@ public class Argument extends Model {
                 votesList.add(votesObjects.getJSONObject(i));
             }
             argument.setVotesList(votesList);
+
+            JSONArray repliesAuthorsObjects = jsonObject.getJSONArray("replies_authors");
+            List<UserIcon> repliesAuthorsList = new ArrayList<>();
+            for (int i=0; i < repliesAuthorsObjects.length(); i++){
+                UserIcon authorIcon = new UserIcon();
+                JSONObject authorObject = repliesAuthorsObjects.getJSONObject(i);
+                authorIcon.setImageUrl(authorObject.getString("authorImage"));
+                authorIcon.setFullName(authorObject.getString("authorName"));
+                repliesAuthorsList.add(authorIcon);
+            }
+            argument.setRepliesAuthorsList(repliesAuthorsList);
+
             return argument;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -155,4 +168,8 @@ public class Argument extends Model {
     public void setRepliesCount(Integer repliesCount) {
         this.repliesCount = repliesCount;
     }
+
+    public List<UserIcon> getRepliesAuthorsList() { return this.repliesAuthorsList; }
+
+    public void setRepliesAuthorsList(List<UserIcon> repliesAuthorsList) { this.repliesAuthorsList = repliesAuthorsList; }
 }

@@ -22,7 +22,6 @@ import org.json.JSONObject;
 import java.util.List;
 
 public class DebateBoxViewHolder extends ListViewHolder {
-    private DebateBox debateBox;
     private TextView debateNameView;
     private ImageView debateImageView;
     private TextView debateVoteView;
@@ -52,7 +51,6 @@ public class DebateBoxViewHolder extends ListViewHolder {
     @Override
     public void updateWithObject(Object object) {
         DebateBox debateBox = (DebateBox) object;
-        this.debateBox = debateBox;
         debateNameView.setText(debateBox.getName());
         Glide.with(debateImageView.getContext())
                 .load(Uri.parse(debateBox.getImageUrl()))

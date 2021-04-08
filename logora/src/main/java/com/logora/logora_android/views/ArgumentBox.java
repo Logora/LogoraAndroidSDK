@@ -25,13 +25,16 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentContainerView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.logora.logora_android.PaginatedListFragment;
 import com.logora.logora_android.R;
 import com.logora.logora_android.adapters.ArgumentListAdapter;
+import com.logora.logora_android.adapters.UserIconListAdapter;
 import com.logora.logora_android.models.Argument;
 import com.logora.logora_android.models.Debate;
+import com.logora.logora_android.models.UserIcon;
 import com.logora.logora_android.utils.Auth;
 import com.logora.logora_android.utils.DateUtil;
 import com.logora.logora_android.utils.LogoraApiClient;
@@ -39,6 +42,8 @@ import com.logora.logora_android.utils.Settings;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 public class ArgumentBox extends RelativeLayout {
     private Context context;
@@ -58,7 +63,9 @@ public class ArgumentBox extends RelativeLayout {
     private ImageView argumentMoreButton;
     private ArgumentVote argumentVote;
     private LinearLayout argumentRepliesFooter;
-    private LinearLayout argumentRepliesContainer;
+    private RelativeLayout argumentRepliesContainer;
+    private RecyclerView argumentRepliesAuthorsList;
+    private UserIconListAdapter argumentRepliesAuthorsListAdapter;
     private FragmentContainerView argumentRepliesList;
     private PaginatedListFragment repliesList;
 
@@ -95,7 +102,10 @@ public class ArgumentBox extends RelativeLayout {
         argumentMoreButton = findViewById(R.id.argument_more_button);
         argumentRepliesFooter = findViewById(R.id.argument_replies_footer);
         argumentRepliesContainer = findViewById(R.id.argument_replies_container);
+        argumentRepliesAuthorsList = findViewById(R.id.argument_replies_authors_list);
         argumentRepliesList = findViewById(R.id.argument_replies_list);
+        argumentRepliesAuthorsListAdapter = new UserIconListAdapter();
+        argumentRepliesAuthorsList.setAdapter(argumentRepliesAuthorsListAdapter);
     }
 
     public void updateWithObject(Object object, Debate debate, Context context) {
@@ -140,6 +150,14 @@ public class ArgumentBox extends RelativeLayout {
 
         if(argument.getRepliesCount() > 0) {
             argumentRepliesFooter.setVisibility(VISIBLE);
+
+            List<UserIcon> authorsList = argument.getRepliesAuthorsList();
+            if(authorsList.size() == 0) {
+                argumentRepliesAuthorsList.setVisibility(View.GONE);
+            } else {
+                //argumentRepliesAuthorsListAdapter.update(authorsList);
+            }
+
             argumentRepliesFooter.setOnClickListener(v -> {
                 argumentRepliesContainer.setVisibility(VISIBLE);
                 ((AppCompatActivity) getContext()).getSupportFragmentManager()
