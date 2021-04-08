@@ -32,7 +32,7 @@ public class NotificationFragment extends Fragment {
         findViews(view);
 
         NotificationListAdapter notificationListAdapter = new NotificationListAdapter();
-        notificationList = new PaginatedListFragment("notifications", notificationListAdapter, null);
+        notificationList = new PaginatedListFragment("notifications", "USER", notificationListAdapter, null);
 
         getChildFragmentManager()
                 .beginTransaction()

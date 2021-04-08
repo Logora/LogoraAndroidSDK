@@ -25,11 +25,16 @@ public class User {
     public static User objectFromJson(JSONObject jsonObject) {
         User user = new User();
         try {
-            user.setUid(jsonObject.getString("uid"));
+            if (jsonObject.has("uid") == true) {
+                user.setUid(jsonObject.getString("uid"));
+            }
             user.setSlug(jsonObject.getString("slug"));
             user.setId(jsonObject.getInt("id"));
             user.setImageUrl(jsonObject.getString("image_url"));
-            user.setDebatesCount(jsonObject.getInt("debates_count"));
+            user.setFullName(jsonObject.getString("full_name"));
+            if (jsonObject.has("debates_count") == true) {
+                user.setDebatesCount(jsonObject.getInt("debates_count"));
+            }
             if (jsonObject.has("debates_votes_count") == true) {
                 user.setVotesCount(jsonObject.getInt("debates_votes_count"));
             }

@@ -69,7 +69,6 @@ public class NavbarFragment extends Fragment implements Auth.AuthListener {
         //setTexts();
 
         if(auth.getIsLoggedIn()) {
-            Log.e("CURRENT USER", "IS LOGGED IN");
             navbarRightContainer.setVisibility(View.GONE);
             navbarRightUserContainer.setVisibility(View.VISIBLE);
 
@@ -77,6 +76,7 @@ public class NavbarFragment extends Fragment implements Auth.AuthListener {
                     .load(Uri.parse(auth.getCurrentUser().getImageUrl()))
                     .into(userProfileIconView);
 
+            // Update NOTIFICATION BADGE COUNT
             /*if (auth.getCurrentUser().getNotificationsCount() > 0) {
 
                 notificationsBadge.setText(auth.getCurrentUser().getNotificationsCount());
@@ -103,13 +103,6 @@ public class NavbarFragment extends Fragment implements Auth.AuthListener {
             routeParams.put("userSlug", auth.getCurrentUser().getSlug());
             router.setCurrentRoute(Router.getRoute("USER"), routeParams, null);
         });
-
-        NotificationListAdapter notificationListAdapter = new NotificationListAdapter();
-        PaginatedListFragment notificationListFragment = new PaginatedListFragment("notifications", notificationListAdapter, null);
-
-        /*notificationButton.setOnClickListener(new View.OnClickListener() {
-            // Add Notification Fragment
-        });*/
     }
 
     public void findViews(View view) {
