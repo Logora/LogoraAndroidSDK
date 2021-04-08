@@ -28,6 +28,9 @@ public class Router {
         searchRouteQueryParamDef.put("q", "");
         Route searchRoute = new Route("SEARCH", "/recherche", null, searchRouteQueryParamDef);
         Router.routes.put(searchRoute.getName(), searchRoute);
+
+        Route notificationRoute = new Route("NOTIFICATIONS", "/notifications", null, null);
+        Router.routes.put(notificationRoute.getName(), notificationRoute);
     }
 
     public static Route getRoute(String routeName) {

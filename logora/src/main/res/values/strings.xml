@@ -75,4 +75,21 @@
     <string name="more_actions">Plus d\'actions</string>
     <string name="report">Signaler</string>
     <string name="participants_count">Nombre de participants</string>
+    <string name="notification">Notification</string>
+    <string name="notifications_new_badge">Vous avez obtenu le badge</string>
+    <string name="notifications_level_up">Vous êtes maintenant au niveau</string>
+    <string name="notifications_mentor_level_up">a atteint le niveau </string>
+    <string name="notifications_followed">vous a suivi</string>
+    <string name="notifications_multiple_answers">autres personnes ont répondu</string>
+    <string name="notifications_answer">a répondu</string>
+    <string name="notifications_multiple_support">autres personnes soutiennent</string>
+    <string name="notifications_support">soutient</string>
+    <string name="notifications_multiple_participations">autres personnes ont participé</string>
+    <string name="notifications_participation">a participé</string>
+    <string name="notifications_subject">a votre message dans le débat</string>
+    <string name="notifications_subject_argument">votre argument</string>
+    <string name="notifications_subject_debate">dans le débat</string>
+    <string name="notifications_read_all">Tout marquer comme lu</string>
+    <string name="notifications_group_invitation_action">vous provoque en duel</string>
+    <string name="view_more">Voir plus</string>
 </resources>

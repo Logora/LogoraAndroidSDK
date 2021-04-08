@@ -6,18 +6,23 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.logora.logora_android.adapters.NotificationListAdapter;
+import com.logora.logora_android.adapters.UserMessagesListAdapter;
 import com.logora.logora_android.utils.Auth;
 import com.logora.logora_android.utils.LogoraApiClient;
 import com.logora.logora_android.utils.Router;
@@ -45,6 +50,7 @@ public class NavbarFragment extends Fragment implements Auth.AuthListener {
     private ImageView userProfileIconView;
     private ImageView userSearchIconView;
     private TextView notificationsBadge;
+    private ImageView notificationButton;
 
     public NavbarFragment() {
         super(R.layout.fragment_navbar);
@@ -63,7 +69,6 @@ public class NavbarFragment extends Fragment implements Auth.AuthListener {
         //setTexts();
 
         if(auth.getIsLoggedIn()) {
-            Log.e("CURRENT USER", "IS LOGGED IN");
             navbarRightContainer.setVisibility(View.GONE);
             navbarRightUserContainer.setVisibility(View.VISIBLE);
 
@@ -71,6 +76,7 @@ public class NavbarFragment extends Fragment implements Auth.AuthListener {
                     .load(Uri.parse(auth.getCurrentUser().getImageUrl()))
                     .into(userProfileIconView);
 
+            // Update NOTIFICATION BADGE COUNT
             /*if (auth.getCurrentUser().getNotificationsCount() > 0) {
 
                 notificationsBadge.setText(auth.getCurrentUser().getNotificationsCount());
@@ -109,6 +115,7 @@ public class NavbarFragment extends Fragment implements Auth.AuthListener {
         userProfileIconView = getView().findViewById(R.id.user_profile_icon);
         userSearchIconView = getView().findViewById(R.id.search_user_icon);
         notificationsBadge = getView().findViewById(R.id.notification_badge);
+        notificationButton = getView().findViewById(R.id.notification_icon);
     }
 
     public void setStyles() {
