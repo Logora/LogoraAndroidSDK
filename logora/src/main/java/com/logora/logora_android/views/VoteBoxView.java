@@ -2,6 +2,7 @@ package com.logora.logora_android.views;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -117,10 +118,12 @@ public class VoteBoxView extends RelativeLayout {
     }
 
     public void vote(Integer positionId) {
-        showResults();
         if(this.voteId != null) {
+            showResults();
             this.updateVote(positionId);
         } else {
+            this.debate.incrementVotesCount();
+            showResults();
             this.createVote(positionId);
         }
     }
@@ -144,19 +147,19 @@ public class VoteBoxView extends RelativeLayout {
 
     public void updateVote(Integer positionId) {
         this.apiClient.updateVote(
-                response -> {
-                    try {
-                        boolean success = response.getBoolean("success");
-                        JSONObject vote = response.getJSONObject("data").getJSONObject("resource");
-                        if(success) {
-                            this.voteId = vote.getInt("id");
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+            response -> {
+                try {
+                    boolean success = response.getBoolean("success");
+                    JSONObject vote = response.getJSONObject("data").getJSONObject("resource");
+                    if(success) {
+                        this.voteId = vote.getInt("id");
                     }
-                }, error -> {
-                    Log.i("ERROR", "error");
-                }, this.voteId, positionId);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }, error -> {
+                Log.i("ERROR", "error");
+            }, this.voteId, positionId);
     }
 
     private void showButtons() {
@@ -170,7 +173,10 @@ public class VoteBoxView extends RelativeLayout {
         voteFirstPositionButton.setText(this.debate.getPositionList().get(0).getName());
         voteSecondPositionButton.setText(this.debate.getPositionList().get(1).getName());
 
-        votesCountView.setText(String.valueOf(debate.getVotesCount()));
+        int count = debate.getVotesCount();
+        Resources res = getResources();
+        String votesCount = res.getQuantityString(R.plurals.debate_votes_count, count, count);
+        votesCountView.setText(votesCount);
     }
 
     private void showResults() {
@@ -183,8 +189,12 @@ public class VoteBoxView extends RelativeLayout {
         voteFirstPositionResultText.setText(this.debate.getPositionList().get(0).getName());
         voteSecondPositionResultText.setText(this.debate.getPositionList().get(1).getName());
 
-        voteResultsCountView.setText(String.valueOf(debate.getVotesCount()));
         voteFirstPositionProgress.setProgressTintList(ColorStateList.valueOf(Color.parseColor(firstPositionPrimaryColor)));
         voteSecondPositionProgress.setProgressTintList(ColorStateList.valueOf(Color.parseColor(secondPositionPrimaryColor)));
+
+        int count = debate.getVotesCount();
+        Resources res = getResources();
+        String votesCount = res.getQuantityString(R.plurals.debate_votes_count, count, count);
+        voteResultsCountView.setText(votesCount);
     }
 }

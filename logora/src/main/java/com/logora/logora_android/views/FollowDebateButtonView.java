@@ -2,10 +2,11 @@ package com.logora.logora_android.views;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 
 import androidx.core.content.ContextCompat;
 
@@ -15,12 +16,11 @@ import com.logora.logora_android.utils.LogoraApiClient;
 import com.logora.logora_android.utils.Settings;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 public class FollowDebateButtonView extends androidx.appcompat.widget.AppCompatButton implements View.OnClickListener {
     private Settings settings = Settings.getInstance();
     private LogoraApiClient apiClient = LogoraApiClient.getInstance();
-    private Context context;
+    private final Context context;
     private Debate debate;
     Boolean active = false;
 
@@ -82,22 +82,22 @@ public class FollowDebateButtonView extends androidx.appcompat.widget.AppCompatB
         this.setInactive();
         this.setEnabled(false);
         this.apiClient.unfollowDebate(
-                response -> {
-                    try {
-                        boolean success = response.getBoolean("success");
-                        if(success) {
-                            this.setEnabled(true);
-                        } else {
-                            setActive();
-                        }
-                    } catch (JSONException e) {
+            response -> {
+                try {
+                    boolean success = response.getBoolean("success");
+                    if(success) {
+                        this.setEnabled(true);
+                    } else {
                         setActive();
-                        e.printStackTrace();
                     }
-                },
-                error -> {
+                } catch (JSONException e) {
                     setActive();
-                }, this.debate.getSlug());
+                    e.printStackTrace();
+                }
+            },
+            error -> {
+                setActive();
+            }, this.debate.getSlug());
     }
 
     public void init(Debate debate) {
@@ -126,8 +126,12 @@ public class FollowDebateButtonView extends androidx.appcompat.widget.AppCompatB
         } else {
             this.setText(R.string.debate_follow_active);
         }
+
         this.setTextColor(Color.WHITE);
-        this.setBackgroundColor(Color.parseColor(primaryColor));
+        LayerDrawable shape = (LayerDrawable) ContextCompat.getDrawable(this.context, R.drawable.button_active_background);
+        GradientDrawable gradientDrawable = (GradientDrawable) shape.findDrawableByLayerId(R.id.shape);
+        gradientDrawable.setColor(Color.parseColor(primaryColor));
+        this.setBackground(shape);
     }
 
     private void setInactive() {
@@ -140,7 +144,11 @@ public class FollowDebateButtonView extends androidx.appcompat.widget.AppCompatB
         } else {
             this.setText(R.string.debate_follow_inactive);
         }
+
         this.setTextColor(Color.parseColor(primaryColor));
-        this.setBackgroundDrawable(ContextCompat.getDrawable(context, R.drawable.button_inactive_background));
+        LayerDrawable shape = (LayerDrawable) ContextCompat.getDrawable(this.context, R.drawable.button_inactive_background);
+        GradientDrawable gradientDrawable = (GradientDrawable) shape.findDrawableByLayerId(R.id.border);
+        gradientDrawable.setColor(Color.parseColor(primaryColor));
+        this.setBackground(shape);
     }
 }

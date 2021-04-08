@@ -44,7 +44,10 @@
     <string name="debate_published_date">Date de publication du débat</string>
     <string name="debate_first_position">Oui</string>
     <string name="debate_second_position">Non</string>
-    <string name="debate_votes_count">0 votes</string>
+    <plurals name="debate_votes_count">
+        <item quantity="one">%d vote</item>
+        <item quantity="other">%d votes</item>
+    </plurals>
     <string name="debate_edit_vote">Modifier</string>
     <string name="debate_first_position_progress_text">50%</string>
     <string name="debate_second_position_progress_text">50%</string>
