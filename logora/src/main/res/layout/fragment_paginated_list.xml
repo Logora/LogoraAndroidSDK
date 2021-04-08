@@ -40,7 +40,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/loader"
         android:visibility="gone"
-        app:buttonTextKey="infoSeeMoreDebates"
-        android:text="@string/infoSeeMoreDebates"
+        app:buttonTextKey="infoSeeMore"
+        android:text="@string/view_more"
         style="@style/PrimaryButton" />
 </RelativeLayout>

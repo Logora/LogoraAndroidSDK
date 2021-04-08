@@ -3,13 +3,15 @@ package com.logora.logora_android.models;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Notification extends Model {
-    private Integer id;
-    private User actor;
-    private String notifyType;
-    private String redirectUrl;
-
-    public Notification() {}
+public class Notification<T1, T2, T3> extends Model {
+    protected Integer id;
+    protected User actor;
+    protected String notifyType;
+    protected String redirectUrl;
+    protected Integer actorCount;
+    protected T1 target;
+    protected T2 secondTarget;
+    protected T3 thirdTarget;
 
     public static Notification objectFromJson(JSONObject jsonObject) {
         Notification notification = new Notification();
@@ -18,6 +20,7 @@ public class Notification extends Model {
             notification.setActor(User.objectFromJson(jsonObject.getJSONObject("actor")));
             notification.setNotifyType(jsonObject.getString("notify_type"));
             notification.setRedirectUrl(jsonObject.getString("redirect_url"));
+            notification.setActorCount(jsonObject.getInt("actor_count"));
             return notification;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -37,6 +40,10 @@ public class Notification extends Model {
 
     public void setActor(User actor) { this.actor = actor; }
 
+    public Integer getActorCount() { return actorCount; }
+
+    public void setActorCount(Integer actorCount) { this.actorCount = actorCount; }
+
     public String getNotifyType() { return notifyType; }
 
     public void setNotifyType(String notifyType) { this.notifyType = notifyType; }
@@ -44,4 +51,20 @@ public class Notification extends Model {
     public String getRedirectUrl() { return redirectUrl; }
 
     public void setRedirectUrl(String redirectUrl) { this.redirectUrl = redirectUrl; }
+
+    public T1 getTarget() { return target; }
+
+    public void setTarget(T1 target) { this.target = target; }
+
+    public T2 getSecondTarget() { return secondTarget; }
+
+    public void setSecondTarget(T2 secondTarget) { this.secondTarget = secondTarget; }
+
+    public T3 getThirdTarget() { return thirdTarget; }
+
+    public void setThirdTarget(T3 secondTarget) { this.thirdTarget = thirdTarget; }
+
+    public String getImageUrl() {
+        return this.getActor().getImageUrl();
+    }
 }
