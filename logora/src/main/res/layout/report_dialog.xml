@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/report_dialog_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -33,16 +34,23 @@
         android:id="@+id/report_dialog_input_subtitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="left"
+        android:gravity="start"
+        android:labelFor="@+id/tell_us_more_input"
         android:text="Dites nous en plus :" />
 
     <EditText
         android:id="@+id/tell_us_more_input"
         android:layout_height="wrap_content"
-        android:minHeight="200dp"
         android:layout_width="match_parent"
-        android:layout_marginBottom="10dp"
-        android:inputType="text"/>
+        android:layout_marginBottom="6dp"
+        android:backgroundTint="@color/text_secondary"
+        android:textCursorDrawable="@null"
+        android:inputType="textMultiLine"
+        android:lines="3"
+        android:minLines="3"
+        android:gravity="top"
+        android:maxLines="10"
+        android:autofillHints="Description" />
 
     <com.logora.logora_android.views.PrimaryButton
         android:id="@+id/report_dialog_submit"

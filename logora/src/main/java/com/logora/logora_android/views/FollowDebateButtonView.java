@@ -12,14 +12,16 @@ import androidx.core.content.ContextCompat;
 
 import com.logora.logora_android.R;
 import com.logora.logora_android.models.Debate;
+import com.logora.logora_android.utils.Auth;
 import com.logora.logora_android.utils.LogoraApiClient;
 import com.logora.logora_android.utils.Settings;
 
 import org.json.JSONException;
 
 public class FollowDebateButtonView extends androidx.appcompat.widget.AppCompatButton implements View.OnClickListener {
-    private Settings settings = Settings.getInstance();
-    private LogoraApiClient apiClient = LogoraApiClient.getInstance();
+    private final Settings settings = Settings.getInstance();
+    private final Auth auth = Auth.getInstance();
+    private final LogoraApiClient apiClient = LogoraApiClient.getInstance();
     private final Context context;
     private Debate debate;
     Boolean active = false;
@@ -102,18 +104,20 @@ public class FollowDebateButtonView extends androidx.appcompat.widget.AppCompatB
 
     public void init(Debate debate) {
         this.debate = debate;
-        this.apiClient.getDebateFollow(
-            response -> {
-                try {
-                    boolean success = response.getBoolean("success");
-                    boolean follow = response.getJSONObject("data").getBoolean("follow");
-                    if(success && follow) {
-                        setActive();
+        if(this.auth.getIsLoggedIn()) {
+            this.apiClient.getDebateFollow(
+                response -> {
+                    try {
+                        boolean success = response.getBoolean("success");
+                        boolean follow = response.getJSONObject("data").getBoolean("follow");
+                        if(success && follow) {
+                            setActive();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }, Throwable::printStackTrace, Integer.valueOf(debate.getId()));
+                }, Throwable::printStackTrace, Integer.valueOf(debate.getId()));
+        }
     }
 
     private void setActive() {

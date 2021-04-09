@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentContainerView;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -32,6 +34,7 @@ import com.logora.logora_android.PaginatedListFragment;
 import com.logora.logora_android.R;
 import com.logora.logora_android.adapters.ArgumentListAdapter;
 import com.logora.logora_android.adapters.UserIconListAdapter;
+import com.logora.logora_android.dialogs.ReportDialog;
 import com.logora.logora_android.models.Argument;
 import com.logora.logora_android.models.Debate;
 import com.logora.logora_android.models.UserIcon;
@@ -50,6 +53,7 @@ public class ArgumentBox extends RelativeLayout {
     private Auth authClient = Auth.getInstance();
     private LogoraApiClient apiClient = LogoraApiClient.getInstance();
     private Debate debate;
+    private Argument argument;
     private Integer positionIndex = 0;
     private final Settings settings = Settings.getInstance();
     private TextView fullNameView;
@@ -59,15 +63,17 @@ public class ArgumentBox extends RelativeLayout {
     private TextView dateView;
     private ImageView levelIconView;
     private ImageView userImageView;
+    private RelativeLayout argumentContainer;
     private ImageView argumentShareButton;
     private ImageView argumentMoreButton;
     private ArgumentVote argumentVote;
     private LinearLayout argumentRepliesFooter;
-    private RelativeLayout argumentRepliesContainer;
     private RecyclerView argumentRepliesAuthorsList;
     private UserIconListAdapter argumentRepliesAuthorsListAdapter;
-    private FragmentContainerView argumentRepliesList;
+    private FrameLayout argumentRepliesList;
     private PaginatedListFragment repliesList;
+    private Boolean toggleReplies = false;
+    private FragmentTransaction argumentRepliesTransaction;
 
     public ArgumentBox(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -97,24 +103,23 @@ public class ArgumentBox extends RelativeLayout {
         contentView = findViewById(R.id.argument_content);
         userImageView = findViewById(R.id.user_image);
         dateView = findViewById(R.id.argument_date);
+        argumentContainer = findViewById(R.id.argument_container);
         argumentVote = findViewById(R.id.argument_vote_container);
         argumentShareButton = findViewById(R.id.argument_share_button);
         argumentMoreButton = findViewById(R.id.argument_more_button);
         argumentRepliesFooter = findViewById(R.id.argument_replies_footer);
-        argumentRepliesContainer = findViewById(R.id.argument_replies_container);
         argumentRepliesAuthorsList = findViewById(R.id.argument_replies_authors_list);
         argumentRepliesList = findViewById(R.id.argument_replies_list);
         argumentRepliesAuthorsListAdapter = new UserIconListAdapter();
-        argumentRepliesAuthorsList.setAdapter(argumentRepliesAuthorsListAdapter);
     }
 
     public void updateWithObject(Object object, Debate debate, Context context) {
         this.context = context;
+        this.argument = (Argument) object;
         this.debate = debate;
         String firstPositionPrimaryColor = settings.get("theme.firstPositionColorPrimary");
         String secondPositionPrimaryColor = settings.get("theme.secondPositionColorPrimary");
         LayerDrawable shape = (LayerDrawable) ContextCompat.getDrawable(context, R.drawable.position_background);
-        Argument argument = (Argument) object;
 
         positionIndex = debate.getPositionIndex(argument.getPosition().getId());
         if (positionIndex == 0) {
@@ -124,6 +129,11 @@ public class ArgumentBox extends RelativeLayout {
             GradientDrawable gradientDrawable = (GradientDrawable) shape.findDrawableByLayerId(R.id.shape);
             gradientDrawable.setColor(Color.parseColor(secondPositionPrimaryColor));
         }
+
+        if(argument.getIsReply()) {
+            this.setReplyStyle();
+        }
+
         sideLabelView.setBackground(shape);
         argumentVote.init(argument);
         fullNameView.setText(argument.getAuthor().getFullName());
@@ -134,7 +144,7 @@ public class ArgumentBox extends RelativeLayout {
             openShareDialog("Cet argument devrait vous intéresser.");
         });
         argumentMoreButton.setOnClickListener(v -> {
-            openMoreActionsDialog(argument);
+            openMoreActionsDialog();
         });
         Glide.with(levelIconView.getContext())
                 .load(Uri.parse(argument.getAuthor().getLevelIconUrl()))
@@ -145,27 +155,35 @@ public class ArgumentBox extends RelativeLayout {
 
         String resourceName = "messages/" + argument.getId() + "/replies";
         ArgumentListAdapter repliesListAdapter = new ArgumentListAdapter(debate);
-
         repliesList = new PaginatedListFragment(resourceName, "CLIENT", repliesListAdapter, null);
+
+        List<JSONObject> authorsList = argument.getRepliesAuthorsList();
+        argumentRepliesAuthorsList.setAdapter(argumentRepliesAuthorsListAdapter);
+        argumentRepliesAuthorsListAdapter.setItems(authorsList);
+
+        argumentRepliesTransaction = ((AppCompatActivity) getContext()).getSupportFragmentManager().beginTransaction();
+
+        argumentRepliesFooter.setOnClickListener(v -> {
+            this.toggleReplies(argument.getId());
+        });
 
         if(argument.getRepliesCount() > 0) {
             argumentRepliesFooter.setVisibility(VISIBLE);
-
-            List<UserIcon> authorsList = argument.getRepliesAuthorsList();
-            if(authorsList.size() == 0) {
-                argumentRepliesAuthorsList.setVisibility(View.GONE);
-            } else {
-                //argumentRepliesAuthorsListAdapter.update(authorsList);
-            }
-
-            argumentRepliesFooter.setOnClickListener(v -> {
-                argumentRepliesContainer.setVisibility(VISIBLE);
-                ((AppCompatActivity) getContext()).getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.argument_replies_list, repliesList)
-                        .commit();
-            });
         }
+    }
+
+    private void toggleReplies(Integer argumentId) {
+        if(this.toggleReplies) {
+            argumentRepliesList.setVisibility(GONE);
+            this.toggleReplies = false;
+        } else {
+            argumentRepliesTransaction.add(R.id.argument_replies_list, repliesList, argumentId + "_REPLIES").commit();
+            this.toggleReplies = true;
+        }
+    }
+
+    private void setReplyStyle() {
+        argumentContainer.setBackgroundColor(getResources().getColor(R.color.text_tertiary));
     }
 
     private void openShareDialog(String subject) {
@@ -175,10 +193,10 @@ public class ArgumentBox extends RelativeLayout {
         this.context.startActivity(Intent.createChooser(share, "Partager l'argument"));
     }
 
-    private void openMoreActionsDialog(Argument argument) {
+    private void openMoreActionsDialog() {
         String[] actionsList;
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        if(argument.getAuthor().getId() == authClient.getCurrentUser().getId()) {
+        if(authClient.getIsLoggedIn() && argument.getAuthor().getId().equals(authClient.getCurrentUser().getId())) {
             actionsList = new String[]{"Modifier", "Supprimer", "Signaler"};
         } else {
             actionsList = new String[]{"Signaler"};
@@ -194,14 +212,12 @@ public class ArgumentBox extends RelativeLayout {
                             Log.i("SUPPRIMER :", "supprimer");
                             break;
                         case 2:
-                            openReportDialog(argument);
+                            openReportDialog();
                             break;
                     }
                 } else {
-                    switch (which) {
-                        case 0:
-                            openReportDialog(argument);
-                            break;
+                    if(which == 0) {
+                        openReportDialog();
                     }
                 }
             }
@@ -210,92 +226,7 @@ public class ArgumentBox extends RelativeLayout {
         dialog.show();
     }
 
-    private void openReportDialog(Argument argument) {
-        final String[] reportClassification = new String[1];
-        final String[] reportDescription = new String[1];
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View reportLayout = inflater.inflate(R.layout.report_dialog, null);
-
-        builder.setView(reportLayout);
-        builder.setTitle("Signaler un argument");
-
-        Spinner reportDropdown = reportLayout.findViewById(R.id.report_reason_select);
-        EditText reportInput = reportLayout.findViewById(R.id.tell_us_more_input);
-        PrimaryButton reportSubmitButton = reportLayout.findViewById(R.id.report_dialog_submit);
-        String[] items = new String[]{
-                "Contenu indésirable ou de mauvaise qualité",
-                "Harcèlement",
-                "Discours haineux",
-                "Plagiat",
-                "Fausses informations"
-        };
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, items);
-        reportDropdown.setAdapter(adapter);
-
-        AlertDialog dialog = builder.create();
-        dialog.show();
-
-        reportDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                switch (position) {
-                    case 0:
-                        reportClassification[0] = "spam";
-                        Log.i("Classification :", reportClassification[0]);
-                        break;
-                    case 1:
-                        reportClassification[0] = "harassment";
-                        Log.i("Classification :", reportClassification[0]);
-                        break;
-                    case 2:
-                        reportClassification[0] = "hate_speech";
-                        Log.i("Classification :", reportClassification[0]);
-                        break;
-                    case 3:
-                        reportClassification[0] = "plagiarism";
-                        Log.i("Classification :", reportClassification[0]);
-                        break;
-                    case 4:
-                        reportClassification[0] = "fake_news";
-                        Log.i("Classification :", reportClassification[0]);
-                        break;
-                }
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-            }
-        });
-
-        reportSubmitButton.setOnClickListener(v -> {
-            reportDescription[0] = reportInput.getText().toString();
-            createReport(argument.getId(), reportClassification[0], reportDescription[0]);
-            dialog.dismiss();
-        });
-    }
-
-    private void createReport(Integer argumentId, String reportClassification, String reportDescription) {
-        this.apiClient.createReport(
-                response -> {
-                    try {
-                        boolean success = response.getBoolean("success");
-                        JSONObject vote = response.getJSONObject("data").getJSONObject("resource");
-                        if(success) {
-                            showToastMessage("Votre signalement à bien été envoyé.");
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }, error -> {
-                    Log.i("ERROR", "error");
-                    showToastMessage("Un problème est survenu lors de l'envoi de votre signalement.");
-                }, argumentId, "Message", reportClassification, reportDescription);
-    }
-
-    private void showToastMessage(String message) {
-        int duration = Toast.LENGTH_SHORT;
-
-        Toast toast = Toast.makeText(this.context, message, duration);
-        toast.show();
+    private void openReportDialog() {
+        ReportDialog.show(context, argument);
     }
 }
