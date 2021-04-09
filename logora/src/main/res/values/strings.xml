@@ -76,6 +76,7 @@
     <string name="report">Signaler</string>
     <string name="participants_count">Nombre de participants</string>
     <string name="notification">Notification</string>
+    <string name="notifications">Notifications</string>
     <string name="notifications_new_badge">Vous avez obtenu le badge</string>
     <string name="notifications_level_up">Vous êtes maintenant au niveau</string>
     <string name="notifications_mentor_level_up">a atteint le niveau </string>

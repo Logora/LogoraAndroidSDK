@@ -1,19 +1,25 @@
 package com.logora.logora_android;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
 import com.logora.logora_android.adapters.DebateBoxListAdapter;
 import com.logora.logora_android.adapters.NotificationListAdapter;
 import com.logora.logora_android.adapters.UserBoxListAdapter;
+import com.logora.logora_android.utils.LogoraApiClient;
 import com.logora.logora_android.utils.Router;
+import com.logora.logora_android.utils.Settings;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
 
 /**
  * A {@link Fragment} subclass containing the debate space notification center when the user is connected.
@@ -21,7 +27,10 @@ import org.jetbrains.annotations.NotNull;
 
 public class NotificationFragment extends Fragment {
     private final Router router = Router.getInstance();
+    private final Settings settings = Settings.getInstance();
+    private LogoraApiClient apiClient = LogoraApiClient.getInstance();
     private PaginatedListFragment notificationList;
+    private TextView readAllButton;
 
     public NotificationFragment() { super(R.layout.fragment_notification); }
 
@@ -30,6 +39,19 @@ public class NotificationFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         findViews(view);
+        String primaryColor = settings.get("theme.callPrimaryColor");
+        readAllButton.setTextColor(Color.parseColor(primaryColor));
+        readAllButton.setOnClickListener(v -> {
+            this.apiClient.readAllNotifications(
+                response -> {
+                    try {
+                        boolean success = response.getBoolean("success");
+                        Log.e("onClick", "SUCESS");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }, Throwable::printStackTrace);
+        });
 
         NotificationListAdapter notificationListAdapter = new NotificationListAdapter();
         notificationList = new PaginatedListFragment("notifications", "USER", notificationListAdapter, null);
@@ -41,6 +63,6 @@ public class NotificationFragment extends Fragment {
     }
 
     private void findViews(View view) {
-        // Find views here
+        readAllButton = view.findViewById(R.id.read_all_button);
     }
 }

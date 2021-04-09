@@ -15,11 +15,14 @@ import com.logora.logora_android.models.GroupFollowArgumentNotification;
 import com.logora.logora_android.models.GroupReplyNotification;
 import com.logora.logora_android.models.LevelUnlockNotification;
 import com.logora.logora_android.models.Notification;
+import com.logora.logora_android.utils.Router;
 import com.logora.logora_android.view_holders.ListViewHolder;
 import com.logora.logora_android.view_holders.NotificationViewHolder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
 
 public class NotificationListAdapter extends ListAdapter {
 
