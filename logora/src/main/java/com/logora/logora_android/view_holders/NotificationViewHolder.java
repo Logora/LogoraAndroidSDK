@@ -61,16 +61,8 @@ public class NotificationViewHolder extends ListViewHolder {
         Notification notification = (Notification) object;
         Spanned content;
         if (notification.getIsOpened() == false) {
-            notificationContainer.setBackgroundColor(res.getColor(R.color.text_tertiary));
+            notificationContainer.setBackgroundColor(res.getColor(R.color.text_secondary));
         }
-        this.apiClient.readNotification(response -> {
-            try {
-                boolean success = response.getBoolean("success");
-                Log.e("readId", "SUCESS");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }, Throwable::printStackTrace, notification.getId());
         notificationDate.setText(DateUtil.getTimeAgo(notification.getPublishedDate()));
         switch(notification.getNotifyType()){
             case "get_badge":
@@ -81,6 +73,14 @@ public class NotificationViewHolder extends ListViewHolder {
                         .load(Uri.parse(badgeNotification.getImageUrl()))
                         .into(notificationImage);
                 this.itemView.setOnClickListener(v -> {
+                    this.apiClient.readNotification(response -> {
+                        try {
+                            boolean success = response.getBoolean("success");
+                            Log.e("readId", "SUCESS");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }, Throwable::printStackTrace, notification.getId());
                     HashMap<String, String> routeParams = new HashMap<>();
                     routeParams.put("userSlug", badgeNotification.getActor().getSlug());
                     router.setCurrentRoute(Router.getRoute("USER"), routeParams, null);
@@ -91,13 +91,21 @@ public class NotificationViewHolder extends ListViewHolder {
                 if(notification.getActorCount() > 1) {
                     content = Html.fromHtml("<b>" + groupReplyNotification.getActor().getFullName() + "</b>" + " et " + String.valueOf(notification.getActorCount() - 1) + " " + res.getString(R.string.notifications_multiple_answers) + " " + res.getString(R.string.notifications_subject) + " " + "<b>" + groupReplyNotification.getSecondTarget().getName() + "</b>");
                 } else {
-                    content = Html.fromHtml(res.getString(R.string.notifications_answer) + res.getString(R.string.notifications_subject) + " " + "<b>" +groupReplyNotification.getSecondTarget().getName() + "</b>");
+                    content = Html.fromHtml("<b>" + groupReplyNotification.getActor().getFullName() + "</b>" + " " + res.getString(R.string.notifications_answer) + " " + res.getString(R.string.notifications_subject) + " " + "<b>" +groupReplyNotification.getSecondTarget().getName() + "</b>");
                 }
                 notificationContent.setText(content);
                 Glide.with(notificationImage.getContext())
                         .load(Uri.parse(groupReplyNotification.getImageUrl()))
                         .into(notificationImage);
                 this.itemView.setOnClickListener(v -> {
+                    this.apiClient.readNotification(response -> {
+                        try {
+                            boolean success = response.getBoolean("success");
+                            Log.e("readId", "SUCESS");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }, Throwable::printStackTrace, notification.getId());
                     HashMap<String, String> routeParams = new HashMap<>();
                     routeParams.put("debateSlug", groupReplyNotification.getSecondTarget().getSlug());
                     router.setCurrentRoute(Router.getRoute("DEBATE"), routeParams, null);
@@ -111,6 +119,14 @@ public class NotificationViewHolder extends ListViewHolder {
                         .load(Uri.parse(levelUnlockNotification.getImageUrl()))
                         .into(notificationImage);
                 this.itemView.setOnClickListener(v -> {
+                    this.apiClient.readNotification(response -> {
+                        try {
+                            boolean success = response.getBoolean("success");
+                            Log.e("readId", "SUCESS");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }, Throwable::printStackTrace, notification.getId());
                     HashMap<String, String> routeParams = new HashMap<>();
                     routeParams.put("userSlug", levelUnlockNotification.getTarget().getSlug());
                     router.setCurrentRoute(Router.getRoute("USER"), routeParams, null);
@@ -125,6 +141,14 @@ public class NotificationViewHolder extends ListViewHolder {
                 }
                 notificationContent.setText(content);
                 this.itemView.setOnClickListener(v -> {
+                    this.apiClient.readNotification(response -> {
+                        try {
+                            boolean success = response.getBoolean("success");
+                            Log.e("readId", "SUCESS");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }, Throwable::printStackTrace, notification.getId());
                     HashMap<String, String> routeParams = new HashMap<>();
                     routeParams.put("debateSlug", getVoteNotification.getSecondTarget().getSlug());
                     router.setCurrentRoute(Router.getRoute("DEBATE"), routeParams, null);
@@ -139,6 +163,14 @@ public class NotificationViewHolder extends ListViewHolder {
                 }
                 notificationContent.setText(content);
                 this.itemView.setOnClickListener(v -> {
+                    this.apiClient.readNotification(response -> {
+                try {
+                    boolean success = response.getBoolean("success");
+                    Log.e("readId", "SUCESS");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }, Throwable::printStackTrace, notification.getId());
                     HashMap<String, String> routeParams = new HashMap<>();
                     routeParams.put("debateSlug", groupFollowArgumentNotification.getSecondTarget().getSlug());
                     router.setCurrentRoute(Router.getRoute("DEBATE"), routeParams, null);
@@ -148,6 +180,14 @@ public class NotificationViewHolder extends ListViewHolder {
                 content = Html.fromHtml("<b>" + notification.getActor().getFullName() + "</b>" + " " + res.getString(R.string.notifications_mentor_level_up) + " " + notification.getActor().getLevelName());
                 notificationContent.setText(content);
                 this.itemView.setOnClickListener(v -> {
+                    this.apiClient.readNotification(response -> {
+                try {
+                    boolean success = response.getBoolean("success");
+                    Log.e("readId", "SUCESS");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }, Throwable::printStackTrace, notification.getId());
                     HashMap<String, String> routeParams = new HashMap<>();
                     routeParams.put("userSlug", notification.getActor().getSlug());
                     router.setCurrentRoute(Router.getRoute("USER"), routeParams, null);
@@ -160,11 +200,21 @@ public class NotificationViewHolder extends ListViewHolder {
                         .load(Uri.parse(notification.getActor().getImageUrl()))
                         .into(notificationImage);
                 this.itemView.setOnClickListener(v -> {
+                    this.apiClient.readNotification(response -> {
+                try {
+                    boolean success = response.getBoolean("success");
+                    Log.e("readId", "SUCESS");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }, Throwable::printStackTrace, notification.getId());
                     HashMap<String, String> routeParams = new HashMap<>();
                     routeParams.put("userSlug", notification.getActor().getSlug());
                     router.setCurrentRoute(Router.getRoute("USER"), routeParams, null);
                 });
                 break;
+            case "group_invitation_new":
+                this.itemView.setVisibility(View.GONE);
             default:
                 content = Html.fromHtml("default");
                 notificationContent.setText(content);
