@@ -29,11 +29,9 @@ public abstract class ListAdapter extends RecyclerView.Adapter<ListViewHolder> {
     public void update(List<JSONObject> items) {
         if(this.items != null) {
             this.items.clear();
-            this.items.addAll(items);
-            this.notifyDataSetChanged();
-        } else {
-            this.setItems(items);
         }
+        this.items.addAll(items);
+        this.notifyDataSetChanged();
     }
 
     @Override

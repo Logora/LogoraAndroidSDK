@@ -1,0 +1,151 @@
+package com.logora.logora_android.dialogs;
+
+import android.app.AlertDialog;
+import android.content.Context;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+import com.logora.logora_android.R;
+import com.logora.logora_android.models.Argument;
+import com.logora.logora_android.models.Debate;
+import com.logora.logora_android.utils.Auth;
+import com.logora.logora_android.utils.LogoraApiClient;
+import com.logora.logora_android.utils.Settings;
+import com.logora.logora_android.views.PrimaryButton;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class ReportDialog extends LinearLayout {
+    private Context context;
+    private final LogoraApiClient apiClient = LogoraApiClient.getInstance();
+    private final Settings settings = Settings.getInstance();
+    private AlertDialog dialog;
+    private Argument argument;
+    private Spinner reportDropdown;
+    private EditText reportInput;
+    private PrimaryButton reportSubmitButton;
+
+    public ReportDialog(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        this.context = context;
+        initView();
+    }
+
+    public ReportDialog(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        this.context = context;
+        initView();
+    }
+
+    public ReportDialog(Context context, Argument argument) {
+        super(context);
+        this.context = context;
+        this.argument = argument;
+        initView();
+    }
+
+    private void initView() {
+        inflate(getContext(), R.layout.report_dialog, this);
+        findViews();
+
+        String[] items = new String[]{
+                "Contenu indésirable ou de mauvaise qualité",
+                "Harcèlement",
+                "Discours haineux",
+                "Plagiat",
+                "Fausses informations"
+        };
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, items);
+        reportDropdown.setAdapter(adapter);
+
+        final String[] reportClassification = new String[1];
+        final String[] reportDescription = new String[1];
+        reportDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                switch (position) {
+                    case 0:
+                        reportClassification[0] = "spam";
+                        break;
+                    case 1:
+                        reportClassification[0] = "harassment";
+                        break;
+                    case 2:
+                        reportClassification[0] = "hate_speech";
+                        break;
+                    case 3:
+                        reportClassification[0] = "plagiarism";
+                        break;
+                    case 4:
+                        reportClassification[0] = "fake_news";
+                        break;
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
+        });
+
+        reportSubmitButton.setOnClickListener(v -> {
+            reportDescription[0] = reportInput.getText().toString();
+            createReport(argument.getId(), reportClassification[0], reportDescription[0]);
+            dialog.dismiss();
+        });
+    }
+
+    private void findViews() {
+        reportDropdown = this.findViewById(R.id.report_reason_select);
+        reportInput = this.findViewById(R.id.tell_us_more_input);
+        reportSubmitButton = this.findViewById(R.id.report_dialog_submit);
+    }
+
+    private void createReport(Integer argumentId, String reportClassification, String reportDescription) {
+        this.apiClient.createReport(
+            response -> {
+                try {
+                    boolean success = response.getBoolean("success");
+                    if(success) {
+                        showToastMessage("Votre signalement à bien été envoyé.");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }, error -> {
+                Log.i("ERROR", String.valueOf(error));
+                showToastMessage("Un problème est survenu lors de l'envoi de votre signalement.");
+            }, argumentId, "Message", reportClassification, reportDescription);
+    }
+
+    private void showToastMessage(String message) {
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(this.context, message, duration);
+        toast.show();
+    }
+
+    public void setDialog(AlertDialog dialog) {
+        this.dialog = dialog;
+    }
+
+    public static void show(Context context, Argument argument) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        ReportDialog reportLayout = new ReportDialog(context, argument);
+
+        builder.setView(reportLayout);
+        builder.setTitle("Signaler un argument");
+
+        AlertDialog dialog = builder.create();
+        reportLayout.setDialog(dialog);
+        dialog.show();
+    }
+}

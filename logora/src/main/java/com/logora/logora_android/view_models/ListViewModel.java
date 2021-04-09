@@ -78,7 +78,7 @@ public class ListViewModel extends ViewModel {
     }
 
     public LiveData<List<JSONObject>> resetList() {
-        this.items = new ArrayList<>();
+        this.items.clear();
         this.resetCurrentPage();
         loadItems();
         return itemsLiveData;
