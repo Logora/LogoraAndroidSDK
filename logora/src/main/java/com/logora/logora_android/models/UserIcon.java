@@ -14,8 +14,10 @@ public class UserIcon extends Model {
         UserIcon userIcon = new UserIcon();
         try {
             userIcon.setFullName(jsonObject.getString("full_name"));
-            userIcon.setSlug(jsonObject.getString("slug"));
             userIcon.setImageUrl(jsonObject.getString("image_url"));
+            if(jsonObject.has("slug")) {
+                userIcon.setSlug(jsonObject.getString("slug"));
+            }
             return userIcon;
         } catch (JSONException e) {
             e.printStackTrace();

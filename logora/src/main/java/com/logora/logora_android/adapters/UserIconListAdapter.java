@@ -1,6 +1,7 @@
 package com.logora.logora_android.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,11 +40,6 @@ public class UserIconListAdapter extends ListAdapter {
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
         UserIcon userIcon = this.getObjectFromJson(this.items.get(position));
         holder.updateWithObject(userIcon);
-        holder.itemView.setOnClickListener(v -> {
-            HashMap<String, String> routeParams = new HashMap<>();
-            routeParams.put("userSlug", userIcon.getSlug());
-            router.setCurrentRoute(Router.getRoute("USER"), routeParams, null);
-        });
     }
 
     @Override

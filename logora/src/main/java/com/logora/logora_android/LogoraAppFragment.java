@@ -1,6 +1,7 @@
 package com.logora.logora_android;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.bumptech.glide.Glide;
 import com.logora.logora_android.utils.Auth;
 import com.logora.logora_android.utils.LogoraApiClient;
 import com.logora.logora_android.utils.Route;
@@ -25,9 +27,10 @@ import java.util.HashMap;
  * This component is responsible for routing and fetches settings and theme to store them
  * for children.
  */
-public class LogoraAppFragment extends Fragment implements Router.RouteListener {
+public class LogoraAppFragment extends Fragment implements Router.RouteListener, Auth.AuthListener {
     private final String applicationName;
     private final String authAssertion;
+    private ProgressBar spinner;
 
     public LogoraAppFragment(String applicationName, String authAssertion) {
         super(R.layout.fragment_root);
@@ -45,20 +48,29 @@ public class LogoraAppFragment extends Fragment implements Router.RouteListener 
         router.setListener(this);
 
         Auth auth = Auth.getInstance();
+        auth.setListener(this);
         auth.authenticate();
     }
 
     @Override
     public void onViewCreated(@NotNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        findViews(view);
 
-        ProgressBar spinner = view.findViewById(R.id.root_loader);
+        this.init();
+    }
+
+    private void findViews(View view) {
+        spinner = view.findViewById(R.id.root_loader);
+    }
+
+    public void init() {
         spinner.setVisibility(View.VISIBLE);
         SettingsViewModel model = new SettingsViewModel();
         model.getSettings().observe(getViewLifecycleOwner(), settings -> {
             getChildFragmentManager().beginTransaction()
                     .add(R.id.navbar_fragment, new NavbarFragment())
-                    .add(R.id.main_fragment, new NotificationFragment())
+                    .add(R.id.main_fragment, new IndexFragment())
                     .add(R.id.footer_fragment, new FooterFragment())
                     .commit();
             spinner.setVisibility(View.GONE);
@@ -94,5 +106,10 @@ public class LogoraAppFragment extends Fragment implements Router.RouteListener 
                         .replace(R.id.main_fragment, new IndexFragment())
                         .commit();
         }
+    }
+
+    @Override
+    public void onAuthChange(Boolean isLoggedIn) {
+        this.init();
     }
 }

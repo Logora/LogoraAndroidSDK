@@ -5,9 +5,7 @@
     android:id="@+id/argument_vote_container"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_centerVertical="true"
-    android:backgroundTint="@android:color/white"
-    android:background="@drawable/box_background">
+    android:layout_centerVertical="true">
 
     <ImageView
         android:id="@+id/argument_clap_button"
@@ -28,6 +26,6 @@
         android:layout_height="22dp"
         android:layout_marginHorizontal="6dp"
         android:gravity="center"
-        android:text="21" />
+        android:text="0" />
 
 </LinearLayout>

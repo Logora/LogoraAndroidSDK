@@ -37,7 +37,7 @@ import java.util.HashMap;
 /**
  * A {@link Fragment} subclass containing the debate space navbar.
  */
-public class NavbarFragment extends Fragment implements Auth.AuthListener {
+public class NavbarFragment extends Fragment {
     private final Router router = Router.getInstance();
     private final Settings settings = Settings.getInstance();
     private final Auth auth = Auth.getInstance();
@@ -59,7 +59,6 @@ public class NavbarFragment extends Fragment implements Auth.AuthListener {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        auth.setListener(this);
     }
 
     @Override
@@ -106,32 +105,20 @@ public class NavbarFragment extends Fragment implements Auth.AuthListener {
     }
 
     public void findViews(View view) {
-        loginLinkView = getView().findViewById(R.id.login_link_button);
-        indexButtonView = getView().findViewById(R.id.index_button);
-        searchIconView = getView().findViewById(R.id.search_icon);
-        navbarRightContainer = getView().findViewById(R.id.navbar_right_container);
-        navbarRightUserContainer = getView().findViewById(R.id.navbar_right_user_container);
-        searchFormView = getView().findViewById(R.id.search_form_container);
-        userProfileIconView = getView().findViewById(R.id.user_profile_icon);
-        userSearchIconView = getView().findViewById(R.id.search_user_icon);
-        notificationsBadge = getView().findViewById(R.id.notification_badge);
-        notificationButton = getView().findViewById(R.id.notification_icon);
+        loginLinkView = view.findViewById(R.id.login_link_button);
+        indexButtonView = view.findViewById(R.id.index_button);
+        searchIconView = view.findViewById(R.id.search_icon);
+        navbarRightContainer = view.findViewById(R.id.navbar_right_container);
+        navbarRightUserContainer = view.findViewById(R.id.navbar_right_user_container);
+        searchFormView = view.findViewById(R.id.search_form_container);
+        userProfileIconView = view.findViewById(R.id.user_profile_icon);
+        userSearchIconView = view.findViewById(R.id.search_user_icon);
+        notificationsBadge = view.findViewById(R.id.notification_badge);
+        notificationButton = view.findViewById(R.id.notification_icon);
     }
 
     public void setStyles() {
         String primaryColor = settings.get("theme.callPrimaryColor");
         loginLinkView.setTextColor(Color.parseColor(primaryColor));
-    }
-
-    @Override
-    public void onAuthChange(Boolean isLoggedIn) {
-        if(isLoggedIn) {
-            navbarRightContainer.setVisibility(View.GONE);
-            navbarRightUserContainer.setVisibility(View.VISIBLE);
-
-            Glide.with(userProfileIconView.getContext())
-                    .load(Uri.parse(auth.getCurrentUser().getImageUrl()))
-                    .into(userProfileIconView);
-        }
     }
 }

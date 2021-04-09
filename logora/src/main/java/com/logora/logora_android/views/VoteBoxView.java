@@ -23,6 +23,7 @@ import androidx.core.content.ContextCompat;
 
 import com.logora.logora_android.R;
 import com.logora.logora_android.models.Debate;
+import com.logora.logora_android.utils.Auth;
 import com.logora.logora_android.utils.LogoraApiClient;
 import com.logora.logora_android.utils.Router;
 import com.logora.logora_android.utils.Settings;
@@ -34,6 +35,7 @@ import java.util.HashMap;
 
 public class VoteBoxView extends RelativeLayout {
     private final Settings settings = Settings.getInstance();
+    private final Auth auth = Auth.getInstance();
     private final LogoraApiClient apiClient = LogoraApiClient.getInstance();
     private Context context;
     private Debate debate;
@@ -103,18 +105,20 @@ public class VoteBoxView extends RelativeLayout {
     public void init(Debate debate) {
         this.debate = debate;
         showButtons();
-        this.apiClient.getGroupVote(
-            response -> {
-                try {
-                    boolean success = response.getBoolean("success");
-                    boolean vote = response.getJSONObject("data").getBoolean("vote");
-                    if(success && vote) {
-                        showResults();
+        if(this.auth.getIsLoggedIn()) {
+            this.apiClient.getGroupVote(
+                response -> {
+                    try {
+                        boolean success = response.getBoolean("success");
+                        boolean vote = response.getJSONObject("data").getBoolean("vote");
+                        if(success && vote) {
+                            showResults();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }, Throwable::printStackTrace, Integer.parseInt(debate.getId()));
+                }, Throwable::printStackTrace, Integer.parseInt(debate.getId()));
+        }
     }
 
     public void vote(Integer positionId) {

@@ -22,7 +22,7 @@ public class Argument extends Model {
     private Boolean isReply;
     private Integer repliesCount;
     private Integer parentArgumentId = null;
-    private List <UserIcon> repliesAuthorsList;
+    private List <JSONObject> repliesAuthorsList;
 
     public Argument() {}
 
@@ -58,13 +58,9 @@ public class Argument extends Model {
             argument.setVotesList(votesList);
 
             JSONArray repliesAuthorsObjects = jsonObject.getJSONArray("replies_authors");
-            List<UserIcon> repliesAuthorsList = new ArrayList<>();
+            List<JSONObject> repliesAuthorsList = new ArrayList<>();
             for (int i=0; i < repliesAuthorsObjects.length(); i++){
-                UserIcon authorIcon = new UserIcon();
-                JSONObject authorObject = repliesAuthorsObjects.getJSONObject(i);
-                authorIcon.setImageUrl(authorObject.getString("authorImage"));
-                authorIcon.setFullName(authorObject.getString("authorName"));
-                repliesAuthorsList.add(authorIcon);
+                repliesAuthorsList.add(repliesAuthorsObjects.getJSONObject(i));
             }
             argument.setRepliesAuthorsList(repliesAuthorsList);
 
@@ -150,7 +146,7 @@ public class Argument extends Model {
     }
 
     public void setIsReply(Boolean isReply) {
-        isReply = isReply;
+        this.isReply = isReply;
     }
 
     public Integer getParentArgumentId() {
@@ -169,7 +165,7 @@ public class Argument extends Model {
         this.repliesCount = repliesCount;
     }
 
-    public List<UserIcon> getRepliesAuthorsList() { return this.repliesAuthorsList; }
+    public List<JSONObject> getRepliesAuthorsList() { return this.repliesAuthorsList; }
 
-    public void setRepliesAuthorsList(List<UserIcon> repliesAuthorsList) { this.repliesAuthorsList = repliesAuthorsList; }
+    public void setRepliesAuthorsList(List<JSONObject> repliesAuthorsList) { this.repliesAuthorsList = repliesAuthorsList; }
 }

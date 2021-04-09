@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentContainerView;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -59,15 +61,17 @@ public class ArgumentBox extends RelativeLayout {
     private TextView dateView;
     private ImageView levelIconView;
     private ImageView userImageView;
+    private RelativeLayout argumentContainer;
     private ImageView argumentShareButton;
     private ImageView argumentMoreButton;
     private ArgumentVote argumentVote;
     private LinearLayout argumentRepliesFooter;
-    private RelativeLayout argumentRepliesContainer;
     private RecyclerView argumentRepliesAuthorsList;
     private UserIconListAdapter argumentRepliesAuthorsListAdapter;
-    private FragmentContainerView argumentRepliesList;
+    private FrameLayout argumentRepliesList;
     private PaginatedListFragment repliesList;
+    private Boolean toggleReplies = false;
+    private FragmentTransaction argumentRepliesTransaction;
 
     public ArgumentBox(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -97,15 +101,14 @@ public class ArgumentBox extends RelativeLayout {
         contentView = findViewById(R.id.argument_content);
         userImageView = findViewById(R.id.user_image);
         dateView = findViewById(R.id.argument_date);
+        argumentContainer = findViewById(R.id.argument_container);
         argumentVote = findViewById(R.id.argument_vote_container);
         argumentShareButton = findViewById(R.id.argument_share_button);
         argumentMoreButton = findViewById(R.id.argument_more_button);
         argumentRepliesFooter = findViewById(R.id.argument_replies_footer);
-        argumentRepliesContainer = findViewById(R.id.argument_replies_container);
         argumentRepliesAuthorsList = findViewById(R.id.argument_replies_authors_list);
         argumentRepliesList = findViewById(R.id.argument_replies_list);
         argumentRepliesAuthorsListAdapter = new UserIconListAdapter();
-        argumentRepliesAuthorsList.setAdapter(argumentRepliesAuthorsListAdapter);
     }
 
     public void updateWithObject(Object object, Debate debate, Context context) {
@@ -124,6 +127,11 @@ public class ArgumentBox extends RelativeLayout {
             GradientDrawable gradientDrawable = (GradientDrawable) shape.findDrawableByLayerId(R.id.shape);
             gradientDrawable.setColor(Color.parseColor(secondPositionPrimaryColor));
         }
+
+        if(argument.getIsReply()) {
+            this.setReplyStyle();
+        }
+
         sideLabelView.setBackground(shape);
         argumentVote.init(argument);
         fullNameView.setText(argument.getAuthor().getFullName());
@@ -148,24 +156,33 @@ public class ArgumentBox extends RelativeLayout {
 
         repliesList = new PaginatedListFragment(resourceName, "CLIENT", repliesListAdapter, null);
 
+        List<JSONObject> authorsList = argument.getRepliesAuthorsList();
+        argumentRepliesAuthorsList.setAdapter(argumentRepliesAuthorsListAdapter);
+        argumentRepliesAuthorsListAdapter.setItems(authorsList);
+
+        argumentRepliesTransaction = ((AppCompatActivity) getContext()).getSupportFragmentManager().beginTransaction();
+
+        argumentRepliesFooter.setOnClickListener(v -> {
+            this.toggleReplies(argument.getId());
+        });
+
         if(argument.getRepliesCount() > 0) {
             argumentRepliesFooter.setVisibility(VISIBLE);
-
-            List<UserIcon> authorsList = argument.getRepliesAuthorsList();
-            if(authorsList.size() == 0) {
-                argumentRepliesAuthorsList.setVisibility(View.GONE);
-            } else {
-                //argumentRepliesAuthorsListAdapter.update(authorsList);
-            }
-
-            argumentRepliesFooter.setOnClickListener(v -> {
-                argumentRepliesContainer.setVisibility(VISIBLE);
-                ((AppCompatActivity) getContext()).getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.argument_replies_list, repliesList)
-                        .commit();
-            });
         }
+    }
+
+    private void toggleReplies(Integer argumentId) {
+        if(this.toggleReplies) {
+            argumentRepliesTransaction.hide(repliesList);
+            this.toggleReplies = false;
+        } else {
+            argumentRepliesTransaction.add(R.id.argument_replies_list, repliesList, String.valueOf(argumentId) + "_REPLIES").commit();
+            this.toggleReplies = true;
+        }
+    }
+
+    private void setReplyStyle() {
+        argumentContainer.setBackgroundColor(getResources().getColor(R.color.text_tertiary));
     }
 
     private void openShareDialog(String subject) {
@@ -178,7 +195,7 @@ public class ArgumentBox extends RelativeLayout {
     private void openMoreActionsDialog(Argument argument) {
         String[] actionsList;
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        if(argument.getAuthor().getId() == authClient.getCurrentUser().getId()) {
+        if(authClient.getIsLoggedIn() && argument.getAuthor().getId().equals(authClient.getCurrentUser().getId())) {
             actionsList = new String[]{"Modifier", "Supprimer", "Signaler"};
         } else {
             actionsList = new String[]{"Signaler"};
@@ -198,10 +215,8 @@ public class ArgumentBox extends RelativeLayout {
                             break;
                     }
                 } else {
-                    switch (which) {
-                        case 0:
-                            openReportDialog(argument);
-                            break;
+                    if(which == 0) {
+                        openReportDialog(argument);
                     }
                 }
             }
@@ -276,20 +291,20 @@ public class ArgumentBox extends RelativeLayout {
 
     private void createReport(Integer argumentId, String reportClassification, String reportDescription) {
         this.apiClient.createReport(
-                response -> {
-                    try {
-                        boolean success = response.getBoolean("success");
-                        JSONObject vote = response.getJSONObject("data").getJSONObject("resource");
-                        if(success) {
-                            showToastMessage("Votre signalement à bien été envoyé.");
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+            response -> {
+                try {
+                    boolean success = response.getBoolean("success");
+                    JSONObject vote = response.getJSONObject("data").getJSONObject("resource");
+                    if(success) {
+                        showToastMessage("Votre signalement à bien été envoyé.");
                     }
-                }, error -> {
-                    Log.i("ERROR", "error");
-                    showToastMessage("Un problème est survenu lors de l'envoi de votre signalement.");
-                }, argumentId, "Message", reportClassification, reportDescription);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }, error -> {
+                Log.i("ERROR", "error");
+                showToastMessage("Un problème est survenu lors de l'envoi de votre signalement.");
+            }, argumentId, "Message", reportClassification, reportDescription);
     }
 
     private void showToastMessage(String message) {

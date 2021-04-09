@@ -7,8 +7,6 @@ import com.logora.logora_android.models.User;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-
 public class Auth {
     private final LogoraApiClient apiClient = LogoraApiClient.getInstance();
     private static Auth instance = null;
@@ -94,12 +92,14 @@ public class Auth {
         this.setIsLoggingIn(false);
         this.setCurrentUser(null);
         apiClient.deleteUserToken();
+        this.authListener.onAuthChange(false);
     }
 
     public void exitLogin(String error) {
         this.setAuthError(error);
         this.setIsLoggedIn(false);
         this.setIsLoggingIn(false);
+        this.authListener.onAuthChange(false);
     }
 
     public Boolean hasSession() {
