@@ -25,23 +25,23 @@ public class User {
     public static User objectFromJson(JSONObject jsonObject) {
         User user = new User();
         try {
-            if (jsonObject.has("uid") == true) {
+            if (jsonObject.has("uid")) {
                 user.setUid(jsonObject.getString("uid"));
             }
             user.setSlug(jsonObject.getString("slug"));
             user.setId(jsonObject.getInt("id"));
             user.setImageUrl(jsonObject.getString("image_url"));
             user.setFullName(jsonObject.getString("full_name"));
-            if (jsonObject.has("debates_count") == true) {
+            if (jsonObject.has("debates_count")) {
                 user.setDebatesCount(jsonObject.getInt("debates_count"));
             }
-            if (jsonObject.has("debates_votes_count") == true) {
+            if (jsonObject.has("debates_votes_count")) {
                 user.setVotesCount(jsonObject.getInt("debates_votes_count"));
             }
-            if (jsonObject.has("followers_count") == true) {
+            if (jsonObject.has("followers_count")) {
                 user.setDisciplesCount(jsonObject.getInt("followers_count"));
             }
-            if (jsonObject.has("notifications_count") == true) {
+            if (jsonObject.has("notifications_count")) {
                 user.setNotificationsCount(jsonObject.getInt("notifications_count"));
             }
             return user;
@@ -97,7 +97,7 @@ public class User {
         this.disciplesCount = disciplesCount;
     }
 
-    public void setNotificationsCount(Integer debatesCount) {
+    public void setNotificationsCount(Integer notificationsCount) {
         this.notificationsCount = notificationsCount;
     }
 

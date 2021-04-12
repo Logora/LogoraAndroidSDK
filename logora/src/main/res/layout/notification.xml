@@ -45,19 +45,16 @@
                 android:gravity="center_vertical"
                 android:textColor="@color/text_primary"
                 android:textSize="16sp"
-                android:text="@string/notification" />
+                android:text="@string/notification_content" />
 
             <TextView
                 android:id="@+id/notification_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/notification_main_content"
                 android:gravity="center_vertical"
                 android:textColor="@color/text_secondary"
-                android:text="Il y a 2 jours"
-                android:layout_centerInParent="true"
+                android:text="@string/notification_date"
                 android:textSize="12sp" />
         </LinearLayout>
-
     </RelativeLayout>
 </RelativeLayout>
