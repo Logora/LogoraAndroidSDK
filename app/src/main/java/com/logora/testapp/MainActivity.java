@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LogoraAppActivity.class);
         intent.putExtra("applicationName", applicationName);
         intent.putExtra("authAssertion", authAssertion);
-        intent.putExtra("routeName", "DEBATE");
-        intent.putExtra("routeParam", "bonjour-a-tous-debat-Nop08");
+        intent.putExtra("routeName", "INDEX");
+        intent.putExtra("routeParam", "");
         startActivity(intent);
     }
 }
