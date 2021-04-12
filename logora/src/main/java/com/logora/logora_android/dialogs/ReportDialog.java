@@ -2,6 +2,7 @@ package com.logora.logora_android.dialogs;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.res.Resources;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -56,14 +57,15 @@ public class ReportDialog extends LinearLayout {
 
     private void initView() {
         inflate(getContext(), R.layout.report_dialog, this);
+        Resources res = this.getContext().getResources();
         findViews();
 
         String[] items = new String[]{
-                "Contenu indésirable ou de mauvaise qualité",
-                "Harcèlement",
-                "Discours haineux",
-                "Plagiat",
-                "Fausses informations"
+                res.getString(R.string.report_spam),
+                res.getString(R.string.report_harassment),
+                res.getString(R.string.report_hate_speech),
+                res.getString(R.string.report_plagiarism),
+                res.getString(R.string.report_fake_news),
         };
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, android.R.layout.simple_spinner_dropdown_item, items);
         reportDropdown.setAdapter(adapter);
@@ -75,19 +77,19 @@ public class ReportDialog extends LinearLayout {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 switch (position) {
                     case 0:
-                        reportClassification[0] = "spam";
+                        reportClassification[0] = res.getString(R.string.report_spam);
                         break;
                     case 1:
-                        reportClassification[0] = "harassment";
+                        reportClassification[0] = res.getString(R.string.report_harassment);
                         break;
                     case 2:
-                        reportClassification[0] = "hate_speech";
+                        reportClassification[0] = res.getString(R.string.report_hate_speech);
                         break;
                     case 3:
-                        reportClassification[0] = "plagiarism";
+                        reportClassification[0] = res.getString(R.string.report_plagiarism);
                         break;
                     case 4:
-                        reportClassification[0] = "fake_news";
+                        reportClassification[0] = res.getString(R.string.report_fake_news);
                         break;
                 }
             }
@@ -110,19 +112,20 @@ public class ReportDialog extends LinearLayout {
     }
 
     private void createReport(Integer argumentId, String reportClassification, String reportDescription) {
+        Resources res = this.getContext().getResources();
         this.apiClient.createReport(
             response -> {
                 try {
                     boolean success = response.getBoolean("success");
                     if(success) {
-                        showToastMessage("Votre signalement à bien été envoyé.");
+                        showToastMessage(res.getString(R.string.report_success));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }, error -> {
                 Log.i("ERROR", String.valueOf(error));
-                showToastMessage("Un problème est survenu lors de l'envoi de votre signalement.");
+                showToastMessage(res.getString(R.string.report_error));
             }, argumentId, "Message", reportClassification, reportDescription);
     }
 
@@ -138,11 +141,12 @@ public class ReportDialog extends LinearLayout {
     }
 
     public static void show(Context context, Argument argument) {
+        Resources res = context.getResources();
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         ReportDialog reportLayout = new ReportDialog(context, argument);
 
         builder.setView(reportLayout);
-        builder.setTitle("Signaler un argument");
+        builder.setTitle(res.getString(R.string.report_header));
 
         AlertDialog dialog = builder.create();
         reportLayout.setDialog(dialog);

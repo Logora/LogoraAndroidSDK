@@ -40,6 +40,7 @@ public class NotificationFragment extends Fragment {
 
         findViews(view);
         String primaryColor = settings.get("theme.callPrimaryColor");
+        // TODO set animation on click for readAllButton
         readAllButton.setTextColor(Color.parseColor(primaryColor));
         readAllButton.setOnClickListener(v -> {
             this.apiClient.readAllNotifications(

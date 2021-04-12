@@ -49,6 +49,7 @@ public class NotificationViewHolder extends ListViewHolder {
         notificationContent = view.findViewById(R.id.notification_main_content);
         notificationImage = view.findViewById(R.id.notification_image);
         notificationDate = view.findViewById(R.id.notification_date);
+        // TODO Fix notificationDate format
     }
 
     public void redirectTo() {
