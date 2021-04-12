@@ -19,12 +19,10 @@ import org.jetbrains.annotations.NotNull;
  * A {@link Fragment} subclass containing the debate space search page.
  */
 public class SearchFragment extends Fragment {
-    private Settings settings = Settings.getInstance();
+    private final Settings settings = Settings.getInstance();
     private String query;
     private TextView textHeader;
     private TabLayout tabLayout;
-    private TabLayout.Tab debateTab;
-    private TabLayout.Tab userTab;
     private RelativeLayout debateResultsContainer;
     private RelativeLayout userResultsContainer;
 
@@ -41,13 +39,13 @@ public class SearchFragment extends Fragment {
     public void onViewCreated(@NotNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        textHeader = view.findViewById(R.id.search_header);
+        findViews(view);
+
         String newHeader = textHeader.getText().toString() + ' ' + '"' + query + '"';
         textHeader.setText(newHeader);
 
-        tabLayout = view.findViewById(R.id.tab_layout);
-        debateTab = tabLayout.getTabAt(0);
-        userTab = tabLayout.getTabAt(1);
+        TabLayout.Tab debateTab = tabLayout.getTabAt(0);
+        TabLayout.Tab userTab = tabLayout.getTabAt(1);
 
         String debateTabText = settings.get("infoDebate");
         String userTabText = settings.get("infoDebaters");
@@ -59,9 +57,6 @@ public class SearchFragment extends Fragment {
         }
 
         setStyles();
-
-        debateResultsContainer = view.findViewById(R.id.debate_results_container);
-        userResultsContainer = view.findViewById(R.id.user_results_container);
 
         DebateBoxListAdapter debateListAdapter = new DebateBoxListAdapter();
         UserBoxListAdapter userListAdapter = new UserBoxListAdapter();
@@ -101,5 +96,12 @@ public class SearchFragment extends Fragment {
     private void setStyles() {
         String primaryColor = settings.get("theme.callPrimaryColor");
         tabLayout.setSelectedTabIndicatorColor(Color.parseColor(primaryColor));
+    }
+
+    private void findViews(View view) {
+        textHeader = view.findViewById(R.id.search_header);
+        tabLayout = view.findViewById(R.id.tab_layout);
+        debateResultsContainer = view.findViewById(R.id.debate_results_container);
+        userResultsContainer = view.findViewById(R.id.user_results_container);
     }
 }
