@@ -34,8 +34,6 @@ public class LogoraAppActivity extends AppCompatActivity implements Router.Route
         auth.authenticate();
 
         findViews();
-
-        this.init();
     }
 
     private void findViews() {

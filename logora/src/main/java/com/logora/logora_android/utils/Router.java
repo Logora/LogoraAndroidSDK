@@ -60,7 +60,6 @@ public class Router {
 
     public static Route parseRoute(String routeName, String routeParam) {
         Route route = Router.getRoute(routeName);
-        Log.i("rout", route.getName());
         HashMap<String, String> routeParams = new HashMap<>();
         switch (route.getName()) {
             case "DEBATE":

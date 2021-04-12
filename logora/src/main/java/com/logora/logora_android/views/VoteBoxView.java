@@ -109,8 +109,8 @@ public class VoteBoxView extends RelativeLayout {
             this.apiClient.getGroupVote(
                 response -> {
                     try {
-                        boolean success = response.getBoolean("success");
-                        boolean vote = response.getJSONObject("data").getBoolean("vote");
+                        boolean success = response.getJSONObject("data").getBoolean("success");
+                        boolean vote = response.getJSONObject("data").getJSONObject("data").getBoolean("vote");
                         if(success && vote) {
                             showResults();
                         }
