@@ -83,6 +83,7 @@ public class NavbarFragment extends Fragment {
 
             notificationButton.setOnClickListener(v -> {
                 HashMap<String, String> routeParams = new HashMap<>();
+                notificationsBadge.setVisibility(View.GONE);
                 router.setCurrentRoute(Router.getRoute("NOTIFICATIONS"), routeParams);
             });
         }

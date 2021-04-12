@@ -51,7 +51,6 @@ public class Argument extends Model {
             };
             String publishedDate = jsonObject.getString("created_at");
             argument.setPublishedDate(DateUtil.parseDate(publishedDate));
-            Log.e("DATEARG", publishedDate);
 
             JSONArray votesObjects = jsonObject.getJSONArray("votes");
             List<JSONObject> votesList = new ArrayList<>();

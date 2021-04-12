@@ -10,8 +10,7 @@ public class GetVoteNotification extends Notification<Object, Debate, Object> {
     public GetVoteNotification() {}
 
     public static GetVoteNotification objectFromJson(JSONObject jsonObject) {
-        Notification notification = Notification.objectFromJson(jsonObject);
-        GetVoteNotification getVoteNotification = (GetVoteNotification) notification;
+        GetVoteNotification getVoteNotification = new GetVoteNotification();
         try {
             getVoteNotification.setTarget(null);
             getVoteNotification.setIsOpened(jsonObject.getBoolean("is_opened"));
