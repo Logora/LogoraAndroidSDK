@@ -72,7 +72,6 @@ public class NotificationViewHolder extends ListViewHolder {
                     this.apiClient.readNotification(response -> {
                         try {
                             boolean success = response.getBoolean("success");
-                            Log.e("readId", "SUCCESS");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -97,7 +96,6 @@ public class NotificationViewHolder extends ListViewHolder {
                     this.apiClient.readNotification(response -> {
                         try {
                             boolean success = response.getBoolean("success");
-                            Log.e("readId", "SUCESS");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -118,7 +116,6 @@ public class NotificationViewHolder extends ListViewHolder {
                     this.apiClient.readNotification(response -> {
                         try {
                             boolean success = response.getBoolean("success");
-                            Log.e("readId", "SUCESS");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -140,7 +137,6 @@ public class NotificationViewHolder extends ListViewHolder {
                     this.apiClient.readNotification(response -> {
                         try {
                             boolean success = response.getBoolean("success");
-                            Log.e("readId", "SUCESS");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -162,7 +158,6 @@ public class NotificationViewHolder extends ListViewHolder {
                     this.apiClient.readNotification(response -> {
                 try {
                     boolean success = response.getBoolean("success");
-                    Log.e("readId", "SUCESS");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -179,7 +174,6 @@ public class NotificationViewHolder extends ListViewHolder {
                     this.apiClient.readNotification(response -> {
                 try {
                     boolean success = response.getBoolean("success");
-                    Log.e("readId", "SUCESS");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -199,7 +193,6 @@ public class NotificationViewHolder extends ListViewHolder {
                     this.apiClient.readNotification(response -> {
                 try {
                     boolean success = response.getBoolean("success");
-                    Log.e("readId", "SUCESS");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

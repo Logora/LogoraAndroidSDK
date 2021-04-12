@@ -16,8 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.logora.logora_android.adapters.ArgumentListAdapter;
 import com.logora.logora_android.adapters.TagListAdapter;
+import com.logora.logora_android.models.Debate;
+import com.logora.logora_android.utils.Auth;
 import com.logora.logora_android.utils.DateUtil;
 import com.logora.logora_android.view_models.DebateShowViewModel;
+import com.logora.logora_android.views.ArgumentAuthorBox;
 import com.logora.logora_android.views.FollowDebateButtonView;
 import com.logora.logora_android.views.ShareView;
 import com.logora.logora_android.views.VoteBoxView;
@@ -40,6 +43,7 @@ public class DebateFragment extends Fragment {
     private FollowDebateButtonView followDebateButtonView;
     private Spinner argumentSortView;
     private PaginatedListFragment argumentList;
+    private ArgumentAuthorBox argumentAuthorBox;
 
     public DebateFragment() {
         super(R.layout.fragment_debate);
@@ -63,6 +67,8 @@ public class DebateFragment extends Fragment {
         DebateShowViewModel debateShowViewModel = new DebateShowViewModel();
         debateShowViewModel.getDebate(this.debateSlug).observe(getViewLifecycleOwner(), debate -> {
             debateNameView.setText(debate.getName());
+
+            argumentAuthorBox.init(null);
 
             debatePublishedDateView.setText(DateUtil.getDateText(debate.getPublishedDate()));
             debateTagListAdapter.setItems(debate.getTagList());
@@ -126,6 +132,7 @@ public class DebateFragment extends Fragment {
         shareView = view.findViewById(R.id.debate_share);
         argumentSortView = view.findViewById(R.id.argument_sort);
         debateTagList.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.HORIZONTAL, false));
+        argumentAuthorBox = view.findViewById(R.id.argument_author_box_container);
     }
 
     public String[] getSpinnerOptions() {
