@@ -1,9 +1,7 @@
 package com.logora.logora_android.utils;
 
 import android.util.Log;
-
 import com.logora.logora_android.models.User;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -60,10 +58,10 @@ public class Auth {
         this.apiClient.getCurrentUser(
             response -> {
                 try {
-                    if(!response.getBoolean("success")) {
+                    if(!response.getJSONObject("data").getBoolean("success")) {
                         this.exitLogin("Cannot fetch current user.");
                     } else {
-                        JSONObject currentUserObject = response.getJSONObject("data").getJSONObject("resource");
+                        JSONObject currentUserObject = response.getJSONObject("data").getJSONObject("data").getJSONObject("resource");
                         User currentUser = new User();
                         currentUser.setFullName(currentUserObject.getString("full_name"));
                         currentUser.setSlug(currentUserObject.getString("slug"));
@@ -82,7 +80,6 @@ public class Auth {
                 }
             },
             error -> {
-                Log.i("ERROR", String.valueOf(error));
                 this.exitLogin(String.valueOf(error));
             });
     }

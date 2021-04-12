@@ -86,7 +86,7 @@ public class NavbarFragment extends Fragment {
         }
 
         indexButtonView.setOnClickListener(v -> {
-            router.setCurrentRoute(Router.getRoute("INDEX"), null, null);
+            router.setCurrentRoute(Router.getRoute("INDEX"), null);
         });
 
         searchIconView.setOnClickListener(v -> {
@@ -100,7 +100,7 @@ public class NavbarFragment extends Fragment {
         userProfileIconView.setOnClickListener(v -> {
             HashMap<String, String> routeParams = new HashMap<>();
             routeParams.put("userSlug", auth.getCurrentUser().getSlug());
-            router.setCurrentRoute(Router.getRoute("USER"), routeParams, null);
+            router.setCurrentRoute(Router.getRoute("USER"), routeParams);
         });
     }
 
