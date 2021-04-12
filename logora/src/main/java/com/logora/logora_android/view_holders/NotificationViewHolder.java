@@ -60,7 +60,7 @@ public class NotificationViewHolder extends ListViewHolder {
             notificationContainer.setBackgroundColor(res.getColor(R.color.text_tertiary));
         }
         notificationDate.setText(DateUtil.getTimeAgo(notification.getPublishedDate()));
-        switch(notification.getNotifyType()){
+        switch(notification.getNotifyType()) {
             case "get_badge":
                 BadgeNotification badgeNotification = (BadgeNotification) object;
                 content = Html.fromHtml(res.getString(R.string.notifications_new_badge) + " " + "<b>" + badgeNotification.getSecondTarget().getTitle() + "</b>");
