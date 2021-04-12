@@ -6,22 +6,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import com.logora.logora_android.adapters.ListAdapter;
 import com.logora.logora_android.view_models.ListViewModel;
-
 import org.jetbrains.annotations.NotNull;
-
 import java.util.HashMap;
 
 public class PaginatedListFragment extends Fragment {
     private RecyclerView recyclerView;
     private ProgressBar loader;
     private Button paginationButton;
-    private ListViewModel listViewModel;
-    private ListAdapter listAdapter;
+    private final ListViewModel listViewModel;
+    private final ListAdapter listAdapter;
     private TextView emptyView;
 
     public PaginatedListFragment(String resourceName, String resourceType, ListAdapter listAdapter, HashMap<String,String> extraArguments) {
@@ -45,10 +42,7 @@ public class PaginatedListFragment extends Fragment {
     public void onViewCreated(@NotNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        recyclerView = view.findViewById(R.id.recycler_view);
-        emptyView = view.findViewById(R.id.empty_list_text);
-        paginationButton = view.findViewById(R.id.pagination_button);
-        loader = view.findViewById(R.id.loader);
+        findViews(view);
 
         recyclerView.setAdapter(listAdapter);
 
@@ -78,9 +72,9 @@ public class PaginatedListFragment extends Fragment {
     }
 
     public void updateSort() {
+        loader.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
         paginationButton.setVisibility(View.GONE);
-        loader.setVisibility(View.VISIBLE);
 
         listViewModel.resetList().observe(getViewLifecycleOwner(), itemList -> {
             if(itemList.size() == 0) {
@@ -95,5 +89,12 @@ public class PaginatedListFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private void findViews(View view) {
+        recyclerView = view.findViewById(R.id.recycler_view);
+        emptyView = view.findViewById(R.id.empty_list_text);
+        paginationButton = view.findViewById(R.id.pagination_button);
+        loader = view.findViewById(R.id.loader);
     }
 }
