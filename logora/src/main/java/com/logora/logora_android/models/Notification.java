@@ -1,5 +1,7 @@
 package com.logora.logora_android.models;
 
+import android.util.Log;
+
 import com.logora.logora_android.utils.DateUtil;
 
 import org.json.JSONException;
@@ -29,6 +31,7 @@ public class Notification<T1, T2, T3> extends Model {
             notification.setActorCount(jsonObject.getInt("actor_count"));
             notification.setIsOpened(jsonObject.getBoolean("is_opened"));
             String publishedDate = jsonObject.getString("created_at");
+            Log.e("DATE", publishedDate);
             notification.setPublishedDate(DateUtil.parseDate(publishedDate));
             return notification;
         } catch (JSONException e) {
