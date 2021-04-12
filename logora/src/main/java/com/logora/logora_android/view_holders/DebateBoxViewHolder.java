@@ -58,6 +58,7 @@ public class DebateBoxViewHolder extends ListViewHolder {
 
         String debateVote = debateBox.getVotePercentage() + " %" + " " + debateBox.getVotePosition();
         debateVoteView.setText(debateVote);
+        debateImageView.setClipToOutline(true);
 
         List<JSONObject> userList = debateBox.getUserList();
         if(userList.size() == 0) {

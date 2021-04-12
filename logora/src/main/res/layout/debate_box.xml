@@ -15,7 +15,8 @@
         android:scaleType="fitXY"
         android:adjustViewBounds="true"
         android:layout_alignParentTop="true"
-        android:contentDescription="@string/debate_box_image_content_description" />
+        android:contentDescription="@string/debate_box_image_content_description"
+        android:background="@drawable/rounded_debate_image"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
