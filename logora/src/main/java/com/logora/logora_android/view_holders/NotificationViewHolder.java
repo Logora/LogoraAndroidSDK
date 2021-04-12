@@ -52,10 +52,6 @@ public class NotificationViewHolder extends ListViewHolder {
         // TODO Fix notificationDate format
     }
 
-    public void redirectTo() {
-
-    }
-
     @Override
     public void updateWithObject(Object object) {
         Resources res = this.itemView.getContext().getResources();
