@@ -1,7 +1,6 @@
 package com.logora.logora_android;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -18,6 +17,7 @@ public class LogoraAppActivity extends AppCompatActivity implements Router.Route
     private String applicationName;
     private String authAssertion;
     private ProgressBar spinner;
+    private Route initialRoute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,13 +27,13 @@ public class LogoraAppActivity extends AppCompatActivity implements Router.Route
         LogoraApiClient apiClient = LogoraApiClient.getInstance(this.applicationName,
                 this.authAssertion, getBaseContext());
 
+        findViews();
+
         router.setListener(this);
 
         Auth auth = Auth.getInstance();
         auth.setListener(this);
         auth.authenticate();
-
-        findViews();
     }
 
     private void findViews() {
@@ -46,7 +46,7 @@ public class LogoraAppActivity extends AppCompatActivity implements Router.Route
         model.getSettings().observe(this, settings -> {
             getSupportFragmentManager().beginTransaction()
                 .add(R.id.navbar_fragment, new NavbarFragment())
-                .add(R.id.main_fragment, new IndexFragment())
+                .add(R.id.main_fragment, Router.getRouteFragment(initialRoute))
                 .add(R.id.footer_fragment, new FooterFragment())
                 .commit();
             spinner.setVisibility(View.GONE);
@@ -61,14 +61,7 @@ public class LogoraAppActivity extends AppCompatActivity implements Router.Route
         String routeName = b.getString("routeName");
         String routeParam = b.getString("routeParam");
 
-        Route initialRoute = Router.parseRoute(routeName, routeParam);
-        //setInitialRoute(initialRoute);
-    }
-
-    private void setInitialRoute(Route initialRoute) {
-        getSupportFragmentManager().beginTransaction()
-            .replace(R.id.main_fragment, Router.getRouteFragment(initialRoute))
-            .commit();
+        initialRoute = Router.parseRoute(routeName, routeParam);
     }
 
     @Override

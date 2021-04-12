@@ -77,6 +77,7 @@ public class Router {
     }
 
     public static Fragment getRouteFragment(Route route) {
+        Log.i("lkjlkj", String.valueOf(route.getParams().get("debateSlug")));
         switch (route.getName()) {
             case "DEBATE":
                 return new DebateFragment(route.getParams().get("debateSlug"));

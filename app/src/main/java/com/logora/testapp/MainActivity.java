@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("applicationName", applicationName);
         intent.putExtra("authAssertion", authAssertion);
         intent.putExtra("routeName", "DEBATE");
-        intent.putExtra("routeParam", "param");
+        intent.putExtra("routeParam", "bonjour-a-tous-debat-Nop08");
         startActivity(intent);
     }
 }
