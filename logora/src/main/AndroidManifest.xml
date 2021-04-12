@@ -4,5 +4,10 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <application />
+    <application>
+        <activity
+            android:name=".LogoraAppActivity"
+            android:label="@string/activity_name" >
+        </activity>
+    </application>
 </manifest>

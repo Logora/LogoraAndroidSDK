@@ -2,13 +2,11 @@ package com.logora.testapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.media.tv.TvContract;
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
-import com.logora.logora_android.FooterFragment;
-import com.logora.logora_android.IndexFragment;
-import com.logora.logora_android.LogoraAppFragment;
-import com.logora.logora_android.NavbarFragment;
+import com.logora.logora_android.LogoraAppActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,9 +18,18 @@ public class MainActivity extends AppCompatActivity {
         String applicationName = "logora-demo";
         String authAssertion = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiZmlyc3RfbmFtZSI6IlZpdGFsaWsiLCJsYXN0X25hbWUiOiJCdXRlcmluIiwiZW1haWwiOiJ2aXRhbGlrQGJ1dGVyaW4uY29tIiwidWlkIjoiMTIzNDI0IiwiaWF0IjoxNTE2MjM5MDIyfQ.KEQ6fHyFHu34-dGLYGnbBR_LF6BdOWnz2P9GyYZPJBg";
 
-        LogoraAppFragment fragment = new LogoraAppFragment(applicationName, authAssertion);
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.fragment_container_view, fragment)
-                .commit();
+        TextView textView = this.findViewById(R.id.text);
+        textView.setOnClickListener(v -> {
+            startDebate(applicationName, authAssertion);
+        });
+    }
+
+    private void startDebate(String applicationName, String authAssertion) {
+        Intent intent = new Intent(this, LogoraAppActivity.class);
+        intent.putExtra("applicationName", applicationName);
+        intent.putExtra("authAssertion", authAssertion);
+        intent.putExtra("routeName", "DEBATE");
+        intent.putExtra("routeParam", "param");
+        startActivity(intent);
     }
 }

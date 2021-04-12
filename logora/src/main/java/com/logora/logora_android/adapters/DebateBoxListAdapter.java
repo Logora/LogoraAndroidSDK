@@ -47,7 +47,7 @@ public class DebateBoxListAdapter extends ListAdapter {
         holder.itemView.setOnClickListener(v -> {
             HashMap<String, String> routeParams = new HashMap<>();
             routeParams.put("debateSlug", debateBox.getSlug());
-            router.setCurrentRoute(Router.getRoute("DEBATE"), routeParams, null);
+            router.setCurrentRoute(Router.getRoute("DEBATE"), routeParams);
         });
     }
 

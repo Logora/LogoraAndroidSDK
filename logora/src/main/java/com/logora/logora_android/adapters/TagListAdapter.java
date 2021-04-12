@@ -44,9 +44,9 @@ public class TagListAdapter extends ListAdapter {
         Tag tag = this.getObjectFromJson(this.items.get(position));
         holder.updateWithObject(tag);
         holder.itemView.setOnClickListener(v -> {
-            HashMap<String, String> queryParams = new HashMap<>();
-            queryParams.put("q", tag.getDisplayName());
-            router.setCurrentRoute(Router.getRoute("SEARCH"), null, queryParams);
+            HashMap<String, String> routeParams = new HashMap<>();
+            routeParams.put("q", tag.getDisplayName());
+            router.setCurrentRoute(Router.getRoute("SEARCH"), routeParams);
         });
     }
 
