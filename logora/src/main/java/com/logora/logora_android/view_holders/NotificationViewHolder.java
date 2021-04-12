@@ -49,7 +49,6 @@ public class NotificationViewHolder extends ListViewHolder {
         notificationContent = view.findViewById(R.id.notification_main_content);
         notificationImage = view.findViewById(R.id.notification_image);
         notificationDate = view.findViewById(R.id.notification_date);
-        // TODO Fix notificationDate format
     }
 
     @Override
@@ -73,7 +72,7 @@ public class NotificationViewHolder extends ListViewHolder {
                     this.apiClient.readNotification(response -> {
                         try {
                             boolean success = response.getBoolean("success");
-                            Log.e("readId", "SUCESS");
+                            Log.e("readId", "SUCCESS");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
