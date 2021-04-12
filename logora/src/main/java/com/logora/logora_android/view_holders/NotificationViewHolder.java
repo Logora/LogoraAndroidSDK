@@ -57,8 +57,8 @@ public class NotificationViewHolder extends ListViewHolder {
         Resources res = this.itemView.getContext().getResources();
         Notification notification = (Notification) object;
         Spanned content;
-        if (notification.getIsOpened() == false) {
-            notificationContainer.setBackgroundColor(res.getColor(R.color.text_secondary));
+        if (!notification.getIsOpened()) {
+            notificationContainer.setBackgroundColor(res.getColor(R.color.text_tertiary));
         }
         notificationDate.setText(DateUtil.getTimeAgo(notification.getPublishedDate()));
         switch(notification.getNotifyType()){

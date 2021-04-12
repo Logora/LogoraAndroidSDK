@@ -75,14 +75,16 @@ public class NavbarFragment extends Fragment {
                     .load(Uri.parse(auth.getCurrentUser().getImageUrl()))
                     .into(userProfileIconView);
 
-            // Update NOTIFICATION BADGE COUNT
-            /*if (auth.getCurrentUser().getNotificationsCount() > 0) {
-
-                notificationsBadge.setText(auth.getCurrentUser().getNotificationsCount());
+            if (auth.getCurrentUser().getNotificationsCount() > 0) {
+                notificationsBadge.setText(String.valueOf(auth.getCurrentUser().getNotificationsCount()));
             } else {
-                Log.e("NOTIFS COUNT", String.valueOf(auth.getCurrentUser().getNotificationsCount()));
                 notificationsBadge.setVisibility(View.GONE);
-            }*/
+            }
+
+            notificationButton.setOnClickListener(v -> {
+                HashMap<String, String> routeParams = new HashMap<>();
+                router.setCurrentRoute(Router.getRoute("NOTIFICATIONS"), routeParams);
+            });
         }
 
         indexButtonView.setOnClickListener(v -> {
