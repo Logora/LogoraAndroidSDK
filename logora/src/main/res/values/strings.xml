@@ -78,6 +78,7 @@
     <string name="report">Signaler</string>
     <string name="participants_count">Nombre de participants</string>
     <string name="notification">Notification</string>
+    <string name="notifications">Notifications</string>
     <string name="notifications_new_badge">Vous avez obtenu le badge</string>
     <string name="notifications_level_up">Vous êtes maintenant au niveau</string>
     <string name="notifications_mentor_level_up">a atteint le niveau </string>
@@ -94,4 +95,12 @@
     <string name="notifications_read_all">Tout marquer comme lu</string>
     <string name="notifications_group_invitation_action">vous provoque en duel</string>
     <string name="view_more">Voir plus</string>
+    <string name="report_spam">Contenu indésirable ou de mauvaise qualité</string>
+    <string name="report_harassment">Harcèlement</string>
+    <string name="report_hate_speech">Discours haineux</string>
+    <string name="report_plagiarism">Plagiat</string>
+    <string name="report_fake_news">Fausses informations</string>
+    <string name="report_success">Votre signalement à bien été envoyé.</string>
+    <string name="report_error">Un problème est survenu lors de l\'envoi de votre signalement.</string>
+    <string name="report_header">Signaler un argument</string>
 </resources>

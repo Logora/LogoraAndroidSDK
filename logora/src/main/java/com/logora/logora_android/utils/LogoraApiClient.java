@@ -188,6 +188,20 @@ public class LogoraApiClient {
         this.user_post(route, queryParams, bodyParams, listener, errorListener);
     }
 
+    public void readNotification(Response.Listener<JSONObject> listener,
+                                     Response.ErrorListener errorListener, Integer notificationId) {
+        HashMap<String, String> queryParams = new HashMap<>();
+        String route = "/notifications/read/" + notificationId;
+        this.user_post(route, queryParams, null, listener, errorListener);
+    }
+
+    public void readAllNotifications(Response.Listener<JSONObject> listener,
+                             Response.ErrorListener errorListener) {
+        HashMap<String, String> queryParams = new HashMap<>();
+        String route = "/notifications/read/all";
+        this.user_post(route, queryParams, null, listener, errorListener);
+    }
+
     /* AUTH METHODS */
     public void userAuth(Response.Listener<JSONObject> listener,
                          Response.ErrorListener errorListener) {

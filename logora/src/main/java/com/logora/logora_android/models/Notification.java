@@ -1,14 +1,20 @@
 package com.logora.logora_android.models;
 
+import com.logora.logora_android.utils.DateUtil;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Date;
+
 public class Notification<T1, T2, T3> extends Model {
     protected Integer id;
-    protected User actor;
+    protected UserBox actor;
     protected String notifyType;
     protected String redirectUrl;
     protected Integer actorCount;
+    protected Boolean isOpened;
+    protected Date publishedDate;
     protected T1 target;
     protected T2 secondTarget;
     protected T3 thirdTarget;
@@ -17,10 +23,13 @@ public class Notification<T1, T2, T3> extends Model {
         Notification notification = new Notification();
         try {
             notification.setId(jsonObject.getInt("id"));
-            notification.setActor(User.objectFromJson(jsonObject.getJSONObject("actor")));
+            notification.setActor(UserBox.objectFromJson(jsonObject.getJSONObject("actor")));
             notification.setNotifyType(jsonObject.getString("notify_type"));
             notification.setRedirectUrl(jsonObject.getString("redirect_url"));
             notification.setActorCount(jsonObject.getInt("actor_count"));
+            notification.setIsOpened(jsonObject.getBoolean("is_opened"));
+            String publishedDate = jsonObject.getString("created_at");
+            notification.setPublishedDate(DateUtil.parseDate(publishedDate));
             return notification;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -36,9 +45,9 @@ public class Notification<T1, T2, T3> extends Model {
         this.id = id;
     }
 
-    public User getActor() { return actor; }
+    public UserBox getActor() { return actor; }
 
-    public void setActor(User actor) { this.actor = actor; }
+    public void setActor(UserBox actor) { this.actor = actor; }
 
     public Integer getActorCount() { return actorCount; }
 
@@ -67,4 +76,12 @@ public class Notification<T1, T2, T3> extends Model {
     public String getImageUrl() {
         return this.getActor().getImageUrl();
     }
+
+    public Boolean getIsOpened() { return this.isOpened; }
+
+    public void setIsOpened(Boolean isOpened) { this.isOpened = isOpened; }
+
+    public Date getPublishedDate() { return publishedDate; }
+
+    public void setPublishedDate(Date publishedDate){ this.publishedDate = publishedDate; }
 }
