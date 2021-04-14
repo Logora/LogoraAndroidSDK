@@ -6,27 +6,20 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
-import com.logora.logora_android.adapters.DebateBoxListAdapter;
-import com.logora.logora_android.adapters.ListAdapter;
 import com.logora.logora_android.adapters.UserBoxListAdapter;
 import com.logora.logora_android.adapters.UserMessagesListAdapter;
 import com.logora.logora_android.utils.Settings;
-import com.logora.logora_android.view_models.DebateShowViewModel;
-import com.logora.logora_android.view_models.ListViewModel;
 import com.logora.logora_android.view_models.UserShowViewModel;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * A {@link Fragment} subclass containing the user profile page.
@@ -61,7 +54,7 @@ public class UserFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NotNull View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         TextView userFullNameView = view.findViewById(R.id.user_full_name);

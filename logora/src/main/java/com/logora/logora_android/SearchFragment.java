@@ -7,13 +7,13 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.tabs.TabLayout;
 import com.logora.logora_android.adapters.DebateBoxListAdapter;
 import com.logora.logora_android.adapters.UserBoxListAdapter;
 import com.logora.logora_android.utils.Settings;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * A {@link Fragment} subclass containing the debate space search page.
@@ -36,7 +36,7 @@ public class SearchFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NotNull View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         findViews(view);

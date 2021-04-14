@@ -21,16 +21,11 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
-import com.logora.logora_android.adapters.NotificationListAdapter;
-import com.logora.logora_android.adapters.UserMessagesListAdapter;
 import com.logora.logora_android.utils.Auth;
 import com.logora.logora_android.utils.LogoraApiClient;
 import com.logora.logora_android.utils.Router;
 import com.logora.logora_android.utils.Settings;
 import com.logora.logora_android.views.SearchFormView;
-
-import org.jetbrains.annotations.NotNull;
-import org.json.JSONException;
 
 import java.util.HashMap;
 
@@ -62,7 +57,7 @@ public class NavbarFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         findViews(view);
         setStyles();
         //setTexts();

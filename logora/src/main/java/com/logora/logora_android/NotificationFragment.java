@@ -9,16 +9,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
-import com.logora.logora_android.adapters.DebateBoxListAdapter;
 import com.logora.logora_android.adapters.NotificationListAdapter;
-import com.logora.logora_android.adapters.UserBoxListAdapter;
 import com.logora.logora_android.utils.LogoraApiClient;
 import com.logora.logora_android.utils.Router;
 import com.logora.logora_android.utils.Settings;
 
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 
 /**
@@ -35,7 +32,7 @@ public class NotificationFragment extends Fragment {
     public NotificationFragment() { super(R.layout.fragment_notification); }
 
     @Override
-    public void onViewCreated(@NotNull View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         findViews(view);

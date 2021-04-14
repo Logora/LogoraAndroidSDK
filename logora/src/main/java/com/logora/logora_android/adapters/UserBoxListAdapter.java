@@ -8,14 +8,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 
 import com.logora.logora_android.R;
-import com.logora.logora_android.models.DebateBox;
 import com.logora.logora_android.models.UserBox;
 import com.logora.logora_android.utils.Router;
-import com.logora.logora_android.view_holders.DebateBoxViewHolder;
 import com.logora.logora_android.view_holders.ListViewHolder;
 import com.logora.logora_android.view_holders.UserBoxViewHolder;
 
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -30,7 +27,7 @@ public class UserBoxListAdapter extends ListAdapter {
         super(items);
     }
 
-    @NotNull
+    @NonNull
     @Override
     public ListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();

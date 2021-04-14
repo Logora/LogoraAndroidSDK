@@ -10,22 +10,19 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.logora.logora_android.adapters.ArgumentListAdapter;
 import com.logora.logora_android.adapters.TagListAdapter;
-import com.logora.logora_android.models.Debate;
-import com.logora.logora_android.utils.Auth;
 import com.logora.logora_android.utils.DateUtil;
 import com.logora.logora_android.view_models.DebateShowViewModel;
 import com.logora.logora_android.views.ArgumentAuthorBox;
 import com.logora.logora_android.views.FollowDebateButtonView;
 import com.logora.logora_android.views.ShareView;
 import com.logora.logora_android.views.VoteBoxView;
-
-import org.jetbrains.annotations.NotNull;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,7 +52,7 @@ public class DebateFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NotNull View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         findViews(view);
 

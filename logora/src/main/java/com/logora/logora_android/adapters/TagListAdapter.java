@@ -9,13 +9,10 @@ import androidx.annotation.NonNull;
 
 import com.logora.logora_android.R;
 import com.logora.logora_android.models.Tag;
-import com.logora.logora_android.models.UserIcon;
 import com.logora.logora_android.utils.Router;
 import com.logora.logora_android.view_holders.ListViewHolder;
 import com.logora.logora_android.view_holders.TagViewHolder;
-import com.logora.logora_android.view_holders.UserIconViewHolder;
 
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -30,7 +27,7 @@ public class TagListAdapter extends ListAdapter {
         super(items);
     }
 
-    @NotNull
+    @NonNull
     @Override
     public ListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();

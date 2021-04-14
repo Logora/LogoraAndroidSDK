@@ -9,16 +9,9 @@ import androidx.annotation.NonNull;
 
 import com.logora.logora_android.R;
 import com.logora.logora_android.models.NextBadgeBox;
-import com.logora.logora_android.models.UserBox;
-import com.logora.logora_android.utils.Router;
 import com.logora.logora_android.view_holders.ListViewHolder;
 import com.logora.logora_android.view_holders.NextBadgeBoxViewHolder;
-import com.logora.logora_android.view_holders.UserBoxViewHolder;
-
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
-
-import java.util.HashMap;
 import java.util.List;
 
 public class NextBadgeBoxListAdapter extends ListAdapter {
@@ -28,7 +21,7 @@ public class NextBadgeBoxListAdapter extends ListAdapter {
         super(items);
     }
 
-    @NotNull
+    @NonNull
     @Override
     public ListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();

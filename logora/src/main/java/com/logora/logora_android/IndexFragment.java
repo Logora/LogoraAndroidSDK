@@ -6,13 +6,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.logora.logora_android.adapters.DebateBoxListAdapter;
 import com.logora.logora_android.adapters.UserBoxListAdapter;
 import com.logora.logora_android.utils.Router;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * A {@link Fragment} subclass containing the debate space index.
@@ -27,7 +27,7 @@ public class IndexFragment extends Fragment {
     public IndexFragment() { super(R.layout.fragment_index); }
 
     @Override
-    public void onViewCreated(@NotNull View view, Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         findViews(view);

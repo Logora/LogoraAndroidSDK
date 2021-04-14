@@ -35,6 +35,7 @@ public class Argument extends Model {
             argument.setAuthor(UserBox.objectFromJson(jsonObject.getJSONObject("author")));
             argument.setVotesCount(jsonObject.getInt("upvotes"));
             argument.setContent(jsonObject.getString("content"));
+
             argument.setPosition(Position.objectFromJson(jsonObject.getJSONObject("position")));
             argument.setIsReply(jsonObject.getBoolean("is_reply"));
 
