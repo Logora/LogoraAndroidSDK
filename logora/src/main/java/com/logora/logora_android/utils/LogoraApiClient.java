@@ -380,7 +380,7 @@ public class LogoraApiClient {
         }
 
         String userAuthorizationHeader = this.getUserAuthorizationHeader();
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.PATCH,
                 requestUrl, bodyJson, listener, errorListener
         ) {
             @Override

@@ -7,8 +7,6 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -19,7 +17,6 @@ import com.logora.logora_android.utils.Auth;
 import com.logora.logora_android.utils.LogoraApiClient;
 import com.logora.logora_android.utils.Router;
 import com.logora.logora_android.utils.Settings;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -101,7 +98,9 @@ public class VoteBoxView extends RelativeLayout {
                     try {
                         boolean success = response.getJSONObject("data").getBoolean("success");
                         boolean vote = response.getJSONObject("data").getJSONObject("data").getBoolean("vote");
+                        int voteId = response.getJSONObject("data").getJSONObject("data").getJSONObject("resource").getInt("id");
                         if(success && vote) {
+                            this.voteId = voteId;
                             showResults();
                         }
                     } catch (JSONException e) {
@@ -135,7 +134,7 @@ public class VoteBoxView extends RelativeLayout {
                     e.printStackTrace();
                 }
             }, error -> {
-                Log.i("ERROR", "error");
+                Log.i("ERROR", String.valueOf(error));
             }, Integer.parseInt(debate.getId()), "Group", positionId);
     }
 
@@ -152,7 +151,7 @@ public class VoteBoxView extends RelativeLayout {
                     e.printStackTrace();
                 }
             }, error -> {
-                Log.i("ERROR", "error");
+                Log.i("ERROR", String.valueOf(error));
             }, this.voteId, positionId);
     }
 
