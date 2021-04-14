@@ -1,8 +1,9 @@
 package com.logora.logora_android;
 
 import android.os.Bundle;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -10,7 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import com.logora.logora_android.adapters.ListAdapter;
 import com.logora.logora_android.view_models.ListViewModel;
-import org.jetbrains.annotations.NotNull;
+
 import java.util.HashMap;
 
 public class PaginatedListFragment extends Fragment {
@@ -22,7 +23,6 @@ public class PaginatedListFragment extends Fragment {
     private TextView emptyView;
 
     public PaginatedListFragment(String resourceName, String resourceType, ListAdapter listAdapter, HashMap<String,String> extraArguments) {
-        super(R.layout.fragment_paginated_list);
         this.listAdapter = listAdapter;
         listViewModel = new ListViewModel(resourceName, resourceType);
         if(extraArguments != null) {
@@ -39,27 +39,15 @@ public class PaginatedListFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NotNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                              Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.fragment_paginated_list, container, false);
 
         findViews(view);
 
         recyclerView.setAdapter(listAdapter);
 
-        loader.setVisibility(View.VISIBLE);
-
-        listViewModel.getList().observe(getViewLifecycleOwner(), itemList -> {
-            if(itemList.size() == 0) {
-                loader.setVisibility(View.GONE);
-                emptyView.setVisibility(View.VISIBLE);
-            } else {
-                listAdapter.update(itemList);
-                loader.setVisibility(View.GONE);
-                if(!listViewModel.isLastPage()) {
-                    paginationButton.setVisibility(View.VISIBLE);
-                }
-            }
-        });
+        init();
 
         paginationButton.setOnClickListener(v -> {
             loader.setVisibility(View.VISIBLE);
@@ -69,11 +57,35 @@ public class PaginatedListFragment extends Fragment {
                 loader.setVisibility(View.GONE);
             });
         });
+
+        return view;
     }
 
-    public void updateSort() {
+    public void init() {
         loader.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
+        emptyView.setVisibility(View.GONE);
+        paginationButton.setVisibility(View.GONE);
+
+        listViewModel.getList().observe(getViewLifecycleOwner(), itemList -> {
+            if(itemList.size() == 0) {
+                loader.setVisibility(View.GONE);
+                emptyView.setVisibility(View.VISIBLE);
+            } else {
+                listAdapter.update(itemList);
+                loader.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
+                if(!listViewModel.isLastPage()) {
+                    paginationButton.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+    }
+
+    public void update() {
+        loader.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
+        emptyView.setVisibility(View.GONE);
         paginationButton.setVisibility(View.GONE);
 
         listViewModel.resetList().observe(getViewLifecycleOwner(), itemList -> {
@@ -82,8 +94,8 @@ public class PaginatedListFragment extends Fragment {
                 emptyView.setVisibility(View.VISIBLE);
             } else {
                 listAdapter.update(itemList);
-                recyclerView.setVisibility(View.VISIBLE);
                 loader.setVisibility(View.GONE);
+                recyclerView.setVisibility(View.VISIBLE);
                 if(!listViewModel.isLastPage()) {
                     paginationButton.setVisibility(View.VISIBLE);
                 }
