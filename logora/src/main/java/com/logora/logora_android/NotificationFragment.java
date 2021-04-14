@@ -47,7 +47,7 @@ public class NotificationFragment extends Fragment {
                 response -> {
                     try {
                         boolean success = response.getBoolean("success");
-                        Log.e("onClick", "SUCESS");
+                        notificationList.updateSort();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

@@ -103,11 +103,30 @@
         <EditText
             android:id="@+id/argument_input"
             android:layout_width="match_parent"
-            android:minHeight="80dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/argument_author_box_container"
             android:background="@android:color/transparent"
-            android:textCursorDrawable="@drawable/black_cursor" />
+            android:textCursorDrawable="@drawable/black_cursor"
+            android:layout_marginLeft="12dp"/>
+
+        <RelativeLayout
+            android:id="@+id/argument_input_controls"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/argument_input"
+            android:gravity="right"
+            android:paddingVertical="10dp">
+
+            <ImageView
+                android:id="@+id/argument_input_send_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_send"
+                android:layout_gravity="right"
+                android:clickable="true"
+                android:focusable="true"/>
+
+        </RelativeLayout>
 
     </RelativeLayout>
 

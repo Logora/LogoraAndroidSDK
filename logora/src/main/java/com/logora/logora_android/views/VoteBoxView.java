@@ -24,6 +24,7 @@ import androidx.core.content.ContextCompat;
 import com.logora.logora_android.R;
 import com.logora.logora_android.models.Debate;
 import com.logora.logora_android.utils.Auth;
+import com.logora.logora_android.utils.InputProvider;
 import com.logora.logora_android.utils.LogoraApiClient;
 import com.logora.logora_android.utils.Router;
 import com.logora.logora_android.utils.Settings;
@@ -37,6 +38,7 @@ public class VoteBoxView extends RelativeLayout {
     private final Settings settings = Settings.getInstance();
     private final Auth auth = Auth.getInstance();
     private final LogoraApiClient apiClient = LogoraApiClient.getInstance();
+    private final InputProvider inputProvider = InputProvider.getInstance();
     private Context context;
     private Debate debate;
     private Integer voteId;
@@ -140,6 +142,7 @@ public class VoteBoxView extends RelativeLayout {
                     JSONObject vote = response.getJSONObject("data").getJSONObject("resource");
                     if(success) {
                         this.voteId = vote.getInt("id");
+                        inputProvider.addUserPosition(Integer.parseInt(debate.getId()), positionId);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -157,6 +160,7 @@ public class VoteBoxView extends RelativeLayout {
                     JSONObject vote = response.getJSONObject("data").getJSONObject("resource");
                     if(success) {
                         this.voteId = vote.getInt("id");
+                        inputProvider.addUserPosition(Integer.parseInt(debate.getId()), positionId);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -133,6 +133,9 @@ public class NotificationViewHolder extends ListViewHolder {
                     content = Html.fromHtml("<b>" + getVoteNotification.getActor().getFullName() + "</b>" + " " + res.getString(R.string.notifications_support) + " " + res.getString(R.string.notifications_subject_argument));
                 }
                 notificationContent.setText(content);
+                Glide.with(notificationImage.getContext())
+                        .load(Uri.parse(getVoteNotification.getImageUrl()))
+                        .into(notificationImage);
                 this.itemView.setOnClickListener(v -> {
                     this.apiClient.readNotification(response -> {
                         try {

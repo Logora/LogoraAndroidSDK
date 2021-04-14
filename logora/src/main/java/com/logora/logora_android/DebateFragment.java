@@ -1,15 +1,21 @@
 package com.logora.logora_android;
 
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +25,9 @@ import com.logora.logora_android.adapters.TagListAdapter;
 import com.logora.logora_android.models.Debate;
 import com.logora.logora_android.utils.Auth;
 import com.logora.logora_android.utils.DateUtil;
+import com.logora.logora_android.utils.InputProvider;
+import com.logora.logora_android.utils.LogoraApiClient;
+import com.logora.logora_android.utils.Settings;
 import com.logora.logora_android.view_models.DebateShowViewModel;
 import com.logora.logora_android.views.ArgumentAuthorBox;
 import com.logora.logora_android.views.FollowDebateButtonView;
@@ -26,11 +35,16 @@ import com.logora.logora_android.views.ShareView;
 import com.logora.logora_android.views.VoteBoxView;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONException;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class DebateFragment extends Fragment {
+    private final Auth auth = Auth.getInstance();
+    private final InputProvider inputProvider = InputProvider.getInstance();
+    private LogoraApiClient apiClient = LogoraApiClient.getInstance();
+    private Settings settings = Settings.getInstance();
     private Boolean spinnerSelected = false;
     private String debateSlug;
     private ProgressBar loader;
@@ -44,6 +58,9 @@ public class DebateFragment extends Fragment {
     private Spinner argumentSortView;
     private PaginatedListFragment argumentList;
     private ArgumentAuthorBox argumentAuthorBox;
+    private RelativeLayout argumentInputControls;
+    private EditText argumentInput;
+    private ImageView argumentSend;
 
     public DebateFragment() {
         super(R.layout.fragment_debate);
@@ -68,7 +85,50 @@ public class DebateFragment extends Fragment {
         debateShowViewModel.getDebate(this.debateSlug).observe(getViewLifecycleOwner(), debate -> {
             debateNameView.setText(debate.getName());
 
+            // Argument Input
             argumentAuthorBox.init(null);
+            String primaryColor = settings.get("theme.callPrimaryColor");
+            LayerDrawable shape = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.button_primary_background);
+            GradientDrawable gradientDrawable = (GradientDrawable) shape.findDrawableByLayerId(R.id.shape);
+            gradientDrawable.setColor(Color.parseColor(primaryColor));
+            argumentSend.setBackground(shape);
+            argumentInputControls.setVisibility(View.GONE);
+            argumentInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                @Override
+                public void onFocusChange(View view, boolean hasFocus) {
+                    if (hasFocus) {
+                        argumentInputControls.setVisibility(View.VISIBLE);
+                    }
+                }
+            });
+
+            argumentSend.setOnClickListener(v -> {
+                Log.e("SEND CLICKED", "true");
+                if(auth.getIsLoggedIn() == true ) {
+                    if (inputProvider.getUserPositions().get(debate.getId()) != null)
+                        this.apiClient.createArgument(
+                        response -> {
+                            try {
+                                boolean success = response.getBoolean("success");
+                                if(success) {
+                                    Log.e("ARGUMENT POSTED", String.valueOf(response));
+                                    // Remove entry in userPositions now that the argument is posted
+                                    inputProvider.getUserPositions().entrySet().remove(inputProvider.getUserPositions().get(debate.getId()));
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }, error -> {
+                            Log.i("ERROR", String.valueOf(error));
+                            // Show error message
+                        }, String.valueOf(argumentInput.getText()), Integer.parseInt(debate.getId()), inputProvider.getUserPositions().get(debate.getId()));
+                    else {
+                        Log.e("SHOW SIDE MODAL", "true");
+                    }
+                } else {
+                    Log.e("SHOW LOGIN MODAL", "true");
+                }
+            });
 
             debatePublishedDateView.setText(DateUtil.getDateText(debate.getPublishedDate()));
             debateTagListAdapter.setItems(debate.getTagList());
@@ -133,6 +193,9 @@ public class DebateFragment extends Fragment {
         argumentSortView = view.findViewById(R.id.argument_sort);
         debateTagList.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.HORIZONTAL, false));
         argumentAuthorBox = view.findViewById(R.id.argument_author_box_container);
+        argumentInputControls = view.findViewById(R.id.argument_input_controls);
+        argumentInput = view.findViewById(R.id.argument_input);
+        argumentSend = view.findViewById(R.id.argument_input_send_button);
     }
 
     public String[] getSpinnerOptions() {
