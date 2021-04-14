@@ -68,7 +68,7 @@
     <string name="argument_sort_trending">Le plus pertinent</string>
     <string name="argument_sort_recent">Le plus récent</string>
     <string name="argument_sort_old">Le plus ancien</string>
-    <string name="argument_date" />
+    <string name="argument_date">Il y a 5 jours</string>
     <string name="argument_clap_icon_content_description">Icône du bouton de vote pour l\'argument</string>
     <string name="argument_reply_icon_content_description">Icône du bouton de réponse de l\'argument</string>
     <string name="argument_view_replies">Voir les réponses</string>

@@ -85,11 +85,37 @@
         </RelativeLayout>
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/argument_input_container"
+        android:layout_width="wrap_content"
+        android:minHeight="80dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/debate_presentation_container"
+        android:background="@drawable/box_background"
+        android:padding="10dp"
+        android:layout_marginBottom="12dp">
+
+        <com.logora.logora_android.views.ArgumentAuthorBox
+            android:id="@+id/argument_author_box_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/argument_input"
+            android:layout_width="match_parent"
+            android:minHeight="80dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/argument_author_box_container"
+            android:background="@android:color/transparent"
+            android:textCursorDrawable="@drawable/black_cursor" />
+
+    </RelativeLayout>
+
     <Spinner
         android:id="@+id/argument_sort"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/debate_presentation_container"
+        android:layout_below="@id/argument_input_container"
         android:spinnerMode="dropdown" />
 
     <FrameLayout

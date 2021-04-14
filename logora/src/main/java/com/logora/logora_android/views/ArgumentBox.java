@@ -50,22 +50,16 @@ import java.util.List;
 
 public class ArgumentBox extends RelativeLayout {
     private Context context;
+    private final Settings settings = Settings.getInstance();
     private Auth authClient = Auth.getInstance();
     private LogoraApiClient apiClient = LogoraApiClient.getInstance();
     private Debate debate;
     private Argument argument;
-    private Integer positionIndex = 0;
-    private final Settings settings = Settings.getInstance();
-    private TextView fullNameView;
-    private TextView levelNameView;
-    private TextView sideLabelView;
     private TextView contentView;
-    private TextView dateView;
-    private ImageView levelIconView;
-    private ImageView userImageView;
     private RelativeLayout argumentContainer;
     private ImageView argumentShareButton;
     private ImageView argumentMoreButton;
+    private ArgumentAuthorBox argumentAuthorBox;
     private ArgumentVote argumentVote;
     private LinearLayout argumentRepliesFooter;
     private RecyclerView argumentRepliesAuthorsList;
@@ -74,6 +68,9 @@ public class ArgumentBox extends RelativeLayout {
     private PaginatedListFragment repliesList;
     private Boolean toggleReplies = false;
     private FragmentTransaction argumentRepliesTransaction;
+    private Integer positionIndex = 0;
+    private TextView sideLabelView;
+    private TextView dateView;
 
     public ArgumentBox(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -96,13 +93,8 @@ public class ArgumentBox extends RelativeLayout {
     }
 
     private void findViews() {
-        fullNameView = findViewById(R.id.user_full_name);
-        levelNameView = findViewById(R.id.user_level);
-        levelIconView = findViewById(R.id.user_level_icon);
-        sideLabelView = findViewById(R.id.argument_position);
+        argumentAuthorBox = findViewById(R.id.argument_author_box_container);
         contentView = findViewById(R.id.argument_content);
-        userImageView = findViewById(R.id.user_image);
-        dateView = findViewById(R.id.argument_date);
         argumentContainer = findViewById(R.id.argument_container);
         argumentVote = findViewById(R.id.argument_vote_container);
         argumentShareButton = findViewById(R.id.argument_share_button);
@@ -111,12 +103,15 @@ public class ArgumentBox extends RelativeLayout {
         argumentRepliesAuthorsList = findViewById(R.id.argument_replies_authors_list);
         argumentRepliesList = findViewById(R.id.argument_replies_list);
         argumentRepliesAuthorsListAdapter = new UserIconListAdapter();
+        sideLabelView = findViewById(R.id.argument_position);
+        dateView = findViewById(R.id.argument_date);
     }
 
     public void updateWithObject(Object object, Debate debate, Context context) {
         this.context = context;
         this.argument = (Argument) object;
         this.debate = debate;
+
         String firstPositionPrimaryColor = settings.get("theme.firstPositionColorPrimary");
         String secondPositionPrimaryColor = settings.get("theme.secondPositionColorPrimary");
         LayerDrawable shape = (LayerDrawable) ContextCompat.getDrawable(context, R.drawable.position_background);
@@ -135,23 +130,16 @@ public class ArgumentBox extends RelativeLayout {
         }
 
         sideLabelView.setBackground(shape);
-        argumentVote.init(argument);
-        fullNameView.setText(argument.getAuthor().getFullName());
         sideLabelView.setText(argument.getPosition().getName());
+        argumentAuthorBox.init(argument);
+        argumentVote.init(argument);
         contentView.setText(argument.getContent());
-        dateView.setText(DateUtil.getTimeAgo(argument.getPublishedDate()));
         argumentShareButton.setOnClickListener(v -> {
             openShareDialog("Cet argument devrait vous intéresser.");
         });
         argumentMoreButton.setOnClickListener(v -> {
             openMoreActionsDialog();
         });
-        Glide.with(levelIconView.getContext())
-                .load(Uri.parse(argument.getAuthor().getLevelIconUrl()))
-                .into(levelIconView);
-        Glide.with(userImageView.getContext())
-                .load(Uri.parse(argument.getAuthor().getImageUrl()))
-                .into(userImageView);
 
         String resourceName = "messages/" + argument.getId() + "/replies";
         ArgumentListAdapter repliesListAdapter = new ArgumentListAdapter(debate);
