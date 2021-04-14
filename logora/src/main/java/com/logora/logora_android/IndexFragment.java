@@ -63,7 +63,7 @@ public class IndexFragment extends Fragment {
                     } else if(position == 2) {
                         debateList.setSort("+created_at");
                     }
-                    debateList.updateSort();
+                    debateList.update();
                 } else {
                     spinnerSelected = true;
                 }

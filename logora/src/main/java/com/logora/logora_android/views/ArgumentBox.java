@@ -189,24 +189,22 @@ public class ArgumentBox extends RelativeLayout {
         } else {
             actionsList = new String[]{"Signaler"};
         }
-        builder.setItems(actionsList, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                if(actionsList.length > 1) {
-                    switch (which) {
-                        case 0:
-                            Log.i("MODIFIER :", "modifier");
-                            break;
-                        case 1:
-                            Log.i("SUPPRIMER :", "supprimer");
-                            break;
-                        case 2:
-                            openReportDialog();
-                            break;
-                    }
-                } else {
-                    if(which == 0) {
+        builder.setItems(actionsList, (dialog, which) -> {
+            if(actionsList.length > 1) {
+                switch (which) {
+                    case 0:
+                        Log.i("MODIFIER :", "modifier");
+                        break;
+                    case 1:
+                        Log.i("SUPPRIMER :", "supprimer");
+                        break;
+                    case 2:
                         openReportDialog();
-                    }
+                        break;
+                }
+            } else {
+                if(which == 0) {
+                    openReportDialog();
                 }
             }
         });

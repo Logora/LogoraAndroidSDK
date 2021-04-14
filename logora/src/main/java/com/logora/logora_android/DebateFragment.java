@@ -170,7 +170,7 @@ public class DebateFragment extends Fragment {
                     } else if(position == 2) {
                         argumentList.setSort("+created_at");
                     }
-                    argumentList.updateSort();
+                    argumentList.update();
                 } else {
                     spinnerSelected = true;
                 }
