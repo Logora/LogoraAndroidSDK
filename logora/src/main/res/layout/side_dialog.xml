@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="25dp"
+    android:paddingVertical="25dp"
+    >
+
+    <TextView
+        android:id="@+id/side_dialog_debate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Titre du débat"
+        android:layout_marginVertical="10dp"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/side_dialog_debate">
+
+    <Button
+        android:id="@+id/first_position_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Oui"
+        android:textColor="@android:color/white"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="6dp"
+        android:layout_marginRight="10dp"
+        />
+
+    <Button
+        android:id="@+id/second_position_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/first_position_button"
+        android:text="Non"
+        android:textColor="@android:color/white"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="6dp"
+        />
+    </RelativeLayout>
+
+</RelativeLayout>

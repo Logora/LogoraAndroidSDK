@@ -22,11 +22,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.logora.logora_android.adapters.ArgumentListAdapter;
 import com.logora.logora_android.adapters.TagListAdapter;
+import com.logora.logora_android.dialogs.ReportDialog;
+import com.logora.logora_android.dialogs.SideDialog;
 import com.logora.logora_android.models.Debate;
+import com.logora.logora_android.models.Position;
 import com.logora.logora_android.utils.Auth;
 import com.logora.logora_android.utils.DateUtil;
 import com.logora.logora_android.utils.InputProvider;
 import com.logora.logora_android.utils.LogoraApiClient;
+import com.logora.logora_android.utils.Route;
+import com.logora.logora_android.utils.Router;
 import com.logora.logora_android.utils.Settings;
 import com.logora.logora_android.view_models.DebateShowViewModel;
 import com.logora.logora_android.views.ArgumentAuthorBox;
@@ -61,6 +66,8 @@ public class DebateFragment extends Fragment {
     private RelativeLayout argumentInputControls;
     private EditText argumentInput;
     private ImageView argumentSend;
+    private Debate debate;
+
 
     public DebateFragment() {
         super(R.layout.fragment_debate);
@@ -83,6 +90,7 @@ public class DebateFragment extends Fragment {
 
         DebateShowViewModel debateShowViewModel = new DebateShowViewModel();
         debateShowViewModel.getDebate(this.debateSlug).observe(getViewLifecycleOwner(), debate -> {
+            this.debate = debate;
             debateNameView.setText(debate.getName());
 
             // Argument Input
@@ -105,7 +113,8 @@ public class DebateFragment extends Fragment {
             argumentSend.setOnClickListener(v -> {
                 Log.e("SEND CLICKED", "true");
                 if(auth.getIsLoggedIn() == true ) {
-                    if (inputProvider.getUserPositions().get(debate.getId()) != null)
+                    Log.e("POSITION PROVIDER", String.valueOf(inputProvider.getUserPositions().get(Integer.parseInt(debate.getId()))));
+                    if (inputProvider.getUserPositions().get(Integer.parseInt(debate.getId())) != null)
                         this.apiClient.createArgument(
                         response -> {
                             try {
@@ -114,6 +123,8 @@ public class DebateFragment extends Fragment {
                                     Log.e("ARGUMENT POSTED", String.valueOf(response));
                                     // Remove entry in userPositions now that the argument is posted
                                     inputProvider.getUserPositions().entrySet().remove(inputProvider.getUserPositions().get(debate.getId()));
+                                    // Clear argumentInput
+                                    argumentInput.getText().clear();
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -123,7 +134,7 @@ public class DebateFragment extends Fragment {
                             // Show error message
                         }, String.valueOf(argumentInput.getText()), Integer.parseInt(debate.getId()), inputProvider.getUserPositions().get(debate.getId()));
                     else {
-                        Log.e("SHOW SIDE MODAL", "true");
+                        openSideDialog();
                     }
                 } else {
                     Log.e("SHOW LOGIN MODAL", "true");
@@ -179,6 +190,17 @@ public class DebateFragment extends Fragment {
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {}
         });
+    }
+
+    private void openSideDialog() {
+        SideDialog sideDialog = new SideDialog(getContext(), debate);
+        sideDialog.setArgumentInputListener(new SideDialog.ArgumentInputListener() {
+            @Override
+            public void onArgumentReady(Integer positionId) {
+                Log.e("ARGUMENT RDY", String.valueOf(positionId));
+            }
+        });
+        SideDialog.show(getContext(), debate);
     }
 
     private void findViews(View view) {
