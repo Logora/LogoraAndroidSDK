@@ -13,7 +13,6 @@ import com.logora.logora_android.models.Debate;
 import com.logora.logora_android.view_holders.ArgumentViewHolder;
 import com.logora.logora_android.view_holders.ListViewHolder;
 
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -29,7 +28,6 @@ public class ArgumentListAdapter extends ListAdapter {
         super(items);
     }
 
-    @NotNull
     @Override
     public ListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();

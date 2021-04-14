@@ -15,7 +15,6 @@ import com.logora.logora_android.utils.Router;
 import com.logora.logora_android.view_holders.ListViewHolder;
 import com.logora.logora_android.view_holders.UserMessagesViewHolder;
 
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
 import java.util.List;

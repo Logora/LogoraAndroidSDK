@@ -12,10 +12,7 @@ import com.logora.logora_android.utils.Router;
 import com.logora.logora_android.view_holders.ListViewHolder;
 import com.logora.logora_android.view_holders.UserIconViewHolder;
 
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
-
-import java.util.HashMap;
 import java.util.List;
 
 public class UserIconListAdapter extends ListAdapter {
@@ -27,7 +24,7 @@ public class UserIconListAdapter extends ListAdapter {
         super(items);
     }
 
-    @NotNull
+    @NonNull
     @Override
     public ListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
