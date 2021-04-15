@@ -39,13 +39,12 @@ import com.logora.logora_android.views.ArgumentAuthorBox;
 import com.logora.logora_android.views.FollowDebateButtonView;
 import com.logora.logora_android.views.ShareView;
 import com.logora.logora_android.views.VoteBoxView;
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DebateFragment extends Fragment {
+public class DebateFragment extends Fragment implements SideDialog.ArgumentInputListener {
     private final Auth auth = Auth.getInstance();
     private final InputProvider inputProvider = InputProvider.getInstance();
     private LogoraApiClient apiClient = LogoraApiClient.getInstance();
@@ -194,12 +193,7 @@ public class DebateFragment extends Fragment {
 
     private void openSideDialog() {
         SideDialog sideDialog = new SideDialog(getContext(), debate);
-        sideDialog.setArgumentInputListener(new SideDialog.ArgumentInputListener() {
-            @Override
-            public void onArgumentReady(Integer positionId) {
-                Log.e("ARGUMENT RDY", String.valueOf(positionId));
-            }
-        });
+        sideDialog.setArgumentInputListener(this);
         SideDialog.show(getContext(), debate);
     }
 
@@ -226,5 +220,10 @@ public class DebateFragment extends Fragment {
         String oldOption = getString(R.string.argument_sort_old);
 
         return new String[] { trendingOption, recentOption, oldOption };
+    }
+
+    @Override
+    public void onArgumentReady(Integer positionId) {
+        Log.e("ARGUMENT RDY", String.valueOf(positionId));
     }
 }

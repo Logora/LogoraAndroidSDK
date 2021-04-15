@@ -9,6 +9,7 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.renderscript.ScriptGroup;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -19,6 +20,7 @@ import com.logora.logora_android.models.Argument;
 import com.logora.logora_android.models.Debate;
 import com.logora.logora_android.utils.InputProvider;
 import com.logora.logora_android.utils.LogoraApiClient;
+import com.logora.logora_android.utils.Router;
 import com.logora.logora_android.utils.Settings;
 
 public class SideDialog extends LinearLayout {
@@ -36,21 +38,18 @@ public class SideDialog extends LinearLayout {
     public SideDialog(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         this.context = context;
-        this.argumentInputListener = null;
         initView();
     }
 
     public SideDialog(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
-        this.argumentInputListener = null;
         initView();
     }
 
     public SideDialog(Context context, Debate debate) {
         super(context);
         this.context = context;
-        this.argumentInputListener = null;
         this.debate = debate;
         initView();
     }
@@ -68,6 +67,7 @@ public class SideDialog extends LinearLayout {
         secondPositionButton.setText(debate.getPositionList().get(1).getName());
         firstPositionButton.setOnClickListener(v -> {
             inputProvider.addUserPosition(Integer.parseInt(debate.getId()), debate.getPositionList().get(0).getId());
+            Log.e("Argument Input Listener", String.valueOf(argumentInputListener));
             if (argumentInputListener != null) {
                 argumentInputListener.onArgumentReady(debate.getPositionList().get(0).getId());
             }
