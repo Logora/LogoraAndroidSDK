@@ -192,9 +192,8 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
     }
 
     private void openSideDialog() {
-        SideDialog sideDialog = new SideDialog(getContext(), debate);
-        sideDialog.setArgumentInputListener(this);
-        SideDialog.show(getContext(), debate);
+        SideDialog sideDialog = new SideDialog(getContext(), debate, this);
+        sideDialog.show(getContext(), debate, this);
     }
 
     private void findViews(View view) {

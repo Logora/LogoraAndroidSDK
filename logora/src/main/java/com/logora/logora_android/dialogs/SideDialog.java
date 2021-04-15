@@ -47,10 +47,11 @@ public class SideDialog extends LinearLayout {
         initView();
     }
 
-    public SideDialog(Context context, Debate debate) {
+    public SideDialog(Context context, Debate debate, ArgumentInputListener argumentInputListener) {
         super(context);
         this.context = context;
         this.debate = debate;
+        this.argumentInputListener = argumentInputListener;
         initView();
     }
 
@@ -92,10 +93,10 @@ public class SideDialog extends LinearLayout {
         this.dialog = dialog;
     }
 
-    public static void show(Context context, Debate debate) {
+    public static void show(Context context, Debate debate, ArgumentInputListener argumentInputListener) {
         Resources res = context.getResources();
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        SideDialog sideLayout = new SideDialog(context, debate);
+        SideDialog sideLayout = new SideDialog(context, debate, argumentInputListener);
 
         builder.setView(sideLayout);
         builder.setTitle(res.getString(R.string.side_dialog_header));
@@ -103,10 +104,6 @@ public class SideDialog extends LinearLayout {
         AlertDialog dialog = builder.create();
         sideLayout.setDialog(dialog);
         dialog.show();
-    }
-
-    public void setArgumentInputListener(ArgumentInputListener argumentInputListener) {
-        this.argumentInputListener = argumentInputListener;
     }
 
     public interface ArgumentInputListener {
