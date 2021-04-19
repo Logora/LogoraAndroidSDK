@@ -131,6 +131,7 @@ public class ArgumentBox extends RelativeLayout {
 
         sideLabelView.setBackground(shape);
         sideLabelView.setText(argument.getPosition().getName());
+        dateView.setText(DateUtil.getTimeAgo(argument.getPublishedDate()));
         argumentAuthorBox.init(argument);
         argumentVote.init(argument);
         contentView.setText(argument.getContent());

@@ -23,6 +23,11 @@ public class InputProvider {
         Log.e("USER POSITIONS : ", String.valueOf(this.getUserPositions()));
     }
 
+    public void removeUserPosition(Integer debateId) {
+        this.userPositions.remove(debateId);
+        Log.e("USER POSITIONS : ", String.valueOf(this.getUserPositions()));
+    }
+
     public Map<Integer, Integer> getUserPositions() {
         return this.userPositions;
     }

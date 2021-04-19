@@ -70,7 +70,6 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
     private Debate debate;
     private ArgumentListAdapter argumentListAdapter;
 
-
     public DebateFragment() {
         super(R.layout.fragment_debate);
     }
@@ -186,7 +185,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                                 argumentListAdapter.addItem(argument);
                                 argumentListAdapter.notifyDataSetChanged();
                                 // Remove entry in userPositions now that the argument is posted
-                                inputProvider.getUserPositions().entrySet().remove(inputProvider.getUserPositions().get(debate.getId()));
+                                inputProvider.removeUserPosition(Integer.parseInt(debate.getId()));
                                 // Clear argumentInput
                                 argumentInput.getText().clear();
                                 // Show toast message
@@ -209,7 +208,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                                     argumentListAdapter.addItem(argument);
                                     argumentListAdapter.notifyDataSetChanged();
                                     // Remove entry in userPositions now that the argument is posted
-                                    inputProvider.getUserPositions().entrySet().remove(inputProvider.getUserPositions().get(debate.getId()));
+                                    inputProvider.removeUserPosition(Integer.parseInt(debate.getId()));
                                     // Clear argumentInput
                                     argumentInput.getText().clear();
                                     // Show toast
