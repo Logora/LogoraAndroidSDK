@@ -124,7 +124,8 @@
                 android:src="@drawable/ic_send"
                 android:layout_gravity="right"
                 android:clickable="true"
-                android:focusable="true"/>
+                android:focusable="true"
+                android:padding="6dp"/>
 
         </RelativeLayout>
 

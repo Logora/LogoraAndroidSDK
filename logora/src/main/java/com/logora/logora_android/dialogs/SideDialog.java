@@ -68,7 +68,6 @@ public class SideDialog extends LinearLayout {
         secondPositionButton.setText(debate.getPositionList().get(1).getName());
         firstPositionButton.setOnClickListener(v -> {
             inputProvider.addUserPosition(Integer.parseInt(debate.getId()), debate.getPositionList().get(0).getId());
-            Log.e("Argument Input Listener", String.valueOf(argumentInputListener));
             if (argumentInputListener != null) {
                 argumentInputListener.onArgumentReady(debate.getPositionList().get(0).getId());
             }

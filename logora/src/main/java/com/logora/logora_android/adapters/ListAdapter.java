@@ -34,6 +34,10 @@ public abstract class ListAdapter extends RecyclerView.Adapter<ListViewHolder> {
         this.notifyDataSetChanged();
     }
 
+    public void addItem(JSONObject item) {
+        this.items.add(0, item);
+    }
+
     @Override
     public int getItemCount() {
         return this.items.size();

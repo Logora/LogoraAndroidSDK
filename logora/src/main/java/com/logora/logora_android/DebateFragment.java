@@ -14,6 +14,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.annotation.NonNull;
@@ -40,6 +41,7 @@ import com.logora.logora_android.views.FollowDebateButtonView;
 import com.logora.logora_android.views.ShareView;
 import com.logora.logora_android.views.VoteBoxView;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -66,6 +68,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
     private EditText argumentInput;
     private ImageView argumentSend;
     private Debate debate;
+    private ArgumentListAdapter argumentListAdapter;
 
 
     public DebateFragment() {
@@ -110,34 +113,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
             });
 
             argumentSend.setOnClickListener(v -> {
-                Log.e("SEND CLICKED", "true");
-                if(auth.getIsLoggedIn() == true ) {
-                    Log.e("POSITION PROVIDER", String.valueOf(inputProvider.getUserPositions().get(Integer.parseInt(debate.getId()))));
-                    if (inputProvider.getUserPositions().get(Integer.parseInt(debate.getId())) != null)
-                        this.apiClient.createArgument(
-                        response -> {
-                            try {
-                                boolean success = response.getBoolean("success");
-                                if(success) {
-                                    Log.e("ARGUMENT POSTED", String.valueOf(response));
-                                    // Remove entry in userPositions now that the argument is posted
-                                    inputProvider.getUserPositions().entrySet().remove(inputProvider.getUserPositions().get(debate.getId()));
-                                    // Clear argumentInput
-                                    argumentInput.getText().clear();
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }, error -> {
-                            Log.i("ERROR", String.valueOf(error));
-                            // Show error message
-                        }, String.valueOf(argumentInput.getText()), Integer.parseInt(debate.getId()), inputProvider.getUserPositions().get(debate.getId()));
-                    else {
-                        openSideDialog();
-                    }
-                } else {
-                    Log.e("SHOW LOGIN MODAL", "true");
-                }
+                createArgument(null);
             });
 
             debatePublishedDateView.setText(DateUtil.getDateText(debate.getPublishedDate()));
@@ -153,6 +129,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
 
             String argumentResourceName = "groups/" + debate.getSlug() + "/messages";
             ArgumentListAdapter argumentListAdapter = new ArgumentListAdapter(debate);
+            this.argumentListAdapter = argumentListAdapter;
 
             argumentList = new PaginatedListFragment(argumentResourceName, "CLIENT", argumentListAdapter, null);
             argumentList.setSort("-score");
@@ -196,6 +173,64 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
         sideDialog.show(getContext(), debate, this);
     }
 
+    private void createArgument(Integer positionId){
+        if(auth.getIsLoggedIn() == true ) {
+            if(positionId != null) {
+                Integer argumentPosition = positionId;
+                this.apiClient.createArgument(
+                    response -> {
+                        try {
+                            boolean success = response.getBoolean("success");
+                            JSONObject argument = response.getJSONObject("data").getJSONObject("resource");
+                            if (success) {
+                                argumentListAdapter.addItem(argument);
+                                argumentListAdapter.notifyDataSetChanged();
+                                // Remove entry in userPositions now that the argument is posted
+                                inputProvider.getUserPositions().entrySet().remove(inputProvider.getUserPositions().get(debate.getId()));
+                                // Clear argumentInput
+                                argumentInput.getText().clear();
+                                // Show toast message
+                                showToastMessage("Votre argument à bien été posté");
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }, error -> {
+                        showToastMessage("Un problème est survenu");
+                    }, String.valueOf(argumentInput.getText()), Integer.parseInt(debate.getId()), argumentPosition);
+            } else {
+                if (inputProvider.getUserPositions().get(Integer.parseInt(debate.getId())) != null) {
+                    this.apiClient.createArgument(
+                        response -> {
+                            try {
+                                boolean success = response.getBoolean("success");
+                                JSONObject argument = response.getJSONObject("data").getJSONObject("resource");
+                                if (success) {
+                                    argumentListAdapter.addItem(argument);
+                                    argumentListAdapter.notifyDataSetChanged();
+                                    // Remove entry in userPositions now that the argument is posted
+                                    inputProvider.getUserPositions().entrySet().remove(inputProvider.getUserPositions().get(debate.getId()));
+                                    // Clear argumentInput
+                                    argumentInput.getText().clear();
+                                    // Show toast
+                                    showToastMessage("Votre argument à bien été posté");
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }, error -> {
+                            showToastMessage("Un problème est survenu");
+                        }, String.valueOf(argumentInput.getText()), Integer.parseInt(debate.getId()), inputProvider.getUserPositions().get(Integer.parseInt(debate.getId())));
+                } else {
+                    openSideDialog();
+                }
+            }
+        } else {
+            Log.e("SHOW LOGIN MODAL", "true");
+            // SHOW LOGIN DIALOG HERE
+        }
+    }
+
     private void findViews(View view) {
         loader = view.findViewById(R.id.loader);
         debatePresentationContainerView = view.findViewById(R.id.debate_presentation_container);
@@ -221,8 +256,15 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
         return new String[] { trendingOption, recentOption, oldOption };
     }
 
+    private void showToastMessage(String message) {
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(getContext(), message, duration);
+        toast.show();
+    }
+
     @Override
     public void onArgumentReady(Integer positionId) {
-        Log.e("ARGUMENT RDY", String.valueOf(positionId));
+        createArgument(positionId);
     }
 }
