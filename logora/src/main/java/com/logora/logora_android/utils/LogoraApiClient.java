@@ -100,6 +100,13 @@ public class LogoraApiClient {
         this.client_get(route, queryParams, listener, errorListener);
     }
 
+    public void getSynthesis(Response.Listener<JSONObject> listener,
+                             Response.ErrorListener errorListener, String uid) {
+        HashMap<String, String> queryParams = new HashMap<>();
+        String route = "/groups/" + uid  +"/synthesis";
+        this.client_get(route, queryParams, listener, errorListener);
+    }
+
     public void getUser(Response.Listener<JSONObject> listener,
                           Response.ErrorListener errorListener, String slug) {
         HashMap<String, String> queryParams = new HashMap<>();

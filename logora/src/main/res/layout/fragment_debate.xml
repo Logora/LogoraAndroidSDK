@@ -129,7 +129,6 @@
                 android:padding="6dp"/>
 
         </RelativeLayout>
-
     </RelativeLayout>
 
     <Spinner

@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:visibility="visible"
     tools:context="com.logora.testapp.MainActivity"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/text"
@@ -14,5 +14,13 @@
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:textColor="@color/text_primary"
-        android:text="Bonjour" />
+        android:text="Bonjour"
+        />
+
+    <FrameLayout
+        android:id="@+id/widget_view_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
 </LinearLayout>
