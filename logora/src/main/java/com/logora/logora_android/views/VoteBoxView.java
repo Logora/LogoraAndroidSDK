@@ -1,11 +1,15 @@
 package com.logora.logora_android.views;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.ViewTreeObserver;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -39,6 +43,8 @@ public class VoteBoxView extends RelativeLayout {
     private TextView voteSecondPositionResultText;
     private Integer voteFirstPositionProgressPercentage;
     private Integer voteSecondPositionProgressPercentage;
+    private TextView voteFirstPositionProgressResult;
+    private TextView voteSecondPositionProgressResult;
     private ProgressBar voteFirstPositionProgress;
     private ProgressBar voteSecondPositionProgress;
     private TextView voteResultsCountView;
@@ -84,6 +90,8 @@ public class VoteBoxView extends RelativeLayout {
         voteFirstPositionButton = findViewById(R.id.vote_first_position_button);
         voteSecondPositionButton = findViewById(R.id.vote_second_position_button);
         voteFirstPositionResultText = findViewById(R.id.vote_first_position_result_text);
+        voteFirstPositionProgressResult = findViewById(R.id.vote_first_position_progress_percentage);;
+        voteSecondPositionProgressResult = findViewById(R.id.vote_second_position_progress_percentage);
         voteSecondPositionResultText = findViewById(R.id.vote_second_position_result_text);
         voteResultsCountView = findViewById(R.id.vote_results_count);
         voteEditView = findViewById(R.id.vote_edit);
@@ -100,8 +108,8 @@ public class VoteBoxView extends RelativeLayout {
                     try {
                         boolean success = response.getJSONObject("data").getBoolean("success");
                         boolean vote = response.getJSONObject("data").getJSONObject("data").getBoolean("vote");
-                        int voteId = response.getJSONObject("data").getJSONObject("data").getJSONObject("resource").getInt("id");
                         if(success && vote) {
+                            int voteId = response.getJSONObject("data").getJSONObject("data").getJSONObject("resource").getInt("id");
                             this.voteId = voteId;
                             showResults();
                         }
@@ -170,7 +178,10 @@ public class VoteBoxView extends RelativeLayout {
         voteFirstPositionButton.setText(this.debate.getPositionList().get(0).getName());
         voteSecondPositionButton.setText(this.debate.getPositionList().get(1).getName());
 
-        int count = debate.getVotesCount();
+        int count = 0;
+        if (debate.getVotesCount() != null) {
+            count = debate.getVotesCount();
+        }
         Resources res = getResources();
         String votesCount = res.getQuantityString(R.plurals.debate_votes_count, count, count);
         votesCountView.setText(votesCount);
@@ -189,9 +200,56 @@ public class VoteBoxView extends RelativeLayout {
         voteFirstPositionProgress.setProgressTintList(ColorStateList.valueOf(Color.parseColor(firstPositionPrimaryColor)));
         voteSecondPositionProgress.setProgressTintList(ColorStateList.valueOf(Color.parseColor(secondPositionPrimaryColor)));
 
+        voteFirstPositionProgressPercentage = debate.getFirstPositionPercentage();
+        voteSecondPositionProgressPercentage = debate.getSecondPositionPercentage();
+
+        if(voteFirstPositionProgressPercentage != null && voteSecondPositionProgressPercentage != null){
+            setUpObserver();
+        }
+
+        voteFirstPositionProgressResult.setText(String.valueOf(voteFirstPositionProgressPercentage) + "%");
+        voteSecondPositionProgressResult.setText(String.valueOf(voteSecondPositionProgressPercentage) + "%");
+
         int count = debate.getVotesCount();
         Resources res = getResources();
         String votesCount = res.getQuantityString(R.plurals.debate_votes_count, count, count);
         voteResultsCountView.setText(votesCount);
     }
+
+    private void setUpObserver() {
+        voteFirstPositionProgress.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Log.e("first%", String.valueOf(voteFirstPositionProgressPercentage));
+                startAnimation(voteFirstPositionProgress, 0, (float) voteFirstPositionProgressPercentage/100);
+                voteFirstPositionProgress.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
+        voteSecondPositionProgress.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                Log.e("second%", String.valueOf(voteSecondPositionProgressPercentage));
+                startAnimation(voteSecondPositionProgress, 0, (float) voteSecondPositionProgressPercentage/100);
+                voteSecondPositionProgress.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
+    }
+
+    private void startAnimation(ProgressBar progressBar, float startPercent, float endPercent) {
+        int width = progressBar.getWidth();
+        progressBar.setMax(width);
+
+        int start = (int) (startPercent * width);
+        int end = (int) (endPercent * width);
+        ValueAnimator animator = ValueAnimator.ofInt(start, end);
+        animator.setInterpolator(new LinearInterpolator());
+        animator.setStartDelay(0);
+        animator.setDuration(450);
+        animator.addUpdateListener(valueAnimator -> {
+            int value = (int) valueAnimator.getAnimatedValue();
+            progressBar.setProgress(value);
+        });
+        animator.start();
+    }
+
 }

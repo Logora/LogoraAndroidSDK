@@ -1,11 +1,14 @@
 package com.logora.logora_android;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -173,6 +176,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
     }
 
     private void createArgument(Integer positionId){
+        argumentInput.clearFocus();
         if(auth.getIsLoggedIn() == true ) {
             if(positionId != null) {
                 Integer argumentPosition = positionId;
@@ -256,6 +260,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
     }
 
     private void showToastMessage(String message) {
+        Log.e("I'M A", "TOAST");
         int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(getContext(), message, duration);
