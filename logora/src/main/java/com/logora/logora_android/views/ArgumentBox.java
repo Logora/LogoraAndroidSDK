@@ -2,7 +2,6 @@ package com.logora.logora_android.views;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -10,11 +9,6 @@ import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,8 +19,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentContainerView;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -51,8 +45,8 @@ import java.util.List;
 public class ArgumentBox extends RelativeLayout {
     private Context context;
     private final Settings settings = Settings.getInstance();
-    private Auth authClient = Auth.getInstance();
-    private LogoraApiClient apiClient = LogoraApiClient.getInstance();
+    private final Auth authClient = Auth.getInstance();
+    private final LogoraApiClient apiClient = LogoraApiClient.getInstance();
     private Debate debate;
     private Argument argument;
     private TextView contentView;
@@ -102,7 +96,6 @@ public class ArgumentBox extends RelativeLayout {
         argumentRepliesFooter = findViewById(R.id.argument_replies_footer);
         argumentRepliesAuthorsList = findViewById(R.id.argument_replies_authors_list);
         argumentRepliesList = findViewById(R.id.argument_replies_list);
-        argumentRepliesAuthorsListAdapter = new UserIconListAdapter();
         sideLabelView = findViewById(R.id.argument_position);
         dateView = findViewById(R.id.argument_date);
     }
@@ -146,10 +139,6 @@ public class ArgumentBox extends RelativeLayout {
         ArgumentListAdapter repliesListAdapter = new ArgumentListAdapter(debate);
         repliesList = new PaginatedListFragment(resourceName, "CLIENT", repliesListAdapter, null);
 
-        List<JSONObject> authorsList = argument.getRepliesAuthorsList();
-        argumentRepliesAuthorsList.setAdapter(argumentRepliesAuthorsListAdapter);
-        argumentRepliesAuthorsListAdapter.setItems(authorsList);
-
         argumentRepliesTransaction = ((AppCompatActivity) getContext()).getSupportFragmentManager().beginTransaction();
 
         argumentRepliesFooter.setOnClickListener(v -> {
@@ -158,6 +147,13 @@ public class ArgumentBox extends RelativeLayout {
 
         if(argument.getRepliesCount() > 0) {
             argumentRepliesFooter.setVisibility(VISIBLE);
+            argumentRepliesAuthorsListAdapter = new UserIconListAdapter();
+            List<JSONObject> authorsList = argument.getRepliesAuthorsList();
+            LinearLayoutManager layoutManager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
+            argumentRepliesAuthorsList.setLayoutManager(layoutManager);
+            argumentRepliesAuthorsList.setAdapter(argumentRepliesAuthorsListAdapter);
+            argumentRepliesAuthorsListAdapter.setItems(authorsList);
+            argumentRepliesAuthorsListAdapter.notifyDataSetChanged();
         }
     }
 

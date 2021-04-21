@@ -1,6 +1,7 @@
 package com.logora.logora_android;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,10 +63,7 @@ public class PaginatedListFragment extends Fragment {
     }
 
     public void init() {
-        loader.setVisibility(View.VISIBLE);
-        recyclerView.setVisibility(View.GONE);
-        emptyView.setVisibility(View.GONE);
-        paginationButton.setVisibility(View.GONE);
+        showLoader();
 
         listViewModel.getList().observe(getViewLifecycleOwner(), itemList -> {
             if(itemList.size() == 0) {
@@ -83,10 +81,7 @@ public class PaginatedListFragment extends Fragment {
     }
 
     public void update() {
-        loader.setVisibility(View.VISIBLE);
-        recyclerView.setVisibility(View.GONE);
-        emptyView.setVisibility(View.GONE);
-        paginationButton.setVisibility(View.GONE);
+        showLoader();
 
         listViewModel.resetList().observe(getViewLifecycleOwner(), itemList -> {
             if(itemList.size() == 0) {
@@ -101,6 +96,13 @@ public class PaginatedListFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private void showLoader() {
+        recyclerView.setVisibility(View.GONE);
+        emptyView.setVisibility(View.GONE);
+        paginationButton.setVisibility(View.GONE);
+        loader.setVisibility(View.VISIBLE);
     }
 
     private void findViews(View view) {
