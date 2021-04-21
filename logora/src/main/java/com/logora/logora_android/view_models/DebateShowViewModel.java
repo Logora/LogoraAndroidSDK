@@ -50,7 +50,7 @@ public class DebateShowViewModel extends ViewModel {
 
                         JSONObject votesCount = responseData.getJSONObject("votes_count");
                         JSONArray votesCountKeys = votesCount.names();
-                        Integer totalVotes = responseData.getJSONObject("votes_count").getInt("total");
+                        int totalVotes = responseData.getJSONObject("votes_count").getInt("total");
                         for (int i = 0; i < votesCountKeys.length(); i++) {
                             String key = votesCountKeys.getString(i);
                             if(key.equals("total")) {

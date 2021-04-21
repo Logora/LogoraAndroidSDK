@@ -9,6 +9,7 @@ import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -49,6 +51,7 @@ public class ArgumentBox extends RelativeLayout {
     private final LogoraApiClient apiClient = LogoraApiClient.getInstance();
     private Debate debate;
     private Argument argument;
+    private int argumentBoxId = View.generateViewId();
     private TextView contentView;
     private RelativeLayout argumentContainer;
     private ImageView argumentShareButton;
@@ -61,7 +64,8 @@ public class ArgumentBox extends RelativeLayout {
     private FrameLayout argumentRepliesList;
     private PaginatedListFragment repliesList;
     private Boolean toggleReplies = false;
-    private FragmentTransaction argumentRepliesTransaction;
+    private Boolean initReplies = false;
+    private FragmentManager fragmentManager;
     private Integer positionIndex = 0;
     private TextView sideLabelView;
     private TextView dateView;
@@ -135,14 +139,15 @@ public class ArgumentBox extends RelativeLayout {
             openMoreActionsDialog();
         });
 
+        argumentRepliesList.setId(argumentBoxId);
         String resourceName = "messages/" + argument.getId() + "/replies";
         ArgumentListAdapter repliesListAdapter = new ArgumentListAdapter(debate);
         repliesList = new PaginatedListFragment(resourceName, "CLIENT", repliesListAdapter, null);
 
-        argumentRepliesTransaction = ((AppCompatActivity) getContext()).getSupportFragmentManager().beginTransaction();
+        fragmentManager = ((AppCompatActivity) getContext()).getSupportFragmentManager();
 
         argumentRepliesFooter.setOnClickListener(v -> {
-            this.toggleReplies(argument.getId());
+            this.toggleReplies(argumentBoxId);
         });
 
         if(argument.getRepliesCount() > 0) {
@@ -153,16 +158,26 @@ public class ArgumentBox extends RelativeLayout {
             argumentRepliesAuthorsList.setLayoutManager(layoutManager);
             argumentRepliesAuthorsList.setAdapter(argumentRepliesAuthorsListAdapter);
             argumentRepliesAuthorsListAdapter.setItems(authorsList);
-            argumentRepliesAuthorsListAdapter.notifyDataSetChanged();
         }
     }
 
-    private void toggleReplies(Integer argumentId) {
+    private void toggleReplies(Integer boxId) {
         if(this.toggleReplies) {
-            argumentRepliesList.setVisibility(GONE);
+            fragmentManager.beginTransaction()
+                    .hide(repliesList)
+                    .commit();
             this.toggleReplies = false;
         } else {
-            argumentRepliesTransaction.add(R.id.argument_replies_list, repliesList, argumentId + "_REPLIES").commit();
+            if(!this.initReplies) {
+                fragmentManager.beginTransaction()
+                        .add(boxId, repliesList)
+                        .commit();
+                this.initReplies = true;
+            } else {
+                fragmentManager.beginTransaction()
+                        .show(repliesList)
+                        .commit();
+            }
             this.toggleReplies = true;
         }
     }
