@@ -22,11 +22,14 @@ public class Debate {
     private Integer votesCount;
     private Integer usersCount;
     private Integer argumentsCount;
+    private JSONObject votesCountObject;
     private List<JSONObject> tagList;
     private List<Position> positionList;
     private Integer argumentPositionIndex;
     private String votePosition;
     private Integer votePercentage;
+    private Integer firstPositionPercentage;
+    private Integer secondPositionPercentage;
 
     public Debate() {}
 
@@ -49,7 +52,9 @@ public class Debate {
             debate.setPositionList(positionsList);
 
             JSONObject votesCount = jsonObject.getJSONObject("votes_count");
+            debate.setVotesCountObject(votesCount);
             JSONArray votesCountKeys = votesCount.names();
+
             int maxPercentage = 0;
             Integer maxId = null;
             if(votesCountKeys == null || votesCountKeys.length() == 0) {
@@ -142,6 +147,14 @@ public class Debate {
         this.votesCount -= 1;
     }
 
+    public JSONObject getVotesCountObject() {
+        return this.votesCountObject;
+    }
+
+    public void setVotesCountObject(JSONObject votesCountObject) {
+        this.votesCountObject = votesCountObject;
+    }
+
     public List<JSONObject> getTagList() {
         return tagList;
     }
@@ -167,7 +180,7 @@ public class Debate {
                 return positionIndex;
             }
         }
-        return 0; // Should not return null
+        return 0;
     }
 
     public String getVotePosition() { return votePosition; }
@@ -177,6 +190,15 @@ public class Debate {
     public Integer getVotePercentage() { return votePercentage; }
 
     public void setVotePercentage(Integer votePercentage) { this.votePercentage = votePercentage; }
+
+    public Integer getFirstPositionPercentage() { return firstPositionPercentage; }
+
+    public void setFirstPositionPercentage(Integer firstPositionPercentage) { this.firstPositionPercentage = firstPositionPercentage; }
+
+    public Integer getSecondPositionPercentage() { return secondPositionPercentage; }
+
+    public void setSecondPositionPercentage(Integer secondPositionPercentage) { this.secondPositionPercentage = secondPositionPercentage; }
+
 
     private static String getVotePosition(JSONArray positions, Integer id) throws JSONException {
         for (int i = 0 ; i < positions.length(); i++) {
