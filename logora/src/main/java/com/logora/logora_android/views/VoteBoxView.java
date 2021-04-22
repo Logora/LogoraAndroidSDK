@@ -122,11 +122,9 @@ public class VoteBoxView extends RelativeLayout {
 
     public void vote(Integer positionId) {
         if(this.voteId != null) {
-            showResults();
             this.updateVote(positionId);
         } else {
             this.debate.incrementVotesCount();
-            showResults();
             this.createVote(positionId);
         }
     }
@@ -140,7 +138,8 @@ public class VoteBoxView extends RelativeLayout {
                     if(success) {
                         this.voteId = vote.getInt("id");
                         inputProvider.addUserPosition(Integer.parseInt(debate.getId()), positionId);
-                        debate.calculateVotes(debate.getVotesCountObject(), debate.getPositionsObject());
+                        debate.calculateVotePercentage(debate.getVotesCountObject(), String.valueOf(positionId), false);
+                        showResults();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -159,7 +158,8 @@ public class VoteBoxView extends RelativeLayout {
                     if(success) {
                         this.voteId = vote.getInt("id");
                         inputProvider.addUserPosition(Integer.parseInt(debate.getId()), positionId);
-                        debate.calculateVotes(debate.getVotesCountObject(), debate.getPositionsObject());
+                        debate.calculateVotePercentage(debate.getVotesCountObject(), String.valueOf(positionId), true);
+                        showResults();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -222,7 +222,6 @@ public class VoteBoxView extends RelativeLayout {
         voteFirstPositionProgress.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                Log.e("first%", String.valueOf(voteFirstPositionProgressPercentage));
                 startAnimation(voteFirstPositionProgress, 0, (float) voteFirstPositionProgressPercentage/100);
                 voteFirstPositionProgress.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
@@ -230,7 +229,6 @@ public class VoteBoxView extends RelativeLayout {
         voteSecondPositionProgress.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                Log.e("second%", String.valueOf(voteSecondPositionProgressPercentage));
                 startAnimation(voteSecondPositionProgress, 0, (float) voteSecondPositionProgressPercentage/100);
                 voteSecondPositionProgress.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }

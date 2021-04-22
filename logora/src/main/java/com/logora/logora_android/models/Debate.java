@@ -22,15 +22,17 @@ public class Debate {
     private Integer votesCount;
     private Integer usersCount;
     private Integer argumentsCount;
-    private JSONObject votesCountObject;
     private List<JSONObject> tagList;
     private List<Position> positionList;
     private JSONArray positionsObject;
     private Integer argumentPositionIndex;
     private String votePosition;
+    private JSONObject votesCountObject;
     private Integer votePercentage;
     private Integer firstPositionPercentage;
     private Integer secondPositionPercentage;
+    private Integer firstPositionCount;
+    private Integer secondPositionCount;
 
     public Debate() {}
 
@@ -45,6 +47,9 @@ public class Debate {
             String publishedDate = jsonObject.getString("created_at");
             debate.setPublishedDate(DateUtil.parseDate(publishedDate));
 
+            JSONObject votesCount = jsonObject.getJSONObject("votes_count");
+            debate.setVotesCountObject(votesCount);
+
             JSONArray positionsObject = jsonObject.getJSONObject("group_context").getJSONArray("positions");
             debate.setPositionsObject(positionsObject);
             List<Position> positionsList = new ArrayList<>();
@@ -52,7 +57,8 @@ public class Debate {
                 positionsList.add(Position.objectFromJson(positionsObject.getJSONObject(i)));
             }
             debate.setPositionList(positionsList);
-            debate.calculateVotes(jsonObject, positionsObject);
+            debate.calculateMaxPercentage(jsonObject, positionsObject);
+            debate.initVotePercentage(votesCount);
             return debate;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -142,25 +148,13 @@ public class Debate {
         this.positionList = positionList;
     }
 
-    public int getPositionIndex(Integer index) {
-        List<Position> positionList = this.getPositionList();
-        Integer positionIndex = null;
-        for (int i = 0; i < positionList.size(); i++){
-            if(positionList.get(i).getId().equals(index)){
-                positionIndex = i;
-                return positionIndex;
-            }
-        }
-        return 0;
-    }
-
     public String getVotePosition() { return votePosition; }
 
     public void setVotePosition(String votePosition) { this.votePosition = votePosition; }
 
-    public void setPositionsObject(JSONArray positionsObject) { this.positionsObject = positionsObject; }
-
     public JSONArray getPositionsObject() { return this.positionsObject; }
+
+    public void setPositionsObject(JSONArray positionsObject) { this.positionsObject = positionsObject; }
 
     public Integer getVotePercentage() { return votePercentage; }
 
@@ -174,6 +168,25 @@ public class Debate {
 
     public void setSecondPositionPercentage(Integer secondPositionPercentage) { this.secondPositionPercentage = secondPositionPercentage; }
 
+    public Integer getFirstPositionCount() { return firstPositionCount; }
+
+    public void setFirstPositionCount(Integer firstPositionCount) { this.firstPositionCount = firstPositionCount; }
+
+    public Integer getSecondPositionCount() { return secondPositionCount; }
+
+    public void setSecondPositionCount(Integer secondPositionCount) { this.secondPositionCount = secondPositionCount; }
+
+    public int getPositionIndex(Integer index) {
+        List<Position> positionList = this.getPositionList();
+        Integer positionIndex = null;
+        for (int i = 0; i < positionList.size(); i++){
+            if(positionList.get(i).getId().equals(index)){
+                positionIndex = i;
+                return positionIndex;
+            }
+        }
+        return 0;
+    }
 
     private static String getVotePosition(JSONArray positions, Integer id) throws JSONException {
         for (int i = 0 ; i < positions.length(); i++) {
@@ -189,8 +202,8 @@ public class Debate {
         return "";
     }
 
-    public void calculateVotes(JSONObject votesCountObject, JSONArray positionsObject) throws JSONException {
-        Log.e("votesCountObject", String.valueOf(votesCountObject));
+    public void initVotePercentage(JSONObject votesCountObject) throws JSONException {
+        this.setVotesCountObject(votesCountObject);
         JSONArray votesCountKeys = votesCountObject.names();
         if (votesCountObject.has("total")) {
             Integer totalVotes = votesCountObject.getInt("total");
@@ -201,16 +214,57 @@ public class Debate {
                     continue;
                 }
                 if(i == 0){
+                    setFirstPositionCount(Integer.parseInt(votesCountObject.getString(key)));
                     setFirstPositionPercentage(100 * Integer.parseInt(votesCountObject.getString(key)) / totalVotes);
                 }
                 if(i == 1){
+                    setSecondPositionCount(Integer.parseInt(votesCountObject.getString(key)));
                     setSecondPositionPercentage(100 * Integer.parseInt(votesCountObject.getString(key)) / totalVotes);
                 }
             }
         } else {
             setVotesCount(0);
         }
+    }
 
+    public void calculateVotePercentage(JSONObject votesCountObject, String positionId, Boolean isUpvote) throws JSONException {
+        Log.wtf("positionId", positionId);
+        Log.wtf("isUpvote", String.valueOf(isUpvote));
+        JSONArray votesCountKeys = votesCountObject.names();
+        JSONObject newVotesCountObject = new JSONObject();
+        for (int i = 0; i < votesCountKeys.length(); i++) {
+            String key = votesCountKeys.getString(i);
+            if(key.equals("total")) {
+                continue;
+            }
+            if(i == 0){
+                if(key.equals(positionId)) {
+                    newVotesCountObject.put(positionId, String.valueOf(Integer.parseInt(votesCountObject.getString(key)) + 1));
+                    if (isUpvote) {
+                        newVotesCountObject.put(votesCountKeys.getString(1), String.valueOf(Integer.parseInt(votesCountObject.getString(votesCountKeys.getString(1))) - 1));
+                    }
+                }
+            }
+            if(i == 1){
+                if(key.equals(positionId)) {
+                    newVotesCountObject.put(positionId, String.valueOf(Integer.parseInt(votesCountObject.getString(key)) + 1));
+                    if (isUpvote) {
+                        newVotesCountObject.put(votesCountKeys.getString(0), String.valueOf(Integer.parseInt(votesCountObject.getString(votesCountKeys.getString(0))) - 1));
+                    }
+                }
+            }
+        }
+        if (isUpvote) {
+            newVotesCountObject.put("total", votesCountObject.getString("total"));
+        } else {
+            newVotesCountObject.put("total", votesCountObject.getString("total") + 1);
+        }
+        Log.wtf("newVotesCount", String.valueOf(newVotesCountObject));
+        this.initVotePercentage(newVotesCountObject);
+    }
+
+    public void calculateMaxPercentage(JSONObject votesCountObject, JSONArray positionsObject) throws JSONException {
+        JSONArray votesCountKeys = votesCountObject.names();
         int maxPercentage = 0;
         Integer maxId = null;
         if(votesCountKeys == null || votesCountKeys.length() == 0) {
