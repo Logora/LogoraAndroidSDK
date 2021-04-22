@@ -53,8 +53,10 @@ public class DebateShowViewModel extends ViewModel {
                     }
                     debateObject.setTagList(tagList);
 
-                    JSONObject votesCount = responseData.getJSONObject("votes_count");
-                    debateObject.setVotesCountObject(votesCount);
+                    JSONObject votesCountObject = responseData.getJSONObject("votes_count");
+                    debateObject.setTotalVotesCount(Integer.parseInt(votesCountObject.getString("total")));
+                    votesCountObject.remove("total");
+                    debateObject.setVotesCountObject(debateObject.convertToHashMap(votesCountObject));
 
                     JSONArray positionObjects = responseData.getJSONObject("group_context").getJSONArray("positions");
                     List<Position> positionList = new ArrayList<>();
@@ -62,9 +64,7 @@ public class DebateShowViewModel extends ViewModel {
                         positionList.add(Position.objectFromJson(positionObjects.getJSONObject(i)));
                     }
                     debateObject.setPositionList(positionList);
-                    debateObject.setPositionsObject(positionObjects);
-                    debateObject.initVotePercentage(votesCount);
-                    debateObject.calculateMaxPercentage(votesCount, positionObjects);
+                    debateObject.initVotePercentage();
 
                     debate.setValue(debateObject);
                 } catch (JSONException e) {

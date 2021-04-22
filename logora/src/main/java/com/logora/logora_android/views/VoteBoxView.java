@@ -122,9 +122,23 @@ public class VoteBoxView extends RelativeLayout {
 
     public void vote(Integer positionId) {
         if(this.voteId != null) {
+            inputProvider.addUserPosition(Integer.parseInt(debate.getId()), positionId);
+            try {
+                debate.calculateVotePercentage(String.valueOf(positionId), true);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            showResults();
             this.updateVote(positionId);
         } else {
-            this.debate.incrementVotesCount();
+            this.debate.incrementTotalVotesCount();
+            inputProvider.addUserPosition(Integer.parseInt(debate.getId()), positionId);
+            try {
+                debate.calculateVotePercentage(String.valueOf(positionId), false);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            showResults();
             this.createVote(positionId);
         }
     }
@@ -137,9 +151,6 @@ public class VoteBoxView extends RelativeLayout {
                     JSONObject vote = response.getJSONObject("data").getJSONObject("resource");
                     if(success) {
                         this.voteId = vote.getInt("id");
-                        inputProvider.addUserPosition(Integer.parseInt(debate.getId()), positionId);
-                        debate.calculateVotePercentage(debate.getVotesCountObject(), String.valueOf(positionId), false);
-                        showResults();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -157,9 +168,6 @@ public class VoteBoxView extends RelativeLayout {
                     JSONObject vote = response.getJSONObject("data").getJSONObject("resource");
                     if(success) {
                         this.voteId = vote.getInt("id");
-                        inputProvider.addUserPosition(Integer.parseInt(debate.getId()), positionId);
-                        debate.calculateVotePercentage(debate.getVotesCountObject(), String.valueOf(positionId), true);
-                        showResults();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -180,10 +188,7 @@ public class VoteBoxView extends RelativeLayout {
         voteFirstPositionButton.setText(this.debate.getPositionList().get(0).getName());
         voteSecondPositionButton.setText(this.debate.getPositionList().get(1).getName());
 
-        int count = 0;
-        if (debate.getVotesCount() != null) {
-            count = debate.getVotesCount();
-        }
+        int count = debate.getTotalVotesCount();
         Resources res = getResources();
         String votesCount = res.getQuantityString(R.plurals.debate_votes_count, count, count);
         votesCountView.setText(votesCount);
@@ -202,17 +207,17 @@ public class VoteBoxView extends RelativeLayout {
         voteFirstPositionProgress.setProgressTintList(ColorStateList.valueOf(Color.parseColor(firstPositionPrimaryColor)));
         voteSecondPositionProgress.setProgressTintList(ColorStateList.valueOf(Color.parseColor(secondPositionPrimaryColor)));
 
-        voteFirstPositionProgressPercentage = debate.getFirstPositionPercentage();
-        voteSecondPositionProgressPercentage = debate.getSecondPositionPercentage();
+        voteFirstPositionProgressPercentage = debate.getPositionPercentage(this.debate.getPositionList().get(0).getId());
+        voteSecondPositionProgressPercentage = debate.getPositionPercentage(this.debate.getPositionList().get(1).getId());
 
         if(voteFirstPositionProgressPercentage != null && voteSecondPositionProgressPercentage != null){
             setUpObserver();
         }
 
-        voteFirstPositionProgressResult.setText(String.valueOf(voteFirstPositionProgressPercentage) + "%");
-        voteSecondPositionProgressResult.setText(String.valueOf(voteSecondPositionProgressPercentage) + "%");
+        voteFirstPositionProgressResult.setText(voteFirstPositionProgressPercentage + "%");
+        voteSecondPositionProgressResult.setText(voteSecondPositionProgressPercentage + "%");
 
-        int count = debate.getVotesCount();
+        int count = debate.getTotalVotesCount();
         Resources res = getResources();
         String votesCount = res.getQuantityString(R.plurals.debate_votes_count, count, count);
         voteResultsCountView.setText(votesCount);
