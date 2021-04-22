@@ -25,6 +25,7 @@ public class Debate {
     private JSONObject votesCountObject;
     private List<JSONObject> tagList;
     private List<Position> positionList;
+    private JSONArray positionsObject;
     private Integer argumentPositionIndex;
     private String votePosition;
     private Integer votePercentage;
@@ -45,37 +46,13 @@ public class Debate {
             debate.setPublishedDate(DateUtil.parseDate(publishedDate));
 
             JSONArray positionsObject = jsonObject.getJSONObject("group_context").getJSONArray("positions");
+            debate.setPositionsObject(positionsObject);
             List<Position> positionsList = new ArrayList<>();
             for (int i=0; i < positionsObject.length(); i++){
                 positionsList.add(Position.objectFromJson(positionsObject.getJSONObject(i)));
             }
             debate.setPositionList(positionsList);
-
-            JSONObject votesCount = jsonObject.getJSONObject("votes_count");
-            debate.setVotesCountObject(votesCount);
-            JSONArray votesCountKeys = votesCount.names();
-
-            int maxPercentage = 0;
-            Integer maxId = null;
-            if(votesCountKeys == null || votesCountKeys.length() == 0) {
-                maxPercentage = 50;
-                maxId = null;
-            } else {
-                for (int i = 0; i < votesCountKeys.length(); i++) {
-                    String key = votesCountKeys.getString(i);
-                    if(key.equals("total")) {
-                        continue;
-                    }
-                    int percentage = votesCount.getInt(key);
-                    if(percentage > maxPercentage) {
-                        maxPercentage = percentage;
-                        maxId = Integer.parseInt(key);
-                    }
-                }
-            }
-            debate.setVotePercentage(maxPercentage);
-            debate.setVotePosition(getVotePosition(positionsObject, maxId));
-
+            debate.calculateVotes(jsonObject, positionsObject);
             return debate;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -139,21 +116,15 @@ public class Debate {
         this.votesCount = votesCount;
     }
 
-    public void incrementVotesCount() {
-        this.votesCount += 1;
-    }
+    public void incrementVotesCount() { this.votesCount += 1; }
 
-    public void decrementVotesCount() {
-        this.votesCount -= 1;
-    }
+    public void decrementVotesCount() { this.votesCount -= 1; }
 
     public JSONObject getVotesCountObject() {
         return this.votesCountObject;
     }
 
-    public void setVotesCountObject(JSONObject votesCountObject) {
-        this.votesCountObject = votesCountObject;
-    }
+    public void setVotesCountObject(JSONObject votesCountObject) { this.votesCountObject = votesCountObject; }
 
     public List<JSONObject> getTagList() {
         return tagList;
@@ -187,6 +158,10 @@ public class Debate {
 
     public void setVotePosition(String votePosition) { this.votePosition = votePosition; }
 
+    public void setPositionsObject(JSONArray positionsObject) { this.positionsObject = positionsObject; }
+
+    public JSONArray getPositionsObject() { return this.positionsObject; }
+
     public Integer getVotePercentage() { return votePercentage; }
 
     public void setVotePercentage(Integer votePercentage) { this.votePercentage = votePercentage; }
@@ -212,5 +187,49 @@ public class Debate {
             }
         }
         return "";
+    }
+
+    public void calculateVotes(JSONObject votesCountObject, JSONArray positionsObject) throws JSONException {
+        Log.e("votesCountObject", String.valueOf(votesCountObject));
+        JSONArray votesCountKeys = votesCountObject.names();
+        if (votesCountObject.has("total")) {
+            Integer totalVotes = votesCountObject.getInt("total");
+            setVotesCount(totalVotes);
+            for (int i = 0; i < votesCountKeys.length(); i++) {
+                String key = votesCountKeys.getString(i);
+                if(key.equals("total")) {
+                    continue;
+                }
+                if(i == 0){
+                    setFirstPositionPercentage(100 * Integer.parseInt(votesCountObject.getString(key)) / totalVotes);
+                }
+                if(i == 1){
+                    setSecondPositionPercentage(100 * Integer.parseInt(votesCountObject.getString(key)) / totalVotes);
+                }
+            }
+        } else {
+            setVotesCount(0);
+        }
+
+        int maxPercentage = 0;
+        Integer maxId = null;
+        if(votesCountKeys == null || votesCountKeys.length() == 0) {
+            maxPercentage = 50;
+            maxId = null;
+        } else {
+            for (int i = 0; i < votesCountKeys.length(); i++) {
+                String key = votesCountKeys.getString(i);
+                if(key.equals("total")) {
+                    continue;
+                }
+                int percentage = votesCountObject.getInt(key);
+                if(percentage > maxPercentage) {
+                    maxPercentage = percentage;
+                    maxId = Integer.parseInt(key);
+                }
+            }
+        }
+        setVotePercentage(maxPercentage);
+        setVotePosition(getVotePosition(positionsObject, maxId));
     }
 }

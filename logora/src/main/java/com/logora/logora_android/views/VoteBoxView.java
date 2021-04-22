@@ -140,6 +140,7 @@ public class VoteBoxView extends RelativeLayout {
                     if(success) {
                         this.voteId = vote.getInt("id");
                         inputProvider.addUserPosition(Integer.parseInt(debate.getId()), positionId);
+                        debate.calculateVotes(debate.getVotesCountObject(), debate.getPositionsObject());
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -158,6 +159,7 @@ public class VoteBoxView extends RelativeLayout {
                     if(success) {
                         this.voteId = vote.getInt("id");
                         inputProvider.addUserPosition(Integer.parseInt(debate.getId()), positionId);
+                        debate.calculateVotes(debate.getVotesCountObject(), debate.getPositionsObject());
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -251,5 +253,4 @@ public class VoteBoxView extends RelativeLayout {
         });
         animator.start();
     }
-
 }
