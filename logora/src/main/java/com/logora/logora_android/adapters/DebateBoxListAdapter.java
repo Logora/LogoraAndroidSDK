@@ -40,6 +40,7 @@ public class DebateBoxListAdapter extends ListAdapter {
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
         DebateBox debateBox = this.getObjectFromJson(this.items.get(position));
+
         holder.updateWithObject(debateBox);
 
         holder.itemView.setOnClickListener(v -> {

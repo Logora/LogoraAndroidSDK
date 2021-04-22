@@ -16,11 +16,12 @@ import java.util.HashMap;
 import java.util.List;
 
 public class ListViewModel extends ViewModel {
+    private final LogoraApiClient apiClient = LogoraApiClient.getInstance();
     private String TAG = ListViewModel.class.getSimpleName();
     private final String resourceName;
     private final String resourceType;
     private MutableLiveData<List<JSONObject>> itemsLiveData;
-    private List<JSONObject> items = new ArrayList<>();
+    private final List<JSONObject> items = new ArrayList<>();
     private Integer total;
     private Integer totalPages;
     private Integer currentPage = 1;
@@ -67,29 +68,31 @@ public class ListViewModel extends ViewModel {
     public LiveData<List<JSONObject>> getList() {
         if (itemsLiveData == null) {
             itemsLiveData = new MutableLiveData<>();
-            loadItems();
+            loadItems(false);
         }
         return itemsLiveData;
     }
 
     public LiveData<List<JSONObject>> updateList() {
-        loadItems();
+        loadItems(false);
         return itemsLiveData;
     }
 
     public LiveData<List<JSONObject>> resetList() {
-        this.items.clear();
         this.resetCurrentPage();
-        loadItems();
+        itemsLiveData = new MutableLiveData<>();
+        loadItems(true);
         return itemsLiveData;
     }
 
-    private void loadItems() {
-        LogoraApiClient apiClient = LogoraApiClient.getInstance();
+    private void loadItems(Boolean reset) {
         apiClient.getList(
             response -> {
                 try {
                     JSONArray itemsJson = response.getJSONObject("data").getJSONArray("data");
+                    if(reset) {
+                        this.items.clear();
+                    }
                     for (int i = 0; i < itemsJson.length(); i++) {
                         this.items.add(itemsJson.getJSONObject(i));
                     }

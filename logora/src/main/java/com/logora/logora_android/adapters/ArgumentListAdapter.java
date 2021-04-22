@@ -28,6 +28,7 @@ public class ArgumentListAdapter extends ListAdapter {
         super(items);
     }
 
+    @NonNull
     @Override
     public ListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();

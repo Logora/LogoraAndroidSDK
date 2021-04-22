@@ -128,7 +128,7 @@
             android:layout_below="@+id/argument_footer"
             android:orientation="horizontal"
             android:paddingVertical="12dp"
-            android:paddingHorizontal="6dp"
+            android:paddingHorizontal="12dp"
             android:visibility="gone">
 
             <androidx.recyclerview.widget.RecyclerView

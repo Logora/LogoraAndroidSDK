@@ -27,7 +27,6 @@ public class DebateBoxViewHolder extends ListViewHolder {
     private TextView debateVoteView;
     private RecyclerView debateUserListView;
     private TextWrapper debateUserListEmpty;
-    private UserIconListAdapter userIconListAdapter;
 
     public DebateBoxViewHolder(View itemView, Context context) {
         super(itemView);
@@ -44,28 +43,29 @@ public class DebateBoxViewHolder extends ListViewHolder {
         debateVoteView = view.findViewById(R.id.debate_vote);
         debateUserListView = view.findViewById(R.id.debate_user_list);
         debateUserListEmpty = view.findViewById(R.id.debate_user_list_empty);
-        userIconListAdapter = new UserIconListAdapter();
-        debateUserListView.setAdapter(userIconListAdapter);
     }
 
     @Override
     public void updateWithObject(Object object) {
         DebateBox debateBox = (DebateBox) object;
         debateNameView.setText(debateBox.getName());
+
         Glide.with(debateImageView.getContext())
                 .load(Uri.parse(debateBox.getImageUrl()))
                 .into(debateImageView);
+        debateImageView.setClipToOutline(true);
 
         String debateVote = debateBox.getVotePercentage() + " %" + " " + debateBox.getVotePosition();
         debateVoteView.setText(debateVote);
-        debateImageView.setClipToOutline(true);
 
         List<JSONObject> userList = debateBox.getUserList();
+        UserIconListAdapter userIconListAdapter = new UserIconListAdapter(userList);
+        debateUserListView.setAdapter(userIconListAdapter);
+
         if(userList.size() == 0) {
             debateUserListView.setVisibility(View.GONE);
             debateUserListEmpty.setVisibility(View.VISIBLE);
-        } else {
-            userIconListAdapter.update(userList);
         }
+
     }
 }
