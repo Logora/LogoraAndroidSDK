@@ -165,6 +165,8 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
             argumentRepliesAuthorsList.setAdapter(argumentRepliesAuthorsListAdapter);
             argumentRepliesAuthorsListAdapter.setItems(authorsList);
         }
+
+        setModerated();
     }
 
     private void toggleReplies(Integer boxId) {
@@ -264,5 +266,14 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
 
         Toast toast = Toast.makeText(getContext(), message, duration);
         toast.show();
+    }
+
+    private void setModerated(){
+        Resources res = getResources();
+        if (argument.getStatus().equals("rejected") || argument.getStatus().equals("moderated")) {
+            Float opacity = 0.4f;
+            argumentContainer.setAlpha(opacity);
+            dateView.setText(res.getString(R.string.moderated_argument));
+        }
     }
 }

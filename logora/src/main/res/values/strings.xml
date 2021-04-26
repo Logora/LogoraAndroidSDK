@@ -117,4 +117,5 @@
     <string name="cancel">Annuler</string>
     <string name="author_box_default_name">Partagez votre opinion</string>
     <string name="author_box_default_level">Gagnez des niveaux</string>
+    <string name="moderated_argument">En attente de modération</string>
 </resources>

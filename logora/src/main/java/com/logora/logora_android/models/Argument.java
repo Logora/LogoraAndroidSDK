@@ -24,6 +24,7 @@ public class Argument extends Model {
     private Boolean isReply;
     private Integer repliesCount;
     private Integer parentArgumentId = null;
+    private String status;
     private List <JSONObject> repliesAuthorsList;
 
     public Argument() {}
@@ -38,6 +39,7 @@ public class Argument extends Model {
 
             argument.setPosition(Position.objectFromJson(jsonObject.getJSONObject("position")));
             argument.setIsReply(jsonObject.getBoolean("is_reply"));
+            argument.setStatus(jsonObject.getString("status"));
 
             String replyToId = jsonObject.getString("reply_to_id");
             if(!replyToId.equals("null")) {
@@ -45,7 +47,7 @@ public class Argument extends Model {
             }
 
             argument.setRepliesCount(jsonObject.getInt("number_replies"));
-            argument.setPositionIndex(0); // TODO Add function to compare groupContext positions and argument position
+            argument.setPositionIndex(0);
 
             if (jsonObject.has("group")) {
                 argument.setDebate(Debate.objectFromJson(jsonObject.getJSONObject("group")));
@@ -171,4 +173,8 @@ public class Argument extends Model {
     public List<JSONObject> getRepliesAuthorsList() { return this.repliesAuthorsList; }
 
     public void setRepliesAuthorsList(List<JSONObject> repliesAuthorsList) { this.repliesAuthorsList = repliesAuthorsList; }
+
+    public String getStatus() { return this.status; }
+
+    public void setStatus(String status) { this.status = status; }
 }
