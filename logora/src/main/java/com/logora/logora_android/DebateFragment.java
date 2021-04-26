@@ -1,5 +1,6 @@
 package com.logora.logora_android;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -121,6 +122,8 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
             });
 
             argumentSend.setOnClickListener(v -> {
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                 if (inputProvider.getUpdateArgument() != null) {
                     try {
                         updateArgument(inputProvider.getUpdateArgument());

@@ -1,13 +1,16 @@
 package com.logora.logora_android.views;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.logora.logora_android.LogoraAppActivity;
 import com.logora.logora_android.R;
 import com.logora.logora_android.utils.Router;
 
@@ -43,6 +46,8 @@ public class SearchFormView extends RelativeLayout {
         });
 
         searchSubmit.setOnClickListener(v -> {
+            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
             String searchQuery = searchInput.getText().toString();
             HashMap<String, String> routeParams = new HashMap<>();
             routeParams.put("q", searchQuery);
