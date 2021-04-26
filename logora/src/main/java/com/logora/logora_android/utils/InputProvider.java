@@ -20,12 +20,10 @@ public class InputProvider {
 
     public void addUserPosition(Integer debateId, Integer positionId) {
         this.userPositions.put(debateId, positionId);
-        Log.e("USER POSITIONS : ", String.valueOf(this.getUserPositions()));
     }
 
     public void removeUserPosition(Integer debateId) {
         this.userPositions.remove(debateId);
-        Log.e("USER POSITIONS : ", String.valueOf(this.getUserPositions()));
     }
 
     public Map<Integer, Integer> getUserPositions() {

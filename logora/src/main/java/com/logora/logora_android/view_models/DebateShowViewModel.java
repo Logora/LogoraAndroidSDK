@@ -45,27 +45,6 @@ public class DebateShowViewModel extends ViewModel {
                     debateObject.setPublishedDate(DateUtil.parseDate(publishedDate));
 
                     debateObject.setUsersCount(responseData.getInt("participants_count"));
-                    if (responseData.getJSONObject("votes_count").has("total")) {
-                        int totalVotes = responseData.getJSONObject("votes_count").getInt("total");
-                        debateObject.setVotesCount(totalVotes);
-
-                        JSONObject votesCount = responseData.getJSONObject("votes_count");
-                        JSONArray votesCountKeys = votesCount.names();
-                        for (int i = 0; i < votesCountKeys.length(); i++) {
-                            String key = votesCountKeys.getString(i);
-                            if(key.equals("total")) {
-                                continue;
-                            }
-                            if(i == 0){
-                                debateObject.setFirstPositionPercentage(100 * Integer.parseInt(votesCount.getString(key)) / totalVotes);
-                            }
-                            if(i == 1){
-                                debateObject.setSecondPositionPercentage(100 * Integer.parseInt(votesCount.getString(key)) / totalVotes);
-                            }
-                        }
-                    } else {
-                        debateObject.setVotesCount(0);
-                    }
 
                     JSONArray tagObjects = responseData.getJSONObject("group_context").getJSONArray("tags");
                     List<JSONObject> tagList = new ArrayList<>();
@@ -74,12 +53,18 @@ public class DebateShowViewModel extends ViewModel {
                     }
                     debateObject.setTagList(tagList);
 
+                    JSONObject votesCountObject = responseData.getJSONObject("votes_count");
+                    debateObject.setTotalVotesCount(Integer.parseInt(votesCountObject.getString("total")));
+                    votesCountObject.remove("total");
+                    debateObject.setVotesCountObject(debateObject.convertToHashMap(votesCountObject));
+
                     JSONArray positionObjects = responseData.getJSONObject("group_context").getJSONArray("positions");
                     List<Position> positionList = new ArrayList<>();
                     for(int i=0; i < positionObjects.length(); i++) {
                         positionList.add(Position.objectFromJson(positionObjects.getJSONObject(i)));
                     }
                     debateObject.setPositionList(positionList);
+                    debateObject.initVotePercentage();
 
                     debate.setValue(debateObject);
                 } catch (JSONException e) {

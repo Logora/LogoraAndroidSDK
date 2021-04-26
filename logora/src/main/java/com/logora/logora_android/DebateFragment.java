@@ -273,7 +273,6 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
     }
 
     private void showToastMessage(String message) {
-        Log.e("I'M A", "TOAST");
         int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(getContext(), message, duration);
