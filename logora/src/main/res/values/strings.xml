@@ -6,6 +6,7 @@
     <string name="headerBestUsers">Débatteurs de la semaine</string>
     <string name="infoSeeMoreDebates">Voir plus de débats</string>
     <string name="infoAllDebates">Tous les débats</string>
+    <string name="infoRelatedDebates">Débats sélectionnés pour vous</string>
     <string name="actionSignInIn">Connexion</string>
     <string name="debate_box_title">Titre du débat</string>
     <string name="debate_box_image_content_description">Image du débat</string>
