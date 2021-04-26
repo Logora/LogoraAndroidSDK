@@ -106,5 +106,12 @@
     <string name="report_error">Un problème est survenu lors de l\'envoi de votre signalement.</string>
     <string name="report_header">Signaler un argument</string>
     <string name="side_dialog_header">Choisissez votre camp</string>
+    <string name="delete_dialog_header">Êtes-vous sûr de vouloir supprimer cet argument ?</string>
     <string name="widget_button">Aller au débat</string>
+    <string name="argument_update_success">Votre argument à bien été modifié</string>
+    <string name="argument_delete_success">Votre argument à bien été supprimé</string>
+    <string name="argument_create_success">Votre argument à bien été posté</string>
+    <string name="issue">Un problème est survenu</string>
+    <string name="delete">Supprimer</string>
+    <string name="cancel">Annuler</string>
 </resources>

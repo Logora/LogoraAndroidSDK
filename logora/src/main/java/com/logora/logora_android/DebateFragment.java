@@ -1,6 +1,7 @@
 package com.logora.logora_android;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
@@ -29,6 +30,7 @@ import com.logora.logora_android.adapters.ArgumentListAdapter;
 import com.logora.logora_android.adapters.TagListAdapter;
 import com.logora.logora_android.dialogs.ReportDialog;
 import com.logora.logora_android.dialogs.SideDialog;
+import com.logora.logora_android.models.Argument;
 import com.logora.logora_android.models.Debate;
 import com.logora.logora_android.models.Position;
 import com.logora.logora_android.utils.Auth;
@@ -40,6 +42,7 @@ import com.logora.logora_android.utils.Router;
 import com.logora.logora_android.utils.Settings;
 import com.logora.logora_android.view_models.DebateShowViewModel;
 import com.logora.logora_android.views.ArgumentAuthorBox;
+import com.logora.logora_android.views.ArgumentBox;
 import com.logora.logora_android.views.FollowDebateButtonView;
 import com.logora.logora_android.views.ShareView;
 import com.logora.logora_android.views.VoteBoxView;
@@ -49,7 +52,7 @@ import org.json.JSONObject;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class DebateFragment extends Fragment implements SideDialog.ArgumentInputListener {
+public class DebateFragment extends Fragment implements SideDialog.ArgumentInputListener, InputProvider.InputProviderUpdateListener {
     private final Auth auth = Auth.getInstance();
     private final InputProvider inputProvider = InputProvider.getInstance();
     private LogoraApiClient apiClient = LogoraApiClient.getInstance();
@@ -75,16 +78,19 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
 
     public DebateFragment() {
         super(R.layout.fragment_debate);
+        inputProvider.setListener(this);
     }
 
     public DebateFragment(String debateSlug) {
         super(R.layout.fragment_debate);
         this.debateSlug = debateSlug;
+        inputProvider.setListener(this);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        inputProvider.setListener(this);
         findViews(view);
 
         TagListAdapter debateTagListAdapter = new TagListAdapter();
@@ -115,7 +121,15 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
             });
 
             argumentSend.setOnClickListener(v -> {
-                createArgument(null);
+                if (inputProvider.getUpdateArgument() != null) {
+                    try {
+                        updateArgument(inputProvider.getUpdateArgument());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    createArgument(null);
+                }
             });
 
             debatePublishedDateView.setText(DateUtil.getDateText(debate.getPublishedDate()));
@@ -151,12 +165,12 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
         argumentSortView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                if(spinnerSelected) {
-                    if(position == 0) {
+                if (spinnerSelected) {
+                    if (position == 0) {
                         argumentList.setSort("-score");
-                    } else if(position == 1) {
+                    } else if (position == 1) {
                         argumentList.setSort("-created_at");
-                    } else if(position == 2) {
+                    } else if (position == 2) {
                         argumentList.setSort("+created_at");
                     }
                     argumentList.update();
@@ -166,7 +180,8 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parentView) {}
+            public void onNothingSelected(AdapterView<?> parentView) {
+            }
         });
     }
 
@@ -175,35 +190,13 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
         sideDialog.show(getContext(), debate, this);
     }
 
-    private void createArgument(Integer positionId){
+    private void createArgument(Integer positionId) {
+        Resources res = this.getContext().getResources();
         argumentInput.clearFocus();
-        if(auth.getIsLoggedIn() == true ) {
-            if(positionId != null) {
+        if (auth.getIsLoggedIn() == true) {
+            if (positionId != null) {
                 Integer argumentPosition = positionId;
                 this.apiClient.createArgument(
-                    response -> {
-                        try {
-                            boolean success = response.getBoolean("success");
-                            JSONObject argument = response.getJSONObject("data").getJSONObject("resource");
-                            if (success) {
-                                argumentListAdapter.addItem(argument);
-                                argumentListAdapter.notifyDataSetChanged();
-                                // Remove entry in userPositions now that the argument is posted
-                                inputProvider.removeUserPosition(Integer.parseInt(debate.getId()));
-                                // Clear argumentInput
-                                argumentInput.getText().clear();
-                                // Show toast message
-                                showToastMessage("Votre argument à bien été posté");
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }, error -> {
-                        showToastMessage("Un problème est survenu");
-                    }, String.valueOf(argumentInput.getText()), Integer.parseInt(debate.getId()), argumentPosition);
-            } else {
-                if (inputProvider.getUserPositions().get(Integer.parseInt(debate.getId())) != null) {
-                    this.apiClient.createArgument(
                         response -> {
                             try {
                                 boolean success = response.getBoolean("success");
@@ -215,15 +208,38 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                                     inputProvider.removeUserPosition(Integer.parseInt(debate.getId()));
                                     // Clear argumentInput
                                     argumentInput.getText().clear();
-                                    // Show toast
-                                    showToastMessage("Votre argument à bien été posté");
+                                    // Show toast message
+                                    showToastMessage(res.getString(R.string.argument_create_success));
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
                         }, error -> {
-                            showToastMessage("Un problème est survenu");
-                        }, String.valueOf(argumentInput.getText()), Integer.parseInt(debate.getId()), inputProvider.getUserPositions().get(Integer.parseInt(debate.getId())));
+                            showToastMessage(res.getString(R.string.issue));
+                        }, String.valueOf(argumentInput.getText()), Integer.parseInt(debate.getId()), argumentPosition);
+            } else {
+                if (inputProvider.getUserPositions().get(Integer.parseInt(debate.getId())) != null) {
+                    this.apiClient.createArgument(
+                            response -> {
+                                try {
+                                    boolean success = response.getBoolean("success");
+                                    JSONObject argument = response.getJSONObject("data").getJSONObject("resource");
+                                    if (success) {
+                                        argumentListAdapter.addItem(argument);
+                                        argumentListAdapter.notifyDataSetChanged();
+                                        // Remove entry in userPositions now that the argument is posted
+                                        inputProvider.removeUserPosition(Integer.parseInt(debate.getId()));
+                                        // Clear argumentInput
+                                        argumentInput.getText().clear();
+                                        // Show toast
+                                        showToastMessage(res.getString(R.string.argument_create_success));
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }, error -> {
+                                showToastMessage(res.getString(R.string.issue));
+                            }, String.valueOf(argumentInput.getText()), Integer.parseInt(debate.getId()), inputProvider.getUserPositions().get(Integer.parseInt(debate.getId())));
                 } else {
                     openSideDialog();
                 }
@@ -232,6 +248,29 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
             Log.e("SHOW LOGIN MODAL", "true");
             // SHOW LOGIN DIALOG HERE
         }
+    }
+
+    private void updateArgument(Argument argument) throws JSONException {
+        Resources res = this.getContext().getResources();
+        argumentListAdapter.removeItem(argument.getId());
+        this.apiClient.updateArgument(response -> {
+            try {
+                boolean success = response.getBoolean("success");
+                JSONObject updatedArgument = response.getJSONObject("data").getJSONObject("resource");
+                if (success) {
+                    argumentListAdapter.addItem(updatedArgument);
+                    argumentListAdapter.notifyDataSetChanged();
+                    argumentInput.getText().clear();
+                    inputProvider.removeUpdateArgument();
+                    // Show toast
+                    showToastMessage(res.getString(R.string.argument_update_success));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }, error -> {
+            showToastMessage(res.getString(R.string.issue));
+        }, argument.getId(), String.valueOf(argumentInput.getText()));
     }
 
     private void findViews(View view) {
@@ -256,7 +295,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
         String recentOption = getString(R.string.argument_sort_recent);
         String oldOption = getString(R.string.argument_sort_old);
 
-        return new String[] { trendingOption, recentOption, oldOption };
+        return new String[]{trendingOption, recentOption, oldOption};
     }
 
     private void showToastMessage(String message) {
@@ -269,5 +308,17 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
     @Override
     public void onArgumentReady(Integer positionId) {
         createArgument(positionId);
+    }
+
+    @Override
+    public void onInputProviderUpdate(){
+        if (inputProvider.getUpdateArgument() != null) {
+            argumentInput.setText(inputProvider.getUpdateArgument().getContent());
+        }
+        if (inputProvider.getRemoveArgument() != null) {
+            argumentListAdapter.removeItem(inputProvider.getRemoveArgument().getId());
+            argumentListAdapter.notifyDataSetChanged();
+            inputProvider.removeRemoveArgument();
+        }
     }
 }

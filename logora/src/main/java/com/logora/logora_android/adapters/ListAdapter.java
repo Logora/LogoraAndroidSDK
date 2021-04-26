@@ -1,9 +1,12 @@
 package com.logora.logora_android.adapters;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.logora.logora_android.view_holders.ListViewHolder;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -31,11 +34,24 @@ public abstract class ListAdapter extends RecyclerView.Adapter<ListViewHolder> {
             this.items.clear();
         }
         this.items.addAll(items);
-        this.notifyDataSetChanged();
     }
 
     public void addItem(JSONObject item) {
         this.items.add(0, item);
+    }
+
+    public void removeItem(Integer id) {
+        JSONObject currentArgument = null;
+        for(int i = 0; i < this.items.size(); i++){
+            try {
+                if(this.items.get(i).getInt("id") == id) {
+                    currentArgument = this.items.get(i);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        this.items.remove(currentArgument);
     }
 
     @Override

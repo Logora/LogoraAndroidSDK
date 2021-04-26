@@ -3,6 +3,7 @@ package com.logora.logora_android.views;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
@@ -26,16 +27,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.Resource;
 import com.logora.logora_android.PaginatedListFragment;
 import com.logora.logora_android.R;
 import com.logora.logora_android.adapters.ArgumentListAdapter;
 import com.logora.logora_android.adapters.UserIconListAdapter;
+import com.logora.logora_android.dialogs.DeleteArgumentDialog;
 import com.logora.logora_android.dialogs.ReportDialog;
+import com.logora.logora_android.dialogs.SideDialog;
 import com.logora.logora_android.models.Argument;
 import com.logora.logora_android.models.Debate;
 import com.logora.logora_android.models.UserIcon;
 import com.logora.logora_android.utils.Auth;
 import com.logora.logora_android.utils.DateUtil;
+import com.logora.logora_android.utils.InputProvider;
 import com.logora.logora_android.utils.LogoraApiClient;
 import com.logora.logora_android.utils.Settings;
 
@@ -44,11 +49,12 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-public class ArgumentBox extends RelativeLayout {
+public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.DeleteArgumentListener{
     private Context context;
     private final Settings settings = Settings.getInstance();
     private final Auth authClient = Auth.getInstance();
     private final LogoraApiClient apiClient = LogoraApiClient.getInstance();
+    private final InputProvider inputProvider = InputProvider.getInstance();
     private Debate debate;
     private Argument argument;
     private int argumentBoxId = View.generateViewId();
@@ -205,10 +211,10 @@ public class ArgumentBox extends RelativeLayout {
             if(actionsList.length > 1) {
                 switch (which) {
                     case 0:
-                        Log.i("MODIFIER :", "modifier");
+                        inputProvider.setUpdateArgument(argument);
                         break;
                     case 1:
-                        Log.i("SUPPRIMER :", "supprimer");
+                        openDeleteArgumentDialog();
                         break;
                     case 2:
                         openReportDialog();
@@ -226,5 +232,37 @@ public class ArgumentBox extends RelativeLayout {
 
     private void openReportDialog() {
         ReportDialog.show(context, argument);
+    }
+
+    private void openDeleteArgumentDialog() {
+        DeleteArgumentDialog deleteArgumentDialog = new DeleteArgumentDialog(getContext(), argument, this);
+        deleteArgumentDialog.show(getContext(), argument, this);
+    }
+
+    @Override
+    public void onDelete(Boolean deleteArgument) {
+        Resources res = getContext().getResources();
+        if(deleteArgument) {
+            apiClient.deleteArgument( response -> {
+                try {
+                    boolean success = response.getBoolean("success");
+                    if (success) {
+                        inputProvider.setRemoveArgument(argument);
+                        showToastMessage(res.getString(R.string.argument_delete_success));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }, error -> {
+                showToastMessage(res.getString(R.string.issue));
+            }, argument.getId());
+        }
+    }
+
+    private void showToastMessage(String message) {
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(getContext(), message, duration);
+        toast.show();
     }
 }

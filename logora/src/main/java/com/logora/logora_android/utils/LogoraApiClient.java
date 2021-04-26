@@ -153,10 +153,27 @@ public class LogoraApiClient {
         this.user_patch(route, queryParams, bodyParams, listener, errorListener);
     }
 
+    public void updateArgument(Response.Listener<JSONObject> listener,
+                           Response.ErrorListener errorListener,
+                           Integer argumentId, String argumentContent) {
+        HashMap<String, String> queryParams = new HashMap<>();
+        HashMap<String, String> bodyParams = new HashMap<>();
+        bodyParams.put("content", argumentContent);
+        String route = "/messages/" + argumentId;
+        this.user_patch(route, queryParams, bodyParams, listener, errorListener);
+    }
+
     public void deleteVote(Response.Listener<JSONObject> listener,
                Response.ErrorListener errorListener, Integer voteId) {
         HashMap<String, String> queryParams = new HashMap<>();
         String route = "/votes/" + voteId;
+        this.user_delete(route, queryParams, listener, errorListener);
+    }
+
+    public void deleteArgument(Response.Listener<JSONObject> listener,
+                           Response.ErrorListener errorListener, Integer argumentId) {
+        HashMap<String, String> queryParams = new HashMap<>();
+        String route = "/messages/" + argumentId;
         this.user_delete(route, queryParams, listener, errorListener);
     }
 

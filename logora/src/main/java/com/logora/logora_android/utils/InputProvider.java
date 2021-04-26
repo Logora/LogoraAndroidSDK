@@ -1,6 +1,9 @@
 package com.logora.logora_android.utils;
 import android.util.Log;
 
+import com.logora.logora_android.dialogs.DeleteArgumentDialog;
+import com.logora.logora_android.models.Argument;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,6 +13,9 @@ public class InputProvider {
     static {
         userPositions = new HashMap<>();
     }
+    private InputProviderUpdateListener listener;
+    public Argument updateArgument;
+    public Argument removeArgument;
 
     public static InputProvider getInstance() {
         if(InputProvider.instance == null) {
@@ -18,9 +24,27 @@ public class InputProvider {
         return InputProvider.instance;
     }
 
-    public void addUserPosition(Integer debateId, Integer positionId) {
-        this.userPositions.put(debateId, positionId);
+    public void setListener(InputProviderUpdateListener listener) { this.listener = listener; }
+
+    public void addUserPosition(Integer debateId, Integer positionId) { this.userPositions.put(debateId, positionId); }
+
+    public void setUpdateArgument(Argument argument) {
+        this.updateArgument = argument;
+        listener.onInputProviderUpdate();
     }
+
+    public Argument getUpdateArgument() { return this.updateArgument; }
+
+    public void removeUpdateArgument() { this.updateArgument = null; }
+
+    public void setRemoveArgument(Argument argument) {
+        this.removeArgument = argument;
+        listener.onInputProviderUpdate();
+    }
+
+    public Argument getRemoveArgument() { return this.removeArgument; }
+
+    public void removeRemoveArgument() { this.removeArgument = null; }
 
     public void removeUserPosition(Integer debateId) {
         this.userPositions.remove(debateId);
@@ -28,5 +52,9 @@ public class InputProvider {
 
     public Map<Integer, Integer> getUserPositions() {
         return this.userPositions;
+    }
+
+    public interface InputProviderUpdateListener {
+        void onInputProviderUpdate();
     }
 }
