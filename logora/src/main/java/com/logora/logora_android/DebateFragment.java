@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.logora.logora_android.adapters.ArgumentListAdapter;
+import com.logora.logora_android.adapters.DebateBoxListAdapter;
 import com.logora.logora_android.adapters.TagListAdapter;
 import com.logora.logora_android.dialogs.ReportDialog;
 import com.logora.logora_android.dialogs.SideDialog;
@@ -66,12 +67,14 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
     private FollowDebateButtonView followDebateButtonView;
     private Spinner argumentSortView;
     private PaginatedListFragment argumentList;
+    private PaginatedListFragment relatedDebatesList;
     private ArgumentAuthorBox argumentAuthorBox;
     private RelativeLayout argumentInputControls;
     private EditText argumentInput;
     private ImageView argumentSend;
     private Debate debate;
     private ArgumentListAdapter argumentListAdapter;
+    private DebateBoxListAdapter relatedDebatesListAdapter;
 
     public DebateFragment() {
         super(R.layout.fragment_debate);
@@ -140,6 +143,17 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                     .beginTransaction()
                     .add(R.id.argument_list, argumentList)
                     .commit();
+
+            String relatedDebatesResourceName = "groups/" + debate.getSlug() + "/related";
+            DebateBoxListAdapter relatedDebatesListAdapter = new DebateBoxListAdapter();
+            this.relatedDebatesListAdapter = relatedDebatesListAdapter;
+
+            relatedDebatesList = new PaginatedListFragment(relatedDebatesResourceName, "CLIENT", relatedDebatesListAdapter, null);
+
+            getChildFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.related_debates_list, relatedDebatesList)
+                    .commit();
         });
 
         String[] sortOptions = getSpinnerOptions();
@@ -177,9 +191,8 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
 
     private void createArgument(Integer positionId){
         argumentInput.clearFocus();
-        if(auth.getIsLoggedIn() == true ) {
+        if(auth.getIsLoggedIn()) {
             if(positionId != null) {
-                Integer argumentPosition = positionId;
                 this.apiClient.createArgument(
                     response -> {
                         try {
@@ -200,7 +213,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                         }
                     }, error -> {
                         showToastMessage("Un problème est survenu");
-                    }, String.valueOf(argumentInput.getText()), Integer.parseInt(debate.getId()), argumentPosition);
+                    }, String.valueOf(argumentInput.getText()), Integer.parseInt(debate.getId()), positionId);
             } else {
                 if (inputProvider.getUserPositions().get(Integer.parseInt(debate.getId())) != null) {
                     this.apiClient.createArgument(

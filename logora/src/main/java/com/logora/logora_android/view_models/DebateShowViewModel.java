@@ -46,11 +46,11 @@ public class DebateShowViewModel extends ViewModel {
 
                     debateObject.setUsersCount(responseData.getInt("participants_count"));
                     if (responseData.getJSONObject("votes_count").has("total")) {
-                        debateObject.setVotesCount(responseData.getJSONObject("votes_count").getInt("total"));
+                        int totalVotes = responseData.getJSONObject("votes_count").getInt("total");
+                        debateObject.setVotesCount(totalVotes);
 
                         JSONObject votesCount = responseData.getJSONObject("votes_count");
                         JSONArray votesCountKeys = votesCount.names();
-                        int totalVotes = responseData.getJSONObject("votes_count").getInt("total");
                         for (int i = 0; i < votesCountKeys.length(); i++) {
                             String key = votesCountKeys.getString(i);
                             if(key.equals("total")) {

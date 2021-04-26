@@ -199,7 +199,6 @@ public class Debate {
 
     public void setSecondPositionPercentage(Integer secondPositionPercentage) { this.secondPositionPercentage = secondPositionPercentage; }
 
-
     private static String getVotePosition(JSONArray positions, Integer id) throws JSONException {
         for (int i = 0 ; i < positions.length(); i++) {
             JSONObject position = positions.getJSONObject(i);
