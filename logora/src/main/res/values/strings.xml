@@ -115,4 +115,6 @@
     <string name="issue">Un problème est survenu</string>
     <string name="delete">Supprimer</string>
     <string name="cancel">Annuler</string>
+    <string name="author_box_default_name">Partagez votre opinion</string>
+    <string name="author_box_default_level">Gagnez des niveaux</string>
 </resources>

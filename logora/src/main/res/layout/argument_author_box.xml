@@ -40,7 +40,7 @@
             android:textStyle="bold"
             android:textColor="@color/text_primary"
             android:textSize="15sp"
-            android:text="@string/user_box_full_name" />
+            android:text="@string/author_box_default_name" />
 
         <RelativeLayout
             android:id="@+id/user_level_container"

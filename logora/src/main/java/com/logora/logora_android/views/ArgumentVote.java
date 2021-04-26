@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -31,6 +32,7 @@ public class ArgumentVote extends LinearLayout {
     private final Settings settings = Settings.getInstance();
     private Context context;
     private Argument argument;
+    private Debate debate;
     private LogoraApiClient apiClient = LogoraApiClient.getInstance();
     private Auth authClient = Auth.getInstance();
     Integer votesCount = 0;
@@ -67,8 +69,9 @@ public class ArgumentVote extends LinearLayout {
         });
     }
 
-    public void init(Argument argument) {
+    public void init(Argument argument, Debate debate) {
         this.argument = argument;
+        this.debate = debate;
         initHasVoted();
         votesCount = argument.getVotesCount();
         votesCountView.setText(String.valueOf(votesCount));
@@ -86,13 +89,19 @@ public class ArgumentVote extends LinearLayout {
     }
 
     public void setActive() {
-        String callPrimaryColor = settings.get("theme.callPrimaryColor");
+        String firstPositionPrimaryColor = settings.get("theme.firstPositionColorPrimary");
+        String secondPositionPrimaryColor = settings.get("theme.secondPositionColorPrimary");
         hasVoted = true;
         votesCount = argument.getVotesCount();
         votesCountView.setText(String.valueOf(votesCount));
-        // Check position of argument and add color
-        votesCountView.setTextColor(Color.parseColor(callPrimaryColor));
-        clapButtonView.setColorFilter(Color.parseColor(callPrimaryColor));
+        Integer position = debate.getPositionIndex(argument.getPosition().getId());
+        if (position == 0) {
+            votesCountView.setTextColor(Color.parseColor(firstPositionPrimaryColor));
+            clapButtonView.setColorFilter(Color.parseColor(firstPositionPrimaryColor));
+        } else {
+            votesCountView.setTextColor(Color.parseColor(secondPositionPrimaryColor));
+            clapButtonView.setColorFilter(Color.parseColor(secondPositionPrimaryColor));
+        }
     }
 
     public void setInactive() {

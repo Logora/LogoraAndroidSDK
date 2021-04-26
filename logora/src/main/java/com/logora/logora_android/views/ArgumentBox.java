@@ -136,7 +136,7 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
         sideLabelView.setText(argument.getPosition().getName());
         dateView.setText(DateUtil.getTimeAgo(argument.getPublishedDate()));
         argumentAuthorBox.init(argument);
-        argumentVote.init(argument);
+        argumentVote.init(argument, debate);
         contentView.setText(argument.getContent());
         argumentShareButton.setOnClickListener(v -> {
             openShareDialog("Cet argument devrait vous intéresser.");

@@ -1,6 +1,7 @@
 package com.logora.logora_android.views;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
@@ -26,6 +27,7 @@ public class ArgumentAuthorBox extends RelativeLayout {
     private final Settings settings = Settings.getInstance();
     private Auth authClient = Auth.getInstance();
     private TextView fullNameView;
+    private TextView userLevelView;
     private ImageView userImageView;
     private ImageView levelIconView;
     private Argument argument;
@@ -55,6 +57,7 @@ public class ArgumentAuthorBox extends RelativeLayout {
         fullNameView = findViewById(R.id.user_full_name);
         levelIconView = findViewById(R.id.user_level_icon);
         userImageView = findViewById(R.id.user_image);
+        userLevelView = findViewById(R.id.user_level);
     }
 
     public void init(Argument argument){
@@ -77,7 +80,14 @@ public class ArgumentAuthorBox extends RelativeLayout {
                         .load(Uri.parse(authClient.getCurrentUser().getImageUrl()))
                         .into(userImageView);
             } else {
-                // Default author name
+                Resources res = getResources();
+                userLevelView.setText(res.getString(R.string.author_box_default_level));
+                Glide.with(levelIconView.getContext())
+                        .load(Uri.parse("https://d2vtyvk9fq7442.cloudfront.net/level_1.png"))
+                        .into(levelIconView);
+                Glide.with(userImageView.getContext())
+                        .load(Uri.parse("https://d1afevl9u7zxbe.cloudfront.net/static/default_user_80x80.jpg"))
+                        .into(userImageView);
             }
         }
     }

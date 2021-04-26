@@ -45,7 +45,7 @@ public class Argument extends Model {
             }
 
             argument.setRepliesCount(jsonObject.getInt("number_replies"));
-            argument.setPositionIndex(0); // Add function to compare groupContext positions and argument position
+            argument.setPositionIndex(0); // TODO Add function to compare groupContext positions and argument position
 
             if (jsonObject.has("group")) {
                 argument.setDebate(Debate.objectFromJson(jsonObject.getJSONObject("group")));

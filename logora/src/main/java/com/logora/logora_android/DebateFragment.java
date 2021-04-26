@@ -6,7 +6,9 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.LocaleList;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -49,6 +51,8 @@ import com.logora.logora_android.views.ShareView;
 import com.logora.logora_android.views.VoteBoxView;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
