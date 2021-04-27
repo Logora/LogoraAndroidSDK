@@ -1,13 +1,10 @@
 package com.logora.logora_android.models;
 
 import android.util.Log;
-
 import com.logora.logora_android.utils.DateUtil;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -23,7 +20,6 @@ public class Debate {
     private Integer argumentsCount;
     private List<JSONObject> tagList;
     private List<Position> positionList;
-    private Integer argumentPositionIndex;
     private String votePosition;
     private HashMap<Integer, Integer> votesCountObject = new HashMap<>();
     private HashMap<Integer, Integer> votesPercentages = new HashMap<>();
