@@ -2,18 +2,6 @@ plugins {
     id 'com.android.library'
 }
 
-def getVersionName = { ->
-    return "0.0.1"
-}
-
-def getArtifactId = { ->
-    return "logora-sdk"
-}
-
-def getGroupId = { ->
-    return "com.logora"
-}
-
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
