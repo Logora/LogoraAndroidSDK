@@ -24,7 +24,6 @@
             android:text="@string/debate_first_position"
             android:textStyle="bold"
             android:textSize="18sp"
-            android:backgroundTint="@color/first_position_primary"
             android:layout_marginBottom="10dp"/>
 
         <Button
@@ -35,8 +34,7 @@
             android:textColor="@android:color/white"
             android:text="@string/debate_second_position"
             android:textStyle="bold"
-            android:textSize="18sp"
-            android:backgroundTint="@color/second_position_primary" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/vote_total"

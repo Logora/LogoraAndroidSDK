@@ -184,16 +184,20 @@ public class VoteBoxView extends RelativeLayout {
         this.active = false;
         voteResultsContainer.setVisibility(GONE);
         voteContainer.setVisibility(VISIBLE);
+
         String firstPositionPrimaryColor = settings.get("theme.firstPositionColorPrimary");
         String secondPositionPrimaryColor = settings.get("theme.secondPositionColorPrimary");
+
         LayerDrawable firstShape = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.button_primary_background);
         GradientDrawable firstGradientDrawable = (GradientDrawable) firstShape.findDrawableByLayerId(R.id.shape);
         firstGradientDrawable.setColor(Color.parseColor(firstPositionPrimaryColor));
         voteFirstPositionButton.setBackground(firstShape);
+
         LayerDrawable secondShape = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.button_primary_background);
         GradientDrawable secondGradientDrawable = (GradientDrawable) secondShape.findDrawableByLayerId(R.id.shape);
         secondGradientDrawable.setColor(Color.parseColor(secondPositionPrimaryColor));
         voteSecondPositionButton.setBackground(secondShape);
+
         voteFirstPositionButton.setText(this.debate.getPositionList().get(0).getName());
         voteSecondPositionButton.setText(this.debate.getPositionList().get(1).getName());
 
