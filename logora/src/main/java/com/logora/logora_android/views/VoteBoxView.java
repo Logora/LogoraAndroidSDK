@@ -7,7 +7,6 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ViewTreeObserver;
@@ -25,7 +24,6 @@ import com.logora.logora_android.models.Debate;
 import com.logora.logora_android.utils.Auth;
 import com.logora.logora_android.utils.InputProvider;
 import com.logora.logora_android.utils.LogoraApiClient;
-import com.logora.logora_android.utils.Router;
 import com.logora.logora_android.utils.Settings;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,6 +36,7 @@ public class VoteBoxView extends RelativeLayout {
     private Context context;
     private Debate debate;
     private Integer voteId;
+    private Integer votePositionId;
     private Boolean active = false;
     private LinearLayout voteContainer;
     private LinearLayout voteResultsContainer;
@@ -114,8 +113,9 @@ public class VoteBoxView extends RelativeLayout {
                         boolean success = response.getJSONObject("data").getBoolean("success");
                         boolean vote = response.getJSONObject("data").getJSONObject("data").getBoolean("vote");
                         if(success && vote) {
-                            int voteId = response.getJSONObject("data").getJSONObject("data").getJSONObject("resource").getInt("id");
-                            this.voteId = voteId;
+                            JSONObject voteObject = response.getJSONObject("data").getJSONObject("data").getJSONObject("resource");
+                            this.voteId = voteObject.getInt("id");
+                            this.votePositionId = voteObject.getJSONObject("position").getInt("id");
                             showResults();
                         }
                     } catch (JSONException e) {
@@ -128,21 +128,17 @@ public class VoteBoxView extends RelativeLayout {
     public void vote(Integer positionId) {
         if(this.voteId != null) {
             inputProvider.addUserPosition(Integer.parseInt(debate.getId()), positionId);
-            try {
+            if(!positionId.equals(this.votePositionId)) {
                 debate.calculateVotePercentage(String.valueOf(positionId), true);
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
             showResults();
-            this.updateVote(positionId);
+            if(!positionId.equals(this.votePositionId)) {
+                this.updateVote(positionId);
+            }
         } else {
             this.debate.incrementTotalVotesCount();
             inputProvider.addUserPosition(Integer.parseInt(debate.getId()), positionId);
-            try {
-                debate.calculateVotePercentage(String.valueOf(positionId), false);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            debate.calculateVotePercentage(String.valueOf(positionId), false);
             showResults();
             this.createVote(positionId);
         }
@@ -156,6 +152,7 @@ public class VoteBoxView extends RelativeLayout {
                     JSONObject vote = response.getJSONObject("data").getJSONObject("resource");
                     if(success) {
                         this.voteId = vote.getInt("id");
+                        this.votePositionId = vote.getJSONObject("position").getInt("id");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -173,6 +170,7 @@ public class VoteBoxView extends RelativeLayout {
                     JSONObject vote = response.getJSONObject("data").getJSONObject("resource");
                     if(success) {
                         this.voteId = vote.getInt("id");
+                        this.votePositionId = vote.getJSONObject("position").getInt("id");
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

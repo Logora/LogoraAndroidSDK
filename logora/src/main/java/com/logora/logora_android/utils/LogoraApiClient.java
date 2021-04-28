@@ -26,8 +26,7 @@ public class LogoraApiClient {
     RequestQueue queue;
     private final String apiUrl = "https://staging.logora.fr/api/v1";
     private final String authUrl = "https://staging.logora.fr/oauth";
-    private String userTokenKey = "logora_user_token";
-    private String userSessionKey = "logora_session";
+    private final String userTokenKey = "logora_user_token";
     private String applicationName = null;
     private String authAssertion = null;
     private String providerToken = null;
