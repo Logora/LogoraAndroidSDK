@@ -7,6 +7,7 @@
     <application>
         <activity
             android:name=".LogoraAppActivity"
+            android:theme="@style/LogoraActivityTheme.NoActionBar"
             android:label="@string/activity_name" >
         </activity>
     </application>
