@@ -10,6 +10,7 @@
 
     <name>Logora SDK</name>
     <url>https://logora.fr</url>
+
     <dependencies>
         <dependency>
             <groupId>com.google.android</groupId>
@@ -84,6 +85,14 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>maven_central_repo</id>
+            <name>Maven repo</name>
+            <url>https://mvnrepository.com</url>
+        </repository>
+    </repositories>
 
     <distributionManagement>
         <repository>
