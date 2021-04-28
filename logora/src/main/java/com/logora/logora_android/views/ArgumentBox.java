@@ -141,6 +141,10 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
             this.setReplyStyle();
         }
 
+        if(this.depth == 2) {
+            argumentReplyButton.setVisibility(GONE);
+        }
+
         sideLabelView.setBackground(shape);
         sideLabelView.setText(argument.getPosition().getName());
         dateView.setText(DateUtil.getTimeAgo(argument.getPublishedDate()));
