@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 
 import com.logora.logora_android.R;
+import com.logora.logora_android.dialogs.LoginDialog;
 import com.logora.logora_android.models.Argument;
 import com.logora.logora_android.models.Debate;
 import com.logora.logora_android.utils.Auth;
@@ -151,7 +152,12 @@ public class ArgumentVote extends LinearLayout {
                     }, Integer.parseInt(String.valueOf(argument.getId())), "Message", null);
             }
         } else {
-            // Login modal
+            openLoginDialog();
         }
+    }
+
+    private void openLoginDialog() {
+        LoginDialog loginDialog = new LoginDialog(getContext());
+        loginDialog.show(getContext());
     }
 }

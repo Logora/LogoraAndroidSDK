@@ -25,7 +25,6 @@ public class ArgumentViewHolder extends ListViewHolder {
     public void updateWithObject(Object object) {
         Argument argument = (Argument) object;
         String status = argument.getStatus();
-
         if(status.equals("accepted")) {
             argumentBox.updateWithObject(object, debate, context);
         } else if(status.equals("rejected") || status.equals("moderated")) {
@@ -33,6 +32,8 @@ public class ArgumentViewHolder extends ListViewHolder {
                 if(argument.getAuthor().getId().intValue() == authClient.getCurrentUser().getId().intValue()) {
                     argumentBox.updateWithObject(object, debate, context);
                 }
+            } else {
+                argumentBox.setVisibility(View.GONE);
             }
         }
     }

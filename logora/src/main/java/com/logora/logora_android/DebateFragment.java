@@ -31,6 +31,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.logora.logora_android.adapters.ArgumentListAdapter;
 import com.logora.logora_android.adapters.TagListAdapter;
+import com.logora.logora_android.dialogs.LoginDialog;
 import com.logora.logora_android.dialogs.ReportDialog;
 import com.logora.logora_android.dialogs.SideDialog;
 import com.logora.logora_android.models.Argument;
@@ -121,6 +122,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                 public void onFocusChange(View view, boolean hasFocus) {
                     if (hasFocus) {
                         argumentInputControls.setVisibility(View.VISIBLE);
+                        /*scrollView.smoothScrollTo(view.left, view.top);*/
                     }
                 }
             });
@@ -197,6 +199,11 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
         sideDialog.show(getContext(), debate, this);
     }
 
+    private void openLoginDialog() {
+        LoginDialog loginDialog = new LoginDialog(getContext());
+        loginDialog.show(getContext());
+    }
+
     private void createArgument(Integer positionId) {
         Resources res = this.getContext().getResources();
         argumentInput.clearFocus();
@@ -252,8 +259,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                 }
             }
         } else {
-            Log.e("SHOW LOGIN MODAL", "true");
-            // SHOW LOGIN DIALOG HERE
+            openLoginDialog();
         }
     }
 

@@ -75,6 +75,10 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
     private Integer positionIndex = 0;
     private TextView sideLabelView;
     private TextView dateView;
+    private ImageView argumentReplyButton;
+    private LinearLayout replyInputContainer;
+    private ImageView replySendButton;
+    private ImageView replyInputUserImage;
 
     public ArgumentBox(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -108,6 +112,10 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
         argumentRepliesList = findViewById(R.id.argument_replies_list);
         sideLabelView = findViewById(R.id.argument_position);
         dateView = findViewById(R.id.argument_date);
+        argumentReplyButton = findViewById(R.id.argument_reply_button);
+        replyInputContainer = findViewById(R.id.reply_input_container);
+        replySendButton = findViewById(R.id.reply_input_send_button);
+        replyInputUserImage = findViewById(R.id.reply_input_user_image);
     }
 
     public void updateWithObject(Object object, Debate debate, Context context) {
@@ -117,6 +125,7 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
 
         String firstPositionPrimaryColor = settings.get("theme.firstPositionColorPrimary");
         String secondPositionPrimaryColor = settings.get("theme.secondPositionColorPrimary");
+        String callPrimaryColor = settings.get("theme.callPrimaryColor");
         LayerDrawable shape = (LayerDrawable) ContextCompat.getDrawable(context, R.drawable.position_background);
 
         positionIndex = debate.getPositionIndex(argument.getPosition().getId());
@@ -144,6 +153,19 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
         argumentMoreButton.setOnClickListener(v -> {
             openMoreActionsDialog();
         });
+
+        // Reply input
+        argumentReplyButton.setOnClickListener(v -> {
+            replyInputContainer.setVisibility(View.VISIBLE);
+        });
+        LayerDrawable buttonShape = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.button_primary_background);
+        GradientDrawable buttonGradientDrawable = (GradientDrawable) buttonShape.findDrawableByLayerId(R.id.shape);
+        buttonGradientDrawable.setColor(Color.parseColor(callPrimaryColor));
+        replySendButton.setBackground(buttonShape);
+
+        /*Glide.with(replyInputUserImage.getContext())
+                .load(Uri.parse(authClient.getCurrentUser().getImageUrl()))
+                .into(replyInputUserImage);*/
 
         argumentRepliesList.setId(argumentBoxId);
         String resourceName = "messages/" + argument.getId() + "/replies";
