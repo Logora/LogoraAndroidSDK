@@ -24,7 +24,8 @@
             android:text="@string/debate_first_position"
             android:textStyle="bold"
             android:textSize="18sp"
-            android:backgroundTint="@color/first_position_primary" />
+            android:backgroundTint="@color/first_position_primary"
+            android:layout_marginBottom="10dp"/>
 
         <Button
             android:id="@+id/vote_second_position_button"

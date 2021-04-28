@@ -7,6 +7,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.renderscript.ScriptGroup;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -14,6 +16,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
 
 import com.logora.logora_android.R;
 import com.logora.logora_android.models.Argument;
@@ -62,8 +66,14 @@ public class SideDialog extends LinearLayout {
         debateTitle.setText(debate.getName());
         String firstPositionPrimaryColor = settings.get("theme.firstPositionColorPrimary");
         String secondPositionPrimaryColor = settings.get("theme.secondPositionColorPrimary");
-        firstPositionButton.setBackgroundColor(Color.parseColor(firstPositionPrimaryColor));
-        secondPositionButton.setBackgroundColor(Color.parseColor(secondPositionPrimaryColor));
+        LayerDrawable firstShape = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.button_primary_background);
+        GradientDrawable firstGradientDrawable = (GradientDrawable) firstShape.findDrawableByLayerId(R.id.shape);
+        firstGradientDrawable.setColor(Color.parseColor(firstPositionPrimaryColor));
+        firstPositionButton.setBackground(firstShape);
+        LayerDrawable secondShape = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.button_primary_background);
+        GradientDrawable secondGradientDrawable = (GradientDrawable) secondShape.findDrawableByLayerId(R.id.shape);
+        secondGradientDrawable.setColor(Color.parseColor(secondPositionPrimaryColor));
+        secondPositionButton.setBackground(secondShape);
         firstPositionButton.setText(debate.getPositionList().get(0).getName());
         secondPositionButton.setText(debate.getPositionList().get(1).getName());
         firstPositionButton.setOnClickListener(v -> {

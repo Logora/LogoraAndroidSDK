@@ -292,7 +292,7 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
 
     private void setModerated(){
         Resources res = getResources();
-        if (argument.getStatus().equals("rejected") || argument.getStatus().equals("moderated")) {
+        if (argument.getStatus().equals("rejected") || argument.getStatus().equals("pending")) {
             Float opacity = 0.4f;
             argumentContainer.setAlpha(opacity);
             dateView.setText(res.getString(R.string.moderated_argument));

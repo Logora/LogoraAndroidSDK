@@ -27,7 +27,7 @@ public class ArgumentViewHolder extends ListViewHolder {
         String status = argument.getStatus();
         if(status.equals("accepted")) {
             argumentBox.updateWithObject(object, debate, context);
-        } else if(status.equals("rejected") || status.equals("moderated")) {
+        } else if(status.equals("rejected") || status.equals("pending")) {
             if(authClient.getIsLoggedIn()) {
                 if(argument.getAuthor().getId().intValue() == authClient.getCurrentUser().getId().intValue()) {
                     argumentBox.updateWithObject(object, debate, context);
