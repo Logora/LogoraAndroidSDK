@@ -172,8 +172,8 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
             .into(replyInputUserImage);
 
         replySendButton.setOnClickListener(v -> {
-            /*InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
-            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);*/
+            InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
             createReply(argument.getId());
         });
 
@@ -223,8 +223,19 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
     }
 
     private void setReplyStyle() {
-        Log.e("SETREPLYSTYLE", "true");
+        String firstPositionPrimaryColor = settings.get("theme.firstPositionColorPrimary");
+        String secondPositionPrimaryColor = settings.get("theme.secondPositionColorPrimary");
+        LayerDrawable borderLeft = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.reply_left_border);
+        positionIndex = debate.getPositionIndex(argument.getPosition().getId());
+        if (positionIndex == 0) {
+            GradientDrawable gradientDrawable = (GradientDrawable) borderLeft.findDrawableByLayerId(R.id.leftStroke);
+            gradientDrawable.setColor(Color.parseColor(firstPositionPrimaryColor));
+        } else {
+            GradientDrawable gradientDrawable = (GradientDrawable) borderLeft.findDrawableByLayerId(R.id.leftStroke);
+            gradientDrawable.setColor(Color.parseColor(secondPositionPrimaryColor));
+        }
         argumentContainer.setBackgroundColor(getResources().getColor(R.color.text_tertiary));
+        argumentContainer.setBackground(borderLeft);
     }
 
     private void openShareDialog(String subject) {
