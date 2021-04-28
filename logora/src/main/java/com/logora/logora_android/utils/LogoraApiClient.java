@@ -226,14 +226,14 @@ public class LogoraApiClient {
 
     public void createArgument(Response.Listener<JSONObject> listener,
                              Response.ErrorListener errorListener,
-                             String argumentContent, Integer debateId, Integer positionId) {
+                             String argumentContent, Integer debateId, Integer messageId, Integer positionId, String isReply) {
         HashMap<String, String> queryParams = new HashMap<>();
         HashMap<String, String> bodyParams = new HashMap<>();
         bodyParams.put("position_id", String.valueOf(positionId));
         bodyParams.put("group_id", String.valueOf(debateId));
         bodyParams.put("content", argumentContent);
-        bodyParams.put("message_id", null);
-        bodyParams.put("is_reply", "false");
+        bodyParams.put("message_id", String.valueOf(messageId));
+        bodyParams.put("is_reply", isReply);
         String route = "/messages";
         this.user_post(route, queryParams, bodyParams, listener, errorListener);
     }
