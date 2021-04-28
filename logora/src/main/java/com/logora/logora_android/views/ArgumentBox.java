@@ -1,5 +1,6 @@
 package com.logora.logora_android.views;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +12,9 @@ import android.net.Uri;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -76,9 +80,11 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
     private TextView sideLabelView;
     private TextView dateView;
     private ImageView argumentReplyButton;
+    private EditText replyInput;
     private LinearLayout replyInputContainer;
     private ImageView replySendButton;
     private ImageView replyInputUserImage;
+    private ArgumentListAdapter repliesListAdapter;
 
     public ArgumentBox(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -113,6 +119,7 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
         sideLabelView = findViewById(R.id.argument_position);
         dateView = findViewById(R.id.argument_date);
         argumentReplyButton = findViewById(R.id.argument_reply_button);
+        replyInput = findViewById(R.id.reply_input);
         replyInputContainer = findViewById(R.id.reply_input_container);
         replySendButton = findViewById(R.id.reply_input_send_button);
         replyInputUserImage = findViewById(R.id.reply_input_user_image);
@@ -121,6 +128,7 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
     public void updateWithObject(Object object, Debate debate, Context context) {
         this.context = context;
         this.argument = (Argument) object;
+        Log.e("ARGISREPLY", String.valueOf(argument.getIsReply()));
         this.debate = debate;
 
         String firstPositionPrimaryColor = settings.get("theme.firstPositionColorPrimary");
@@ -163,13 +171,19 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
         buttonGradientDrawable.setColor(Color.parseColor(callPrimaryColor));
         replySendButton.setBackground(buttonShape);
 
-        /*Glide.with(replyInputUserImage.getContext())
-                .load(Uri.parse(authClient.getCurrentUser().getImageUrl()))
-                .into(replyInputUserImage);*/
+        Glide.with(replyInputUserImage.getContext())
+            .load(Uri.parse(authClient.getCurrentUser().getImageUrl()))
+            .into(replyInputUserImage);
+
+        replySendButton.setOnClickListener(v -> {
+            /*InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);*/
+            createReply(argument.getId());
+        });
 
         argumentRepliesList.setId(argumentBoxId);
         String resourceName = "messages/" + argument.getId() + "/replies";
-        ArgumentListAdapter repliesListAdapter = new ArgumentListAdapter(debate);
+        repliesListAdapter = new ArgumentListAdapter(debate);
         repliesList = new PaginatedListFragment(resourceName, "CLIENT", repliesListAdapter, null);
 
         fragmentManager = ((AppCompatActivity) getContext()).getSupportFragmentManager();
@@ -213,6 +227,7 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
     }
 
     private void setReplyStyle() {
+        Log.e("SETREPLYSTYLE", "true");
         argumentContainer.setBackgroundColor(getResources().getColor(R.color.text_tertiary));
     }
 
@@ -297,5 +312,30 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
             argumentContainer.setAlpha(opacity);
             dateView.setText(res.getString(R.string.moderated_argument));
         }
+    }
+
+    private void createReply(Integer replyToId) {
+        Resources res = this.getContext().getResources();
+        replyInput.clearFocus();
+        this.apiClient.createArgument(response -> {
+            try {
+                boolean success = response.getBoolean("success");
+                JSONObject argument = response.getJSONObject("data").getJSONObject("resource");
+                if (success) {
+                    repliesListAdapter.addItem(argument);
+                    repliesListAdapter.notifyDataSetChanged();
+                    // Clear argumentInput
+                    replyInput.getText().clear();
+                    replyInputContainer.setVisibility(View.GONE);
+                    argumentRepliesFooter.setVisibility(VISIBLE);
+                    this.toggleReplies(argumentBoxId);
+                    showToastMessage(res.getString(R.string.reply_create_success));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }, error -> {
+            showToastMessage(res.getString(R.string.issue));
+        }, String.valueOf(replyInput.getText()), Integer.parseInt(debate.getId()), replyToId, argument.getPosition().getId(), "true");
     }
 }

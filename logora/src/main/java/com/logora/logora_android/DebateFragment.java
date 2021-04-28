@@ -230,7 +230,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                             }
                         }, error -> {
                             showToastMessage(res.getString(R.string.issue));
-                        }, String.valueOf(argumentInput.getText()), Integer.parseInt(debate.getId()), argumentPosition);
+                        }, String.valueOf(argumentInput.getText()), Integer.parseInt(debate.getId()), null, argumentPosition, "false");
             } else {
                 if (inputProvider.getUserPositions().get(Integer.parseInt(debate.getId())) != null) {
                     this.apiClient.createArgument(
@@ -253,7 +253,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                                 }
                             }, error -> {
                                 showToastMessage(res.getString(R.string.issue));
-                            }, String.valueOf(argumentInput.getText()), Integer.parseInt(debate.getId()), inputProvider.getUserPositions().get(Integer.parseInt(debate.getId())));
+                            }, String.valueOf(argumentInput.getText()), Integer.parseInt(debate.getId()), null, inputProvider.getUserPositions().get(Integer.parseInt(debate.getId())), "false");
                 } else {
                     openSideDialog();
                 }
