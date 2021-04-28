@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.LayerDrawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ViewTreeObserver;
@@ -188,15 +186,8 @@ public class VoteBoxView extends RelativeLayout {
         String firstPositionPrimaryColor = settings.get("theme.firstPositionColorPrimary");
         String secondPositionPrimaryColor = settings.get("theme.secondPositionColorPrimary");
 
-        LayerDrawable firstShape = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.button_primary_background);
-        GradientDrawable firstGradientDrawable = (GradientDrawable) firstShape.findDrawableByLayerId(R.id.shape);
-        firstGradientDrawable.setColor(Color.parseColor(firstPositionPrimaryColor));
-        voteFirstPositionButton.setBackground(firstShape);
-
-        LayerDrawable secondShape = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.button_primary_background);
-        GradientDrawable secondGradientDrawable = (GradientDrawable) secondShape.findDrawableByLayerId(R.id.shape);
-        secondGradientDrawable.setColor(Color.parseColor(secondPositionPrimaryColor));
-        voteSecondPositionButton.setBackground(secondShape);
+        voteFirstPositionButton.setBackgroundColor(Color.parseColor(firstPositionPrimaryColor));
+        voteSecondPositionButton.setBackgroundColor(Color.parseColor(secondPositionPrimaryColor));
 
         voteFirstPositionButton.setText(this.debate.getPositionList().get(0).getName());
         voteSecondPositionButton.setText(this.debate.getPositionList().get(1).getName());

@@ -19,9 +19,11 @@ import java.util.List;
 
 public class ArgumentListAdapter extends ListAdapter {
     private Debate debate;
+    private int depth;
 
-    public ArgumentListAdapter(Debate debate) {
+    public ArgumentListAdapter(Debate debate, int depth) {
         this.debate = debate;
+        this.depth = depth;
     }
 
     public ArgumentListAdapter(List<JSONObject> items) {
@@ -34,7 +36,7 @@ public class ArgumentListAdapter extends ListAdapter {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.argument, parent, false);
-        return new ArgumentViewHolder(view, parent.getContext(), debate);
+        return new ArgumentViewHolder(view, parent.getContext(), debate, depth);
     }
 
     @Override
