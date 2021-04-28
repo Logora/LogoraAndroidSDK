@@ -1,6 +1,5 @@
 package com.logora.logora_android.views;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -12,36 +11,29 @@ import android.net.Uri;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.Resource;
 import com.logora.logora_android.PaginatedListFragment;
 import com.logora.logora_android.R;
 import com.logora.logora_android.adapters.ArgumentListAdapter;
 import com.logora.logora_android.adapters.UserIconListAdapter;
 import com.logora.logora_android.dialogs.DeleteArgumentDialog;
 import com.logora.logora_android.dialogs.ReportDialog;
-import com.logora.logora_android.dialogs.SideDialog;
 import com.logora.logora_android.models.Argument;
 import com.logora.logora_android.models.Debate;
-import com.logora.logora_android.models.UserIcon;
 import com.logora.logora_android.utils.Auth;
 import com.logora.logora_android.utils.DateUtil;
 import com.logora.logora_android.utils.InputProvider;
@@ -61,7 +53,8 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
     private final InputProvider inputProvider = InputProvider.getInstance();
     private Debate debate;
     private Argument argument;
-    private int argumentBoxId = View.generateViewId();
+    private final int argumentBoxId = View.generateViewId();
+    private int depth = 0;
     private TextView contentView;
     private RelativeLayout argumentContainer;
     private ImageView argumentShareButton;
@@ -182,7 +175,7 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
 
         argumentRepliesList.setId(argumentBoxId);
         String resourceName = "messages/" + argument.getId() + "/replies";
-        repliesListAdapter = new ArgumentListAdapter(debate);
+        repliesListAdapter = new ArgumentListAdapter(debate, depth + 1);
         repliesList = new PaginatedListFragment(resourceName, "CLIENT", repliesListAdapter, null);
 
         fragmentManager = ((AppCompatActivity) getContext()).getSupportFragmentManager();
@@ -307,7 +300,7 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
     private void setModerated(){
         Resources res = getResources();
         if (argument.getStatus().equals("rejected") || argument.getStatus().equals("pending")) {
-            Float opacity = 0.4f;
+            float opacity = 0.4f;
             argumentContainer.setAlpha(opacity);
             dateView.setText(res.getString(R.string.moderated_argument));
         }
@@ -336,5 +329,9 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
         }, error -> {
             showToastMessage(res.getString(R.string.issue));
         }, String.valueOf(replyInput.getText()), Integer.parseInt(debate.getId()), replyToId, argument.getPosition().getId(), "true");
+    }
+
+    public void setDepth(int depth) {
+        this.depth = depth;
     }
 }

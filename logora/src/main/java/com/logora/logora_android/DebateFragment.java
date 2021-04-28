@@ -153,7 +153,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
             debatePresentationContainerView.setVisibility(View.VISIBLE);
 
             String argumentResourceName = "groups/" + debate.getSlug() + "/messages";
-            ArgumentListAdapter argumentListAdapter = new ArgumentListAdapter(debate);
+            ArgumentListAdapter argumentListAdapter = new ArgumentListAdapter(debate, 0);
             this.argumentListAdapter = argumentListAdapter;
 
             argumentList = new PaginatedListFragment(argumentResourceName, "CLIENT", argumentListAdapter, null);
