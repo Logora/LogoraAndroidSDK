@@ -169,7 +169,7 @@ public class Debate {
         return 0;
     }
 
-    public void initVotePercentage() throws JSONException {
+    public void initVotePercentage() {
         this.setVotesCountObject(votesCountObject);
         List<Integer> votesCountKeys = new ArrayList<>(votesCountObject.keySet());
         for (int i = 0; i < votesCountKeys.size(); i++) {
@@ -179,7 +179,7 @@ public class Debate {
         }
     }
 
-    public void calculateVotePercentage(String positionId, Boolean isUpdate) throws JSONException {
+    public void calculateVotePercentage(String positionId, Boolean isUpdate) {
         List<Integer> votesCountKeys = new ArrayList<>(votesCountObject.keySet());
         for (int i = 0; i < votesCountKeys.size(); i++) {
             Integer key = votesCountKeys.get(i);
