@@ -90,7 +90,7 @@
         <repository>
             <id>maven_central_repo</id>
             <name>Maven repo</name>
-            <url>http://mvnrepository.com/artifact</url>
+            <url>https://maven.google.com/</url>
         </repository>
     </repositories>
 
