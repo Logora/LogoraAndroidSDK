@@ -23,6 +23,7 @@ public class LogoraAppActivity extends AppCompatActivity implements Router.Route
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.root_activity);
+        getSupportActionBar().hide();
         this.parseParams();
         LogoraApiClient apiClient = LogoraApiClient.getInstance(this.applicationName,
                 this.authAssertion, getBaseContext());
