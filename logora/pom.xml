@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.logora.logora_android</groupId>
     <artifactId>logora</artifactId>
-    <packaging>jar</packaging>
+    <packaging>aar</packaging>
     <version>0.0.1</version>
     <name>Logora SDK</name>
     <url>https://logora.fr</url>
