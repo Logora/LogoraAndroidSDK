@@ -128,7 +128,6 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
     public void updateWithObject(Object object, Debate debate, Context context) {
         this.context = context;
         this.argument = (Argument) object;
-        Log.e("ARGISREPLY", String.valueOf(argument.getIsReply()));
         this.debate = debate;
 
         String firstPositionPrimaryColor = settings.get("theme.firstPositionColorPrimary");

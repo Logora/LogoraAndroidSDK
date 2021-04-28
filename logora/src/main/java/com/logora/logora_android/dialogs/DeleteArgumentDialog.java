@@ -4,10 +4,14 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.util.AttributeSet;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
 
 import com.logora.logora_android.R;
 import com.logora.logora_android.models.Argument;
@@ -51,6 +55,14 @@ public class DeleteArgumentDialog extends LinearLayout {
         findViews();
         deleteButton.setText(res.getString(R.string.delete));
         cancelButton.setText(res.getString(R.string.cancel));
+        String callPrimaryColor = settings.get("theme.callPrimaryColor");
+
+        LayerDrawable shape = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.button_primary_background);
+        GradientDrawable gradientDrawable = (GradientDrawable) shape.findDrawableByLayerId(R.id.shape);
+        gradientDrawable.setColor(Color.parseColor(callPrimaryColor));
+        deleteButton.setBackground(shape);
+        cancelButton.setBackground(shape);
+
         deleteButton.setOnClickListener(v -> {
             if (deleteArgumentListener != null) {
                 deleteArgumentListener.onDelete(true);
