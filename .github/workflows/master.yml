@@ -17,6 +17,6 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
       - name: Publish package
-        run: mvn -U --batch-mode -f ./logora/pom.xml deploy
+        run: mvn dependency:tree -U --batch-mode -f ./logora/pom.xml deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
