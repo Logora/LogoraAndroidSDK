@@ -52,7 +52,7 @@
         android:maxLines="10"
         android:autofillHints="Description" />
 
-    <com.logora.logora_android.views.PrimaryButton
+    <com.logora.logora_sdk.views.PrimaryButton
         android:id="@+id/report_dialog_submit"
         app:textKey="submit"
         android:text="@string/report"

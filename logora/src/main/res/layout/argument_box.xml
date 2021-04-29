@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/box_background">
 
-        <com.logora.logora_android.views.ArgumentAuthorBox
+        <com.logora.logora_sdk.views.ArgumentAuthorBox
             android:id="@+id/argument_author_box_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -74,7 +74,7 @@
             android:paddingHorizontal="8dp"
             android:background="@drawable/section_background">
 
-            <com.logora.logora_android.views.ArgumentVote
+            <com.logora.logora_sdk.views.ArgumentVote
                 android:id="@+id/argument_vote_container"
                 android:layout_width="0dp"
                 android:layout_weight="1"

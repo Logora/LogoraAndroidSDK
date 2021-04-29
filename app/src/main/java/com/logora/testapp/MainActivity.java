@@ -2,7 +2,7 @@ package com.logora.testapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import com.logora.logora_android.WidgetFragment;
+import com.logora.logora_sdk.WidgetFragment;
 
 public class MainActivity extends AppCompatActivity {
     @Override

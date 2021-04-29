@@ -80,7 +80,7 @@
         </RelativeLayout>
 
 
-        <com.logora.logora_android.views.ArgumentBox
+        <com.logora.logora_sdk.views.ArgumentBox
             android:id="@+id/argument_box_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

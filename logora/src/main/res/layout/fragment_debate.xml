@@ -55,7 +55,7 @@
             android:paddingHorizontal="12dp"
             android:nestedScrollingEnabled="false" />
 
-        <com.logora.logora_android.views.VoteBoxView
+        <com.logora.logora_sdk.views.VoteBoxView
             android:id="@+id/debate_vote_box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
             android:layout_marginVertical="8dp"
             android:layout_below="@+id/debate_vote_box">
 
-            <com.logora.logora_android.views.ShareView
+            <com.logora.logora_sdk.views.ShareView
                 android:id="@+id/debate_share"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
                 android:layout_centerInParent="true"
                 android:gravity="center" />
 
-            <com.logora.logora_android.views.FollowDebateButtonView
+            <com.logora.logora_sdk.views.FollowDebateButtonView
                 android:id="@+id/debate_follow_button"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
@@ -97,7 +97,7 @@
         android:padding="10dp"
         android:layout_marginBottom="12dp">
 
-        <com.logora.logora_android.views.ArgumentAuthorBox
+        <com.logora.logora_sdk.views.ArgumentAuthorBox
             android:id="@+id/argument_author_box_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
@@ -145,7 +145,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/argument_sort" />
 
-    <com.logora.logora_android.views.TextWrapper
+    <com.logora.logora_sdk.views.TextWrapper
         android:id="@+id/related_debates_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

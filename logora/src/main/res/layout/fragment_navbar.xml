@@ -9,7 +9,7 @@
     android:orientation="horizontal"
     android:background="@drawable/navbar_background">
 
-    <com.logora.logora_android.views.PrimaryButton
+    <com.logora.logora_sdk.views.PrimaryButton
         android:id="@+id/index_button"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
@@ -39,7 +39,7 @@
             android:contentDescription="@string/search_icon_content_description"
             app:tint="@color/text_secondary" />
 
-        <com.logora.logora_android.views.TextWrapper
+        <com.logora.logora_sdk.views.TextWrapper
             android:id="@+id/login_link_button"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -122,7 +122,7 @@
         </androidx.cardview.widget.CardView>
     </RelativeLayout>
 
-    <com.logora.logora_android.views.SearchFormView
+    <com.logora.logora_sdk.views.SearchFormView
         android:id="@+id/search_form_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

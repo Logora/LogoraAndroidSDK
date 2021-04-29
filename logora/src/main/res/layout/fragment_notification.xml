@@ -21,7 +21,7 @@
             android:textSize="16sp"
             android:textStyle="bold"/>
 
-        <com.logora.logora_android.views.TextWrapper
+        <com.logora.logora_sdk.views.TextWrapper
             android:id="@+id/read_all_button"
             android:gravity="right"
             android:layout_width="match_parent"

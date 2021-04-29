@@ -6,7 +6,7 @@
     <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context="com.logora.logora_android.LogoraAppActivity"
+        tools:context="com.logora.logora_sdk.LogoraAppActivity"
         android:orientation="vertical">
 
         <FrameLayout

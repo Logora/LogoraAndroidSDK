@@ -134,7 +134,7 @@
             android:layout_below="@+id/user_stats_container"
             android:orientation="vertical">
 
-            <com.logora.logora_android.views.TextWrapper
+            <com.logora.logora_sdk.views.TextWrapper
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
@@ -142,7 +142,7 @@
                 android:text="@string/user_tags_header"
                 android:textColor="@color/text_secondary" />
 
-            <com.logora.logora_android.views.TextWrapper
+            <com.logora.logora_sdk.views.TextWrapper
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:textKey="userTagsEmpty"
