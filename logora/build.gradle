@@ -16,7 +16,7 @@ afterEvaluate {
             release(MavenPublication) {
                 groupId = 'com.logora'
                 artifactId = 'logora-sdk'
-                version = '0.0.2'
+                version = '0.0.2.1'
 
                 from components.release
             }
