@@ -1,5 +1,6 @@
 package com.logora.logora_android;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class WidgetFragment extends Fragment {
+    private LogoraApiClient apiClient;
     private final Settings settings = Settings.getInstance();
     private RelativeLayout rootLayout;
     private TextView debateNameView;
@@ -33,11 +35,12 @@ public class WidgetFragment extends Fragment {
 
     public WidgetFragment() { super(R.layout.fragment_widget); }
 
-    public WidgetFragment(String pageUid, String applicationName, String authAssertion) {
+    public WidgetFragment(Context context, String pageUid, String applicationName, String authAssertion) {
         super(R.layout.fragment_widget);
         this.pageUid = pageUid;
         this.applicationName = applicationName;
         this.authAssertion = authAssertion;
+        this.apiClient = LogoraApiClient.getInstance(applicationName, authAssertion, context);
     }
 
     @Override
@@ -47,7 +50,7 @@ public class WidgetFragment extends Fragment {
 
         findViews(view);
 
-        getDebate(pageUid, applicationName, authAssertion);
+        getDebate();
 
         return view;
     }
@@ -67,14 +70,10 @@ public class WidgetFragment extends Fragment {
         });
     }
 
-    public void getDebate(String pageUid, String applicationName, String authAssertion){
-        this.applicationName = applicationName;
-        this.authAssertion = authAssertion;
+    public void getDebate(){
         SettingsViewModel model = new SettingsViewModel();
 
         model.getSettings().observe(getViewLifecycleOwner(), settings -> {
-            LogoraApiClient apiClient = LogoraApiClient.getInstance(applicationName,
-                    authAssertion, getContext());
             apiClient.getSynthesis(
                 response -> {
                     try {
