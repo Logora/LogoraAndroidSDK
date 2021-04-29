@@ -14,8 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.logora.logora_sdk.R;
+import com.logora.logora_sdk.dialogs.LoginDialog;
 import com.logora.logora_sdk.models.Debate;
 import com.logora.logora_sdk.utils.Auth;
 import com.logora.logora_sdk.utils.InputProvider;
@@ -71,11 +71,21 @@ public class VoteBoxView extends RelativeLayout {
         findViews();
 
         voteFirstPositionButton.setOnClickListener(v -> {
-            this.vote(debate.getPositionList().get(0).getId());
+            if(auth.getIsLoggedIn()) {
+                this.vote(debate.getPositionList().get(0).getId());
+            } else {
+                LoginDialog loginDialog = new LoginDialog(getContext());
+                loginDialog.show(getContext());
+            }
         });
 
         voteSecondPositionButton.setOnClickListener(v -> {
-            this.vote(debate.getPositionList().get(1).getId());
+            if(auth.getIsLoggedIn()) {
+                this.vote(debate.getPositionList().get(1).getId());
+            } else {
+                LoginDialog loginDialog = new LoginDialog(getContext());
+                loginDialog.show(getContext());
+            }
         });
 
         voteEditView.setOnClickListener(v -> {

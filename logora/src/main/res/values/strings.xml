@@ -119,4 +119,11 @@
     <string name="author_box_default_name">Partagez votre opinion</string>
     <string name="author_box_default_level">Gagnez des niveaux</string>
     <string name="moderated_argument">En attente de modération</string>
+    <string name="login_info">Votre action n\'est pas enregistrée ! Inscrivez-vous pour l\'enregistrer et être alerté par mail.</string>
+    <string name="login_sign_up">Je m\'inscris</string>
+    <string name="already_have_account">Déjà un compte ? </string>
+    <string name="login_sign_in">Je me connecte</string>
+    <string name="login_cancel">Continuer sans enregistrer</string>
+    <string name="argument_input_placeholder">Ajouter un argument...</string>
+    <string name="reply_input_placeholder">Ajouter un argument...</string>
 </resources>

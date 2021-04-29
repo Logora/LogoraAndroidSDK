@@ -6,10 +6,9 @@ import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.util.AttributeSet;
 import android.view.View;
-
 import androidx.core.content.ContextCompat;
-
 import com.logora.logora_sdk.R;
+import com.logora.logora_sdk.dialogs.LoginDialog;
 import com.logora.logora_sdk.models.Debate;
 import com.logora.logora_sdk.utils.Auth;
 import com.logora.logora_sdk.utils.LogoraApiClient;
@@ -50,10 +49,15 @@ public class FollowDebateButtonView extends androidx.appcompat.widget.AppCompatB
 
     @Override
     public void onClick(View view) {
-        if(this.active) {
-            this.unfollow();
+        if(auth.getIsLoggedIn()){
+            if(this.active) {
+                this.unfollow();
+            } else {
+                this.follow();
+            }
         } else {
-            this.follow();
+            LoginDialog loginDialog = new LoginDialog(getContext());
+            loginDialog.show(getContext());
         }
     }
 

@@ -32,6 +32,7 @@ import com.logora.logora_sdk.R;
 import com.logora.logora_sdk.adapters.ArgumentListAdapter;
 import com.logora.logora_sdk.adapters.UserIconListAdapter;
 import com.logora.logora_sdk.dialogs.DeleteArgumentDialog;
+import com.logora.logora_sdk.dialogs.LoginDialog;
 import com.logora.logora_sdk.dialogs.ReportDialog;
 import com.logora.logora_sdk.models.Argument;
 import com.logora.logora_sdk.models.Debate;
@@ -161,16 +162,23 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
 
         // Reply input
         argumentReplyButton.setOnClickListener(v -> {
-            replyInputContainer.setVisibility(View.VISIBLE);
+            if(authClient.getIsLoggedIn()) {
+                replyInputContainer.setVisibility(View.VISIBLE);
+            } else {
+                LoginDialog loginDialog = new LoginDialog(getContext());
+                loginDialog.show(getContext());
+            }
         });
         LayerDrawable buttonShape = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.button_primary_background);
         GradientDrawable buttonGradientDrawable = (GradientDrawable) buttonShape.findDrawableByLayerId(R.id.shape);
         buttonGradientDrawable.setColor(Color.parseColor(callPrimaryColor));
         replySendButton.setBackground(buttonShape);
 
-        Glide.with(replyInputUserImage.getContext())
-            .load(Uri.parse(authClient.getCurrentUser().getImageUrl()))
-            .into(replyInputUserImage);
+        if (authClient.getIsLoggedIn()) {
+            Glide.with(replyInputUserImage.getContext())
+                    .load(Uri.parse(authClient.getCurrentUser().getImageUrl()))
+                    .into(replyInputUserImage);
+        }
 
         replySendButton.setOnClickListener(v -> {
             InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -278,7 +286,12 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
     }
 
     private void openReportDialog() {
-        ReportDialog.show(context, argument);
+        if(authClient.getIsLoggedIn()) {
+            ReportDialog.show(context, argument);
+        } else {
+            LoginDialog loginDialog = new LoginDialog(getContext());
+            loginDialog.show(getContext());
+        }
     }
 
     private void openDeleteArgumentDialog() {
