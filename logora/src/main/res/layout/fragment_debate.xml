@@ -111,7 +111,9 @@
             android:textCursorDrawable="@drawable/black_cursor"
             android:layout_marginStart="12dp"
             android:hint="@string/argument_input_placeholder"
-            android:textSize="14dp"/>
+            android:textSize="14dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"/>
 
         <RelativeLayout
             android:id="@+id/argument_input_controls"

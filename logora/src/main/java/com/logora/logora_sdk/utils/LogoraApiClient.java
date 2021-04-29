@@ -232,7 +232,11 @@ public class LogoraApiClient {
         bodyParams.put("position_id", String.valueOf(positionId));
         bodyParams.put("group_id", String.valueOf(debateId));
         bodyParams.put("content", argumentContent);
-        bodyParams.put("message_id", String.valueOf(messageId));
+        if(messageId != null ) {
+            bodyParams.put("message_id", String.valueOf(messageId));
+        } else {
+            bodyParams.put("message_id", null);
+        }
         bodyParams.put("is_reply", isReply);
         String route = "/messages";
         this.user_post(route, queryParams, bodyParams, listener, errorListener);
