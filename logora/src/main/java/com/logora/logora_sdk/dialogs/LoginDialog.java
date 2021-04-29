@@ -2,16 +2,19 @@ package com.logora.logora_sdk.dialogs;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.VectorDrawable;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.logora.logora_sdk.R;
+import com.logora.logora_sdk.WebViewActivity;
 import com.logora.logora_sdk.utils.InputProvider;
 import com.logora.logora_sdk.utils.Settings;
 import androidx.core.content.ContextCompat;
@@ -53,6 +56,9 @@ public class LoginDialog extends LinearLayout {
         VectorDrawable nextIcon = (VectorDrawable) ContextCompat.getDrawable(getContext(), R.drawable.ic_next);
 
         signUpButton.setBackgroundColor(Color.parseColor(callPrimaryColor));
+        signUpButton.setOnClickListener(v -> {
+            goToLoginUrl(this);
+        });
         cancelButton.setOnClickListener(v -> {
             dialog.dismiss();
         });
@@ -80,6 +86,16 @@ public class LoginDialog extends LinearLayout {
         AlertDialog dialog = builder.create();
         loginLayout.setDialog(dialog);
         dialog.show();
+    }
+
+    public void goToLoginUrl(View view) {
+        goToUrl("https://www.google.com/");
+    }
+
+    private void goToUrl(String url) {
+        Intent intent = new Intent(this.getContext(), WebViewActivity.class);
+        intent.putExtra("url", url);
+        getContext().startActivity(intent);
     }
 
 }

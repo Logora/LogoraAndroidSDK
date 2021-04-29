@@ -73,11 +73,6 @@ public class LogoraAppActivity extends AppCompatActivity implements Router.Route
                 .replace(R.id.main_fragment, Router.getRouteFragment(currentRoute))
                 .addToBackStack(Router.getRouteFragment(currentRoute).getClass().getName())
                 .commit();
-        FragmentManager fm = getFragmentManager();
-        for(int entry = 0; entry<fm.getBackStackEntryCount(); entry++){
-            Log.i("TAG", "Found fragment: " + fm.getBackStackEntryAt(entry).getId());
-        }
-
     }
 
     @Override
