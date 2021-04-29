@@ -11,6 +11,7 @@ import android.view.View;
 import androidx.core.content.ContextCompat;
 
 import com.logora.logora_android.R;
+import com.logora.logora_android.dialogs.LoginDialog;
 import com.logora.logora_android.models.Debate;
 import com.logora.logora_android.utils.Auth;
 import com.logora.logora_android.utils.LogoraApiClient;
@@ -51,10 +52,15 @@ public class FollowDebateButtonView extends androidx.appcompat.widget.AppCompatB
 
     @Override
     public void onClick(View view) {
-        if(this.active) {
-            this.unfollow();
+        if(auth.getIsLoggedIn()){
+            if(this.active) {
+                this.unfollow();
+            } else {
+                this.follow();
+            }
         } else {
-            this.follow();
+            LoginDialog loginDialog = new LoginDialog(getContext());
+            loginDialog.show(getContext());
         }
     }
 

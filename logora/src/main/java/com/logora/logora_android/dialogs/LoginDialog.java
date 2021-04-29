@@ -4,11 +4,17 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.VectorDrawable;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
 
 import com.logora.logora_android.R;
 import com.logora.logora_android.models.Argument;
@@ -49,6 +55,8 @@ public class LoginDialog extends LinearLayout {
         Resources res = this.getContext().getResources();
         findViews();
         String callPrimaryColor = settings.get("theme.callPrimaryColor");
+        VectorDrawable nextIcon = (VectorDrawable) ContextCompat.getDrawable(getContext(), R.drawable.ic_next);
+
         signUpButton.setBackgroundColor(Color.parseColor(callPrimaryColor));
         cancelButton.setOnClickListener(v -> {
             dialog.dismiss();
@@ -73,7 +81,6 @@ public class LoginDialog extends LinearLayout {
         LoginDialog loginLayout = new LoginDialog(context);
 
         builder.setView(loginLayout);
-        builder.setTitle(res.getString(R.string.delete_dialog_header));
 
         AlertDialog dialog = builder.create();
         loginLayout.setDialog(dialog);

@@ -69,6 +69,7 @@ public class LogoraAppActivity extends AppCompatActivity implements Router.Route
     public void onRouteChange(Route previousRoute, Route currentRoute) {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.main_fragment, Router.getRouteFragment(currentRoute))
+                .addToBackStack(Router.getRouteFragment(currentRoute).getClass().getName())
                 .commit();
     }
 

@@ -196,7 +196,8 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:gravity="center_vertical"
-            android:textCursorDrawable="@drawable/black_cursor" />
+            android:textCursorDrawable="@drawable/black_cursor"
+            android:hint="@string/reply_input_placeholder"/>
 
         <ImageView
             android:id="@+id/reply_input_send_button"

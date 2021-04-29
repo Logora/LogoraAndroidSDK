@@ -109,7 +109,9 @@
             android:layout_below="@id/argument_author_box_container"
             android:background="@android:color/transparent"
             android:textCursorDrawable="@drawable/black_cursor"
-            android:layout_marginStart="12dp"/>
+            android:layout_marginStart="12dp"
+            android:hint="@string/argument_input_placeholder"
+            android:textSize="14dp"/>
 
         <RelativeLayout
             android:id="@+id/argument_input_controls"

@@ -121,8 +121,13 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                 @Override
                 public void onFocusChange(View view, boolean hasFocus) {
                     if (hasFocus) {
-                        argumentInputControls.setVisibility(View.VISIBLE);
-                        /*scrollView.smoothScrollTo(view.left, view.top);*/
+                        if(auth.getIsLoggedIn()) {
+                            argumentInputControls.setVisibility(View.VISIBLE);
+                        } else {
+                            argumentInput.clearFocus();
+                            LoginDialog loginDialog = new LoginDialog(getContext());
+                            loginDialog.show(getContext());
+                        }
                     }
                 }
             });

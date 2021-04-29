@@ -18,6 +18,7 @@ import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 
 import com.logora.logora_android.R;
+import com.logora.logora_android.dialogs.LoginDialog;
 import com.logora.logora_android.models.Debate;
 import com.logora.logora_android.utils.Auth;
 import com.logora.logora_android.utils.InputProvider;
@@ -73,11 +74,21 @@ public class VoteBoxView extends RelativeLayout {
         findViews();
 
         voteFirstPositionButton.setOnClickListener(v -> {
-            this.vote(debate.getPositionList().get(0).getId());
+            if(auth.getIsLoggedIn()) {
+                this.vote(debate.getPositionList().get(0).getId());
+            } else {
+                LoginDialog loginDialog = new LoginDialog(getContext());
+                loginDialog.show(getContext());
+            }
         });
 
         voteSecondPositionButton.setOnClickListener(v -> {
-            this.vote(debate.getPositionList().get(1).getId());
+            if(auth.getIsLoggedIn()) {
+                this.vote(debate.getPositionList().get(1).getId());
+            } else {
+                LoginDialog loginDialog = new LoginDialog(getContext());
+                loginDialog.show(getContext());
+            }
         });
 
         voteEditView.setOnClickListener(v -> {

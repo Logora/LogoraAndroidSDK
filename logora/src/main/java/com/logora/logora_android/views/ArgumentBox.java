@@ -1,5 +1,6 @@
 package com.logora.logora_android.views;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.net.Uri;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -31,6 +33,7 @@ import com.logora.logora_android.R;
 import com.logora.logora_android.adapters.ArgumentListAdapter;
 import com.logora.logora_android.adapters.UserIconListAdapter;
 import com.logora.logora_android.dialogs.DeleteArgumentDialog;
+import com.logora.logora_android.dialogs.LoginDialog;
 import com.logora.logora_android.dialogs.ReportDialog;
 import com.logora.logora_android.models.Argument;
 import com.logora.logora_android.models.Debate;
@@ -160,16 +163,23 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
 
         // Reply input
         argumentReplyButton.setOnClickListener(v -> {
-            replyInputContainer.setVisibility(View.VISIBLE);
+            if(authClient.getIsLoggedIn()) {
+                replyInputContainer.setVisibility(View.VISIBLE);
+            } else {
+                LoginDialog loginDialog = new LoginDialog(getContext());
+                loginDialog.show(getContext());
+            }
         });
         LayerDrawable buttonShape = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.button_primary_background);
         GradientDrawable buttonGradientDrawable = (GradientDrawable) buttonShape.findDrawableByLayerId(R.id.shape);
         buttonGradientDrawable.setColor(Color.parseColor(callPrimaryColor));
         replySendButton.setBackground(buttonShape);
 
-        Glide.with(replyInputUserImage.getContext())
-            .load(Uri.parse(authClient.getCurrentUser().getImageUrl()))
-            .into(replyInputUserImage);
+        if (authClient.getIsLoggedIn()) {
+            Glide.with(replyInputUserImage.getContext())
+                    .load(Uri.parse(authClient.getCurrentUser().getImageUrl()))
+                    .into(replyInputUserImage);
+        }
 
         replySendButton.setOnClickListener(v -> {
             InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -277,7 +287,12 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
     }
 
     private void openReportDialog() {
-        ReportDialog.show(context, argument);
+        if(authClient.getIsLoggedIn()) {
+            ReportDialog.show(context, argument);
+        } else {
+            LoginDialog loginDialog = new LoginDialog(getContext());
+            loginDialog.show(getContext());
+        }
     }
 
     private void openDeleteArgumentDialog() {
