@@ -4,28 +4,17 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.VectorDrawable;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-<<<<<<< HEAD:logora/src/main/java/com/logora/logora_sdk/dialogs/LoginDialog.java
 import com.logora.logora_sdk.R;
 import com.logora.logora_sdk.utils.InputProvider;
 import com.logora.logora_sdk.utils.Settings;
-=======
 import androidx.core.content.ContextCompat;
-
-import com.logora.logora_android.R;
-import com.logora.logora_android.models.Argument;
-import com.logora.logora_android.utils.InputProvider;
-import com.logora.logora_android.utils.Settings;
->>>>>>> 4ebcc9bbce780f3465a8ef654de37d43476a18af:logora/src/main/java/com/logora/logora_android/dialogs/LoginDialog.java
 
 public class LoginDialog extends LinearLayout {
     private Context context;
