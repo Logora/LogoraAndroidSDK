@@ -13,6 +13,7 @@ public class Auth {
     private Boolean isLoggingIn = false;
     private String authError = null;
     private User currentUser;
+    private String oauth2Code;
 
     public static Auth getInstance() {
         if(Auth.instance == null) {
@@ -141,9 +142,13 @@ public class Auth {
         return authError;
     }
 
-    public void setAuthError(String authError) {
-        this.authError = authError;
+    public void setAuthError(String authError) { this.authError = authError; }
+
+    public String getOauth2Code() {
+        return oauth2Code;
     }
+
+    public void setOauth2Code(String oauth2Code) { this.oauth2Code = oauth2Code; }
 
     /* AUTH LISTENER */
     public Auth.AuthListener getListener() {

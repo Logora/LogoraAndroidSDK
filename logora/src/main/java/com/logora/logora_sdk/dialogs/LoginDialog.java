@@ -89,7 +89,7 @@ public class LoginDialog extends LinearLayout {
     }
 
     public void goToLoginUrl(View view) {
-        goToUrl("https://www.google.com/");
+        goToUrl("https://oauth.lavoix.com/oauth2/auth?response_type=code&client_id=logora_client_id&redirect_uri=https://app.logora.fr/auth/callback&scope=profile&state=opaque_state_string_example");
     }
 
     private void goToUrl(String url) {

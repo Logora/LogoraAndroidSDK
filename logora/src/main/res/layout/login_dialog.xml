@@ -76,5 +76,11 @@
         android:alpha="0.7"
         android:textSize="12dp"/>
 
+    <WebView  xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        />
 
 </RelativeLayout>
