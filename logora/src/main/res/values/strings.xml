@@ -126,4 +126,5 @@
     <string name="login_cancel">Continuer sans enregistrer</string>
     <string name="argument_input_placeholder">Ajouter un argument...</string>
     <string name="reply_input_placeholder">Ajouter un argument...</string>
+    <string name="login_cgu">En cliquant sur « Je m’inscris », je déclare avoir pris connaissance des Conditions Générales d’Utilisation de l’espace de débat et les accepter </string>
 </resources>

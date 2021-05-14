@@ -70,9 +70,9 @@
         android:layout_below="@id/connection_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/login_cancel"
+        android:text="@string/login_cgu"
         android:layout_centerHorizontal="true"
-        android:textColor="#FF3838"
+        android:gravity="center_horizontal"
         android:alpha="0.7"
         android:textSize="12dp"/>
 
