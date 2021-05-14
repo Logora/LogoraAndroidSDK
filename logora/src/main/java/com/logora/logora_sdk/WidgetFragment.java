@@ -30,16 +30,14 @@ public class WidgetFragment extends Fragment {
     private DebateSynthesis debate;
     private String pageUid;
     private String applicationName;
-    private String authAssertion;
 
     public WidgetFragment() { super(R.layout.fragment_widget); }
 
-    public WidgetFragment(Context context, String pageUid, String applicationName, String authAssertion) {
+    public WidgetFragment(Context context, String pageUid, String applicationName) {
         super(R.layout.fragment_widget);
         this.pageUid = pageUid;
         this.applicationName = applicationName;
-        this.authAssertion = authAssertion;
-        this.apiClient = LogoraApiClient.getInstance(applicationName, authAssertion, context);
+        this.apiClient = LogoraApiClient.getInstance(applicationName, null, context);
     }
 
     @Override
@@ -65,7 +63,7 @@ public class WidgetFragment extends Fragment {
         String callPrimaryColor = settings.get("theme.callPrimaryColor");
         widgetButton.setBackgroundColor(Color.parseColor(callPrimaryColor));
         widgetButton.setOnClickListener(v -> {
-            startDebate(this.applicationName, this.authAssertion);
+            startDebate(this.applicationName);
         });
     }
 
@@ -93,10 +91,9 @@ public class WidgetFragment extends Fragment {
         });
     }
 
-    private void startDebate(String applicationName, String authAssertion) {
+    private void startDebate(String applicationName) {
         Intent intent = new Intent(getContext(), LogoraAppActivity.class);
         intent.putExtra("applicationName", applicationName);
-        intent.putExtra("authAssertion", authAssertion);
         intent.putExtra("routeName", "DEBATE");
         intent.putExtra("routeParam", debate.getSlug());
         this.getContext().startActivity(intent);
