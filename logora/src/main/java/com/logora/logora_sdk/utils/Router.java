@@ -43,13 +43,14 @@ public class Router {
         return routes.get(routeName);
     }
 
-    public void setCurrentRoute(Route currentRoute, HashMap<String, String> params) {
+    public void navigate(Route currentRoute, HashMap<String, String> params) {
         Route previousRoute = this.currentRoute;
         currentRoute.setParams(params);
         this.currentRoute = currentRoute;
         if (routeListener != null) routeListener.onRouteChange(previousRoute, this.currentRoute);
     }
 
+    public void setCurrentRoute(Route currentRoute) { this.currentRoute = currentRoute; }
     public Route getCurrentRoute() {
         return this.currentRoute;
     }

@@ -13,16 +13,20 @@ import android.webkit.WebViewClient;
 
 import androidx.loader.app.LoaderManager;
 
-public class WebViewActivity extends Activity {
+import com.logora.logora_sdk.utils.LogoraApiClient;
+import com.logora.logora_sdk.utils.Route;
+import com.logora.logora_sdk.utils.Router;
 
-    private WebView webView;
+public class WebViewActivity extends Activity {
+    private final LogoraApiClient apiClient = LogoraApiClient.getInstance();
+    private final Router router = Router.getInstance();
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.webview);
         Intent i = getIntent();
         String url= i.getStringExtra("url");
-        webView = (WebView) findViewById(R.id.webview);
+        WebView webView = findViewById(R.id.webview);
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new LogoraWebViewClient());
         webView.loadUrl(url);
@@ -31,32 +35,19 @@ public class WebViewActivity extends Activity {
     private class LogoraWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Log.e("OAUTH", "OKOERKOGKERG ZFIJERIFJESIURHQIOESDV");
-                }
-            }, 1000);
             if(request.getUrl().toString().contains("code=")) {
                 Uri uri = Uri.parse(request.getUrl().toString());
                 String code = uri.getQueryParameter("code");
-                SharedPreferences.Editor editor = getParent().getPreferences(MODE_PRIVATE).edit();
-                editor.putString("code", code);
-                finish();
-                startMainActivity(code);
+                Intent intent = new Intent(getBaseContext(), LogoraAppActivity.class);
+                intent.putExtra("applicationName", apiClient.getApplicationName());
+                intent.putExtra("authAssertion", code);
+                Route currentRoute = router.getCurrentRoute();
+                intent.putExtra("routeName", currentRoute.getName());
+                intent.putExtra("routeParam", String.valueOf(currentRoute.getParams().values().toArray()[0]));
+                startActivity(intent);
                 return true;
             }
             return false;
-        }
-
-        public void startMainActivity(String code){
-            Intent intent = new Intent(getParent(), LogoraAppActivity.class);
-            intent.putExtra("applicationName", "logora-demo");
-            intent.putExtra("authAssertion", code);
-            intent.putExtra("routeName", "INDEX");
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_TASK_ON_HOME);
-            getParent().startActivity(intent);
-            getParent().finish();
         }
     }
 }

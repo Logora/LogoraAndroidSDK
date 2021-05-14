@@ -74,7 +74,7 @@ public class NotificationViewHolder extends ListViewHolder {
                     }, Throwable::printStackTrace, notification.getId());
                     HashMap<String, String> routeParams = new HashMap<>();
                     routeParams.put("userSlug", badgeNotification.getActor().getSlug());
-                    router.setCurrentRoute(Router.getRoute("USER"), routeParams);
+                    router.navigate(Router.getRoute("USER"), routeParams);
                 });
                 break;
             case "group_reply":
@@ -98,7 +98,7 @@ public class NotificationViewHolder extends ListViewHolder {
                     }, Throwable::printStackTrace, notification.getId());
                     HashMap<String, String> routeParams = new HashMap<>();
                     routeParams.put("debateSlug", groupReplyNotification.getSecondTarget().getSlug());
-                    router.setCurrentRoute(Router.getRoute("DEBATE"), routeParams);
+                    router.navigate(Router.getRoute("DEBATE"), routeParams);
                 });
                 break;
             case "level_unlock":
@@ -118,7 +118,7 @@ public class NotificationViewHolder extends ListViewHolder {
                     }, Throwable::printStackTrace, notification.getId());
                     HashMap<String, String> routeParams = new HashMap<>();
                     routeParams.put("userSlug", levelUnlockNotification.getTarget().getSlug());
-                    router.setCurrentRoute(Router.getRoute("USER"), routeParams);
+                    router.navigate(Router.getRoute("USER"), routeParams);
                 });
                 break;
             case "get_vote":
@@ -142,7 +142,7 @@ public class NotificationViewHolder extends ListViewHolder {
                     }, Throwable::printStackTrace, notification.getId());
                     HashMap<String, String> routeParams = new HashMap<>();
                     routeParams.put("debateSlug", getVoteNotification.getSecondTarget().getSlug());
-                    router.setCurrentRoute(Router.getRoute("DEBATE"), routeParams);
+                    router.navigate(Router.getRoute("DEBATE"), routeParams);
                 });
                 break;
             case "group_follow_argument":
@@ -163,7 +163,7 @@ public class NotificationViewHolder extends ListViewHolder {
             }, Throwable::printStackTrace, notification.getId());
                     HashMap<String, String> routeParams = new HashMap<>();
                     routeParams.put("debateSlug", groupFollowArgumentNotification.getSecondTarget().getSlug());
-                    router.setCurrentRoute(Router.getRoute("DEBATE"), routeParams);
+                    router.navigate(Router.getRoute("DEBATE"), routeParams);
                 });
                 break;
             case "user_follow_level_unlock":
@@ -179,7 +179,7 @@ public class NotificationViewHolder extends ListViewHolder {
             }, Throwable::printStackTrace, notification.getId());
                     HashMap<String, String> routeParams = new HashMap<>();
                     routeParams.put("userSlug", notification.getActor().getSlug());
-                    router.setCurrentRoute(Router.getRoute("USER"), routeParams);
+                    router.navigate(Router.getRoute("USER"), routeParams);
                 });
                 break;
             case "followed":
@@ -198,7 +198,7 @@ public class NotificationViewHolder extends ListViewHolder {
             }, Throwable::printStackTrace, notification.getId());
                     HashMap<String, String> routeParams = new HashMap<>();
                     routeParams.put("userSlug", notification.getActor().getSlug());
-                    router.setCurrentRoute(Router.getRoute("USER"), routeParams);
+                    router.navigate(Router.getRoute("USER"), routeParams);
                 });
                 break;
             case "group_invitation_new":

@@ -71,12 +71,12 @@ public class NavbarFragment extends Fragment {
             notificationButton.setOnClickListener(v -> {
                 HashMap<String, String> routeParams = new HashMap<>();
                 notificationsBadge.setVisibility(View.GONE);
-                router.setCurrentRoute(Router.getRoute("NOTIFICATIONS"), routeParams);
+                router.navigate(Router.getRoute("NOTIFICATIONS"), routeParams);
             });
         }
 
         indexButtonView.setOnClickListener(v -> {
-            router.setCurrentRoute(Router.getRoute("INDEX"), null);
+            router.navigate(Router.getRoute("INDEX"), null);
         });
 
         searchIconView.setOnClickListener(v -> {
@@ -90,7 +90,7 @@ public class NavbarFragment extends Fragment {
         userProfileIconView.setOnClickListener(v -> {
             HashMap<String, String> routeParams = new HashMap<>();
             routeParams.put("userSlug", auth.getCurrentUser().getSlug());
-            router.setCurrentRoute(Router.getRoute("USER"), routeParams);
+            router.navigate(Router.getRoute("USER"), routeParams);
         });
     }
 

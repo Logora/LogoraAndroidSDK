@@ -43,7 +43,7 @@ public class TagListAdapter extends ListAdapter {
         holder.itemView.setOnClickListener(v -> {
             HashMap<String, String> routeParams = new HashMap<>();
             routeParams.put("q", tag.getDisplayName());
-            router.setCurrentRoute(Router.getRoute("SEARCH"), routeParams);
+            router.navigate(Router.getRoute("SEARCH"), routeParams);
         });
     }
 

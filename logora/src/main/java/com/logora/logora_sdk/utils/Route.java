@@ -3,8 +3,8 @@ package com.logora.logora_sdk.utils;
 import java.util.HashMap;
 
 public class Route {
-    private String name;
-    private String path;
+    private final String name;
+    private final String path;
     private HashMap<String, String> paramDefs;
     private HashMap<String, String> params;
 

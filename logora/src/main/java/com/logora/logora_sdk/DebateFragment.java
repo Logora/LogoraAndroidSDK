@@ -113,8 +113,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                             argumentInputControls.setVisibility(View.VISIBLE);
                         } else {
                             argumentInput.clearFocus();
-                            LoginDialog loginDialog = new LoginDialog(getContext());
-                            loginDialog.show(getContext());
+                            LoginDialog.show(getContext());
                         }
                     }
                 }

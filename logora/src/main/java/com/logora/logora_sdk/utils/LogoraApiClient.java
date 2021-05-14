@@ -48,6 +48,10 @@ public class LogoraApiClient {
     public void setAuthAssertion(String authAssertion) { this.authAssertion = authAssertion; }
     public String getAuthAssertion() { return this.authAssertion; }
 
+    public String getApplicationName() {
+        return this.applicationName;
+    }
+
     public static LogoraApiClient getInstance(String applicationName, String authAssertion, Context context) {
         if(LogoraApiClient.instance == null) {
             LogoraApiClient.instance = new LogoraApiClient(applicationName, authAssertion, context);

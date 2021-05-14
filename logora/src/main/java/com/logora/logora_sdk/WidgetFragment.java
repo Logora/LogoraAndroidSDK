@@ -71,7 +71,6 @@ public class WidgetFragment extends Fragment {
 
     public void getDebate(){
         SettingsViewModel model = new SettingsViewModel();
-
         model.getSettings().observe(getViewLifecycleOwner(), settings -> {
             apiClient.getSynthesis(
                 response -> {

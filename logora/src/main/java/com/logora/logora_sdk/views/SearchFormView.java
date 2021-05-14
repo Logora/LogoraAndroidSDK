@@ -48,7 +48,7 @@ public class SearchFormView extends RelativeLayout {
             String searchQuery = searchInput.getText().toString();
             HashMap<String, String> routeParams = new HashMap<>();
             routeParams.put("q", searchQuery);
-            router.setCurrentRoute(Router.getRoute("SEARCH"), routeParams);
+            router.navigate(Router.getRoute("SEARCH"), routeParams);
         });
     }
 
