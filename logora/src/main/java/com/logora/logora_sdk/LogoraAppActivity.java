@@ -1,14 +1,10 @@
 package com.logora.logora_sdk;
 
-import android.app.FragmentManager;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.logora.logora_sdk.utils.Auth;
 import com.logora.logora_sdk.utils.LogoraApiClient;
 import com.logora.logora_sdk.utils.Route;
