@@ -61,7 +61,6 @@ public class LogoraAppActivity extends AppCompatActivity implements Router.Route
         Bundle b = getIntent().getExtras();
         this.applicationName = b.getString("applicationName");
         this.authAssertion = b.getString("authAssertion");
-
         String routeName = b.getString("routeName");
         String routeParam = b.getString("routeParam");
 
