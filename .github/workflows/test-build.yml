@@ -10,9 +10,7 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - name: Access APOD_API_KEY
+      - name: Access API_URL
         env:
-          APOD_API_KEY: ${{ secrets.APOD_API_KEY }}
-        run: echo APOD_API_KEY=\"$APOD_API_KEY\" > ./local.properties
-      - name: Build the app
-        run: ./gradlew assembleDebug
+          API_URL: "https://yesdefou.fr"
+        run: echo API_URL=\"$API_URL\" > ./local.properties
