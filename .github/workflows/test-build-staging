@@ -14,5 +14,5 @@ jobs:
           java-version: 11
       - name: Access API_URL
         env:
-          API_URL: "https://app.logora.fr/api/v1"
+          API_URL: "https://staging.logora.fr/api/v1"
         run: echo API_URL=\"$API_URL\" > ./local.properties
