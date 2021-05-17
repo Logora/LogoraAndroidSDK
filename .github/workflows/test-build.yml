@@ -1,0 +1,15 @@
+name: test-build
+on: [push]
+jobs:
+  check-bats-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      - run: npm install -g bats
+      - run: bats -v
+      
+      - name: Access API_URL
+        env:
+          API_URL: "https://app.logora.fr/api/v1"
+          run: echo APOD_API_KEY=\"$APOD_API_KEY\" > ./local.properties
