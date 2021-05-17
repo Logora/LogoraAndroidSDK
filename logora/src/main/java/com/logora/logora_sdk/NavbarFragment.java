@@ -1,9 +1,11 @@
 package com.logora.logora_sdk;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -79,6 +81,16 @@ public class NavbarFragment extends Fragment {
             router.navigate(Router.getRoute("INDEX"), null);
         });
 
+        loginLinkView.setOnClickListener(v -> {
+            Uri.Builder builder = Uri.parse(settings.get("auth.authDialogEndpoint")).buildUpon();
+            builder.appendQueryParameter("response_type", "code")
+                    .appendQueryParameter("redirect_uri", "https://app.logora.fr/auth/callback")
+                    .appendQueryParameter("client_id", settings.get("auth.clientId"))
+                    .appendQueryParameter("scope", settings.get("auth.scope"));
+            String authUrl = builder.build().toString();
+            this.goToUrl(authUrl);
+        });
+
         searchIconView.setOnClickListener(v -> {
             this.searchFormView.setVisibility(View.VISIBLE);
         });
@@ -110,5 +122,11 @@ public class NavbarFragment extends Fragment {
     public void setStyles() {
         String primaryColor = settings.get("theme.callPrimaryColor");
         loginLinkView.setTextColor(Color.parseColor(primaryColor));
+    }
+
+    private void goToUrl(String url) {
+        Intent intent = new Intent(this.getContext(), WebViewActivity.class);
+        intent.putExtra("url", url);
+        getContext().startActivity(intent);
     }
 }

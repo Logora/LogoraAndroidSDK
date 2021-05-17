@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.VectorDrawable;
+import android.net.Uri;
 import android.text.method.LinkMovementMethod;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -88,7 +90,13 @@ public class LoginDialog extends LinearLayout {
     }
 
     public void goToLoginUrl(View view) {
-        goToUrl("https://oauth.lavoix.com/oauth2/auth?response_type=code&client_id=logora_client_id&redirect_uri=https://app.logora.fr/auth/callback&scope=profile&state=opaque_state_string_example");
+        Uri.Builder builder = Uri.parse(settings.get("auth.authDialogEndpoint")).buildUpon();
+        builder.appendQueryParameter("response_type", "code")
+                .appendQueryParameter("redirect_uri", "https://app.logora.fr/auth/callback")
+                .appendQueryParameter("client_id", settings.get("auth.clientId"))
+                .appendQueryParameter("scope", settings.get("auth.scope"));
+        String authUrl = builder.build().toString();
+        goToUrl(authUrl);
     }
 
     private void goToUrl(String url) {
