@@ -103,6 +103,7 @@ public class LoginDialog extends LinearLayout {
         Intent intent = new Intent(this.getContext(), WebViewActivity.class);
         intent.putExtra("url", url);
         getContext().startActivity(intent);
+        Log.d("OAUTH2", url);
     }
 
 }
