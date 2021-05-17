@@ -17,3 +17,7 @@ jobs:
         env:
           API_URL: "https://staging.logora.fr/api/v1"
         run: echo API_URL=\"$API_URL\" > ./local.properties
+      - name: Clean
+        run: ./gradlew clean
+      - name: Build with Gradle
+        run: ./gradlew assembleDebug
