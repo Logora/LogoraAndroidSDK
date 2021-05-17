@@ -87,5 +87,9 @@ String getApiKey() {
     def propFile = rootProject.file("./local.properties")
     def properties = new Properties()
     properties.load(new FileInputStream(propFile))
-    return properties['API_URL']
+    if (properties['API_URL'] != null) {
+        return properties['API_URL']
+    } else {
+        return "\"https://fallback.fr\""
+    }
 }
