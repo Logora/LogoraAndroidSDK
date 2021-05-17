@@ -54,7 +54,6 @@ public class NavbarFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         findViews(view);
         setStyles();
-        //setTexts();
 
         Log.e("BUILD_TYPE", BuildConfig.API_URL);
 
