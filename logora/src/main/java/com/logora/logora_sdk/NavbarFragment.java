@@ -56,6 +56,8 @@ public class NavbarFragment extends Fragment {
         setStyles();
         //setTexts();
 
+        Log.e("BUILD_TYPE", BuildConfig.API_URL);
+
         if(auth.getIsLoggedIn()) {
             navbarRightContainer.setVisibility(View.GONE);
             navbarRightUserContainer.setVisibility(View.VISIBLE);
