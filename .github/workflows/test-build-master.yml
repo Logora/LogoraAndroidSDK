@@ -1,0 +1,16 @@
+name: test-build-master
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+      - name: set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Access API_URL
+        env:
+          API_URL: "https://app.logora.fr/api/v1"
+        run: echo API_URL=\"$API_URL\" > ./local.properties
