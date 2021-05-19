@@ -30,12 +30,12 @@ public class ArgumentViewHolder extends ListViewHolder {
         if(status.equals("accepted")) {
             argumentBox.updateWithObject(object, debate, context);
         } else if(status.equals("rejected") || status.equals("pending")) {
+            argumentBox.setVisibility(View.GONE);
             if(authClient.getIsLoggedIn()) {
                 if(argument.getAuthor().getId().intValue() == authClient.getCurrentUser().getId().intValue()) {
                     argumentBox.updateWithObject(object, debate, context);
+                    argumentBox.setVisibility(View.VISIBLE);
                 }
-            } else {
-                argumentBox.setVisibility(View.GONE);
             }
         }
     }
