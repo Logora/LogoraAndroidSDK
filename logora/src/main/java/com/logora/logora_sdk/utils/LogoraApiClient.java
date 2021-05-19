@@ -12,6 +12,7 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.logora.logora_sdk.BuildConfig;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,13 +25,13 @@ import java.util.Objects;
 
 public class LogoraApiClient {
     RequestQueue queue;
-    private final String apiUrl = "https://staging.logora.fr/api/v1";
-    private final String authUrl = "https://staging.logora.fr/oauth";
+    private final String apiUrl = "https://app.logora.fr/api/v1";
+    private final String authUrl = "https://app.logora.fr/oauth";
     private final String userTokenKey = "logora_user_token";
-    private String applicationName = null;
-    private String authAssertion = null;
-    private String providerToken = null;
-    private Context context = null;
+    private String applicationName;
+    private String authAssertion;
+    private String providerToken;
+    private Context context;
     private static LogoraApiClient instance = null;
 
     public LogoraApiClient() {}
@@ -252,8 +253,9 @@ public class LogoraApiClient {
         HashMap<String, String> bodyParams = new HashMap<>();
         bodyParams.put("grant_type", "assertion");
         bodyParams.put("assertion", this.authAssertion);
-        bodyParams.put("assertion_type", "signature_jwt");
-        bodyParams.put("provider", this.applicationName);
+        bodyParams.put("assertion_type", "oauth2_server");
+        bodyParams.put("provider", "logora-demo");
+        Log.e("BODYPARAMS", String.valueOf(bodyParams));
         String requestUrl = this.authUrl + "/token";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
                 requestUrl, new JSONObject(bodyParams), listener, errorListener) {

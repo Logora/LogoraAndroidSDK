@@ -13,6 +13,7 @@ import com.logora.logora_sdk.view_models.SettingsViewModel;
 
 public class LogoraAppActivity extends AppCompatActivity implements Router.RouteListener, Auth.AuthListener {
     private final Router router = Router.getInstance();
+    private LogoraApiClient apiClient;
     private String applicationName;
     private String authAssertion;
     private ProgressBar spinner;
@@ -24,8 +25,10 @@ public class LogoraAppActivity extends AppCompatActivity implements Router.Route
         setContentView(R.layout.root_activity);
         getSupportActionBar().hide();
         this.parseParams();
-        LogoraApiClient apiClient = LogoraApiClient.getInstance(this.applicationName,
+        Log.e("ASSERTION2", this.authAssertion != null ? this.authAssertion : "nullos");
+        this.apiClient = LogoraApiClient.getInstance(this.applicationName,
                 this.authAssertion, getBaseContext());
+        apiClient.setAuthAssertion(this.authAssertion);
 
         findViews();
 

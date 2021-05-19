@@ -11,7 +11,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         String applicationName = "logora-demo";
-        WidgetFragment widget = new WidgetFragment(this.getApplicationContext(), "3641", applicationName);
+        WidgetFragment widget = new WidgetFragment(this.getApplicationContext(), "1162254885", applicationName);
 
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.widget_view_container, widget)

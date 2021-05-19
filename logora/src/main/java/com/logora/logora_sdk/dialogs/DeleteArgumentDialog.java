@@ -20,7 +20,6 @@ import com.logora.logora_sdk.utils.Settings;
 public class DeleteArgumentDialog extends LinearLayout {
     private Context context;
     private final Settings settings = Settings.getInstance();
-    private final InputProvider inputProvider = InputProvider.getInstance();
     private AlertDialog dialog;
     private Argument argument;
     private Button deleteButton;

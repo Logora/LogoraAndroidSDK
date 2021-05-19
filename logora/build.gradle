@@ -47,7 +47,8 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
 
-        buildConfigField "String", "API_URL", getEnvKey("API_URL", "https://fallback.fr")
+        buildConfigField "String", "API_URL", getEnvKey("API_URL", "https://staging.logora.fr/api/v1")
+        buildConfigField "String", "AUTH_URL", getEnvKey("AUTH_URL", "https://staging.logora.fr/oauth")
     }
 
     buildTypes {
