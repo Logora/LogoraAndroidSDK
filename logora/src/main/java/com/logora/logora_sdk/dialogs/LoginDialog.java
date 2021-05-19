@@ -23,7 +23,7 @@ import com.logora.logora_sdk.utils.Settings;
 import androidx.core.content.ContextCompat;
 
 public class LoginDialog extends LinearLayout {
-    private Context context;
+    private final Context context;
     private final Settings settings = Settings.getInstance();
     private final InputProvider inputProvider = InputProvider.getInstance();
     private AlertDialog dialog;
@@ -78,7 +78,6 @@ public class LoginDialog extends LinearLayout {
     }
 
     public static void show(Context context) {
-        Resources res = context.getResources();
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         LoginDialog loginLayout = new LoginDialog(context);
 
@@ -96,6 +95,7 @@ public class LoginDialog extends LinearLayout {
                 .appendQueryParameter("client_id", settings.get("auth.clientId"))
                 .appendQueryParameter("scope", settings.get("auth.scope"));
         String authUrl = builder.build().toString();
+        Log.d("OAUTH2", authUrl);
         goToUrl(authUrl);
     }
 
@@ -103,7 +103,6 @@ public class LoginDialog extends LinearLayout {
         Intent intent = new Intent(this.getContext(), WebViewActivity.class);
         intent.putExtra("url", url);
         getContext().startActivity(intent);
-        Log.d("OAUTH2", url);
     }
 
 }

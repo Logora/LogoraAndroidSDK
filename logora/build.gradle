@@ -47,7 +47,8 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
 
-        buildConfigField "String", "API_URL", getApiKey()
+        /*buildConfigField "String", "API_URL", getEnvKey("API_URL", "https://staging.logora.fr/api/v1")
+        buildConfigField "String", "AUTH_URL", getEnvKey("AUTH_URL", "https://staging.logora.fr/oauth")*/
     }
 
     buildTypes {
@@ -82,10 +83,15 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 }
+/*
 
-String getApiKey() {
+String getEnvKey(String key, String defaultKey) {
     def propFile = rootProject.file("./local.properties")
     def properties = new Properties()
     properties.load(new FileInputStream(propFile))
-    return properties['API_URL']
-}
+    if (properties[key] != null) {
+        return properties[key]
+    } else {
+        return "\"" + defaultKey + "\""
+    }
+}*/

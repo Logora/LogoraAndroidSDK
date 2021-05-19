@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -33,7 +34,7 @@ public class WebViewActivity extends Activity {
                 Uri uri = Uri.parse(request.getUrl().toString());
                 String code = uri.getQueryParameter("code");
                 Intent intent = new Intent(getBaseContext(), LogoraAppActivity.class);
-                intent.putExtra("applicationName", apiClient.getApplicationName());
+                intent.putExtra("applicationName", "ouest-france-test");
                 intent.putExtra("authAssertion", code);
                 Route currentRoute = router.getCurrentRoute();
                 intent.putExtra("routeName", currentRoute.getName());
