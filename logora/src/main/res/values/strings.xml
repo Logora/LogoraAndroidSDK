@@ -127,4 +127,6 @@
     <string name="argument_input_placeholder">Ajouter un argument...</string>
     <string name="reply_input_placeholder">Ajouter un argument...</string>
     <string name="login_cgu">En cliquant sur « Je m’inscris », je déclare avoir pris connaissance des <a href="https://logora.fr/cgu">Conditions Générales d’Utilisation</a> de l’espace de débat et les accepter </string>
+    <string name="see_all_debates">Voir tout les débats</string>
+    <string name="read_more">Lire plus</string>
 </resources>

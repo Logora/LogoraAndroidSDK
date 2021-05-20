@@ -100,7 +100,6 @@ public class ListViewModel extends ViewModel {
                     JSONObject headers = response.getJSONObject("headers");
                     this.total = headers.getInt("Total");
                     this.totalPages = headers.getInt("Total-Pages");
-
                     itemsLiveData.setValue(this.items);
                 } catch (JSONException e) {
                     e.printStackTrace();

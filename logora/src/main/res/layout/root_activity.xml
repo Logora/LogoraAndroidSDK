@@ -1,38 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    <FrameLayout
+        android:id="@+id/navbar_fragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:context="com.logora.logora_sdk.LogoraAppActivity"
-        android:orientation="vertical">
+        android:layout_height="60dp" />
 
-        <FrameLayout
-            android:id="@+id/navbar_fragment"
-            android:layout_width="match_parent"
-            android:layout_height="60dp" />
+    <ScrollView
+        android:layout_below="@id/navbar_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <ProgressBar
-            android:id="@+id/root_loader"
-            android:layout_below="@id/navbar_fragment"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:indeterminate="true"
-            android:indeterminateTintMode="src_atop"
-            android:indeterminateTint="@android:color/black" />
-
-        <FrameLayout
-            android:id="@+id/main_fragment"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/navbar_fragment" />
+            tools:context="com.logora.logora_sdk.LogoraAppActivity"
+            android:orientation="vertical">
 
-        <FrameLayout
-            android:id="@+id/footer_fragment"
-            android:layout_below="@id/main_fragment"
-            android:layout_width="match_parent"
-            android:layout_height="60dp" />
-    </RelativeLayout>
-</ScrollView>
+            <ProgressBar
+                android:id="@+id/root_loader"
+                android:layout_below="@id/navbar_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:indeterminate="true"
+                android:indeterminateTintMode="src_atop"
+                android:indeterminateTint="@android:color/black"
+                tools:ignore="NotSibling" />
+
+            <FrameLayout
+                android:id="@+id/main_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/navbar_fragment"
+                tools:ignore="NotSibling" />
+
+            <FrameLayout
+                android:id="@+id/footer_fragment"
+                android:layout_below="@id/main_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="60dp" />
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

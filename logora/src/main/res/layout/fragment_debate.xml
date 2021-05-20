@@ -166,4 +166,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/related_debates_header"
         android:layout_marginVertical="6dp" />
+
+    <com.logora.logora_sdk.views.PrimaryButton
+        android:id="@+id/index_button"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/related_debates_list"
+        android:text="@string/see_all_debates"
+        style="@style/PrimaryButton"
+        android:layout_marginBottom="10dp"/>
+
 </RelativeLayout>

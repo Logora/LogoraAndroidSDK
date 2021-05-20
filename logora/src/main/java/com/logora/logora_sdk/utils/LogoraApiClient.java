@@ -255,7 +255,6 @@ public class LogoraApiClient {
         bodyParams.put("assertion", this.authAssertion);
         bodyParams.put("assertion_type", "oauth2_server");
         bodyParams.put("provider", "logora-demo");
-        Log.e("BODYPARAMS", String.valueOf(bodyParams));
         String requestUrl = this.authUrl + "/token";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
                 requestUrl, new JSONObject(bodyParams), listener, errorListener) {

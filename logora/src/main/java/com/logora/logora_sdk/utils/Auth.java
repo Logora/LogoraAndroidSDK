@@ -23,7 +23,6 @@ public class Auth {
     }
 
     public void authenticate() {
-        Log.e("AUTHENTICATE", apiClient.getAuthAssertion() != null ? apiClient.getAuthAssertion() : "nullitos");
         if(hasSession()) {
             if(isLoggedInRemotely()) {
                 if(isSameUser()) {

@@ -9,6 +9,10 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
+import android.os.Build;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -20,6 +24,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
@@ -158,6 +163,33 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
         });
         argumentMoreButton.setOnClickListener(v -> {
             openMoreActionsDialog();
+        });
+
+        // Add read more on contentView
+        int MAX_LINES = 15;
+        String TWO_SPACES = "  ";
+        contentView.post(new Runnable() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void run() {
+                // Past the maximum number of lines we want to display.
+                if (contentView.getLineCount() > MAX_LINES) {
+                    int lastCharShown = contentView.getLayout().getLineVisibleEnd(MAX_LINES - 1);
+                    contentView.setMaxLines(MAX_LINES);
+                    String moreString = context.getString(R.string.read_more);
+                    String suffix = TWO_SPACES + moreString;
+                    // 3 is the length of ellipsis
+                    String actionDisplayText = argument.getContent().substring(0, lastCharShown - suffix.length() - 3) + "..." + suffix;
+                    SpannableString truncatedSpannableString = new SpannableString(actionDisplayText);
+                    int startIndex = actionDisplayText.indexOf(moreString);
+                    truncatedSpannableString.setSpan(new ForegroundColorSpan(context.getColor(android.R.color.black)), startIndex, startIndex + moreString.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    contentView.setText(truncatedSpannableString);
+                    contentView.setOnClickListener(v -> {
+                        contentView.setText(argument.getContent());
+                        contentView.setMaxLines(200);
+                    });
+                }
+            }
         });
 
         // Reply input

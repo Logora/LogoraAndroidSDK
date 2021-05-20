@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.logora.logora_sdk.adapters.ArgumentListAdapter;
+import com.logora.logora_sdk.adapters.DebateBoxListAdapter;
 import com.logora.logora_sdk.adapters.TagListAdapter;
 import com.logora.logora_sdk.dialogs.LoginDialog;
 import com.logora.logora_sdk.dialogs.SideDialog;
@@ -34,20 +35,25 @@ import com.logora.logora_sdk.utils.Auth;
 import com.logora.logora_sdk.utils.DateUtil;
 import com.logora.logora_sdk.utils.InputProvider;
 import com.logora.logora_sdk.utils.LogoraApiClient;
+import com.logora.logora_sdk.utils.Router;
 import com.logora.logora_sdk.utils.Settings;
 import com.logora.logora_sdk.view_models.DebateShowViewModel;
 import com.logora.logora_sdk.views.ArgumentAuthorBox;
 import com.logora.logora_sdk.views.FollowDebateButtonView;
+import com.logora.logora_sdk.views.PrimaryButton;
 import com.logora.logora_sdk.views.ShareView;
 import com.logora.logora_sdk.views.VoteBoxView;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class DebateFragment extends Fragment implements SideDialog.ArgumentInputListener, InputProvider.InputProviderUpdateListener {
     private final Auth auth = Auth.getInstance();
+    private final Router router = Router.getInstance();
     private final InputProvider inputProvider = InputProvider.getInstance();
     private LogoraApiClient apiClient = LogoraApiClient.getInstance();
     private Settings settings = Settings.getInstance();
@@ -69,6 +75,8 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
     private ImageView argumentSend;
     private Debate debate;
     private ArgumentListAdapter argumentListAdapter;
+    private PaginatedListFragment relatedDebatesList;
+    private PrimaryButton indexButton;
 
     public DebateFragment() {
         super(R.layout.fragment_debate);
@@ -155,6 +163,19 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                     .beginTransaction()
                     .add(R.id.argument_list, argumentList)
                     .commit();
+        });
+
+        String debateResourceName = "groups/" + debateSlug + "/related";
+        DebateBoxListAdapter debateListAdapter = new DebateBoxListAdapter();
+        relatedDebatesList = new PaginatedListFragment(debateResourceName, "CLIENT", debateListAdapter, null);
+        getChildFragmentManager()
+                .beginTransaction()
+                .add(R.id.related_debates_list, relatedDebatesList)
+                .commit();
+
+        indexButton.setOnClickListener(v -> {
+            HashMap<String, String> routeParams = new HashMap<>();
+            router.navigate(Router.getRoute("INDEX"), routeParams);
         });
 
         String[] sortOptions = getSpinnerOptions();
@@ -293,6 +314,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
         argumentInputControls = view.findViewById(R.id.argument_input_controls);
         argumentInput = view.findViewById(R.id.argument_input);
         argumentSend = view.findViewById(R.id.argument_input_send_button);
+        indexButton = view.findViewById(R.id.index_button);
     }
 
     public String[] getSpinnerOptions() {
