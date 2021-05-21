@@ -138,15 +138,25 @@
 
     <Spinner
         android:id="@+id/argument_sort"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/argument_input_container"
         android:spinnerMode="dropdown" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_alignLeft="@+id/argument_sort"
+        android:layout_alignRight="@+id/argument_sort"
+        android:layout_below="@id/argument_sort"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/text_primary"/>
 
     <FrameLayout
         android:id="@+id/argument_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_below="@id/argument_sort" />
 
     <com.logora.logora_sdk.views.TextWrapper
