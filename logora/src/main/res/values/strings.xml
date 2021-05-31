@@ -73,7 +73,8 @@
     <string name="argument_clap_icon_content_description">Icône du bouton de vote pour l\'argument</string>
     <string name="argument_reply_icon_content_description">Icône du bouton de réponse de l\'argument</string>
     <string name="argument_view_replies">Voir les réponses</string>
-    <string name="arrow_up">&#9660;</string>
+    <string name="argument_hide_replies">Masquer les réponses</string>
+    <string name="arrow_up">&#9651;</string>
     <string name="arrow_down">&#9661;</string>
     <string name="argument_more_icon_content_description">Icône du bouton "plus d'actions" de l\'argument</string>
     <string name="more_actions">Plus d\'actions</string>
@@ -129,4 +130,7 @@
     <string name="login_cgu">En cliquant sur « Je m’inscris », je déclare avoir pris connaissance des <a href="https://logora.fr/cgu">Conditions Générales d’Utilisation</a> de l’espace de débat et les accepter </string>
     <string name="see_all_debates">Voir tout les débats</string>
     <string name="read_more">Lire plus</string>
+    <string name="share_content">Ce débat devrait vous intéresser</string>
+    <string name="link_copied">Lien copié !</string>
+    <string name="share_debate">Partager le débat</string>
 </resources>

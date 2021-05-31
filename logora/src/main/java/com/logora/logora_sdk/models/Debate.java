@@ -1,5 +1,7 @@
 package com.logora.logora_sdk.models;
 
+import android.util.Log;
+
 import com.logora.logora_sdk.utils.DateUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -50,6 +52,7 @@ public class Debate {
                 positionsList.add(Position.objectFromJson(positionsObject.getJSONObject(i)));
             }
             debate.setPositionList(positionsList);
+            debate.setVotePosition(getVotePosition(positionsList, null));
             debate.initVotePercentage();
             return debate;
         } catch (JSONException e) {
@@ -171,9 +174,13 @@ public class Debate {
     public void initVotePercentage() {
         this.setVotesCountObject(votesCountObject);
         List<Integer> votesCountKeys = new ArrayList<>(votesCountObject.keySet());
+        Integer maxValue = 50;
         for (int i = 0; i < votesCountKeys.size(); i++) {
             Integer positionId = votesCountKeys.get(i);
             Integer percentage = 100 * votesCountObject.get(positionId) / totalVotesCount;
+            if(percentage > maxValue) {
+                this.setVotePercentage(percentage);
+            }
             this.votesPercentages.put(positionId, percentage);
         }
     }
@@ -206,5 +213,19 @@ public class Debate {
             result.put(Integer.parseInt(key), Integer.parseInt(jsonObject.getString(key)));
         }
         return result;
+    }
+
+    private static String getVotePosition(List<Position> positions, Integer id) throws JSONException {
+        for (int i = 0 ; i < positions.size(); i++) {
+            Position position = positions.get(i);
+            if(i == 0 && id == null) {
+                return position.getName();
+            }
+            Integer positionId = position.getId();
+            if(positionId.equals(id)) {
+                return position.getName();
+            }
+        }
+        return "";
     }
 }

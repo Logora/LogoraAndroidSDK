@@ -52,6 +52,7 @@
             android:layout_height="wrap_content"
             android:text="@string/already_have_account"
             android:textColor="#777"
+            android:paddingRight="2dp"
             android:textSize="12dp"/>
 
         <TextView

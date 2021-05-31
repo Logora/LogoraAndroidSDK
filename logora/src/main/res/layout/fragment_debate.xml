@@ -81,6 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:layout_alignParentEnd="true"
+                android:paddingHorizontal="25dp"
                 android:text="@string/debate_follow_inactive"
                 tools:ignore="RelativeOverlap" />
 

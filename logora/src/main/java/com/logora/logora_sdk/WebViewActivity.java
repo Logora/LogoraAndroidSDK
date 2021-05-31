@@ -20,6 +20,7 @@ public class WebViewActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.webview);
         Intent i = getIntent();
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         String url= i.getStringExtra("url");
         WebView webView = findViewById(R.id.webview);
         webView.getSettings().setJavaScriptEnabled(true);

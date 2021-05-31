@@ -6,6 +6,8 @@ import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.RelativeLayout;
+
 import androidx.core.content.ContextCompat;
 import com.logora.logora_sdk.R;
 import com.logora.logora_sdk.dialogs.LoginDialog;
@@ -126,6 +128,7 @@ public class FollowDebateButtonView extends androidx.appcompat.widget.AppCompatB
     private void setActive() {
         this.active = true;
         this.setEnabled(true);
+        this.setPadding(35, 10, 35, 10);
         String primaryColor = settings.get("theme.callPrimaryColor");
         String debateFollowActiveText = settings.get("layout.actionFollow");
         if(debateFollowActiveText != null) {

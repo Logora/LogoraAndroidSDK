@@ -62,6 +62,11 @@ public class LoginDialog extends LinearLayout {
         signUpButton.setOnClickListener(v -> {
             goToLoginUrl(this);
         });
+        signInButton.setTextColor(Color.parseColor(callPrimaryColor));
+        signInButton.setOnClickListener(v -> {
+            goToLoginUrl(this);
+        });
+        cguText.setLinkTextColor(Color.parseColor(callPrimaryColor));
         cguText.setMovementMethod(LinkMovementMethod.getInstance());
     }
 

@@ -5,11 +5,13 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.ViewTreeObserver;
 import android.view.animation.LinearInterpolator;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -17,12 +19,15 @@ import android.widget.TextView;
 import com.logora.logora_sdk.R;
 import com.logora.logora_sdk.dialogs.LoginDialog;
 import com.logora.logora_sdk.models.Debate;
+import com.logora.logora_sdk.models.Position;
 import com.logora.logora_sdk.utils.Auth;
 import com.logora.logora_sdk.utils.InputProvider;
 import com.logora.logora_sdk.utils.LogoraApiClient;
 import com.logora.logora_sdk.utils.Settings;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 public class VoteBoxView extends RelativeLayout {
     private final Settings settings = Settings.getInstance();
@@ -49,6 +54,8 @@ public class VoteBoxView extends RelativeLayout {
     private ProgressBar voteSecondPositionProgress;
     private TextView voteResultsCountView;
     private TextView voteEditView;
+    private ImageView firstPositionSuccessVote;
+    private ImageView secondPositionSuccessVote;
 
     public VoteBoxView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -107,6 +114,8 @@ public class VoteBoxView extends RelativeLayout {
         voteEditView = findViewById(R.id.vote_edit);
         voteFirstPositionProgress = findViewById(R.id.vote_first_position_result);
         voteSecondPositionProgress = findViewById(R.id.vote_second_position_result);
+        firstPositionSuccessVote = findViewById(R.id.success_first_position_vote);
+        secondPositionSuccessVote = findViewById(R.id.success_second_position_vote);
     }
 
     public void init(Debate debate) {
@@ -121,7 +130,7 @@ public class VoteBoxView extends RelativeLayout {
                         if(success && vote) {
                             JSONObject voteObject = response.getJSONObject("data").getJSONObject("data").getJSONObject("resource");
                             this.voteId = voteObject.getInt("id");
-                            this.votePositionId = voteObject.getJSONObject("position").getInt("id");
+                            this.votePositionId = voteObject.getInt("position_id");
                             showResults();
                         }
                     } catch (JSONException e) {
@@ -137,7 +146,6 @@ public class VoteBoxView extends RelativeLayout {
             if(!positionId.equals(this.votePositionId)) {
                 debate.calculateVotePercentage(String.valueOf(positionId), true);
             }
-            showResults();
             if(!positionId.equals(this.votePositionId)) {
                 this.updateVote(positionId);
             }
@@ -145,7 +153,6 @@ public class VoteBoxView extends RelativeLayout {
             this.debate.incrementTotalVotesCount();
             inputProvider.addUserPosition(Integer.parseInt(debate.getId()), positionId);
             debate.calculateVotePercentage(String.valueOf(positionId), false);
-            showResults();
             this.createVote(positionId);
         }
     }
@@ -159,6 +166,7 @@ public class VoteBoxView extends RelativeLayout {
                     if(success) {
                         this.voteId = vote.getInt("id");
                         this.votePositionId = vote.getJSONObject("position").getInt("id");
+                        showResults();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -177,6 +185,7 @@ public class VoteBoxView extends RelativeLayout {
                     if(success) {
                         this.voteId = vote.getInt("id");
                         this.votePositionId = vote.getJSONObject("position").getInt("id");
+                        showResults();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -190,6 +199,11 @@ public class VoteBoxView extends RelativeLayout {
         this.active = false;
         voteResultsContainer.setVisibility(GONE);
         voteContainer.setVisibility(VISIBLE);
+        firstPositionSuccessVote.setVisibility(GONE);
+        secondPositionSuccessVote.setVisibility(GONE);
+        voteFirstPositionResultText.setTypeface(null, Typeface.NORMAL);
+        voteSecondPositionResultText.setTypeface(null, Typeface.NORMAL);
+
 
         String firstPositionPrimaryColor = settings.get("theme.firstPositionColorPrimary");
         String secondPositionPrimaryColor = settings.get("theme.secondPositionColorPrimary");
@@ -218,6 +232,17 @@ public class VoteBoxView extends RelativeLayout {
 
         voteFirstPositionProgress.setProgressTintList(ColorStateList.valueOf(Color.parseColor(firstPositionPrimaryColor)));
         voteSecondPositionProgress.setProgressTintList(ColorStateList.valueOf(Color.parseColor(secondPositionPrimaryColor)));
+
+        List<Position> positionList = this.debate.getPositionList();
+        for(Integer i = 0; i < positionList.size(); i++){
+            if(positionList.get(i).getId().equals(votePositionId) && i.equals(0)){
+                voteFirstPositionResultText.setTypeface(null, Typeface.BOLD);
+                firstPositionSuccessVote.setVisibility(VISIBLE);
+            } else if (positionList.get(i).getId().equals(votePositionId) && i.equals(1)) {
+                voteSecondPositionResultText.setTypeface(null, Typeface.BOLD);
+                secondPositionSuccessVote.setVisibility(VISIBLE);
+            }
+        }
 
         voteFirstPositionProgressPercentage = debate.getPositionPercentage(this.debate.getPositionList().get(0).getId());
         voteSecondPositionProgressPercentage = debate.getPositionPercentage(this.debate.getPositionList().get(1).getId());

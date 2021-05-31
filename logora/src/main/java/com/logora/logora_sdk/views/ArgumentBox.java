@@ -32,6 +32,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.Resource;
 import com.logora.logora_sdk.PaginatedListFragment;
 import com.logora.logora_sdk.R;
 import com.logora.logora_sdk.adapters.ArgumentListAdapter;
@@ -85,6 +86,8 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
     private ImageView replySendButton;
     private ImageView replyInputUserImage;
     private ArgumentListAdapter repliesListAdapter;
+    private TextView argumentRepliesToggle;
+    private TextView argumentRepliesArrow;
 
     public ArgumentBox(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -119,10 +122,12 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
         sideLabelView = findViewById(R.id.argument_position);
         dateView = findViewById(R.id.argument_date);
         argumentReplyButton = findViewById(R.id.argument_reply_button);
+        argumentRepliesToggle = findViewById(R.id.argument_reply_toggle);
         replyInput = findViewById(R.id.reply_input);
         replyInputContainer = findViewById(R.id.reply_input_container);
         replySendButton = findViewById(R.id.reply_input_send_button);
         replyInputUserImage = findViewById(R.id.reply_input_user_image);
+        argumentRepliesArrow = findViewById(R.id.argument_reply_arrow_down);
     }
 
     public void updateWithObject(Object object, Debate debate, Context context) {
@@ -243,11 +248,14 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
     }
 
     private void toggleReplies(Integer boxId) {
+        Resources res = this.getContext().getResources();
         if(this.toggleReplies) {
             fragmentManager.beginTransaction()
                     .hide(repliesList)
                     .commit();
             this.toggleReplies = false;
+            argumentRepliesToggle.setText(res.getString(R.string.argument_view_replies));
+            argumentRepliesArrow.setText(res.getString(R.string.arrow_down));
         } else {
             if(!this.initReplies) {
                 fragmentManager.beginTransaction()
@@ -260,6 +268,8 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
                         .commit();
             }
             this.toggleReplies = true;
+            argumentRepliesToggle.setText(res.getString(R.string.argument_hide_replies));
+            argumentRepliesArrow.setText(res.getString(R.string.arrow_up));
         }
     }
 

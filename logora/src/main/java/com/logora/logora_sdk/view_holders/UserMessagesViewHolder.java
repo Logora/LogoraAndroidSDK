@@ -1,6 +1,7 @@
 package com.logora.logora_sdk.view_holders;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -32,6 +33,7 @@ public class UserMessagesViewHolder extends ListViewHolder {
         argument = (Argument) object;
         Debate debate = argument.getDebate();
         if (debate != null) {
+            argument.setIsReply(false); // Prevent reply style to be added to user profile
             userMessageTitle.setText(debate.getName());
             argumentBox.updateWithObject(object, debate, context);
             argumentsCount.setText(String.valueOf(debate.getArgumentsCount()));

@@ -31,7 +31,11 @@ public class NotificationListAdapter extends ListAdapter {
 
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
-        holder.updateWithObject(this.getObjectFromJson(this.items.get(position)));
+        try {
+            holder.updateWithObject(this.getObjectFromJson(this.items.get(position)));
+        } catch (Exception e) {
+            System.out.println("Error " + e.getMessage());
+        }
     }
 
     @Override

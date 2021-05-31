@@ -34,7 +34,11 @@ public class BadgeBoxListAdapter extends ListAdapter {
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
         BadgeBox badgeBox = this.getObjectFromJson(this.items.get(position));
-        holder.updateWithObject(badgeBox);
+        try {
+            holder.updateWithObject(badgeBox);
+        } catch (Exception e){
+            System.out.println("Error " + e.getMessage());
+        }
     }
 
     @Override

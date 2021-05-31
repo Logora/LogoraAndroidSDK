@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,17 +37,18 @@ public class ShareView extends LinearLayout {
     }
 
     private void initView() {
+        Resources res = this.getContext().getResources();
         inflate(getContext(), R.layout.share_layout, this);
         linkShareView = this.findViewById(R.id.link_share_button);
         mobileShareView = this.findViewById(R.id.mobile_share_button);
 
         linkShareView.setOnClickListener(v -> {
             this.copyToClipboard(this.shareText);
-            this.showSuccessMessage("Lien copié !");
+            this.showSuccessMessage(res.getString(R.string.link_copied));
         });
 
         mobileShareView.setOnClickListener(v -> {
-            this.openShareDialog("Voici un débat intéressant");
+            this.openShareDialog(res.getString(R.string.share_content));
         });
     }
 
@@ -61,10 +63,11 @@ public class ShareView extends LinearLayout {
     }
 
     private void openShareDialog(String subject) {
+        Resources res = this.getContext().getResources();
         Intent share = new Intent(Intent.ACTION_SEND);
         share.setType("text/plain");
         share.putExtra(Intent.EXTRA_TEXT, subject);
-        this.context.startActivity(Intent.createChooser(share, "Partager le débat"));
+        this.context.startActivity(Intent.createChooser(share, res.getString(R.string.share_debate)));
     }
 
     private void showSuccessMessage(String message) {
