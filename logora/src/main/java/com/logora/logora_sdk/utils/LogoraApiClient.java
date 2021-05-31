@@ -2,17 +2,26 @@ package com.logora.logora_sdk.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
 import com.android.volley.NetworkResponse;
+import com.android.volley.NoConnectionError;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.logora.logora_sdk.BuildConfig;
+import com.logora.logora_sdk.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -296,7 +305,29 @@ public class LogoraApiClient {
         String paramsString = this.paramstoQueryString(queryParams);
         String requestUrl = this.apiUrl + route + paramsString;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
-            requestUrl, null, listener, errorListener
+            requestUrl, null, listener, error -> {
+                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                    Toast.makeText(context,
+                            context.getString(R.string.request_error),
+                            Toast.LENGTH_LONG).show();
+                } else if (error instanceof AuthFailureError) {
+                    Toast.makeText(context,
+                            context.getString(R.string.request_error),
+                            Toast.LENGTH_LONG).show();
+                } else if (error instanceof ServerError) {
+                    Toast.makeText(context,
+                            context.getString(R.string.request_error),
+                            Toast.LENGTH_LONG).show();
+                } else if (error instanceof NetworkError) {
+                    Toast.makeText(context,
+                            context.getString(R.string.request_error),
+                            Toast.LENGTH_LONG).show();
+                } else if (error instanceof ParseError) {
+                    Toast.makeText(context,
+                            context.getString(R.string.request_error),
+                            Toast.LENGTH_LONG).show();
+                }
+            }
         ) {
             @Override
             public Map<String, String> getHeaders() {
