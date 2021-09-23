@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -32,6 +34,7 @@ public class NavbarFragment extends Fragment {
     private IconTextView userProfileView;
     private TextView notificationsBadge;
     private IconTextView notificationButtonView;
+    private LinearLayout navbarContainer;
 
     public NavbarFragment() {
         super(R.layout.fragment_navbar);
@@ -58,7 +61,7 @@ public class NavbarFragment extends Fragment {
                 notificationsBadge.setVisibility(View.GONE);
             }
 
-            notificationButtonView.init(R.drawable.ic_clap, "Alertes", null, null);
+            notificationButtonView.init(R.drawable.ic_bell, "Alertes", null, null);
             notificationButtonView.setOnClickListener(v -> {
                 HashMap<String, String> routeParams = new HashMap<>();
                 notificationsBadge.setVisibility(View.GONE);
@@ -73,10 +76,10 @@ public class NavbarFragment extends Fragment {
             });
         }
 
-        indexButtonView.init(R.drawable.ic_clap, "Débats", "infoAllDebates", null);
+        indexButtonView.init(R.drawable.ic_home, "Débats", "infoAllDebates", null);
         indexButtonView.setOnClickListener(v -> router.navigate(Router.getRoute("INDEX"), null));
 
-        loginLinkView.init(R.drawable.ic_clap, "Connexion", null, null);
+        loginLinkView.init(R.drawable.ic_login, "Connexion", null, null);
         loginLinkView.setOnClickListener(v -> {
             Uri.Builder builder = Uri.parse(settings.get("auth.authDialogEndpoint")).buildUpon();
             builder.appendQueryParameter("response_type", "code")
@@ -87,22 +90,20 @@ public class NavbarFragment extends Fragment {
             this.goToUrl(authUrl);
         });
 
-        searchButtonView.init(R.drawable.ic_clap, "Recherche", null, null);
-        searchButtonView.setOnClickListener(v -> this.searchFormView.setVisibility(View.VISIBLE));
+        searchButtonView.init(R.drawable.ic_search, "Recherche", null, null);
+        searchButtonView.setOnClickListener(v -> {
+            this.searchFormView.setVisibility(View.VISIBLE);
+        });
     }
 
     public void findViews(View view) {
-        // Non logged
+        navbarContainer = view.findViewById(R.id.navbar_container);
         indexButtonView = view.findViewById(R.id.index_button_view);
         searchButtonView = view.findViewById(R.id.search_button_view);
         loginLinkView = view.findViewById(R.id.login_link_button);
-
-        // Logged
         userProfileView = view.findViewById(R.id.user_profile_view);
         notificationButtonView = view.findViewById(R.id.user_notification_button_view);
         notificationsBadge = view.findViewById(R.id.notification_badge);
-
-        // Search
         searchFormView = view.findViewById(R.id.search_form_container);
     }
 

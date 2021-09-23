@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingVertical="5dp"
     tools:context=".NavbarFragment"
-    android:orientation="horizontal"
     android:background="@drawable/navbar_background">
 
     <LinearLayout
         android:id="@+id/navbar_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_below="@id/search_form_container">
 
         <com.logora.logora_sdk.views.IconTextView
             android:id="@+id/index_button_view"
@@ -82,4 +82,4 @@
         android:elevation="10dp"
         android:paddingHorizontal="6dp"
         android:visibility="gone" />
-</LinearLayout>
+</RelativeLayout>
