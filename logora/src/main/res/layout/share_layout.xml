@@ -18,8 +18,7 @@
         android:gravity="center"
         android:clickable="true"
         android:focusable="true"
-        android:contentDescription="@string/share_link_icon_content_description"
-        app:tint="@color/text_secondary" />
+        android:contentDescription="@string/share_link_icon_content_description" />
 
     <ImageView
         android:id="@+id/mobile_share_button"
@@ -30,6 +29,5 @@
         android:gravity="center"
         android:clickable="true"
         android:focusable="true"
-        android:contentDescription="@string/share_icon_content_description"
-        app:tint="@color/text_secondary" />
+        android:contentDescription="@string/share_icon_content_description" />
 </LinearLayout>

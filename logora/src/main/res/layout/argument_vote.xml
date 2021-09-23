@@ -9,15 +9,14 @@
 
     <ImageView
         android:id="@+id/argument_clap_button"
-        android:layout_width="22dp"
-        android:layout_height="22dp"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
         android:src="@drawable/ic_clap"
         android:layout_marginHorizontal="6dp"
         android:gravity="center"
         android:clickable="true"
         android:focusable="true"
-        android:contentDescription="@string/share_link_icon_content_description"
-        app:tint="@color/text_secondary" />
+        android:contentDescription="@string/share_link_icon_content_description" />
 
     <TextView
         android:id="@+id/argument_votes_count"
