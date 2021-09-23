@@ -2,23 +2,18 @@ package com.logora.logora_sdk;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.bumptech.glide.Glide;
 import com.logora.logora_sdk.utils.Auth;
 import com.logora.logora_sdk.utils.Router;
 import com.logora.logora_sdk.utils.Settings;
+import com.logora.logora_sdk.views.IconTextView;
 import com.logora.logora_sdk.views.SearchFormView;
 
 import java.util.HashMap;
@@ -30,16 +25,13 @@ public class NavbarFragment extends Fragment {
     private final Router router = Router.getInstance();
     private final Settings settings = Settings.getInstance();
     private final Auth auth = Auth.getInstance();
-    private ImageView searchIconView;
-    private RelativeLayout navbarRightContainer;
-    private RelativeLayout navbarRightUserContainer;
+    private IconTextView searchButtonView;
     private SearchFormView searchFormView;
-    private Button indexButtonView;
-    private TextView loginLinkView;
-    private ImageView userProfileIconView;
-    private ImageView userSearchIconView;
+    private IconTextView indexButtonView;
+    private IconTextView loginLinkView;
+    private IconTextView userProfileView;
     private TextView notificationsBadge;
-    private ImageView notificationButton;
+    private IconTextView notificationButtonView;
 
     public NavbarFragment() {
         super(R.layout.fragment_navbar);
@@ -53,15 +45,12 @@ public class NavbarFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         findViews(view);
-        setStyles();
 
         if(auth.getIsLoggedIn()) {
-            navbarRightContainer.setVisibility(View.GONE);
-            navbarRightUserContainer.setVisibility(View.VISIBLE);
-
-            Glide.with(userProfileIconView.getContext())
-                    .load(Uri.parse(auth.getCurrentUser().getImageUrl()))
-                    .into(userProfileIconView);
+            loginLinkView.setVisibility(View.GONE);
+            notificationButtonView.setVisibility(View.VISIBLE);
+            notificationsBadge.setVisibility(View.VISIBLE);
+            userProfileView.setVisibility(View.VISIBLE);
 
             if (auth.getCurrentUser().getNotificationsCount() > 0) {
                 notificationsBadge.setText(String.valueOf(auth.getCurrentUser().getNotificationsCount()));
@@ -69,17 +58,25 @@ public class NavbarFragment extends Fragment {
                 notificationsBadge.setVisibility(View.GONE);
             }
 
-            notificationButton.setOnClickListener(v -> {
+            notificationButtonView.init(R.drawable.ic_clap, "Alertes", null, null);
+            notificationButtonView.setOnClickListener(v -> {
                 HashMap<String, String> routeParams = new HashMap<>();
                 notificationsBadge.setVisibility(View.GONE);
                 router.navigate(Router.getRoute("NOTIFICATIONS"), routeParams);
             });
+
+            userProfileView.init(0, "Profil", null, auth.getCurrentUser().getImageUrl());
+            userProfileView.setOnClickListener(v -> {
+                HashMap<String, String> routeParams = new HashMap<>();
+                routeParams.put("userSlug", auth.getCurrentUser().getSlug());
+                router.navigate(Router.getRoute("USER"), routeParams);
+            });
         }
 
-        indexButtonView.setOnClickListener(v -> {
-            router.navigate(Router.getRoute("INDEX"), null);
-        });
+        indexButtonView.init(R.drawable.ic_clap, "Débats", "infoAllDebates", null);
+        indexButtonView.setOnClickListener(v -> router.navigate(Router.getRoute("INDEX"), null));
 
+        loginLinkView.init(R.drawable.ic_clap, "Connexion", null, null);
         loginLinkView.setOnClickListener(v -> {
             Uri.Builder builder = Uri.parse(settings.get("auth.authDialogEndpoint")).buildUpon();
             builder.appendQueryParameter("response_type", "code")
@@ -90,37 +87,23 @@ public class NavbarFragment extends Fragment {
             this.goToUrl(authUrl);
         });
 
-        searchIconView.setOnClickListener(v -> {
-            this.searchFormView.setVisibility(View.VISIBLE);
-        });
-
-        userSearchIconView.setOnClickListener(v -> {
-            this.searchFormView.setVisibility(View.VISIBLE);
-        });
-
-        userProfileIconView.setOnClickListener(v -> {
-            HashMap<String, String> routeParams = new HashMap<>();
-            routeParams.put("userSlug", auth.getCurrentUser().getSlug());
-            router.navigate(Router.getRoute("USER"), routeParams);
-        });
+        searchButtonView.init(R.drawable.ic_clap, "Recherche", null, null);
+        searchButtonView.setOnClickListener(v -> this.searchFormView.setVisibility(View.VISIBLE));
     }
 
     public void findViews(View view) {
+        // Non logged
+        indexButtonView = view.findViewById(R.id.index_button_view);
+        searchButtonView = view.findViewById(R.id.search_button_view);
         loginLinkView = view.findViewById(R.id.login_link_button);
-        indexButtonView = view.findViewById(R.id.index_button);
-        searchIconView = view.findViewById(R.id.search_icon);
-        navbarRightContainer = view.findViewById(R.id.navbar_right_container);
-        navbarRightUserContainer = view.findViewById(R.id.navbar_right_user_container);
-        searchFormView = view.findViewById(R.id.search_form_container);
-        userProfileIconView = view.findViewById(R.id.user_profile_icon);
-        userSearchIconView = view.findViewById(R.id.search_user_icon);
-        notificationsBadge = view.findViewById(R.id.notification_badge);
-        notificationButton = view.findViewById(R.id.notification_icon);
-    }
 
-    public void setStyles() {
-        String primaryColor = settings.get("theme.callPrimaryColor");
-        loginLinkView.setTextColor(Color.parseColor(primaryColor));
+        // Logged
+        userProfileView = view.findViewById(R.id.user_profile_view);
+        notificationButtonView = view.findViewById(R.id.user_notification_button_view);
+        notificationsBadge = view.findViewById(R.id.notification_badge);
+
+        // Search
+        searchFormView = view.findViewById(R.id.search_form_container);
     }
 
     private void goToUrl(String url) {
