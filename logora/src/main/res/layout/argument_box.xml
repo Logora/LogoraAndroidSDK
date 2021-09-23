@@ -70,6 +70,7 @@
             android:layout_below="@+id/argument_content_container"
             android:layout_centerVertical="true"
             android:layout_marginTop="6dp"
+            android:layout_marginBottom="8dp"
             android:orientation="horizontal"
             android:paddingHorizontal="8dp">
 
@@ -125,7 +126,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/argument_footer"
             android:orientation="horizontal"
-            android:layout_marginTop="6dp"
             android:paddingHorizontal="12dp"
             android:paddingVertical="12dp"
             android:visibility="gone">
