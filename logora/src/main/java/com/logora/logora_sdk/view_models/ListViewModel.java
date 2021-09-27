@@ -71,32 +71,29 @@ public class ListViewModel extends ViewModel {
     public LiveData<List<JSONObject>> getList() {
         if (itemsLiveData == null) {
             itemsLiveData = new MutableLiveData<>();
-            loadItems(false);
+            loadItems();
         }
         return itemsLiveData;
     }
 
     public LiveData<List<JSONObject>> updateList() {
-        loadItems(false);
+        loadItems();
         return itemsLiveData;
     }
 
     public LiveData<List<JSONObject>> resetList() {
         this.items.clear();
-        itemsLiveData = new MutableLiveData<>();
+        this.itemsLiveData = new MutableLiveData<>();
         this.resetCurrentPage();
-        loadItems(true);
-        return itemsLiveData;
+        loadItems();
+        return this.itemsLiveData;
     }
 
-    private void loadItems(Boolean reset) {
+    private void loadItems() {
         apiClient.getList(
             response -> {
                 try {
                     JSONArray itemsJson = response.getJSONObject("data").getJSONArray("data");
-                    if(reset) {
-                        this.items.clear();
-                    }
                     for (int i = 0; i < itemsJson.length(); i++) {
                         this.items.add(itemsJson.getJSONObject(i));
                     }

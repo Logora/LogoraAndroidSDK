@@ -141,7 +141,6 @@ public class PaginatedListFragment extends Fragment {
                 loader.setVisibility(View.GONE);
                 emptyView.setVisibility(View.VISIBLE);
             } else {
-                Log.e("ITEM LIST", String.valueOf(itemList));
                 listAdapter.update(itemList);
                 loader.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);

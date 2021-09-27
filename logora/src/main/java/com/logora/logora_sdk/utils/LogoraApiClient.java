@@ -95,7 +95,6 @@ public class LogoraApiClient {
             queryParams.putAll(extraArguments);
         }
         String route = "/" + resourceName;
-        Log.e("QUERY PARAMS", String.valueOf(queryParams));
         if(resourceType.equals("USER")) {
             this.user_get(route, queryParams, listener, errorListener);
         } else {
@@ -302,7 +301,7 @@ public class LogoraApiClient {
                      Response.Listener<JSONObject> listener,
                      Response.ErrorListener errorListener) {
         queryParams.put("provider_token", this.providerToken);
-        String paramsString = this.paramstoQueryString(queryParams);
+        String paramsString = this.paramsToQueryString(queryParams);
         String requestUrl = this.apiUrl + route + paramsString;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
             requestUrl, null, listener, errorListener
@@ -338,7 +337,7 @@ public class LogoraApiClient {
                             HashMap<String, String> bodyParams,
                             Response.Listener<JSONObject> listener,
                             Response.ErrorListener errorListener) {
-        String paramsString = this.paramstoQueryString(queryParams);
+        String paramsString = this.paramsToQueryString(queryParams);
         String requestUrl = url + route + paramsString;
         JSONObject bodyJson = new JSONObject();
         if(bodyParams != null) {
@@ -361,7 +360,7 @@ public class LogoraApiClient {
     private void user_get(String route, HashMap<String, String> params,
                             Response.Listener<JSONObject> listener,
                             Response.ErrorListener errorListener) {
-        String paramsString = this.paramstoQueryString(params);
+        String paramsString = this.paramsToQueryString(params);
         String requestUrl = this.apiUrl + route + paramsString;
 
         String userAuthorizationHeader = this.getUserAuthorizationHeader();
@@ -399,7 +398,7 @@ public class LogoraApiClient {
                           HashMap<String, String> bodyParams,
                           Response.Listener<JSONObject> listener,
                           Response.ErrorListener errorListener) {
-        String paramsString = this.paramstoQueryString(params);
+        String paramsString = this.paramsToQueryString(params);
         String requestUrl = this.apiUrl + route + paramsString;
         JSONObject bodyJson = new JSONObject();
         if(bodyParams != null) {
@@ -426,7 +425,7 @@ public class LogoraApiClient {
                            HashMap<String, String> bodyParams,
                            Response.Listener<JSONObject> listener,
                            Response.ErrorListener errorListener) {
-        String paramsString = this.paramstoQueryString(params);
+        String paramsString = this.paramsToQueryString(params);
         String requestUrl = this.apiUrl + route + paramsString;
         JSONObject bodyJson = new JSONObject();
         if(bodyParams != null) {
@@ -451,7 +450,7 @@ public class LogoraApiClient {
     private void user_delete(String route, HashMap<String, String> params,
                            Response.Listener<JSONObject> listener,
                            Response.ErrorListener errorListener) {
-        String paramsString = this.paramstoQueryString(params);
+        String paramsString = this.paramsToQueryString(params);
         String requestUrl = this.apiUrl + route + paramsString;
 
         String userAuthorizationHeader = this.getUserAuthorizationHeader();
@@ -484,7 +483,7 @@ public class LogoraApiClient {
         return "Bearer " + this.getUserToken();
     }
 
-    private String paramstoQueryString(HashMap<String, String> params) {
+    private String paramsToQueryString(HashMap<String, String> params) {
         StringBuilder sb = new StringBuilder();
         int index = 0;
         for (Map.Entry<String, String> stringEntry : params.entrySet()) {
@@ -547,7 +546,6 @@ public class LogoraApiClient {
         }
     }
 
-    /* STORAGE FUNCTIONS */
     private void setStorageItem(String key, JSONObject value) {
         SharedPreferences sharedPreferences = this.context.getSharedPreferences("logora_settings", 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();
