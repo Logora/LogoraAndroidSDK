@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.logora.logora_sdk.adapters.ArgumentListAdapter;
+import com.logora.logora_sdk.adapters.DebateBoxListAdapter;
 import com.logora.logora_sdk.adapters.TagListAdapter;
 import com.logora.logora_sdk.dialogs.LoginDialog;
 import com.logora.logora_sdk.dialogs.SideDialog;
@@ -68,6 +69,8 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
     private ImageView argumentSend;
     private Debate debate;
     private ArgumentListAdapter argumentListAdapter;
+    private PaginatedListFragment relatedDebateList;
+    private DebateBoxListAdapter relatedDebateListAdapter;
 
     public DebateFragment() {
         super(R.layout.fragment_debate);
@@ -161,6 +164,16 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
             getChildFragmentManager()
                     .beginTransaction()
                     .add(R.id.argument_list, argumentList)
+                    .commit();
+
+            String relatedDebateResourceName = "groups/" + debate.getSlug() + "/related";
+            this.relatedDebateListAdapter = new DebateBoxListAdapter();
+
+            relatedDebateList = new PaginatedListFragment(relatedDebateResourceName, "CLIENT", relatedDebateListAdapter, null, null, null);
+
+            getChildFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.related_debates_list, relatedDebateList)
                     .commit();
         });
     }
