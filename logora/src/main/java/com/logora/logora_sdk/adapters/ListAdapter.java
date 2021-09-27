@@ -1,7 +1,11 @@
 package com.logora.logora_sdk.adapters;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.logora.logora_sdk.view_holders.ArgumentViewHolder;
 import com.logora.logora_sdk.view_holders.ListViewHolder;
 
 import org.json.JSONException;

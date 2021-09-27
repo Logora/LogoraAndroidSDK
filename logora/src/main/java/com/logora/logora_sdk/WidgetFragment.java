@@ -73,8 +73,8 @@ public class WidgetFragment extends Fragment {
             apiClient.getSynthesis(
                 response -> {
                     try {
-                        boolean success = response.getJSONObject("data").getBoolean("success");
-                        JSONObject debateObject = response.getJSONObject("data").getJSONObject("data");
+                        boolean success = response.getBoolean("success");
+                        JSONObject debateObject = response.getJSONObject("debate");
                         if (success) {
                             debate = DebateSynthesis.objectFromJson(debateObject);
                             if(debate != null) {
@@ -87,7 +87,7 @@ public class WidgetFragment extends Fragment {
                     }
                 }, error -> {
                     Log.e("ERROR", error.getMessage());
-                }, pageUid);
+                }, pageUid, apiClient.getApplicationName());
         });
     }
 

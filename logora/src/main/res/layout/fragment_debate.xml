@@ -136,18 +136,11 @@
         </RelativeLayout>
     </RelativeLayout>
 
-    <Spinner
-        android:id="@+id/argument_sort"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/argument_input_container"
-        android:spinnerMode="dropdown" />
-
     <FrameLayout
         android:id="@+id/argument_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/argument_sort" />
+        android:layout_below="@+id/argument_input_container"/>
 
     <com.logora.logora_sdk.views.TextWrapper
         android:id="@+id/related_debates_header"

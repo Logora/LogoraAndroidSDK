@@ -8,13 +8,10 @@ import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +27,8 @@ import com.logora.logora_sdk.dialogs.LoginDialog;
 import com.logora.logora_sdk.dialogs.SideDialog;
 import com.logora.logora_sdk.models.Argument;
 import com.logora.logora_sdk.models.Debate;
+import com.logora.logora_sdk.models.FilterOption;
+import com.logora.logora_sdk.models.SortOption;
 import com.logora.logora_sdk.utils.Auth;
 import com.logora.logora_sdk.utils.DateUtil;
 import com.logora.logora_sdk.utils.InputProvider;
@@ -43,6 +42,8 @@ import com.logora.logora_sdk.views.VoteBoxView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -51,7 +52,6 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
     private final InputProvider inputProvider = InputProvider.getInstance();
     private LogoraApiClient apiClient = LogoraApiClient.getInstance();
     private Settings settings = Settings.getInstance();
-    private Boolean spinnerSelected = false;
     private String debateSlug;
     private ProgressBar loader;
     private RelativeLayout debatePresentationContainerView;
@@ -61,7 +61,6 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
     private VoteBoxView voteBoxView;
     private ShareView shareView;
     private FollowDebateButtonView followDebateButtonView;
-    private Spinner argumentSortView;
     private PaginatedListFragment argumentList;
     private ArgumentAuthorBox argumentAuthorBox;
     private RelativeLayout argumentInputControls;
@@ -148,41 +147,21 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
             ArgumentListAdapter argumentListAdapter = new ArgumentListAdapter(debate, 0);
             this.argumentListAdapter = argumentListAdapter;
 
-            argumentList = new PaginatedListFragment(argumentResourceName, "CLIENT", argumentListAdapter, null);
-            argumentList.setSort("-score");
+            ArrayList<SortOption> argumentListSortOptions = new ArrayList<>();
+            argumentListSortOptions.add(new SortOption("Le plus récent", "-created_at", null));
+            argumentListSortOptions.add(new SortOption("Le plus pertinent", "-score", null));
+            argumentListSortOptions.add(new SortOption("Le plus ancien", "+created_at", null));
+
+            ArrayList<FilterOption> argumentListFilterOptions = new ArrayList<>();
+            argumentListFilterOptions.add(new FilterOption("Réponses", "is_reply", "true", null));
+
+            argumentList = new PaginatedListFragment(argumentResourceName, "CLIENT", argumentListAdapter, null, argumentListSortOptions, null);
+            /* TODO : argumentList.setSort("-score");*/
 
             getChildFragmentManager()
                     .beginTransaction()
                     .add(R.id.argument_list, argumentList)
                     .commit();
-        });
-
-        String[] sortOptions = getSpinnerOptions();
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, sortOptions);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        argumentSortView.setAdapter(adapter);
-        argumentSortView.setSelection(0);
-
-        argumentSortView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                if (spinnerSelected) {
-                    if (position == 0) {
-                        argumentList.setSort("-score");
-                    } else if (position == 1) {
-                        argumentList.setSort("-created_at");
-                    } else if (position == 2) {
-                        argumentList.setSort("+created_at");
-                    }
-                    argumentList.update();
-                } else {
-                    spinnerSelected = true;
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-            }
         });
     }
 
@@ -287,20 +266,11 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
         voteBoxView = view.findViewById(R.id.debate_vote_box);
         followDebateButtonView = view.findViewById(R.id.debate_follow_button);
         shareView = view.findViewById(R.id.debate_share);
-        argumentSortView = view.findViewById(R.id.argument_sort);
         debateTagList.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.HORIZONTAL, false));
         argumentAuthorBox = view.findViewById(R.id.argument_author_box_container);
         argumentInputControls = view.findViewById(R.id.argument_input_controls);
         argumentInput = view.findViewById(R.id.argument_input);
         argumentSend = view.findViewById(R.id.argument_input_send_button);
-    }
-
-    public String[] getSpinnerOptions() {
-        String trendingOption = getString(R.string.argument_sort_trending);
-        String recentOption = getString(R.string.argument_sort_recent);
-        String oldOption = getString(R.string.argument_sort_old);
-
-        return new String[]{trendingOption, recentOption, oldOption};
     }
 
     private void showToastMessage(String message) {

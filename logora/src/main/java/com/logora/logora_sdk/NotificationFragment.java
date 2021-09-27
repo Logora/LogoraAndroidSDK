@@ -33,7 +33,6 @@ public class NotificationFragment extends Fragment {
 
         findViews(view);
         String primaryColor = settings.get("theme.callPrimaryColor");
-        // TODO set animation on click for readAllButton
         readAllButton.setTextColor(Color.parseColor(primaryColor));
         readAllButton.setOnClickListener(v -> {
             this.apiClient.readAllNotifications(
@@ -48,7 +47,7 @@ public class NotificationFragment extends Fragment {
         });
 
         NotificationListAdapter notificationListAdapter = new NotificationListAdapter();
-        notificationList = new PaginatedListFragment("notifications", "USER", notificationListAdapter, null);
+        notificationList = new PaginatedListFragment("notifications", "USER", notificationListAdapter, null, null, null);
 
         getChildFragmentManager()
                 .beginTransaction()

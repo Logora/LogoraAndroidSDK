@@ -17,8 +17,12 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
 import com.logora.logora_sdk.adapters.UserBoxListAdapter;
 import com.logora.logora_sdk.adapters.UserMessagesListAdapter;
+import com.logora.logora_sdk.models.FilterOption;
+import com.logora.logora_sdk.models.SortOption;
 import com.logora.logora_sdk.utils.Settings;
 import com.logora.logora_sdk.view_models.UserShowViewModel;
+
+import java.util.ArrayList;
 
 /**
  * A {@link Fragment} subclass containing the user profile page.
@@ -83,10 +87,18 @@ public class UserFragment extends Fragment {
         UserBoxListAdapter userMentorsListAdapter = new UserBoxListAdapter();
         UserMessagesListAdapter userMessagesListAdapter = new UserMessagesListAdapter();
 
-        PaginatedListFragment userMessagesFragment = new PaginatedListFragment("users/" + userSlug + "/messages", "CLIENT", userMessagesListAdapter, null);
+        ArrayList<SortOption> argumentListSortOptions = new ArrayList<>();
+        argumentListSortOptions.add(new SortOption("Le plus récent", "-created_at", null));
+        argumentListSortOptions.add(new SortOption("Le plus pertinent", "-score", null));
+        argumentListSortOptions.add(new SortOption("Le plus ancien", "+created_at", null));
+
+        ArrayList<FilterOption> argumentListFilterOptions = new ArrayList<>();
+        argumentListFilterOptions.add(new FilterOption("Réponses", "is_reply", "true", null));
+
+        PaginatedListFragment userMessagesFragment = new PaginatedListFragment("users/" + userSlug + "/messages", "CLIENT", userMessagesListAdapter, null, argumentListSortOptions, argumentListFilterOptions);
         BadgeTabFragment userBadgesFragment = new BadgeTabFragment(userSlug);
-        PaginatedListFragment userDisciplesFragment = new PaginatedListFragment("users/" + userSlug + "/disciples", "CLIENT", userDisciplesListAdapter, null);
-        PaginatedListFragment userMentorsFragment = new PaginatedListFragment("users/" + userSlug + "/mentors", "CLIENT", userMentorsListAdapter, null);
+        PaginatedListFragment userDisciplesFragment = new PaginatedListFragment("users/" + userSlug + "/disciples", "CLIENT", userDisciplesListAdapter, null, null, null);
+        PaginatedListFragment userMentorsFragment = new PaginatedListFragment("users/" + userSlug + "/mentors", "CLIENT", userMentorsListAdapter, null, null, null);
 
         getChildFragmentManager()
                 .beginTransaction()

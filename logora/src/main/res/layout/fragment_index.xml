@@ -21,21 +21,16 @@
     <View
         android:id="@+id/main_debate_box"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </View>
-
-    <Spinner
-        android:id="@+id/sort_select"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/main_debate_header"
-        android:spinnerMode="dropdown" />
+        android:layout_marginTop="15dp"
+        android:layout_below="@+id/main_debate_header">
+    </View>
 
     <FrameLayout
         android:id="@+id/trending_debates_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/sort_select" />
+        android:layout_below="@id/main_debate_box" />
 
     <com.logora.logora_sdk.views.TextWrapper
         android:id="@+id/trending_users_header"

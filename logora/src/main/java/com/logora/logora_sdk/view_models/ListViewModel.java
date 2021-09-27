@@ -27,6 +27,7 @@ public class ListViewModel extends ViewModel {
     private Integer currentPage = 1;
     private Integer perPage = 10;
     private String sort = "-created_at";
+    private HashMap<String,String> filter = null;
     private String query = null;
     private HashMap<String,String> extraArguments;
 
@@ -54,6 +55,8 @@ public class ListViewModel extends ViewModel {
     public void setSort(String sort) {
         this.sort = sort;
     }
+
+    public void setFilter(HashMap<String, String> filter) { this.filter = filter ; }
 
     public String getSort() { return sort; }
 
@@ -96,12 +99,12 @@ public class ListViewModel extends ViewModel {
                     for (int i = 0; i < itemsJson.length(); i++) {
                         this.items.add(itemsJson.getJSONObject(i));
                     }
-
                     JSONObject headers = response.getJSONObject("headers");
                     this.total = headers.getInt("Total");
                     this.totalPages = headers.getInt("Total-Pages");
 
                     itemsLiveData.setValue(this.items);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                     itemsLiveData.setValue(new ArrayList<>());
@@ -110,6 +113,6 @@ public class ListViewModel extends ViewModel {
             error -> {
                 Log.i("ERROR", String.valueOf(error));
                 itemsLiveData.setValue(new ArrayList<>());
-            }, this.resourceName, this.resourceType, this.currentPage, this.perPage, this.sort, 0, this.query, this.extraArguments);
+            }, this.resourceName, this.resourceType, this.currentPage, this.perPage, this.sort, 0, this.query, this.extraArguments, this.filter);
     }
 }

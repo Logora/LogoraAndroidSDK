@@ -16,11 +16,19 @@
         android:text="@string/list_empty"
         android:visibility="gone" />
 
+    <Spinner
+        android:id="@+id/sort_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:spinnerMode="dropdown"
+        android:visibility="gone" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:nestedScrollingEnabled="false"
+        android:layout_below="@id/sort_view"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     <ProgressBar
