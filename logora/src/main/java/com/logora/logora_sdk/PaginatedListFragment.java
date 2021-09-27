@@ -62,7 +62,6 @@ public class PaginatedListFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_paginated_list, container, false);
 
         findViews(view);
-
         recyclerView.setAdapter(listAdapter);
 
         init();
@@ -115,7 +114,6 @@ public class PaginatedListFragment extends Fragment {
 
     public void init() {
         showLoader();
-        Log.e("INIT", "true");
 
         listViewModel.getList().observe(getViewLifecycleOwner(), itemList -> {
             if(itemList.size() == 0) {
@@ -136,7 +134,6 @@ public class PaginatedListFragment extends Fragment {
     }
 
     public void update() {
-        Log.e("UPDATE", "true");
         showLoader();
 
         listViewModel.resetList().observe(getViewLifecycleOwner(), itemList -> {
@@ -144,6 +141,7 @@ public class PaginatedListFragment extends Fragment {
                 loader.setVisibility(View.GONE);
                 emptyView.setVisibility(View.VISIBLE);
             } else {
+                Log.e("ITEM LIST", String.valueOf(itemList));
                 listAdapter.update(itemList);
                 loader.setVisibility(View.GONE);
                 recyclerView.setVisibility(View.VISIBLE);

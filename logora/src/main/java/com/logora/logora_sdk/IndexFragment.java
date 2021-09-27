@@ -13,7 +13,10 @@ import androidx.fragment.app.Fragment;
 
 import com.logora.logora_sdk.adapters.DebateBoxListAdapter;
 import com.logora.logora_sdk.adapters.UserBoxListAdapter;
+import com.logora.logora_sdk.models.SortOption;
 import com.logora.logora_sdk.utils.Router;
+
+import java.util.ArrayList;
 
 /**
  * A {@link Fragment} subclass containing the debate space index.
@@ -33,7 +36,12 @@ public class IndexFragment extends Fragment {
         String userResourceName = "users/index/trending";
         UserBoxListAdapter userListAdapter = new UserBoxListAdapter();
 
-        debateList = new PaginatedListFragment(debateResourceName, "CLIENT", debateListAdapter, null, null, null);
+        ArrayList<SortOption> debateListSortOptions = new ArrayList<>();
+        debateListSortOptions.add(new SortOption("Le plus récent", "-created_at", null));
+        debateListSortOptions.add(new SortOption("Le plus pertinent", "-score", null));
+        debateListSortOptions.add(new SortOption("Le plus ancien", "+created_at", null));
+
+        debateList = new PaginatedListFragment(debateResourceName, "CLIENT", debateListAdapter, null, debateListSortOptions, null);
 
         getChildFragmentManager()
                 .beginTransaction()
