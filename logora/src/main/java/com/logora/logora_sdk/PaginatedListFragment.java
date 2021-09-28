@@ -176,7 +176,6 @@ public class PaginatedListFragment extends Fragment {
         List<String> finalOptions = new ArrayList<>();
         for(SortOption sortOption: sortOptions) {
             if (this.currentSort != null) {
-                Log.e("CURRENTSORT PASSED : ", currentSort);
                 if (sortOption.getValue().equals(this.currentSort)) {
                     finalOptions.add(0, sortOption.getName());
                 } else {

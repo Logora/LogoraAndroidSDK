@@ -5,6 +5,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.logora.logora_sdk.utils.ApplicationErrorHandler;
 import com.logora.logora_sdk.utils.Auth;
 import com.logora.logora_sdk.utils.LogoraApiClient;
 import com.logora.logora_sdk.utils.Route;
@@ -24,6 +26,7 @@ public class LogoraAppActivity extends AppCompatActivity implements Router.Route
         super.onCreate(savedInstanceState);
         setContentView(R.layout.root_activity);
         getSupportActionBar().hide();
+        Thread.setDefaultUncaughtExceptionHandler(new ApplicationErrorHandler(getApplicationContext()));
         this.parseParams();
         this.apiClient = LogoraApiClient.getInstance(this.applicationName,
                 this.authAssertion, getBaseContext());

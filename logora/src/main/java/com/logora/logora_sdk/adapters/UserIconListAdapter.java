@@ -35,7 +35,9 @@ public class UserIconListAdapter extends ListAdapter {
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
         UserIcon userIcon = this.getObjectFromJson(this.items.get(position));
-        holder.updateWithObject(userIcon);
+        if( userIcon != null) {
+            holder.updateWithObject(userIcon);
+        }
     }
 
     @Override

@@ -43,7 +43,9 @@ public class ArgumentListAdapter extends ListAdapter {
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
         Argument argument = this.getObjectFromJson(this.items.get(position));
-        holder.updateWithObject(argument);
+        if (argument != null) {
+            holder.updateWithObject(argument);
+        }
     }
 
     @Override

@@ -39,8 +39,9 @@ public class DebateBoxListAdapter extends ListAdapter {
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
         DebateBox debateBox = this.getObjectFromJson(this.items.get(position));
-
-        holder.updateWithObject(debateBox);
+        if (debateBox != null) {
+            holder.updateWithObject(debateBox);
+        }
 
         holder.itemView.setOnClickListener(v -> {
             HashMap<String, String> routeParams = new HashMap<>();

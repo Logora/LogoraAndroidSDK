@@ -39,12 +39,14 @@ public class TagListAdapter extends ListAdapter {
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
         Tag tag = this.getObjectFromJson(this.items.get(position));
-        holder.updateWithObject(tag);
-        holder.itemView.setOnClickListener(v -> {
-            HashMap<String, String> routeParams = new HashMap<>();
-            routeParams.put("q", tag.getDisplayName());
-            router.navigate(Router.getRoute("SEARCH"), routeParams);
-        });
+        if (tag != null) {
+            holder.updateWithObject(tag);
+            holder.itemView.setOnClickListener(v -> {
+                HashMap<String, String> routeParams = new HashMap<>();
+                routeParams.put("q", tag.getDisplayName());
+                router.navigate(Router.getRoute("SEARCH"), routeParams);
+            });
+        }
     }
 
     @Override
