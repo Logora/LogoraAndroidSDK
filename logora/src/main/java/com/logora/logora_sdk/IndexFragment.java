@@ -41,12 +41,12 @@ public class IndexFragment extends Fragment {
         debateListSortOptions.add(new SortOption("Le plus pertinent", "-score", null));
         debateListSortOptions.add(new SortOption("Le plus ancien", "+created_at", null));
 
-        debateList = new PaginatedListFragment(debateResourceName, "CLIENT", debateListAdapter, null, debateListSortOptions, null);
+        debateList = new PaginatedListFragment(debateResourceName, "CLIENT", debateListAdapter, null, debateListSortOptions, null, "-created_at");
 
         getChildFragmentManager()
                 .beginTransaction()
                 .add(R.id.trending_debates_list, debateList)
-                .add(R.id.trending_users_list, new PaginatedListFragment(userResourceName, "CLIENT", userListAdapter, null, null, null))
+                .add(R.id.trending_users_list, new PaginatedListFragment(userResourceName, "CLIENT", userListAdapter, null, null, null, null))
                 .commit();
     }
 }

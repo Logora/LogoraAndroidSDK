@@ -33,13 +33,14 @@ public class PaginatedListFragment extends Fragment {
     private TextView emptyView;
     private final ArrayList<SortOption> sortOptions;
     private final ArrayList<FilterOption> filterOptions;
-    // TODO: add currentSort
+    private String currentSort;
 
 
-    public PaginatedListFragment(String resourceName, String resourceType, ListAdapter listAdapter, HashMap<String,String> extraArguments, ArrayList<SortOption> sortOptions, ArrayList<FilterOption> filterOptions) {
+    public PaginatedListFragment(String resourceName, String resourceType, ListAdapter listAdapter, HashMap<String,String> extraArguments, ArrayList<SortOption> sortOptions, ArrayList<FilterOption> filterOptions, String currentSort) {
         this.listAdapter = listAdapter;
         this.sortOptions = sortOptions;
         this.filterOptions = filterOptions;
+        this.currentSort = currentSort;
         listViewModel = new ListViewModel(resourceName, resourceType);
         if(extraArguments != null) {
             listViewModel.setExtraArguments(extraArguments);
@@ -47,6 +48,7 @@ public class PaginatedListFragment extends Fragment {
     }
 
     public void setSort(String sort) {
+        this.currentSort = sort;
         this.listViewModel.setSort(sort);
     }
 
@@ -172,8 +174,17 @@ public class PaginatedListFragment extends Fragment {
 
     public List<String> getSpinnerOptions() {
         List<String> finalOptions = new ArrayList<>();
-        for(int i = 0; i < sortOptions.size(); i++){
-             finalOptions.add(sortOptions.get(i).getName());
+        for(SortOption sortOption: sortOptions) {
+            if (this.currentSort != null) {
+                Log.e("CURRENTSORT PASSED : ", currentSort);
+                if (sortOption.getValue().equals(this.currentSort)) {
+                    finalOptions.add(0, sortOption.getName());
+                } else {
+                    finalOptions.add(sortOption.getName());
+                }
+            } else {
+                finalOptions.add(sortOption.getName());
+            }
         }
         if(filterOptions != null) {
             for(int i = 0; i < filterOptions.size(); i++){

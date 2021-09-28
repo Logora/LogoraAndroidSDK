@@ -87,9 +87,11 @@ public class LogoraApiClient {
         queryParams.put("per_page", String.valueOf(perPage));
         queryParams.put("sort", sort);
         queryParams.put("outset", String.valueOf(outset));
-        queryParams.put("query", String.valueOf(query));
         if (filter != null) {
             queryParams.putAll(filter);
+        }
+        if (query != null) {
+            queryParams.put("query", query);
         }
         if(extraArguments != null) {
             queryParams.putAll(extraArguments);

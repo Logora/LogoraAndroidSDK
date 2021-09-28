@@ -81,32 +81,32 @@ public class UserFragment extends Fragment {
             Glide.with(userImageView.getContext())
                     .load(Uri.parse(user.getImageUrl()))
                     .into(userImageView);
+
+            UserBoxListAdapter userDisciplesListAdapter = new UserBoxListAdapter();
+            UserBoxListAdapter userMentorsListAdapter = new UserBoxListAdapter();
+            UserMessagesListAdapter userMessagesListAdapter = new UserMessagesListAdapter();
+
+            ArrayList<SortOption> argumentListSortOptions = new ArrayList<>();
+            argumentListSortOptions.add(new SortOption("Le plus récent", "-created_at", null));
+            argumentListSortOptions.add(new SortOption("Le plus pertinent", "-score", null));
+            argumentListSortOptions.add(new SortOption("Le plus ancien", "+created_at", null));
+
+            ArrayList<FilterOption> argumentListFilterOptions = new ArrayList<>();
+            argumentListFilterOptions.add(new FilterOption("Réponses", "is_reply", "true", null));
+
+            PaginatedListFragment userMessagesFragment = new PaginatedListFragment("users/" + userSlug + "/messages", "CLIENT", userMessagesListAdapter, null, argumentListSortOptions, argumentListFilterOptions, "-score");
+            BadgeTabFragment userBadgesFragment = new BadgeTabFragment(userSlug);
+            PaginatedListFragment userDisciplesFragment = new PaginatedListFragment("users/" + userSlug + "/disciples", "CLIENT", userDisciplesListAdapter, null, null, null, null);
+            PaginatedListFragment userMentorsFragment = new PaginatedListFragment("users/" + userSlug + "/mentors", "CLIENT", userMentorsListAdapter, null, null, null, null);
+
+            getChildFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.user_arguments_list, userMessagesFragment)
+                    .add(R.id.user_badges_list, userBadgesFragment)
+                    .add(R.id.user_disciples_list, userDisciplesFragment)
+                    .add(R.id.user_mentors_list, userMentorsFragment)
+                    .commit();
         });
-
-        UserBoxListAdapter userDisciplesListAdapter = new UserBoxListAdapter();
-        UserBoxListAdapter userMentorsListAdapter = new UserBoxListAdapter();
-        UserMessagesListAdapter userMessagesListAdapter = new UserMessagesListAdapter();
-
-        ArrayList<SortOption> argumentListSortOptions = new ArrayList<>();
-        argumentListSortOptions.add(new SortOption("Le plus récent", "-created_at", null));
-        argumentListSortOptions.add(new SortOption("Le plus pertinent", "-score", null));
-        argumentListSortOptions.add(new SortOption("Le plus ancien", "+created_at", null));
-
-        ArrayList<FilterOption> argumentListFilterOptions = new ArrayList<>();
-        argumentListFilterOptions.add(new FilterOption("Réponses", "is_reply", "true", null));
-
-        PaginatedListFragment userMessagesFragment = new PaginatedListFragment("users/" + userSlug + "/messages", "CLIENT", userMessagesListAdapter, null, argumentListSortOptions, argumentListFilterOptions);
-        BadgeTabFragment userBadgesFragment = new BadgeTabFragment(userSlug);
-        PaginatedListFragment userDisciplesFragment = new PaginatedListFragment("users/" + userSlug + "/disciples", "CLIENT", userDisciplesListAdapter, null, null, null);
-        PaginatedListFragment userMentorsFragment = new PaginatedListFragment("users/" + userSlug + "/mentors", "CLIENT", userMentorsListAdapter, null, null, null);
-
-        getChildFragmentManager()
-                .beginTransaction()
-                .add(R.id.user_arguments_list, userMessagesFragment)
-                .add(R.id.user_badges_list, userBadgesFragment)
-                .add(R.id.user_disciples_list, userDisciplesFragment)
-                .add(R.id.user_mentors_list, userMentorsFragment)
-                .commit();
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

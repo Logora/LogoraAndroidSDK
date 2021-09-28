@@ -158,8 +158,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
             ArrayList<FilterOption> argumentListFilterOptions = new ArrayList<>();
             argumentListFilterOptions.add(new FilterOption("Réponses", "is_reply", "true", null));
 
-            argumentList = new PaginatedListFragment(argumentResourceName, "CLIENT", argumentListAdapter, null, argumentListSortOptions, null);
-            /* TODO : argumentList.setSort("-score");*/
+            argumentList = new PaginatedListFragment(argumentResourceName, "CLIENT", argumentListAdapter, null, argumentListSortOptions, null, "-score");
 
             getChildFragmentManager()
                     .beginTransaction()
@@ -169,7 +168,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
             String relatedDebateResourceName = "groups/" + debate.getSlug() + "/related";
             this.relatedDebateListAdapter = new DebateBoxListAdapter();
 
-            relatedDebateList = new PaginatedListFragment(relatedDebateResourceName, "CLIENT", relatedDebateListAdapter, null, null, null);
+            relatedDebateList = new PaginatedListFragment(relatedDebateResourceName, "CLIENT", relatedDebateListAdapter, null, null, null, null);
 
             getChildFragmentManager()
                     .beginTransaction()

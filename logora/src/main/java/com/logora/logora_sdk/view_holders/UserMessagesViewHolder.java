@@ -1,6 +1,7 @@
 package com.logora.logora_sdk.view_holders;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 

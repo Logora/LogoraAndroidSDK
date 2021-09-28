@@ -44,7 +44,11 @@ public class Argument extends Model {
                 argument.setParentArgumentId(Integer.parseInt(replyToId));
             }
 
-            argument.setRepliesCount(jsonObject.getInt("number_replies"));
+            if(jsonObject.has("number_replies")) {
+                argument.setRepliesCount(jsonObject.getInt("number_replies"));
+            } else {
+                argument.setRepliesCount(0);
+            }
             argument.setPositionIndex(0);
 
             if (jsonObject.has("group")) {
@@ -60,12 +64,14 @@ public class Argument extends Model {
             }
             argument.setVotesList(votesList);
 
-            JSONArray repliesAuthorsObjects = jsonObject.getJSONArray("replies_authors");
-            List<JSONObject> repliesAuthorsList = new ArrayList<>();
-            for (int i=0; i < repliesAuthorsObjects.length(); i++){
-                repliesAuthorsList.add(repliesAuthorsObjects.getJSONObject(i));
+            if (jsonObject.has("replies_authors")) {
+                JSONArray repliesAuthorsObjects = jsonObject.getJSONArray("replies_authors");
+                List<JSONObject> repliesAuthorsList = new ArrayList<>();
+                for (int i = 0; i < repliesAuthorsObjects.length(); i++) {
+                    repliesAuthorsList.add(repliesAuthorsObjects.getJSONObject(i));
+                }
+                argument.setRepliesAuthorsList(repliesAuthorsList);
             }
-            argument.setRepliesAuthorsList(repliesAuthorsList);
 
             return argument;
         } catch (JSONException e) {

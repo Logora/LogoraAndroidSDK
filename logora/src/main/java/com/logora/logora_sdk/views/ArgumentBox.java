@@ -189,7 +189,7 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
         argumentRepliesList.setId(argumentBoxId);
         String resourceName = "messages/" + argument.getId() + "/replies";
         repliesListAdapter = new ArgumentListAdapter(debate, depth + 1);
-        repliesList = new PaginatedListFragment(resourceName, "CLIENT", repliesListAdapter, null, null, null);
+        repliesList = new PaginatedListFragment(resourceName, "CLIENT", repliesListAdapter, null, null, null, null);
 
         fragmentManager = ((AppCompatActivity) getContext()).getSupportFragmentManager();
 
