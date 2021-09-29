@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -85,96 +86,100 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        inputProvider.setListener(this);
-        findViews(view);
+        try {
+            super.onViewCreated(view, savedInstanceState);
+            inputProvider.setListener(this);
+            findViews(view);
 
-        TagListAdapter debateTagListAdapter = new TagListAdapter();
+            TagListAdapter debateTagListAdapter = new TagListAdapter();
 
-        debatePresentationContainerView.setVisibility(View.GONE);
-        loader.setVisibility(View.VISIBLE);
+            debatePresentationContainerView.setVisibility(View.GONE);
+            loader.setVisibility(View.VISIBLE);
 
-        DebateShowViewModel debateShowViewModel = new DebateShowViewModel();
-        debateShowViewModel.getDebate(this.debateSlug).observe(getViewLifecycleOwner(), debate -> {
-            this.debate = debate;
-            debateNameView.setText(debate.getName());
+            DebateShowViewModel debateShowViewModel = new DebateShowViewModel();
+            debateShowViewModel.getDebate(this.debateSlug).observe(getViewLifecycleOwner(), debate -> {
+                this.debate = debate;
+                debateNameView.setText(debate.getName());
 
-            // Argument Input
-            argumentAuthorBox.init(null);
-            String primaryColor = settings.get("theme.callPrimaryColor");
-            LayerDrawable shape = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.button_primary_background);
-            GradientDrawable gradientDrawable = (GradientDrawable) shape.findDrawableByLayerId(R.id.shape);
-            gradientDrawable.setColor(Color.parseColor(primaryColor));
-            argumentSend.setBackground(shape);
-            argumentInputControls.setVisibility(View.GONE);
-            argumentInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View view, boolean hasFocus) {
-                    if (hasFocus) {
-                        if(auth.getIsLoggedIn()) {
-                            argumentInputControls.setVisibility(View.VISIBLE);
-                        } else {
-                            argumentInput.clearFocus();
-                            LoginDialog.show(getContext());
+                // Argument Input
+                argumentAuthorBox.init(null);
+                String primaryColor = settings.get("theme.callPrimaryColor");
+                LayerDrawable shape = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.button_primary_background);
+                GradientDrawable gradientDrawable = (GradientDrawable) shape.findDrawableByLayerId(R.id.shape);
+                gradientDrawable.setColor(Color.parseColor(primaryColor));
+                argumentSend.setBackground(shape);
+                argumentInputControls.setVisibility(View.GONE);
+                argumentInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View view, boolean hasFocus) {
+                        if (hasFocus) {
+                            if (auth.getIsLoggedIn()) {
+                                argumentInputControls.setVisibility(View.VISIBLE);
+                            } else {
+                                argumentInput.clearFocus();
+                                LoginDialog.show(getContext());
+                            }
                         }
                     }
-                }
-            });
+                });
 
-            argumentSend.setOnClickListener(v -> {
-                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-                if (inputProvider.getUpdateArgument() != null) {
-                    try {
-                        updateArgument(inputProvider.getUpdateArgument());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                argumentSend.setOnClickListener(v -> {
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                    imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                    if (inputProvider.getUpdateArgument() != null) {
+                        try {
+                            updateArgument(inputProvider.getUpdateArgument());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        createArgument(null);
                     }
-                } else {
-                    createArgument(null);
-                }
+                });
+
+                debatePublishedDateView.setText(DateUtil.getDateText(debate.getPublishedDate()));
+                debateTagListAdapter.setItems(debate.getTagList());
+                debateTagList.setAdapter(debateTagListAdapter);
+
+                voteBoxView.init(debate);
+
+                followDebateButtonView.init(debate);
+                shareView.setShareText(debate.getName());
+                loader.setVisibility(View.GONE);
+                debatePresentationContainerView.setVisibility(View.VISIBLE);
+
+                String argumentResourceName = "groups/" + debate.getSlug() + "/messages";
+                ArgumentListAdapter argumentListAdapter = new ArgumentListAdapter(debate, 0);
+                this.argumentListAdapter = argumentListAdapter;
+
+                ArrayList<SortOption> argumentListSortOptions = new ArrayList<>();
+                argumentListSortOptions.add(new SortOption("Le plus récent", "-created_at", null));
+                argumentListSortOptions.add(new SortOption("Le plus pertinent", "-score", null));
+                argumentListSortOptions.add(new SortOption("Le plus ancien", "+created_at", null));
+
+                ArrayList<FilterOption> argumentListFilterOptions = new ArrayList<>();
+                argumentListFilterOptions.add(new FilterOption("Réponses", "is_reply", "true", null));
+
+                argumentList = new PaginatedListFragment(argumentResourceName, "CLIENT", argumentListAdapter, null, argumentListSortOptions, null, "-score");
+
+                getChildFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.argument_list, argumentList)
+                        .commit();
+
+                String relatedDebateResourceName = "groups/" + debate.getSlug() + "/related";
+                this.relatedDebateListAdapter = new DebateBoxListAdapter();
+
+                relatedDebateList = new PaginatedListFragment(relatedDebateResourceName, "CLIENT", relatedDebateListAdapter, null, null, null, null);
+
+                getChildFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.related_debates_list, relatedDebateList)
+                        .commit();
             });
-
-            debatePublishedDateView.setText(DateUtil.getDateText(debate.getPublishedDate()));
-            debateTagListAdapter.setItems(debate.getTagList());
-            debateTagList.setAdapter(debateTagListAdapter);
-
-            voteBoxView.init(debate);
-
-            followDebateButtonView.init(debate);
-            shareView.setShareText(debate.getName());
-            loader.setVisibility(View.GONE);
-            debatePresentationContainerView.setVisibility(View.VISIBLE);
-
-            String argumentResourceName = "groups/" + debate.getSlug() + "/messages";
-            ArgumentListAdapter argumentListAdapter = new ArgumentListAdapter(debate, 0);
-            this.argumentListAdapter = argumentListAdapter;
-
-            ArrayList<SortOption> argumentListSortOptions = new ArrayList<>();
-            argumentListSortOptions.add(new SortOption("Le plus récent", "-created_at", null));
-            argumentListSortOptions.add(new SortOption("Le plus pertinent", "-score", null));
-            argumentListSortOptions.add(new SortOption("Le plus ancien", "+created_at", null));
-
-            ArrayList<FilterOption> argumentListFilterOptions = new ArrayList<>();
-            argumentListFilterOptions.add(new FilterOption("Réponses", "is_reply", "true", null));
-
-            argumentList = new PaginatedListFragment(argumentResourceName, "CLIENT", argumentListAdapter, null, argumentListSortOptions, null, "-score");
-
-            getChildFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.argument_list, argumentList)
-                    .commit();
-
-            String relatedDebateResourceName = "groups/" + debate.getSlug() + "/related";
-            this.relatedDebateListAdapter = new DebateBoxListAdapter();
-
-            relatedDebateList = new PaginatedListFragment(relatedDebateResourceName, "CLIENT", relatedDebateListAdapter, null, null, null, null);
-
-            getChildFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.related_debates_list, relatedDebateList)
-                    .commit();
-        });
+        } catch(Exception e) {
+            Toast.makeText(getContext(), "Une erreur est survenue", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void openSideDialog() {

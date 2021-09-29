@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import com.logora.logora_sdk.models.DebateSynthesis;
@@ -44,10 +45,12 @@ public class WidgetFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_widget, container, false);
-
-        findViews(view);
-
-        getDebate();
+        try {
+            findViews(view);
+            getDebate();
+        } catch(Exception e) {
+            Toast.makeText(getContext(), "Une erreur est survenue", Toast.LENGTH_LONG).show();
+        }
 
         return view;
     }
@@ -86,7 +89,7 @@ public class WidgetFragment extends Fragment {
                         e.printStackTrace();
                     }
                 }, error -> {
-                    Log.e("ERROR", error.getMessage());
+                    Log.e("ERROR", String.valueOf(error));
                 }, pageUid, apiClient.getApplicationName());
         });
     }

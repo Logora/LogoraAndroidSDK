@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -36,60 +37,66 @@ public class SearchFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        try {
+            super.onViewCreated(view, savedInstanceState);
 
-        findViews(view);
+            findViews(view);
 
-        String newHeader = textHeader.getText().toString() + ' ' + '"' + query + '"';
-        textHeader.setText(newHeader);
+            String newHeader = textHeader.getText().toString() + ' ' + '"' + query + '"';
+            textHeader.setText(newHeader);
 
-        TabLayout.Tab debateTab = tabLayout.getTabAt(0);
-        TabLayout.Tab userTab = tabLayout.getTabAt(1);
+            TabLayout.Tab debateTab = tabLayout.getTabAt(0);
+            TabLayout.Tab userTab = tabLayout.getTabAt(1);
 
-        String debateTabText = settings.get("infoDebate");
-        String userTabText = settings.get("infoDebaters");
-        if(debateTabText != null) {
-            debateTab.setText(debateTabText);
-        }
-        if(userTabText != null) {
-            userTab.setText(userTabText);
-        }
-
-        setStyles();
-
-        DebateBoxListAdapter debateListAdapter = new DebateBoxListAdapter();
-        UserBoxListAdapter userListAdapter = new UserBoxListAdapter();
-
-        PaginatedListFragment debateListFragment = new PaginatedListFragment("groups", "CLIENT", debateListAdapter, null, null, null, null);
-        debateListFragment.setQuery(query);
-        PaginatedListFragment userListFragment = new PaginatedListFragment("users", "CLIENT", userListAdapter, null, null, null, null);
-        userListFragment.setQuery(query);
-
-        getChildFragmentManager()
-                .beginTransaction()
-                .add(R.id.debate_list, debateListFragment)
-                .add(R.id.user_list, userListFragment)
-                .commit();
-
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                int position = tab.getPosition();
-                if(position == 0) {
-                    debateResultsContainer.setVisibility(View.VISIBLE);
-                    userResultsContainer.setVisibility(View.GONE);
-                } else if(position == 1) {
-                    debateResultsContainer.setVisibility(View.GONE);
-                    userResultsContainer.setVisibility(View.VISIBLE);
-                }
+            String debateTabText = settings.get("infoDebate");
+            String userTabText = settings.get("infoDebaters");
+            if (debateTabText != null) {
+                debateTab.setText(debateTabText);
+            }
+            if (userTabText != null) {
+                userTab.setText(userTabText);
             }
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {}
+            setStyles();
 
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {}
-        });
+            DebateBoxListAdapter debateListAdapter = new DebateBoxListAdapter();
+            UserBoxListAdapter userListAdapter = new UserBoxListAdapter();
+
+            PaginatedListFragment debateListFragment = new PaginatedListFragment("groups", "CLIENT", debateListAdapter, null, null, null, null);
+            debateListFragment.setQuery(query);
+            PaginatedListFragment userListFragment = new PaginatedListFragment("users", "CLIENT", userListAdapter, null, null, null, null);
+            userListFragment.setQuery(query);
+
+            getChildFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.debate_list, debateListFragment)
+                    .add(R.id.user_list, userListFragment)
+                    .commit();
+
+            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    int position = tab.getPosition();
+                    if (position == 0) {
+                        debateResultsContainer.setVisibility(View.VISIBLE);
+                        userResultsContainer.setVisibility(View.GONE);
+                    } else if (position == 1) {
+                        debateResultsContainer.setVisibility(View.GONE);
+                        userResultsContainer.setVisibility(View.VISIBLE);
+                    }
+                }
+
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+                }
+            });
+        } catch(Exception e) {
+            Toast.makeText(getContext(), "Une erreur est survenue", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void setStyles() {

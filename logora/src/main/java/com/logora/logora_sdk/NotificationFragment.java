@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -29,30 +30,34 @@ public class NotificationFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        try {
+            super.onViewCreated(view, savedInstanceState);
 
-        findViews(view);
-        String primaryColor = settings.get("theme.callPrimaryColor");
-        readAllButton.setTextColor(Color.parseColor(primaryColor));
-        readAllButton.setOnClickListener(v -> {
-            this.apiClient.readAllNotifications(
-                response -> {
-                    try {
-                        boolean success = response.getBoolean("success");
-                        notificationList.update();
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }, Throwable::printStackTrace);
-        });
+            findViews(view);
+            String primaryColor = settings.get("theme.callPrimaryColor");
+            readAllButton.setTextColor(Color.parseColor(primaryColor));
+            readAllButton.setOnClickListener(v -> {
+                this.apiClient.readAllNotifications(
+                        response -> {
+                            try {
+                                boolean success = response.getBoolean("success");
+                                notificationList.update();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }, Throwable::printStackTrace);
+            });
 
-        NotificationListAdapter notificationListAdapter = new NotificationListAdapter();
-        notificationList = new PaginatedListFragment("notifications", "USER", notificationListAdapter, null, null, null, null);
+            NotificationListAdapter notificationListAdapter = new NotificationListAdapter();
+            notificationList = new PaginatedListFragment("notifications", "USER", notificationListAdapter, null, null, null, null);
 
-        getChildFragmentManager()
-                .beginTransaction()
-                .add(R.id.notification_list_container, notificationList)
-                .commit();
+            getChildFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.notification_list_container, notificationList)
+                    .commit();
+        } catch(Exception e) {
+            Toast.makeText(getContext(), "Une erreur est survenue", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void findViews(View view) {

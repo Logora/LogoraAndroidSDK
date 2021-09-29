@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import com.logora.logora_sdk.adapters.ListAdapter;
@@ -62,53 +64,61 @@ public class PaginatedListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                               Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_paginated_list, container, false);
+        try {
+            findViews(view);
+            recyclerView.setAdapter(listAdapter);
 
-        findViews(view);
-        recyclerView.setAdapter(listAdapter);
-
-        init();
-
-        paginationButton.setOnClickListener(v -> {
-            loader.setVisibility(View.VISIBLE);
-            paginationButton.setVisibility(View.GONE);
-            listViewModel.incrementCurrentPage();
-            listViewModel.updateList().observe(getViewLifecycleOwner(), itemList -> loader.setVisibility(View.GONE));
-        });
-
-        if (sortOptions != null) {
-            sortView.setVisibility(View.VISIBLE);
-            List<String> spinnerOptions = getSpinnerOptions();
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, spinnerOptions);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            sortView.setAdapter(adapter);
-            sortView.setSelection(0);
-
-            sortView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                    if (spinnerSelected) {
-                        if(filterOptions != null) {
-                            if (position <= sortOptions.size() - 1) {
-                                setSort(sortOptions.get(position).getValue());
-                            } else {
-                                FilterOption currentFilter = filterOptions.get(position - sortOptions.size());
-                                HashMap<String, String> finalFilter = new HashMap<>();
-                                finalFilter.put(currentFilter.getApiName(), currentFilter.getValue());
-                                setFilter(finalFilter);
-                            }
-                        } else {
-                            setSort(sortOptions.get(position).getValue());
-                        }
-                        update();
-                    } else {
-                        spinnerSelected = true;
-                    }
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> parentView) {
-                }
+            init();
+            paginationButton.setOnClickListener(v -> {
+                loader.setVisibility(View.VISIBLE);
+                paginationButton.setVisibility(View.GONE);
+                listViewModel.incrementCurrentPage();
+                listViewModel.updateList().observe(getViewLifecycleOwner(), itemList -> loader.setVisibility(View.GONE));
             });
+
+            if (sortOptions != null) {
+                sortView.setVisibility(View.VISIBLE);
+                List<String> spinnerOptions = getSpinnerOptions();
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, spinnerOptions);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                sortView.setAdapter(adapter);
+                sortView.setSelection(0);
+
+                sortView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                        if (spinnerSelected) {
+                            if(filterOptions != null) {
+                                if (position <= sortOptions.size() - 1) {
+                                    setSort(sortOptions.get(position).getValue());
+                                } else {
+                                    FilterOption currentFilter = filterOptions.get(position - sortOptions.size());
+                                    HashMap<String, String> finalFilter = new HashMap<>();
+                                    finalFilter.put(currentFilter.getApiName(), currentFilter.getValue());
+                                    setFilter(finalFilter);
+                                }
+                            } else {
+                                setSort(sortOptions.get(position).getValue());
+                            }
+                            update();
+                        } else {
+                            spinnerSelected = true;
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parentView) {
+                    }
+                });
+            }
+
+            return view;
+        } catch(Exception e) {
+            Toast.makeText(getContext(), "Une erreur est survenue", Toast.LENGTH_LONG).show();
+            sortView.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.GONE);
+            emptyView.setVisibility(View.VISIBLE);
+            loader.setVisibility(View.GONE);
         }
 
         return view;
