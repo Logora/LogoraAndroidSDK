@@ -74,8 +74,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:gravity="center_vertical"
-                android:textColor="@color/text_secondary"
-                android:text="@string/debate_box_vote_percentage" />
+                android:text="@string/debate_box_vote_percentage"
+                android:textColor="@color/text_secondary" />
 
         </RelativeLayout>
 

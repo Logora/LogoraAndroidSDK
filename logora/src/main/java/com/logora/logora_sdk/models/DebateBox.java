@@ -32,12 +32,14 @@ public class DebateBox extends Model {
             debateBox.setImageUrl(jsonObject.getString("image_url"));
             debateBox.setUsersCount(jsonObject.getInt("participants_count"));
 
-            JSONArray userObjects = jsonObject.getJSONArray("participants");
-            List<JSONObject> userList = new ArrayList<>();
-            for (int i=0; i < userObjects.length(); i++){
-                userList.add(userObjects.getJSONObject(i));
+            if (jsonObject.has("participants")) {
+                JSONArray userObjects = jsonObject.getJSONArray("participants");
+                List<JSONObject> userList = new ArrayList<>();
+                for (int i = 0; i < userObjects.length(); i++) {
+                    userList.add(userObjects.getJSONObject(i));
+                }
+                debateBox.setUserList(userList);
             }
-            debateBox.setUserList(userList);
 
             JSONArray debatePositions = jsonObject.getJSONObject("group_context").getJSONArray("positions");
             JSONObject votesCount = jsonObject.getJSONObject("votes_count");
@@ -101,7 +103,7 @@ public class DebateBox extends Model {
 
     public void setVotePosition(String votePosition) { this.votePosition = votePosition; }
 
-    public Integer getVotePercentage() { return votePercentage; }
+    public Integer getVotePercentage() { return votePercentage * 10; }
 
     public void setVotePercentage(Integer votePercentage) { this.votePercentage = votePercentage; }
 
