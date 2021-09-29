@@ -6,8 +6,12 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.logora.logora_sdk.R;
 import com.logora.logora_sdk.models.UserIcon;
+import com.logora.logora_sdk.utils.Router;
+
+import java.util.HashMap;
 
 public class UserIconViewHolder extends ListViewHolder {
+    private final Router router = Router.getInstance();
     ImageView userImageView;
 
     public UserIconViewHolder(View itemView) {
@@ -21,5 +25,10 @@ public class UserIconViewHolder extends ListViewHolder {
         Glide.with(userImageView.getContext())
                 .load(Uri.parse(userIcon.getImageUrl()))
                 .into(userImageView);
+        userImageView.setOnClickListener(v -> {
+            HashMap<String, String> routeParams = new HashMap<>();
+            routeParams.put("userSlug", userIcon.getSlug());
+            router.navigate(Router.getRoute("USER"), routeParams);
+        });
     }
 }
