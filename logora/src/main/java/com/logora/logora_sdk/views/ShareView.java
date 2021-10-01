@@ -14,7 +14,6 @@ import com.logora.logora_sdk.R;
 public class ShareView extends LinearLayout {
     private Context context;
     private String shareText;
-    private ImageView linkShareView;
     private ImageView mobileShareView;
 
     public ShareView(Context context, AttributeSet attrs, int defStyle) {
@@ -37,14 +36,7 @@ public class ShareView extends LinearLayout {
 
     private void initView() {
         inflate(getContext(), R.layout.share_layout, this);
-        linkShareView = this.findViewById(R.id.link_share_button);
         mobileShareView = this.findViewById(R.id.mobile_share_button);
-
-        linkShareView.setOnClickListener(v -> {
-            this.copyToClipboard(this.shareText);
-            this.showSuccessMessage("Lien copié !");
-        });
-
         mobileShareView.setOnClickListener(v -> {
             this.openShareDialog("Voici un débat intéressant");
         });
@@ -54,23 +46,10 @@ public class ShareView extends LinearLayout {
         this.shareText = text;
     }
 
-    private void copyToClipboard(String text) {
-        ClipboardManager clipboard = (ClipboardManager) this.context.getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData clip = ClipData.newPlainText("Debate URL", text);
-        clipboard.setPrimaryClip(clip);
-    }
-
     private void openShareDialog(String subject) {
         Intent share = new Intent(Intent.ACTION_SEND);
         share.setType("text/plain");
         share.putExtra(Intent.EXTRA_TEXT, subject);
         this.context.startActivity(Intent.createChooser(share, "Partager le débat"));
-    }
-
-    private void showSuccessMessage(String message) {
-        int duration = Toast.LENGTH_SHORT;
-
-        Toast toast = Toast.makeText(this.context, message, duration);
-        toast.show();
     }
 }
