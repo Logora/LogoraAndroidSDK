@@ -35,6 +35,7 @@ import java.util.Objects;
 public class LogoraApiClient {
     RequestQueue queue;
     private final String apiUrl = "https://app.logora.fr/api/v1";
+    private final String apiRenderUrl = "https://render.logora.fr";
     private final String authUrl = "https://app.logora.fr/oauth";
     private final String userTokenKey = "logora_user_token";
     private String applicationName;
@@ -81,20 +82,26 @@ public class LogoraApiClient {
                             Response.ErrorListener errorListener) {
         HashMap<String, String> queryParams = new HashMap<>();
         queryParams.put("shortname", this.applicationName);
+        String url = this.apiUrl;
         String route = "/settings";
-        this.client_post(route, queryParams, null, listener, errorListener);
+        this.client_post(url, route, queryParams, null, listener, errorListener);
     }
 
     public void getList(Response.Listener<JSONObject> listener,
                                    Response.ErrorListener errorListener, String resourceName, String resourceType, Integer page,
                                    Integer perPage, String sort, Integer outset, String query,
-                                    HashMap<String, String> extraArguments) {
+                                    HashMap<String, String> extraArguments, HashMap<String, String> filter) {
         HashMap<String, String> queryParams = new HashMap<>();
         queryParams.put("page", String.valueOf(page));
         queryParams.put("per_page", String.valueOf(perPage));
         queryParams.put("sort", sort);
         queryParams.put("outset", String.valueOf(outset));
-        queryParams.put("query", String.valueOf(query));
+        if (filter != null) {
+            queryParams.putAll(filter);
+        }
+        if (query != null) {
+            queryParams.put("query", query);
+        }
         if(extraArguments != null) {
             queryParams.putAll(extraArguments);
         }
@@ -114,10 +121,13 @@ public class LogoraApiClient {
     }
 
     public void getSynthesis(Response.Listener<JSONObject> listener,
-                             Response.ErrorListener errorListener, String uid) {
+                             Response.ErrorListener errorListener, String pageUid, String applicationName) {
         HashMap<String, String> queryParams = new HashMap<>();
-        String route = "/groups/" + uid  +"/synthesis";
-        this.client_get(route, queryParams, listener, errorListener);
+        queryParams.put("shortname", applicationName);
+        queryParams.put("uid", pageUid);
+        String url = this.apiRenderUrl;
+        String route = "/synthesis";
+        this.client_post(url, route, queryParams, null, listener, errorListener);
     }
 
     public void getUser(Response.Listener<JSONObject> listener,
@@ -302,7 +312,7 @@ public class LogoraApiClient {
                      Response.Listener<JSONObject> listener,
                      Response.ErrorListener errorListener) {
         queryParams.put("provider_token", this.providerToken);
-        String paramsString = this.paramstoQueryString(queryParams);
+        String paramsString = this.paramsToQueryString(queryParams);
         String requestUrl = this.apiUrl + route + paramsString;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
             requestUrl, null, listener, error -> {
@@ -356,12 +366,12 @@ public class LogoraApiClient {
         this.queue.add(request);
     }
 
-    private void client_post(String route, HashMap<String, String> queryParams,
+    private void client_post(String url, String route, HashMap<String, String> queryParams,
                             HashMap<String, String> bodyParams,
                             Response.Listener<JSONObject> listener,
                             Response.ErrorListener errorListener) {
-        String paramsString = this.paramstoQueryString(queryParams);
-        String requestUrl = this.apiUrl + route + paramsString;
+        String paramsString = this.paramsToQueryString(queryParams);
+        String requestUrl = url + route + paramsString;
         JSONObject bodyJson = new JSONObject();
         if(bodyParams != null) {
             bodyJson = new JSONObject(bodyParams);
@@ -383,7 +393,7 @@ public class LogoraApiClient {
     private void user_get(String route, HashMap<String, String> params,
                             Response.Listener<JSONObject> listener,
                             Response.ErrorListener errorListener) {
-        String paramsString = this.paramstoQueryString(params);
+        String paramsString = this.paramsToQueryString(params);
         String requestUrl = this.apiUrl + route + paramsString;
 
         String userAuthorizationHeader = this.getUserAuthorizationHeader();
@@ -414,7 +424,6 @@ public class LogoraApiClient {
                 }
             }
         };
-
         this.addToQueueWithRefresh(request);
     }
 
@@ -422,7 +431,7 @@ public class LogoraApiClient {
                           HashMap<String, String> bodyParams,
                           Response.Listener<JSONObject> listener,
                           Response.ErrorListener errorListener) {
-        String paramsString = this.paramstoQueryString(params);
+        String paramsString = this.paramsToQueryString(params);
         String requestUrl = this.apiUrl + route + paramsString;
         JSONObject bodyJson = new JSONObject();
         if(bodyParams != null) {
@@ -449,7 +458,7 @@ public class LogoraApiClient {
                            HashMap<String, String> bodyParams,
                            Response.Listener<JSONObject> listener,
                            Response.ErrorListener errorListener) {
-        String paramsString = this.paramstoQueryString(params);
+        String paramsString = this.paramsToQueryString(params);
         String requestUrl = this.apiUrl + route + paramsString;
         JSONObject bodyJson = new JSONObject();
         if(bodyParams != null) {
@@ -474,7 +483,7 @@ public class LogoraApiClient {
     private void user_delete(String route, HashMap<String, String> params,
                            Response.Listener<JSONObject> listener,
                            Response.ErrorListener errorListener) {
-        String paramsString = this.paramstoQueryString(params);
+        String paramsString = this.paramsToQueryString(params);
         String requestUrl = this.apiUrl + route + paramsString;
 
         String userAuthorizationHeader = this.getUserAuthorizationHeader();
@@ -507,7 +516,7 @@ public class LogoraApiClient {
         return "Bearer " + this.getUserToken();
     }
 
-    private String paramstoQueryString(HashMap<String, String> params) {
+    private String paramsToQueryString(HashMap<String, String> params) {
         StringBuilder sb = new StringBuilder();
         int index = 0;
         for (Map.Entry<String, String> stringEntry : params.entrySet()) {
@@ -570,7 +579,6 @@ public class LogoraApiClient {
         }
     }
 
-    /* STORAGE FUNCTIONS */
     private void setStorageItem(String key, JSONObject value) {
         SharedPreferences sharedPreferences = this.context.getSharedPreferences("logora_settings", 0);
         SharedPreferences.Editor editor = sharedPreferences.edit();

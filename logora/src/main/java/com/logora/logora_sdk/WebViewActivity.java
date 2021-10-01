@@ -11,6 +11,7 @@ import android.webkit.WebViewClient;
 import com.logora.logora_sdk.utils.LogoraApiClient;
 import com.logora.logora_sdk.utils.Route;
 import com.logora.logora_sdk.utils.Router;
+import com.logora.logora_sdk.utils.Settings;
 
 public class WebViewActivity extends Activity {
     private final LogoraApiClient apiClient = LogoraApiClient.getInstance();
@@ -35,7 +36,7 @@ public class WebViewActivity extends Activity {
                 Uri uri = Uri.parse(request.getUrl().toString());
                 String code = uri.getQueryParameter("code");
                 Intent intent = new Intent(getBaseContext(), LogoraAppActivity.class);
-                intent.putExtra("applicationName", "ouest-france-test");
+                intent.putExtra("applicationName", apiClient.getApplicationName());
                 intent.putExtra("authAssertion", code);
                 Route currentRoute = router.getCurrentRoute();
                 intent.putExtra("routeName", currentRoute.getName());

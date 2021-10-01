@@ -98,12 +98,11 @@ public class ArgumentVote extends LinearLayout {
     }
 
     public void setInactive() {
-        int textSecondaryColor = ResourcesCompat.getColor(getResources(), R.color.text_secondary, null);
         hasVoted = false;
         votesCount = argument.getVotesCount();
         votesCountView.setText(String.valueOf(votesCount));
-        votesCountView.setTextColor(textSecondaryColor);
-        clapButtonView.setColorFilter(textSecondaryColor);
+        votesCountView.setTextColor(Color.BLACK);
+        clapButtonView.setColorFilter(Color.BLACK);
     }
 
     public void toggleVoteAction() {

@@ -26,15 +26,15 @@
                 android:id="@+id/argument_position"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/debate_first_position"
                 android:layout_alignEnd="@id/argument_date"
-                android:textColor="@android:color/white"
-                android:textStyle="bold"
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/position_background"
-                android:paddingVertical="6dp"
                 android:paddingHorizontal="10dp"
-                android:textSize="14sp"/>
+                android:paddingVertical="6dp"
+                android:text="@string/debate_first_position"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/argument_date"
@@ -43,9 +43,9 @@
                 android:layout_below="@id/argument_position"
                 android:paddingStart="5dp"
                 android:paddingEnd="5dp"
+                android:text="@string/argument_date"
                 android:textColor="@color/text_secondary"
-                android:textSize="12sp"
-                android:text="@string/argument_date" />
+                android:textSize="12sp" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -54,8 +54,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/argument_author_box_container"
             android:layout_marginVertical="6dp"
-            android:paddingVertical="5dp"
-            android:paddingHorizontal="16dp">
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="5dp">
 
             <TextView
                 android:id="@+id/argument_content"
@@ -66,59 +66,58 @@
         <LinearLayout
             android:id="@+id/argument_footer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="28dp"
             android:layout_below="@+id/argument_content_container"
-            android:orientation="horizontal"
+            android:layout_centerVertical="true"
             android:layout_marginTop="6dp"
-            android:paddingVertical="12dp"
-            android:paddingHorizontal="8dp"
-            android:background="@drawable/section_background">
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal"
+            android:paddingHorizontal="8dp">
 
             <com.logora.logora_sdk.views.ArgumentVote
                 android:id="@+id/argument_vote_container"
                 android:layout_width="0dp"
+                android:layout_height="28dp"
                 android:layout_weight="1"
-                android:layout_height="22dp"
-                android:gravity="center" />
+                android:gravity="center_vertical" />
 
             <ImageView
                 android:id="@+id/argument_reply_button"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="22dp"
-                android:src="@drawable/ic_reply"
                 android:layout_marginHorizontal="6dp"
-                android:gravity="center"
+                android:layout_marginTop="6dp"
+                android:layout_weight="1"
                 android:clickable="true"
-                android:focusable="true"
                 android:contentDescription="@string/argument_reply_icon_content_description"
-                app:tint="@color/text_secondary" />
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:src="@drawable/ic_reply" />
 
             <ImageView
                 android:id="@+id/argument_share_button"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="22dp"
-                android:src="@drawable/ic_share"
                 android:layout_marginHorizontal="6dp"
-                android:gravity="center"
+                android:layout_marginTop="6dp"
+                android:layout_weight="1"
                 android:clickable="true"
-                android:focusable="true"
                 android:contentDescription="@string/share_icon_content_description"
-                app:tint="@color/text_secondary" />
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:src="@drawable/ic_share" />
 
             <ImageView
                 android:id="@+id/argument_more_button"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="22dp"
-                android:src="@drawable/ic_more"
                 android:layout_marginHorizontal="6dp"
-                android:gravity="center"
+                android:layout_marginTop="6dp"
+                android:layout_weight="1"
                 android:clickable="true"
-                android:focusable="true"
                 android:contentDescription="@string/argument_more_icon_content_description"
-                app:tint="@color/text_secondary" />
+                android:focusable="true"
+                android:src="@drawable/ic_more" />
         </LinearLayout>
 
         <LinearLayout
@@ -127,35 +126,35 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/argument_footer"
             android:orientation="horizontal"
-            android:paddingVertical="12dp"
             android:paddingHorizontal="12dp"
+            android:paddingVertical="12dp"
             android:visibility="gone">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/argument_replies_authors_list"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:foregroundGravity="center_vertical"
                 android:layout_marginEnd="6dp"
-                android:nestedScrollingEnabled="false"
-                android:layoutDirection="inherit" />
+                android:foregroundGravity="center_vertical"
+                android:layoutDirection="inherit"
+                android:nestedScrollingEnabled="false" />
 
             <TextView
                 android:id="@+id/argument_reply_toggle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="6dp"
                 android:layout_gravity="center"
-                android:textColor="@color/text_primary"
-                android:text="@string/argument_view_replies" />
+                android:layout_marginHorizontal="6dp"
+                android:text="@string/argument_view_replies"
+                android:textColor="@color/text_primary" />
 
             <TextView
                 android:id="@+id/argument_reply_arrow_down"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textColor="@color/text_secondary"
-                android:text="@string/arrow_down" />
+                android:text="@string/arrow_down"
+                android:textColor="@color/text_secondary" />
         </LinearLayout>
     </RelativeLayout>
 

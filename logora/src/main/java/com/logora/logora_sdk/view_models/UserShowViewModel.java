@@ -1,6 +1,7 @@
 package com.logora.logora_sdk.view_models;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -46,7 +47,6 @@ public class UserShowViewModel extends ViewModel {
             },
             error -> {
                 Log.i("ERROR", String.valueOf(error));
-                user.setValue(null);
             }, slug);
     }
 }

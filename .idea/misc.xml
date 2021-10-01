@@ -1,5 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="logora/src/main/res/drawable/ic_arrow_left.xml" value="0.31979166666666664" />
+        <entry key="logora/src/main/res/drawable/ic_clap.xml" value="0.3151041666666667" />
+        <entry key="logora/src/main/res/drawable/ic_more.xml" value="0.1" />
+        <entry key="logora/src/main/res/drawable/ic_next.xml" value="0.1" />
+        <entry key="logora/src/main/res/layout/argument_box.xml" value="0.33" />
+        <entry key="logora/src/main/res/layout/argument_vote.xml" value="0.19972826086956522" />
+        <entry key="logora/src/main/res/layout/debate_box.xml" value="0.19972826086956522" />
+        <entry key="logora/src/main/res/layout/fragment_debate.xml" value="0.19972826086956522" />
+        <entry key="logora/src/main/res/layout/fragment_footer.xml" value="0.3046875" />
+        <entry key="logora/src/main/res/layout/fragment_navbar.xml" value="0.2" />
+        <entry key="logora/src/main/res/layout/icon_text_link.xml" value="0.3" />
+        <entry key="logora/src/main/res/layout/icon_text_view.xml" value="0.19583333333333333" />
+        <entry key="logora/src/main/res/layout/login_dialog.xml" value="0.196875" />
+        <entry key="logora/src/main/res/layout/notification.xml" value="0.19972826086956522" />
+        <entry key="logora/src/main/res/layout/report_dialog.xml" value="0.19972826086956522" />
+        <entry key="logora/src/main/res/layout/share_layout.xml" value="0.20199275362318841" />
+        <entry key="logora/src/main/res/layout/vote_box.xml" value="0.19972826086956522" />
+      </map>
+    </option>
+  </component>
   <component name="NullableNotNullManager">
     <option name="myDefaultNullable" value="org.jetbrains.annotations.Nullable" />
     <option name="myDefaultNotNull" value="androidx.annotation.NonNull" />
@@ -25,7 +48,7 @@
     </option>
     <option name="myNotNulls">
       <value>
-        <list size="13">
+        <list size="14">
           <item index="0" class="java.lang.String" itemvalue="org.jetbrains.annotations.NotNull" />
           <item index="1" class="java.lang.String" itemvalue="edu.umd.cs.findbugs.annotations.NonNull" />
           <item index="2" class="java.lang.String" itemvalue="android.support.annotation.NonNull" />
@@ -39,6 +62,7 @@
           <item index="10" class="java.lang.String" itemvalue="org.eclipse.jdt.annotation.NonNull" />
           <item index="11" class="java.lang.String" itemvalue="io.reactivex.annotations.NonNull" />
           <item index="12" class="java.lang.String" itemvalue="io.reactivex.rxjava3.annotations.NonNull" />
+          <item index="13" class="java.lang.String" itemvalue="lombok.NonNull" />
         </list>
       </value>
     </option>

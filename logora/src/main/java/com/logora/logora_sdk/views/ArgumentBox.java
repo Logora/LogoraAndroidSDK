@@ -46,15 +46,18 @@ import com.logora.logora_sdk.utils.Auth;
 import com.logora.logora_sdk.utils.DateUtil;
 import com.logora.logora_sdk.utils.InputProvider;
 import com.logora.logora_sdk.utils.LogoraApiClient;
+import com.logora.logora_sdk.utils.Router;
 import com.logora.logora_sdk.utils.Settings;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.DeleteArgumentListener{
     private Context context;
+    private final Router router = Router.getInstance();
     private final Settings settings = Settings.getInstance();
     private final Auth authClient = Auth.getInstance();
     private final LogoraApiClient apiClient = LogoraApiClient.getInstance();
@@ -161,6 +164,11 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
         sideLabelView.setText(argument.getPosition().getName());
         dateView.setText(DateUtil.getTimeAgo(argument.getPublishedDate()));
         argumentAuthorBox.init(argument);
+        argumentAuthorBox.setOnClickListener(v -> {
+            HashMap<String, String> routeParams = new HashMap<>();
+            routeParams.put("userSlug", argument.getAuthor().getSlug());
+            router.navigate(Router.getRoute("USER"), routeParams);
+        });
         argumentVote.init(argument, debate);
         contentView.setText(argument.getContent());
         argumentShareButton.setOnClickListener(v -> {
@@ -226,7 +234,7 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
         argumentRepliesList.setId(argumentBoxId);
         String resourceName = "messages/" + argument.getId() + "/replies";
         repliesListAdapter = new ArgumentListAdapter(debate, depth + 1);
-        repliesList = new PaginatedListFragment(resourceName, "CLIENT", repliesListAdapter, null);
+        repliesList = new PaginatedListFragment(resourceName, "CLIENT", repliesListAdapter, null, null, null, null);
 
         fragmentManager = ((AppCompatActivity) getContext()).getSupportFragmentManager();
 

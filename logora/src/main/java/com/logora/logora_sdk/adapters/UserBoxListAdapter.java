@@ -39,15 +39,13 @@ public class UserBoxListAdapter extends ListAdapter {
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
         UserBox userBox = this.getObjectFromJson(this.items.get(position));
-        try {
+        if (userBox != null) {
             holder.updateWithObject(userBox);
             holder.itemView.setOnClickListener(v -> {
                 HashMap<String, String> routeParams = new HashMap<>();
                 routeParams.put("userSlug", userBox.getSlug());
                 router.navigate(Router.getRoute("USER"), routeParams);
             });
-        } catch (Exception e) {
-            System.out.println("Error :" + e.getMessage());
         }
     }
 

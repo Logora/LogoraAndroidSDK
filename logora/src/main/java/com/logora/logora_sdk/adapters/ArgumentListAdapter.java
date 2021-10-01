@@ -1,6 +1,7 @@
 package com.logora.logora_sdk.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,10 +43,8 @@ public class ArgumentListAdapter extends ListAdapter {
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
         Argument argument = this.getObjectFromJson(this.items.get(position));
-        try {
+        if (argument != null) {
             holder.updateWithObject(argument);
-        } catch (Exception e){
-            System.out.println("Error " + e.getMessage());
         }
     }
 

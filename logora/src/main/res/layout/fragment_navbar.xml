@@ -2,125 +2,83 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingVertical="5dp"
+    android:paddingVertical="8dp"
     tools:context=".NavbarFragment"
-    android:orientation="horizontal"
     android:background="@drawable/navbar_background">
 
-    <com.logora.logora_sdk.views.PrimaryButton
-        android:id="@+id/index_button"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="12dp"
-        app:textKey="infoAllDebates"
-        android:text="@string/infoAllDebates"
-        style="@style/PrimaryButton" />
-
-    <RelativeLayout
-        android:id="@+id/navbar_right_container"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/navbar_container"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="12dp"
-        tools:ignore="RelativeOverlap">
+        android:orientation="horizontal"
+        android:layout_below="@id/search_form_container">
 
-        <ImageView
-            android:id="@+id/search_icon"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:src="@drawable/ic_search"
-            android:layout_marginHorizontal="6dp"
-            android:gravity="center"
-            android:layout_centerVertical="true"
-            android:clickable="true"
-            android:focusable="true"
-            android:contentDescription="@string/search_icon_content_description"
-            app:tint="@color/text_secondary" />
+        <com.logora.logora_sdk.views.IconTextView
+            android:id="@+id/index_button_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1" />
 
-        <com.logora.logora_sdk.views.TextWrapper
+        <com.logora.logora_sdk.views.IconTextView
+            android:id="@+id/search_button_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            android:layout_weight="1" />
+
+        <com.logora.logora_sdk.views.IconTextView
             android:id="@+id/login_link_button"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_toEndOf="@+id/search_icon"
-            android:gravity="center"
-            app:textKey="actionSignInIn"
-            android:text="@string/actionSignInIn"
-            tools:ignore="RelativeOverlap" />
-    </RelativeLayout>
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1" />
 
-    <RelativeLayout
-        android:id="@+id/navbar_right_user_container"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="12dp"
-        android:visibility="gone"
-        tools:ignore="RelativeOverlap">
+        <RelativeLayout
+            android:id="@+id/notification_container"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:visibility="gone">
 
-        <ImageView
-            android:id="@+id/search_user_icon"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:src="@drawable/ic_search"
-            android:layout_marginEnd="8dp"
-            android:gravity="center"
-            android:layout_centerVertical="true"
-            android:clickable="true"
-            android:focusable="true"
-            android:contentDescription="@string/search_icon_content_description"
-            app:tint="@color/text_secondary" />
+            <com.logora.logora_sdk.views.IconTextView
+                android:id="@+id/user_notification_button_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+              />
 
-        <ImageView
-            android:id="@+id/notification_icon"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:gravity="center"
-            android:layout_toEndOf="@+id/search_user_icon"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="8dp"
-            android:src="@drawable/ic_bell"
-            android:clickable="true"
-            android:focusable="true"
-            android:contentDescription="@string/notification_icon_content_description"
-            app:tint="@color/text_secondary" />
+            <TextView
+                android:id="@+id/notification_badge"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="-10dp"
+                android:layout_marginStart="-20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/badge_background"
+                android:gravity="center"
+                android:padding="3dp"
+                android:textColor="@android:color/white"
+                android:layout_toEndOf="@id/user_notification_button_view"
+                android:text="@string/user_notifications_count"
+                android:textSize="10sp" />
+        </RelativeLayout>
 
-        <TextView
-            android:id="@+id/notification_badge"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="end"
-            android:layout_marginEnd="-5dp"
-            android:layout_marginStart="-5dp"
-            android:layout_marginTop="3dp"
-            android:background="@drawable/badge_background"
-            android:gravity="center"
-            android:padding="3dp"
-            android:textColor="@android:color/white"
-            android:layout_toEndOf="@id/search_user_icon"
-            android:text="@string/user_notifications_count"
-            android:textSize="10sp"/>
+        <com.logora.logora_sdk.views.IconTextView
+            android:id="@+id/user_profile_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            android:layout_weight="1"
+            android:visibility="gone"/>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/user_profile_icon_container"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/notification_icon"
-            android:layout_centerVertical="true"
-            app:cardBackgroundColor="@android:color/transparent"
-            app:cardCornerRadius="20dp">
+    </LinearLayout>
 
-            <ImageView
-                android:id="@+id/user_profile_icon"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:scaleType="fitXY"
-                android:clickable="true"
-                android:focusable="true"
-                android:contentDescription="@string/user_icon_content_description" />
-        </androidx.cardview.widget.CardView>
-    </RelativeLayout>
 
     <com.logora.logora_sdk.views.SearchFormView
         android:id="@+id/search_form_container"

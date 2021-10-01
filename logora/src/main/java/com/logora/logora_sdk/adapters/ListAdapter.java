@@ -4,6 +4,8 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.logora.logora_sdk.view_holders.ArgumentViewHolder;
 import com.logora.logora_sdk.view_holders.ListViewHolder;
 
 import org.json.JSONException;
@@ -30,10 +32,11 @@ public abstract class ListAdapter extends RecyclerView.Adapter<ListViewHolder> {
     public abstract Object getObjectFromJson(JSONObject jsonObject);
 
     public void update(List<JSONObject> items) {
-        if(this.items != null) {
+        if(this.items.size() != 0) {
             this.items.clear();
         }
         this.items.addAll(items);
+        this.notifyDataSetChanged();
     }
 
     public void addItem(JSONObject item) {

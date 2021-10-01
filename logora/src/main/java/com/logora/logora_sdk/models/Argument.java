@@ -45,7 +45,8 @@ public class Argument extends Model {
             if(!replyToId.equals("null")) {
                 argument.setParentArgumentId(Integer.parseInt(replyToId));
             }
-            if (jsonObject.has("number_replies")) {
+
+            if(jsonObject.has("number_replies")) {
                 argument.setRepliesCount(jsonObject.getInt("number_replies"));
             } else {
                 argument.setRepliesCount(0);
@@ -64,6 +65,7 @@ public class Argument extends Model {
                 votesList.add(votesObjects.getJSONObject(i));
             }
             argument.setVotesList(votesList);
+
             if (jsonObject.has("replies_authors")) {
                 JSONArray repliesAuthorsObjects = jsonObject.getJSONArray("replies_authors");
                 List<JSONObject> repliesAuthorsList = new ArrayList<>();

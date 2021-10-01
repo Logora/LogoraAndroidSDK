@@ -19,8 +19,7 @@
         android:layout_centerVertical="true"
         android:clickable="true"
         android:focusable="true"
-        android:contentDescription="@string/search_back_icon_content_description"
-        app:tint="@color/text_secondary" />
+        android:contentDescription="@string/search_back_icon_content_description" />
 
     <EditText
         android:id="@+id/search_input"
@@ -45,6 +44,5 @@
         android:layout_centerVertical="true"
         android:clickable="true"
         android:focusable="true"
-        android:contentDescription="@string/search_submit_icon_content_description"
-        app:tint="@color/text_secondary" />
+        android:contentDescription="@string/search_submit_icon_content_description" />
 </RelativeLayout>

@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -17,8 +18,12 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
 import com.logora.logora_sdk.adapters.UserBoxListAdapter;
 import com.logora.logora_sdk.adapters.UserMessagesListAdapter;
+import com.logora.logora_sdk.models.FilterOption;
+import com.logora.logora_sdk.models.SortOption;
 import com.logora.logora_sdk.utils.Settings;
 import com.logora.logora_sdk.view_models.UserShowViewModel;
+
+import java.util.ArrayList;
 
 /**
  * A {@link Fragment} subclass containing the user profile page.
@@ -54,81 +59,93 @@ public class UserFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        try {
+            super.onViewCreated(view, savedInstanceState);
 
-        TextView userFullNameView = view.findViewById(R.id.user_full_name);
-        ImageView userImageView = view.findViewById(R.id.user_image);
-        this.findViews(view);
+            TextView userFullNameView = view.findViewById(R.id.user_full_name);
+            ImageView userImageView = view.findViewById(R.id.user_image);
+            this.findViews(view);
 
-        setTabsText();
-        setStyles();
-        userArgumentsContainer.setVisibility(View.VISIBLE);
+            setTabsText();
+            setStyles();
+            userArgumentsContainer.setVisibility(View.VISIBLE);
 
-        ProgressBar spinner = view.findViewById(R.id.loader);
-        spinner.setVisibility(View.VISIBLE);
-        UserShowViewModel userViewModel = new UserShowViewModel();
-        userViewModel.getUser(this.userSlug).observe(getViewLifecycleOwner(), user -> {
-            userFullNameView.setText(user.getFullName());
-            userDebatesCountValue.setText(String.valueOf(user.getDebatesCount()));
-            userVotesCountValue.setText(String.valueOf(user.getVotesCount()));
-            userDisciplesCountValue.setText(String.valueOf(user.getDisciplesCount()));
-            spinner.setVisibility(View.GONE);
+            ProgressBar spinner = view.findViewById(R.id.loader);
+            spinner.setVisibility(View.VISIBLE);
+            UserShowViewModel userViewModel = new UserShowViewModel();
+            userViewModel.getUser(this.userSlug).observe(getViewLifecycleOwner(), user -> {
+                userFullNameView.setText(user.getFullName());
+                userDebatesCountValue.setText(String.valueOf(user.getDebatesCount()));
+                userVotesCountValue.setText(String.valueOf(user.getVotesCount()));
+                userDisciplesCountValue.setText(String.valueOf(user.getDisciplesCount()));
+                spinner.setVisibility(View.GONE);
 
-            Glide.with(userImageView.getContext())
-                    .load(Uri.parse(user.getImageUrl()))
-                    .into(userImageView);
-        });
+                Glide.with(userImageView.getContext())
+                        .load(Uri.parse(user.getImageUrl()))
+                        .into(userImageView);
 
-        UserBoxListAdapter userDisciplesListAdapter = new UserBoxListAdapter();
-        UserBoxListAdapter userMentorsListAdapter = new UserBoxListAdapter();
-        UserMessagesListAdapter userMessagesListAdapter = new UserMessagesListAdapter();
+                UserBoxListAdapter userDisciplesListAdapter = new UserBoxListAdapter();
+                UserBoxListAdapter userMentorsListAdapter = new UserBoxListAdapter();
+                UserMessagesListAdapter userMessagesListAdapter = new UserMessagesListAdapter();
 
-        PaginatedListFragment userMessagesFragment = new PaginatedListFragment("users/" + userSlug + "/messages", "CLIENT", userMessagesListAdapter, null);
-        BadgeTabFragment userBadgesFragment = new BadgeTabFragment(userSlug);
-        PaginatedListFragment userDisciplesFragment = new PaginatedListFragment("users/" + userSlug + "/disciples", "CLIENT", userDisciplesListAdapter, null);
-        PaginatedListFragment userMentorsFragment = new PaginatedListFragment("users/" + userSlug + "/mentors", "CLIENT", userMentorsListAdapter, null);
+                ArrayList<SortOption> argumentListSortOptions = new ArrayList<>();
+                argumentListSortOptions.add(new SortOption("Le plus récent", "-created_at", null));
+                argumentListSortOptions.add(new SortOption("Le plus pertinent", "-score", null));
+                argumentListSortOptions.add(new SortOption("Le plus ancien", "+created_at", null));
 
-        getChildFragmentManager()
-                .beginTransaction()
-                .add(R.id.user_arguments_list, userMessagesFragment)
-                .add(R.id.user_badges_list, userBadgesFragment)
-                .add(R.id.user_disciples_list, userDisciplesFragment)
-                .add(R.id.user_mentors_list, userMentorsFragment)
-                .commit();
+                ArrayList<FilterOption> argumentListFilterOptions = new ArrayList<>();
+                argumentListFilterOptions.add(new FilterOption("Réponses", "is_reply", "true", null));
 
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                int position = tab.getPosition();
-                if(position == 0) {
-                    userArgumentsContainer.setVisibility(View.VISIBLE);
-                    userBadgesContainer.setVisibility(View.GONE);
-                    userMentorsContainer.setVisibility(View.GONE);
-                    userDisciplesContainer.setVisibility(View.GONE);
-                } else if(position == 1) {
-                    userArgumentsContainer.setVisibility(View.GONE);
-                    userBadgesContainer.setVisibility(View.VISIBLE);
-                    userMentorsContainer.setVisibility(View.GONE);
-                    userDisciplesContainer.setVisibility(View.GONE);
-                } else if(position == 2) {
-                    userArgumentsContainer.setVisibility(View.GONE);
-                    userBadgesContainer.setVisibility(View.GONE);
-                    userMentorsContainer.setVisibility(View.VISIBLE);
-                    userDisciplesContainer.setVisibility(View.GONE);
-                } else if(position == 3) {
-                    userArgumentsContainer.setVisibility(View.GONE);
-                    userBadgesContainer.setVisibility(View.GONE);
-                    userMentorsContainer.setVisibility(View.GONE);
-                    userDisciplesContainer.setVisibility(View.VISIBLE);
+                PaginatedListFragment userMessagesFragment = new PaginatedListFragment("users/" + userSlug + "/messages", "CLIENT", userMessagesListAdapter, null, argumentListSortOptions, argumentListFilterOptions, "-score");
+                BadgeTabFragment userBadgesFragment = new BadgeTabFragment(userSlug);
+                PaginatedListFragment userDisciplesFragment = new PaginatedListFragment("users/" + userSlug + "/disciples", "CLIENT", userDisciplesListAdapter, null, null, null, null);
+                PaginatedListFragment userMentorsFragment = new PaginatedListFragment("users/" + userSlug + "/mentors", "CLIENT", userMentorsListAdapter, null, null, null, null);
+
+                getChildFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.user_arguments_list, userMessagesFragment)
+                        .add(R.id.user_badges_list, userBadgesFragment)
+                        .add(R.id.user_disciples_list, userDisciplesFragment)
+                        .add(R.id.user_mentors_list, userMentorsFragment)
+                        .commit();
+            });
+
+            tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    int position = tab.getPosition();
+                    if(position == 0) {
+                        userArgumentsContainer.setVisibility(View.VISIBLE);
+                        userBadgesContainer.setVisibility(View.GONE);
+                        userMentorsContainer.setVisibility(View.GONE);
+                        userDisciplesContainer.setVisibility(View.GONE);
+                    } else if(position == 1) {
+                        userArgumentsContainer.setVisibility(View.GONE);
+                        userBadgesContainer.setVisibility(View.VISIBLE);
+                        userMentorsContainer.setVisibility(View.GONE);
+                        userDisciplesContainer.setVisibility(View.GONE);
+                    } else if(position == 2) {
+                        userArgumentsContainer.setVisibility(View.GONE);
+                        userBadgesContainer.setVisibility(View.GONE);
+                        userMentorsContainer.setVisibility(View.VISIBLE);
+                        userDisciplesContainer.setVisibility(View.GONE);
+                    } else if(position == 3) {
+                        userArgumentsContainer.setVisibility(View.GONE);
+                        userBadgesContainer.setVisibility(View.GONE);
+                        userMentorsContainer.setVisibility(View.GONE);
+                        userDisciplesContainer.setVisibility(View.VISIBLE);
+                    }
                 }
-            }
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {}
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {}
 
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {}
-        });
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {}
+            });
+        } catch(Exception e) {
+            Toast.makeText(getContext(), "Une erreur est survenue", Toast.LENGTH_LONG).show();
+        }
     }
 
     private void setStyles() {

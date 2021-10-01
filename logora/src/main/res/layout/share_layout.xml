@@ -10,18 +10,6 @@
     android:background="@drawable/box_background">
 
     <ImageView
-        android:id="@+id/link_share_button"
-        android:layout_width="22dp"
-        android:layout_height="22dp"
-        android:src="@drawable/ic_link"
-        android:layout_marginHorizontal="6dp"
-        android:gravity="center"
-        android:clickable="true"
-        android:focusable="true"
-        android:contentDescription="@string/share_link_icon_content_description"
-        app:tint="@color/text_secondary" />
-
-    <ImageView
         android:id="@+id/mobile_share_button"
         android:layout_width="22dp"
         android:layout_height="22dp"
@@ -30,6 +18,5 @@
         android:gravity="center"
         android:clickable="true"
         android:focusable="true"
-        android:contentDescription="@string/share_icon_content_description"
-        app:tint="@color/text_secondary" />
+        android:contentDescription="@string/share_icon_content_description" />
 </LinearLayout>

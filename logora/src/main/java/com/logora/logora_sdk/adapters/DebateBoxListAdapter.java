@@ -39,17 +39,15 @@ public class DebateBoxListAdapter extends ListAdapter {
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
         DebateBox debateBox = this.getObjectFromJson(this.items.get(position));
-        try {
+        if (debateBox != null) {
             holder.updateWithObject(debateBox);
-
-            holder.itemView.setOnClickListener(v -> {
-                HashMap<String, String> routeParams = new HashMap<>();
-                routeParams.put("debateSlug", debateBox.getSlug());
-                router.navigate(Router.getRoute("DEBATE"), routeParams);
-            });
-        } catch (Exception e) {
-            System.out.println("Error " + e.getMessage());
         }
+
+        holder.itemView.setOnClickListener(v -> {
+            HashMap<String, String> routeParams = new HashMap<>();
+            routeParams.put("debateSlug", debateBox.getSlug());
+            router.navigate(Router.getRoute("DEBATE"), routeParams);
+        });
     }
 
     @Override

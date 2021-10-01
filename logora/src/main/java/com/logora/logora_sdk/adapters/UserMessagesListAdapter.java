@@ -45,10 +45,8 @@ public class UserMessagesListAdapter extends ListAdapter {
 
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
         Argument argument = this.getObjectFromJson(this.items.get(position));
-        try {
+        if (argument != null) {
             holder.updateWithObject(argument);
-        } catch (Exception e){
-            System.out.println("Error " + e.getMessage());
         }
     }
 
