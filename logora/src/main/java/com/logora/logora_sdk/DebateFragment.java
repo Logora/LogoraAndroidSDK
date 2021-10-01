@@ -45,12 +45,7 @@ import com.logora.logora_sdk.views.ShareView;
 import com.logora.logora_sdk.views.VoteBoxView;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-<<<<<<< HEAD
-import java.util.HashMap;
-=======
 import java.util.ArrayList;
->>>>>>> staging
 
 /**
  * A simple {@link Fragment} subclass.
@@ -77,13 +72,8 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
     private ImageView argumentSend;
     private Debate debate;
     private ArgumentListAdapter argumentListAdapter;
-<<<<<<< HEAD
-    private PaginatedListFragment relatedDebatesList;
-    private PrimaryButton indexButton;
-=======
     private PaginatedListFragment relatedDebateList;
     private DebateBoxListAdapter relatedDebateListAdapter;
->>>>>>> staging
 
     public DebateFragment() {
         super(R.layout.fragment_debate);
@@ -149,71 +139,9 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                     }
                 });
 
-<<<<<<< HEAD
-            debatePublishedDateView.setText(DateUtil.getDateText(debate.getPublishedDate()));
-            debateTagListAdapter.setItems(debate.getTagList());
-            debateTagList.setAdapter(debateTagListAdapter);
-
-            voteBoxView.init(debate);
-
-            followDebateButtonView.init(debate);
-            shareView.setShareText(debate.getName());
-            loader.setVisibility(View.GONE);
-            debatePresentationContainerView.setVisibility(View.VISIBLE);
-
-            String argumentResourceName = "groups/" + debate.getSlug() + "/messages";
-            ArgumentListAdapter argumentListAdapter = new ArgumentListAdapter(debate, 0);
-            this.argumentListAdapter = argumentListAdapter;
-
-            argumentList = new PaginatedListFragment(argumentResourceName, "CLIENT", argumentListAdapter, null);
-            argumentList.setSort("-score");
-
-            getChildFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.argument_list, argumentList)
-                    .commit();
-        });
-
-        String debateResourceName = "groups/" + debateSlug + "/related";
-        DebateBoxListAdapter debateListAdapter = new DebateBoxListAdapter();
-        relatedDebatesList = new PaginatedListFragment(debateResourceName, "CLIENT", debateListAdapter, null);
-        getChildFragmentManager()
-                .beginTransaction()
-                .add(R.id.related_debates_list, relatedDebatesList)
-                .commit();
-
-        indexButton.setOnClickListener(v -> {
-            HashMap<String, String> routeParams = new HashMap<>();
-            router.navigate(Router.getRoute("INDEX"), routeParams);
-        });
-
-        String[] sortOptions = getSpinnerOptions();
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, sortOptions);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        argumentSortView.setAdapter(adapter);
-        argumentSortView.setSelection(0);
-
-        argumentSortView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                if (spinnerSelected) {
-                    if (position == 0) {
-                        argumentList.setSort("-score");
-                    } else if (position == 1) {
-                        argumentList.setSort("-created_at");
-                    } else if (position == 2) {
-                        argumentList.setSort("+created_at");
-                    }
-                    argumentList.update();
-                } else {
-                    spinnerSelected = true;
-                }
-            }
-=======
                 debatePublishedDateView.setText(DateUtil.getDateText(debate.getPublishedDate()));
                 debateTagListAdapter.setItems(debate.getTagList());
                 debateTagList.setAdapter(debateTagListAdapter);
->>>>>>> staging
 
                 voteBoxView.init(debate);
 
@@ -362,7 +290,6 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
         argumentInputControls = view.findViewById(R.id.argument_input_controls);
         argumentInput = view.findViewById(R.id.argument_input);
         argumentSend = view.findViewById(R.id.argument_input_send_button);
-        indexButton = view.findViewById(R.id.index_button);
     }
 
     private void showToastMessage(String message) {
