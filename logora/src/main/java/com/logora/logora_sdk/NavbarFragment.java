@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -34,7 +35,7 @@ public class NavbarFragment extends Fragment {
     private IconTextView userProfileView;
     private TextView notificationsBadge;
     private IconTextView notificationButtonView;
-    private LinearLayout navbarContainer;
+    private RelativeLayout notificationContainer;
 
     public NavbarFragment() {
         super(R.layout.fragment_navbar);
@@ -51,8 +52,7 @@ public class NavbarFragment extends Fragment {
 
         if(auth.getIsLoggedIn()) {
             loginLinkView.setVisibility(View.GONE);
-            notificationButtonView.setVisibility(View.VISIBLE);
-            notificationsBadge.setVisibility(View.VISIBLE);
+            notificationContainer.setVisibility(View.VISIBLE);
             userProfileView.setVisibility(View.VISIBLE);
 
             if (auth.getCurrentUser().getNotificationsCount() > 0) {
@@ -97,11 +97,11 @@ public class NavbarFragment extends Fragment {
     }
 
     public void findViews(View view) {
-        navbarContainer = view.findViewById(R.id.navbar_container);
         indexButtonView = view.findViewById(R.id.index_button_view);
         searchButtonView = view.findViewById(R.id.search_button_view);
         loginLinkView = view.findViewById(R.id.login_link_button);
         userProfileView = view.findViewById(R.id.user_profile_view);
+        notificationContainer = view.findViewById(R.id.notification_container);
         notificationButtonView = view.findViewById(R.id.user_notification_button_view);
         notificationsBadge = view.findViewById(R.id.notification_badge);
         searchFormView = view.findViewById(R.id.search_form_container);
