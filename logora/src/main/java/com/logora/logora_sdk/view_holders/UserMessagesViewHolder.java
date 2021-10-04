@@ -3,6 +3,7 @@ package com.logora.logora_sdk.view_holders;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.logora.logora_sdk.R;
@@ -18,10 +19,12 @@ public class UserMessagesViewHolder extends ListViewHolder {
     TextView argumentsCount;
     TextView participantsCount;
     TextView debateVote;
+    LinearLayout userMessageContainer;
 
     public UserMessagesViewHolder(View itemView, Context context) {
         super(itemView);
         this.context = context;
+        userMessageContainer = itemView.findViewById(R.id.user_message_box_container);
         userMessageTitle = itemView.findViewById(R.id.user_message_group_title);
         argumentBox = itemView.findViewById(R.id.argument_box_container);
         argumentsCount = itemView.findViewById(R.id.user_messages_participants_count);
@@ -31,15 +34,21 @@ public class UserMessagesViewHolder extends ListViewHolder {
 
     public void updateWithObject(Object object) {
         argument = (Argument) object;
+        String status = argument.getStatus();
         Debate debate = argument.getDebate();
         if (debate != null) {
             argument.setIsReply(false); // Prevent reply style to be added to user profile
             userMessageTitle.setText(debate.getName());
-            argumentBox.updateWithObject(object, debate, context);
-            argumentsCount.setText(String.valueOf(debate.getArgumentsCount()));
-            participantsCount.setText(String.valueOf(debate.getUsersCount()));
-            String debateVoteText = debate.getVotePercentage() + " %" + " " + debate.getVotePosition();
-            debateVote.setText(debateVoteText);
+            if(status.equals("accepted")) {
+                argumentBox.updateWithObject(object, debate, context);
+                argumentsCount.setText(String.valueOf(debate.getArgumentsCount()));
+                participantsCount.setText(String.valueOf(debate.getUsersCount()));
+                String debateVoteText = debate.getVotePercentage() + " %" + " " + debate.getVotePosition();
+                debateVote.setText(debateVoteText);
+            } else if(status.equals("rejected") || status.equals("pending")) {
+                userMessageContainer.setVisibility(View.GONE);
+                argumentBox.setVisibility(View.GONE);
+            }
         }
     }
 }
