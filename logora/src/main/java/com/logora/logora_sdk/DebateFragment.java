@@ -110,6 +110,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                 GradientDrawable gradientDrawable = (GradientDrawable) shape.findDrawableByLayerId(R.id.shape);
                 gradientDrawable.setColor(Color.parseColor(primaryColor));
                 argumentSend.setBackground(shape);
+                argumentSend.setColorFilter(Color.WHITE);
                 argumentInputControls.setVisibility(View.GONE);
                 argumentInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                     @Override

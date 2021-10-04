@@ -22,7 +22,7 @@ public class LogoraAppActivity extends AppCompatActivity implements Router.Route
     private Route initialRoute;
 
     // Release 0.1.5
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

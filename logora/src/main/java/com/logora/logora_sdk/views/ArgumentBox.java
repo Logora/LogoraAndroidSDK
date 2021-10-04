@@ -218,6 +218,7 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
         GradientDrawable buttonGradientDrawable = (GradientDrawable) buttonShape.findDrawableByLayerId(R.id.shape);
         buttonGradientDrawable.setColor(Color.parseColor(callPrimaryColor));
         replySendButton.setBackground(buttonShape);
+        replySendButton.setColorFilter(Color.WHITE);
 
         if (authClient.getIsLoggedIn()) {
             Glide.with(replyInputUserImage.getContext())

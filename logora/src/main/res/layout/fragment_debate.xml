@@ -132,7 +132,7 @@
                 android:layout_gravity="right"
                 android:clickable="true"
                 android:focusable="true"
-                android:padding="6dp"/>
+                android:padding="6dp" />
 
         </RelativeLayout>
     </RelativeLayout>
