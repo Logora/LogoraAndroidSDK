@@ -30,8 +30,8 @@ public class SettingsViewModel extends ViewModel {
             response -> {
                 try {
                     JSONObject settingsObject = response.getJSONObject("data").getJSONObject("resource");
-                    String providerToken = settingsObject.getString("provider_token").replace("\n", "");
-                    apiClient.setProviderToken(providerToken);
+                    String apiKey = settingsObject.getString("api_key").replace("\n", "");
+                    apiClient.setApiKey(apiKey);
                     Settings settings = Settings.getInstance();
                     settings.store(settingsObject);
                     this.settings.setValue(settings);

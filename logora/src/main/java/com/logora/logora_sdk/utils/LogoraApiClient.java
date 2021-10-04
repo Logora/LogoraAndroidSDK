@@ -40,7 +40,7 @@ public class LogoraApiClient {
     private final String userTokenKey = "logora_user_token";
     private String applicationName;
     private String authAssertion;
-    private String providerToken;
+    private String apiKey;
     private Context context;
     private static LogoraApiClient instance = null;
 
@@ -53,8 +53,8 @@ public class LogoraApiClient {
         this.context = context;
     }
 
-    public void setProviderToken(String providerToken) { this.providerToken = providerToken; }
-    public String getProviderToken() { return this.providerToken; }
+    public void setApiKey(String apiKey) { this.apiKey = apiKey; }
+    public String getApiKey() { return this.apiKey; }
 
     public void setAuthAssertion(String authAssertion) { this.authAssertion = authAssertion; }
     public String getAuthAssertion() { return this.authAssertion; }
@@ -311,7 +311,7 @@ public class LogoraApiClient {
     private void client_get(String route, HashMap<String, String> queryParams,
                      Response.Listener<JSONObject> listener,
                      Response.ErrorListener errorListener) {
-        queryParams.put("provider_token", this.providerToken);
+        queryParams.put("api_key", this.apiKey);
         String paramsString = this.paramsToQueryString(queryParams);
         String requestUrl = this.apiUrl + route + paramsString;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
