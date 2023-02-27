@@ -1,7 +1,6 @@
 package com.logora.logora_sdk.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +32,9 @@ public class UserMessagesListAdapter extends ListAdapter {
         super(items);
     }
 
-    public UserMessagesListAdapter() {}
+    public UserMessagesListAdapter() {
+
+    }
 
     @NonNull
     public ListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

@@ -77,7 +77,7 @@ public class ListViewModel extends ViewModel {
     }
 
     public LiveData<List<JSONObject>> updateList() {
-        loadItems();
+         loadItems();
         return itemsLiveData;
     }
 
@@ -90,14 +90,16 @@ public class ListViewModel extends ViewModel {
     }
 
     private void loadItems() {
-        apiClient.getList(
+       apiClient.getList(
             response -> {
                 try {
+                    //System.out.println("hello"+response);
+                    //System.out.println("");
                     JSONArray itemsJson = response.getJSONObject("data").getJSONArray("data");
                     for (int i = 0; i < itemsJson.length(); i++) {
                         this.items.add(itemsJson.getJSONObject(i));
                     }
-                    JSONObject headers = response.getJSONObject("headers");
+                   JSONObject headers = response.getJSONObject("headers");
                     this.total = headers.getInt("Total");
                     this.totalPages = headers.getInt("Total-Pages");
                     itemsLiveData.setValue(this.items);

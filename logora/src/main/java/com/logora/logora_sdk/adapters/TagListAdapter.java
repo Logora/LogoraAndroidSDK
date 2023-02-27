@@ -21,7 +21,8 @@ import java.util.List;
 public class TagListAdapter extends ListAdapter {
     private final Router router = Router.getInstance();
 
-    public TagListAdapter() {}
+    public TagListAdapter() {
+    }
 
     public TagListAdapter(List<JSONObject> items) {
         super(items);

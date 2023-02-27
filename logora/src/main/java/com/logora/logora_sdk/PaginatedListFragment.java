@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class PaginatedListFragment extends Fragment {
+public class PaginatedListFragment extends Fragment   {
     private RecyclerView recyclerView;
     private ProgressBar loader;
     private Button paginationButton;
@@ -69,14 +69,13 @@ public class PaginatedListFragment extends Fragment {
             recyclerView.setAdapter(listAdapter);
 
             init();
-            paginationButton.setOnClickListener(v -> {
-                loader.setVisibility(View.VISIBLE);
+            paginationButton.setOnClickListener(v -> {loader.setVisibility(View.VISIBLE);
                 paginationButton.setVisibility(View.GONE);
                 listViewModel.incrementCurrentPage();
                 listViewModel.updateList().observe(getViewLifecycleOwner(), itemList -> loader.setVisibility(View.GONE));
             });
 
-            if (sortOptions != null) {
+           if (sortOptions != null) {
                 sortView.setVisibility(View.VISIBLE);
                 List<String> spinnerOptions = getSpinnerOptions();
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, spinnerOptions);
@@ -84,14 +83,20 @@ public class PaginatedListFragment extends Fragment {
                 sortView.setAdapter(adapter);
                 sortView.setSelection(0);
 
-                sortView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    @Override
-                    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+              sortView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                   // cette méthode est appelée lorsqu'un élément est sélectionné dans l'AdapterView
+                   @Override
+                   public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                         if (spinnerSelected) {
                             if(filterOptions != null) {
                                 if (position <= sortOptions.size() - 1) {
+                                    // cette méthode définit le tri en utilisant
+                                    // la valeur de l'option de tri correspondante.
                                     setSort(sortOptions.get(position).getValue());
                                 } else {
+                                    // cette partie de code récupère l'option de filtre correspondante à l'élément sélectionné,
+                                    // puis crée une HashMap contenant les informations de filtre pour cette option.
+                                    // Enfin elle appelle la méthode setFilter() pour définir le filtre en utilisant la HashMap créée.
                                     FilterOption currentFilter = filterOptions.get(position - sortOptions.size());
                                     HashMap<String, String> finalFilter = new HashMap<>();
                                     finalFilter.put(currentFilter.getApiName(), currentFilter.getValue());
@@ -180,6 +185,7 @@ public class PaginatedListFragment extends Fragment {
         paginationButton = view.findViewById(R.id.pagination_button);
         loader = view.findViewById(R.id.loader);
         sortView = view.findViewById(R.id.sort_view);
+
     }
 
     public List<String> getSpinnerOptions() {
@@ -202,4 +208,5 @@ public class PaginatedListFragment extends Fragment {
         }
         return finalOptions;
     }
+
 }

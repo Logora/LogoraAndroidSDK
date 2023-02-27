@@ -22,6 +22,9 @@ import org.json.JSONObject;
 
 public class NotificationListAdapter extends ListAdapter {
 
+    public NotificationListAdapter() {
+    }
+
     public ListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);

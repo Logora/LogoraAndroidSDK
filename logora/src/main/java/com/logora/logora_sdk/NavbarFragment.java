@@ -81,12 +81,12 @@ public class NavbarFragment extends Fragment {
 
         loginLinkView.init(R.drawable.ic_login, "Connexion", null, null);
         loginLinkView.setOnClickListener(v -> {
-            Uri.Builder builder = Uri.parse(settings.get("auth.authDialogEndpoint")).buildUpon();
-            builder.appendQueryParameter("response_type", "code")
+           Uri.Builder builder = Uri.parse(settings.get("auth.login_url")).buildUpon();
+           builder.appendQueryParameter("response_type", "code")
                     .appendQueryParameter("redirect_uri", "https://app.logora.fr/auth/callback")
                     .appendQueryParameter("client_id", settings.get("auth.clientId"))
                     .appendQueryParameter("scope", settings.get("auth.scope"));
-            String authUrl = builder.build().toString();
+           String authUrl = builder.build().toString();
             this.goToUrl(authUrl);
         });
 

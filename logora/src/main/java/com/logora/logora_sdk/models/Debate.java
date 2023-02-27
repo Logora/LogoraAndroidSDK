@@ -31,8 +31,10 @@ public class Debate {
     public Debate() {}
 
     public static Debate objectFromJson(JSONObject jsonObject) {
+        // Create a new Debate object
         Debate debate = new Debate();
         try {
+            // Définir diverses propriétés de l'objet Debate en fonction des valeurs de l'objet JSON
             debate.setName(jsonObject.getString("name"));
             debate.setId(jsonObject.getString("id"));
             debate.setSlug(jsonObject.getString("slug"));
@@ -40,21 +42,23 @@ public class Debate {
             debate.setArgumentsCount(jsonObject.getInt("messages_count"));
             String publishedDate = jsonObject.getString("created_at");
             debate.setPublishedDate(DateUtil.parseDate(publishedDate));
-
+            // Extract vote count information from the JSON object and add it to the Debate object
             JSONObject votesCountObject = jsonObject.getJSONObject("votes_count");
             debate.setTotalVotesCount(Integer.parseInt(votesCountObject.getString("total")));
             votesCountObject.remove("total");
             debate.setVotesCountObject(debate.convertToHashMap(votesCountObject));
-
+            // Extraire la position et le pourcentage du vote gagnant de l'objet JSON et l'ajouter à l'objet Debate
             JSONArray debatePositions = jsonObject.getJSONObject("group_context").getJSONArray("positions");
             JSONObject votesCount = jsonObject.getJSONObject("votes_count");
             JSONArray votesCountKeys = votesCount.names();
             int maxPercentage = 0;
             Integer maxId = null;
             if(votesCountKeys == null || votesCountKeys.length() == 0) {
+                // S'il n'y a pas de votes, définissez le pourcentage de victoires sur 50 % et la position gagnante sur null
                 maxPercentage = 50;
                 maxId = null;
             } else {
+                // Itérer sur le nombre de votes et trouver celui avec le pourcentage le plus élevé
                 for (int i = 0; i < votesCountKeys.length(); i++) {
                     String key = votesCountKeys.getString(i);
                     if(key.equals("total")) {
@@ -69,6 +73,7 @@ public class Debate {
             }
             debate.setVotePercentage(maxPercentage);
             debate.setVotePosition(getVotePosition(debatePositions, maxId));
+            // Extract the positions from the JSON object and add them to the Debate object
 
             JSONArray positionsObject = jsonObject.getJSONObject("group_context").getJSONArray("positions");
             List<Position> positionsList = new ArrayList<>();
@@ -78,8 +83,10 @@ public class Debate {
             debate.setPositionList(positionsList);
             debate.setVotePosition(getVotePosition(positionsList, null));
             debate.initVotePercentage();
+            // Return the Debate object
             return debate;
         } catch (JSONException e) {
+            // If there is an exception, print the stack trace and return null
             e.printStackTrace();
             return null;
         }
@@ -210,9 +217,19 @@ public class Debate {
     }
 
     public void calculateVotePercentage(String positionId, Boolean isUpdate) {
+        //keySet());
+        //This line creates a new list of integers called "votesCountKeys" and initializes it with the keys from
+        // a Map object called "votesCountObject".
         List<Integer> votesCountKeys = new ArrayList<>(votesCountObject.keySet());
+        //This line starts a loop that iterates over each key in "votesCountKeys".
+        // The current key is stored in a variable called "key".
         for (int i = 0; i < votesCountKeys.size(); i++) {
             Integer key = votesCountKeys.get(i);
+            //This block of code checks if the current key is equal to the value of "positionId".
+            // If it is, the value associated with the key in "votesCountObject" is incremented by 1.
+            // If it's not, and the "isUpdate"
+            // boolean is true, the value associated with the key in
+            // "votesCountObject" is decremented by 1
             if(key.equals(Integer.parseInt(positionId))) {
                 votesCountObject.put(key, votesCountObject.get(key) + 1);
             } else {

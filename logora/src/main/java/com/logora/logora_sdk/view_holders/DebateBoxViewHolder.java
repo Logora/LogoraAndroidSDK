@@ -33,6 +33,8 @@ public class DebateBoxViewHolder extends ListViewHolder {
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         debateUserListView.setLayoutManager(layoutManager);
+
+
     }
 
     private void findViews(View view) {

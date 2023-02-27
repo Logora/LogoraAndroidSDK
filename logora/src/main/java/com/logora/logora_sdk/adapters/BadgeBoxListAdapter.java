@@ -17,7 +17,9 @@ import org.json.JSONObject;
 import java.util.List;
 
 public class BadgeBoxListAdapter extends ListAdapter {
-    public BadgeBoxListAdapter() {}
+    public BadgeBoxListAdapter() {
+
+    }
 
     public BadgeBoxListAdapter(List<JSONObject> items) {
         super(items);

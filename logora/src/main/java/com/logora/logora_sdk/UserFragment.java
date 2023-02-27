@@ -111,7 +111,7 @@ public class UserFragment extends Fragment {
             });
 
             tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-                @Override
+               @Override
                 public void onTabSelected(TabLayout.Tab tab) {
                     int position = tab.getPosition();
                     if(position == 0) {

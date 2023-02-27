@@ -94,16 +94,18 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
             findViews(view);
 
             TagListAdapter debateTagListAdapter = new TagListAdapter();
-
             debatePresentationContainerView.setVisibility(View.GONE);
-            loader.setVisibility(View.VISIBLE);
+             loader.setVisibility(View.VISIBLE);
 
             DebateShowViewModel debateShowViewModel = new DebateShowViewModel();
+             debateShowViewModel.getDebate(this.debateSlug);
+
             debateShowViewModel.getDebate(this.debateSlug).observe(getViewLifecycleOwner(), debate -> {
                 this.debate = debate;
                 debateNameView.setText(debate.getName());
 
                 // Argument Input
+                //j'ai commenter ca
                 argumentAuthorBox.init(null);
                 String primaryColor = settings.get("theme.callPrimaryColor");
                 LayerDrawable shape = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.button_primary_background);
@@ -112,8 +114,13 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                 argumentSend.setBackground(shape);
                 argumentSend.setColorFilter(Color.WHITE);
                 argumentInputControls.setVisibility(View.GONE);
+                //j'ai commenter ca
                 argumentInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                    @Override
+                    // il semble que ce code contrôle la visibilité de certains éléments de l'interface utilisateur
+                    // en fonction du statut de connexion de l'utilisateur. Si l'utilisateur est connecté,
+                    // l'élément UI s'affiche ;
+                    // sinon, l'utilisateur est invité à se connecter avant de pouvoir interagir avec cet élément.
+                 @Override
                     public void onFocusChange(View view, boolean hasFocus) {
                         if (hasFocus) {
                             if (auth.getIsLoggedIn()) {
@@ -126,7 +133,9 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                     }
                 });
 
-                argumentSend.setOnClickListener(v -> {
+//j'ai commenter ca
+
+               argumentSend.setOnClickListener(v -> {
                     InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
                     imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                     if (inputProvider.getUpdateArgument() != null) {
@@ -141,7 +150,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                 });
 
                 debatePublishedDateView.setText(DateUtil.getDateText(debate.getPublishedDate()));
-                debateTagListAdapter.setItems(debate.getTagList());
+               debateTagListAdapter.setItems(debate.getTagList());
                 debateTagList.setAdapter(debateTagListAdapter);
 
                 voteBoxView.init(debate);
@@ -150,22 +159,18 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                 shareView.setShareText(debate.getName());
                 loader.setVisibility(View.GONE);
                 debatePresentationContainerView.setVisibility(View.VISIBLE);
-
                 String argumentResourceName = "groups/" + debate.getSlug() + "/messages";
                 ArgumentListAdapter argumentListAdapter = new ArgumentListAdapter(debate, 0);
                 this.argumentListAdapter = argumentListAdapter;
 
-                ArrayList<SortOption> argumentListSortOptions = new ArrayList<>();
+               ArrayList<SortOption> argumentListSortOptions = new ArrayList<>();
                 argumentListSortOptions.add(new SortOption("Le plus récent", "-created_at", null));
                 argumentListSortOptions.add(new SortOption("Le plus pertinent", "-score", null));
                 argumentListSortOptions.add(new SortOption("Le plus ancien", "+created_at", null));
 
-                ArrayList<FilterOption> argumentListFilterOptions = new ArrayList<>();
-                argumentListFilterOptions.add(new FilterOption("Réponses", "is_reply", "true", null));
-
-                argumentList = new PaginatedListFragment(argumentResourceName, "CLIENT", argumentListAdapter, null, argumentListSortOptions, null, "-score");
-
-                getChildFragmentManager()
+               argumentList = new PaginatedListFragment(argumentResourceName, "CLIENT", argumentListAdapter, null, argumentListSortOptions, null, "-score");
+//j'ai commenter ca
+              getChildFragmentManager()
                         .beginTransaction()
                         .add(R.id.argument_list, argumentList)
                         .commit();
@@ -174,16 +179,22 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                 this.relatedDebateListAdapter = new DebateBoxListAdapter();
 
                 relatedDebateList = new PaginatedListFragment(relatedDebateResourceName, "CLIENT", relatedDebateListAdapter, null, null, null, null);
+//j'ai commenter ca
 
-                getChildFragmentManager()
+               getChildFragmentManager()
                         .beginTransaction()
                         .add(R.id.related_debates_list, relatedDebateList)
                         .commit();
+
+
             });
         } catch(Exception e) {
-            Toast.makeText(getContext(), "Une erreur est survenue", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Une erreur est survenue  ", Toast.LENGTH_LONG).show();
+
         }
     }
+
+
 
     private void openSideDialog() {
         SideDialog sideDialog = new SideDialog(getContext(), debate, this);
@@ -240,6 +251,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                                         showToastMessage(res.getString(R.string.argument_create_success));
                                     }
                                 } catch (JSONException e) {
+                                   // System.out.println("recu");
                                     e.printStackTrace();
                                 }
                             }, error -> {
@@ -253,7 +265,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
             openLoginDialog();
         }
     }
-
+//j'ai commenter ca
     private void updateArgument(Argument argument) throws JSONException {
         Resources res = this.getContext().getResources();
         argumentListAdapter.removeItem(argument.getId());
@@ -279,7 +291,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
 
     private void findViews(View view) {
         loader = view.findViewById(R.id.loader);
-        debatePresentationContainerView = view.findViewById(R.id.debate_presentation_container);
+         debatePresentationContainerView = view.findViewById(R.id.debate_presentation_container);
         debatePublishedDateView = view.findViewById(R.id.debate_published_date);
         debateNameView = view.findViewById(R.id.debate_name);
         debateTagList = view.findViewById(R.id.debate_tag_list);
@@ -290,6 +302,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
         argumentAuthorBox = view.findViewById(R.id.argument_author_box_container);
         argumentInputControls = view.findViewById(R.id.argument_input_controls);
         argumentInput = view.findViewById(R.id.argument_input);
+        //problem de d'affichage d'icon
         argumentSend = view.findViewById(R.id.argument_input_send_button);
     }
 
@@ -316,4 +329,6 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
             inputProvider.removeRemoveArgument();
         }
     }
-}
+
+
+        }

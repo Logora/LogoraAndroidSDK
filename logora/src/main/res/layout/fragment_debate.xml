@@ -87,7 +87,6 @@
 
         </RelativeLayout>
     </RelativeLayout>
-
     <RelativeLayout
         android:id="@+id/argument_input_container"
         android:layout_width="wrap_content"
@@ -117,6 +116,7 @@
             android:paddingBottom="10dp"/>
 
         <RelativeLayout
+
             android:id="@+id/argument_input_controls"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -136,8 +136,6 @@
 
         </RelativeLayout>
     </RelativeLayout>
-
-
     <FrameLayout
         android:id="@+id/argument_list"
         android:layout_width="match_parent"
@@ -171,5 +169,8 @@
         android:text="@string/see_all_debates"
         style="@style/PrimaryButton"
         android:layout_marginBottom="10dp"/>
+
+
+
 
 </RelativeLayout>

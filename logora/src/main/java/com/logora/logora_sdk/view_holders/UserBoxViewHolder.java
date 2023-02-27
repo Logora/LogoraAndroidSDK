@@ -15,6 +15,7 @@ public class UserBoxViewHolder extends ListViewHolder {
     ImageView userImageView;
     ImageView userLevelIconView;
 
+
     public UserBoxViewHolder(View itemView) {
         super(itemView);
         userFullNameView = itemView.findViewById(R.id.user_box_full_name);

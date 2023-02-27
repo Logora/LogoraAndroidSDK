@@ -21,7 +21,8 @@ import java.util.List;
 public class UserBoxListAdapter extends ListAdapter {
     private final Router router = Router.getInstance();
 
-    public UserBoxListAdapter() {}
+    public UserBoxListAdapter() {
+    }
 
     public UserBoxListAdapter(List<JSONObject> items) {
         super(items);

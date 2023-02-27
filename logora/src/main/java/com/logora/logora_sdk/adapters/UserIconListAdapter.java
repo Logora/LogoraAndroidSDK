@@ -17,7 +17,8 @@ import java.util.List;
 public class UserIconListAdapter extends ListAdapter {
     private final Router router = Router.getInstance();
 
-    public UserIconListAdapter() {}
+    public UserIconListAdapter() {
+    }
 
     public UserIconListAdapter(List<JSONObject> items) {
         super(items);
