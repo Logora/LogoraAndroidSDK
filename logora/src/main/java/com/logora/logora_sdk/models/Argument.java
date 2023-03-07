@@ -50,7 +50,6 @@ public class Argument extends Model {
                 argument.setRepliesCount(0);
             }
             argument.setPositionIndex(0);
-
             if (jsonObject.has("group")) {
                 argument.setDebate(Debate.objectFromJson(jsonObject.getJSONObject("group")));
             };
@@ -63,7 +62,6 @@ public class Argument extends Model {
                 votesList.add(votesObjects.getJSONObject(i));
             }
             argument.setVotesList(votesList);
-
            if (jsonObject.has("replies_authors")) {
                 JSONArray repliesAuthorsObjects = jsonObject.getJSONArray("replies_authors");
                 List<JSONObject> repliesAuthorsList = new ArrayList<>();

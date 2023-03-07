@@ -154,7 +154,6 @@ public class FollowDebateButtonView extends androidx.appcompat.widget.AppCompatB
         } else {
             this.setText(R.string.debate_follow_inactive);
         }
-
         this.setTextColor(Color.parseColor(primaryColor));
         LayerDrawable shape = (LayerDrawable) ContextCompat.getDrawable(this.context, R.drawable.button_inactive_background);
         GradientDrawable gradientDrawable = (GradientDrawable) shape.findDrawableByLayerId(R.id.border);

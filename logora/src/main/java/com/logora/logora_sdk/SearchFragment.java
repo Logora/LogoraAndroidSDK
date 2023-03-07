@@ -39,15 +39,11 @@ public class SearchFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         try {
             super.onViewCreated(view, savedInstanceState);
-
             findViews(view);
-
             String newHeader = textHeader.getText().toString() + ' ' + '"' + query + '"';
             textHeader.setText(newHeader);
-
             TabLayout.Tab debateTab = tabLayout.getTabAt(0);
             TabLayout.Tab userTab = tabLayout.getTabAt(1);
-
             String debateTabText = settings.get("infoDebate");
             String userTabText = settings.get("infoDebaters");
             if (debateTabText != null) {
@@ -56,23 +52,18 @@ public class SearchFragment extends Fragment {
             if (userTabText != null) {
                 userTab.setText(userTabText);
             }
-
             setStyles();
-
             DebateBoxListAdapter debateListAdapter = new DebateBoxListAdapter();
             UserBoxListAdapter userListAdapter = new UserBoxListAdapter();
-
             PaginatedListFragment debateListFragment = new PaginatedListFragment("groups", "CLIENT", debateListAdapter, null, null, null, null);
             debateListFragment.setQuery(query);
             PaginatedListFragment userListFragment = new PaginatedListFragment("users", "CLIENT", userListAdapter, null, null, null, null);
             userListFragment.setQuery(query);
-
             getChildFragmentManager()
                     .beginTransaction()
                     .add(R.id.debate_list, debateListFragment)
                     .add(R.id.user_list, userListFragment)
                     .commit();
-
             tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {

@@ -28,7 +28,6 @@ public class User {
             user.setId(jsonObject.getInt("id"));
             user.setImageUrl(jsonObject.getString("image_url"));
             user.setFullName(jsonObject.getString("full_name"));
-            //user.setLevelIconUrl(jsonObject.getJSONObject("level").getString("icon_url"));
             if (jsonObject.has("debates_count")) {
                 user.setDebatesCount(jsonObject.getInt("debates_count"));
             }
@@ -50,9 +49,11 @@ public class User {
     public Integer getVotes() {
         return votesCount;
     }
+
     public void setVotes(Integer votesCount) {
         this.votesCount = votesCount;
     }
+
     public String getFullName() { return fullName; }
 
     public void setFullName(String fullName) {
@@ -109,5 +110,4 @@ public class User {
 
     public String getLevelIconUrl() { return levelIconUrl; }
 
-    public void setLevelIconUrl(String levelIconUrl) { this.levelIconUrl = levelIconUrl; }
 }

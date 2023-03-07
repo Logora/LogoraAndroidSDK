@@ -74,7 +74,6 @@ public class Debate {
             debate.setVotePercentage(maxPercentage);
             debate.setVotePosition(getVotePosition(debatePositions, maxId));
             // Extract the positions from the JSON object and add them to the Debate object
-
             JSONArray positionsObject = jsonObject.getJSONObject("group_context").getJSONArray("positions");
             List<Position> positionsList = new ArrayList<>();
             for (int i=0; i < positionsObject.length(); i++){
@@ -240,7 +239,7 @@ public class Debate {
         }
         this.initVotePercentage();
     }
-
+    
     public Integer getPositionPercentage(Integer positionId) {
         return votesPercentages.get(positionId);
     }

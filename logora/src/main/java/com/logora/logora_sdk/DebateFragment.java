@@ -102,7 +102,6 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                 this.debate = debate;
                 debateNameView.setText(debate.getName());
                 // Argument Input
-                //j'ai commenter ca
                 argumentAuthorBox.init(null);
                 String primaryColor = settings.get("theme.callPrimaryColor");
                 LayerDrawable shape = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.button_primary_background);
@@ -111,7 +110,6 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                 argumentSend.setBackground(shape);
                 argumentSend.setColorFilter(Color.WHITE);
                 argumentInputControls.setVisibility(View.GONE);
-                //j'ai commenter ca
                 argumentInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                     // il semble que ce code contrôle la visibilité de certains éléments de l'interface utilisateur
                     // en fonction du statut de connexion de l'utilisateur. Si l'utilisateur est connecté,
@@ -129,8 +127,6 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                         }
                     }
                 });
-
-//j'ai commenter ca
                 argumentSend.setOnClickListener(v -> {
                     InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
                     imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
@@ -161,7 +157,6 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                 argumentListSortOptions.add(new SortOption("Le plus pertinent", "-score", null));
                 argumentListSortOptions.add(new SortOption("Le plus ancien", "+created_at", null));
                 argumentList = new PaginatedListFragment(argumentResourceName, "CLIENT", argumentListAdapter, null, argumentListSortOptions, null, "-score");
-              //j'ai commenter ca
                getChildFragmentManager()
                         .beginTransaction()
                         .add(R.id.argument_list, argumentList)
@@ -169,7 +164,6 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                 String relatedDebateResourceName = "groups/" + debate.getSlug() + "/related";
                 this.relatedDebateListAdapter = new DebateBoxListAdapter();
                 relatedDebateList = new PaginatedListFragment(relatedDebateResourceName, "CLIENT", relatedDebateListAdapter, null, null, null, null);
-               //j'ai commenter ca
                getChildFragmentManager()
                         .beginTransaction()
                         .add(R.id.related_debates_list, relatedDebateList)
@@ -252,7 +246,6 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
             openLoginDialog();
         }
     }
-//j'ai commenter ca
     private void updateArgument(Argument argument) throws JSONException {
         Resources res = this.getContext().getResources();
         argumentListAdapter.removeItem(argument.getId());
@@ -294,7 +287,6 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
 
     private void showToastMessage(String message) {
         int duration = Toast.LENGTH_SHORT;
-
         Toast toast = Toast.makeText(getContext(), message, duration);
         toast.show();
     }
@@ -315,6 +307,4 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
             inputProvider.removeRemoveArgument();
         }
     }
-
-
         }

@@ -19,7 +19,7 @@ import java.time.format.ResolverStyle;
 public class UserBoxViewHolder extends ListViewHolder {
     UserBox userBox;
     TextView userFullNameView;
-    TextView userVotecount;
+    TextView userVoteCount;
     ImageView userImageView;
     TextView userArgument;
     TextView userPoint;
@@ -28,7 +28,7 @@ public class UserBoxViewHolder extends ListViewHolder {
         super(itemView);
         userFullNameView = itemView.findViewById(R.id.user_box_full_name);
         userImageView = itemView.findViewById(R.id.user_box_image);
-        userVotecount = itemView.findViewById(R.id.user_votes_count_value);
+        userVoteCount = itemView.findViewById(R.id.user_votes_count_value);
         userArgument = itemView.findViewById(R.id.argument_value);
         userPoint = itemView.findViewById(R.id.eloquence_text);
     }
@@ -42,7 +42,7 @@ public class UserBoxViewHolder extends ListViewHolder {
         //vote
         int votesCount = userBox.getVotesCount();
         String voteCount = res.getQuantityString(R.plurals.user_vote_count, votesCount,votesCount);
-        userVotecount.setText(voteCount);
+        userVoteCount.setText(voteCount);
         //argument
         int argumentCount=userBox.getArgumentsCount();
         String ArgumentCount = res.getQuantityString(R.plurals.user_argument_count, argumentCount,argumentCount);
@@ -54,6 +54,5 @@ public class UserBoxViewHolder extends ListViewHolder {
         Glide.with(userImageView.getContext())
                 .load(Uri.parse(userBox.getImageUrl()))
                 .into(userImageView);
-
     }
 }

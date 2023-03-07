@@ -8,7 +8,7 @@ public class UserBox extends Model {
     private String imageUrl;
     private String slug;
     private Integer id;
-    private Integer votesCount = 0;
+    private Integer votesCount ;
     private Integer argumentsCount = 0;
     private Integer points = 0;
 
@@ -24,7 +24,7 @@ public class UserBox extends Model {
             if(jsonObject.has("points")){
                 userBox.setPoints(jsonObject.getInt("points"));
             }
-            if(jsonObject.has("upvotes") || userBox.votesCount == 0) {
+            if(jsonObject.has("upvotes")) {
                 userBox.setVotesCount(jsonObject.getInt("upvotes"));
             }
             if(jsonObject.has("messages_count")) {

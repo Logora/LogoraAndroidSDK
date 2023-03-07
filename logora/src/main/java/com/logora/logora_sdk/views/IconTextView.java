@@ -50,14 +50,12 @@ public class IconTextView extends LinearLayout {
         inflate(getContext(), R.layout.icon_text_view, this);
         TextView textView = this.findViewById(R.id.text_view);
         ImageView iconView = this.findViewById(R.id.icon_view);
-
         String mainText = settings.get("layout." + textKey);
         if(mainText != null) {
             textView.setText(mainText);
         } else {
             textView.setText(textValue);
         }
-
         if (iconValue != 0) {
             iconView.setImageResource(iconValue);
         } else if (imageUrl != null) {

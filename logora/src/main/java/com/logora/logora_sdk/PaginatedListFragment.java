@@ -81,7 +81,6 @@ public class PaginatedListFragment extends Fragment   {
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 sortView.setAdapter(adapter);
                 sortView.setSelection(0);
-
                 sortView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     // cette méthode est appelée lorsqu'un élément est sélectionné dans l'AdapterView
                     @Override
@@ -115,7 +114,6 @@ public class PaginatedListFragment extends Fragment   {
                     }
                 });
             }
-
             return view;
         } catch(Exception e) {
             Toast.makeText(getContext(), "Une erreur est survenue", Toast.LENGTH_LONG).show();
@@ -124,13 +122,11 @@ public class PaginatedListFragment extends Fragment   {
             emptyView.setVisibility(View.VISIBLE);
             loader.setVisibility(View.GONE);
         }
-
         return view;
     }
 
     public void init() {
         showLoader();
-
         listViewModel.getList().observe(getViewLifecycleOwner(), itemList -> {
             if(itemList.size() == 0) {
                 loader.setVisibility(View.GONE);
@@ -151,7 +147,6 @@ public class PaginatedListFragment extends Fragment   {
 
     public void update() {
         showLoader();
-
         listViewModel.resetList().observe(getViewLifecycleOwner(), itemList -> {
             if(itemList.size() == 0) {
                 loader.setVisibility(View.GONE);

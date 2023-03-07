@@ -36,7 +36,6 @@ public class PrimaryButton extends androidx.appcompat.widget.AppCompatButton {
     private void setStyles() {
         String primaryColor = settings.get("theme.callPrimaryColor");
         this.setTextColor(Color.WHITE);
-
         LayerDrawable shape = (LayerDrawable) ContextCompat.getDrawable(this.context, R.drawable.button_primary_background);
         GradientDrawable gradientDrawable = (GradientDrawable) shape.findDrawableByLayerId(R.id.shape);
         gradientDrawable.setColor(Color.parseColor(primaryColor));

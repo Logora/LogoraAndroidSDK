@@ -58,7 +58,6 @@ public class ArgumentAuthorBox extends RelativeLayout {
         levelIconView = findViewById(R.id.user_level_icon);
         userImageView = findViewById(R.id.user_image);
         eloquence_point=findViewById(R.id.eloquence_text);
-
     }
 
    public void init(Argument argument) {

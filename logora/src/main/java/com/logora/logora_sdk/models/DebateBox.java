@@ -31,7 +31,6 @@ public class DebateBox extends Model {
             debateBox.setSlug(jsonObject.getString("slug"));
             debateBox.setImageUrl(jsonObject.getString("image_url"));
             debateBox.setUsersCount(jsonObject.getInt("participants_count"));
-
             if (jsonObject.has("participants")) {
                 JSONArray userObjects = jsonObject.getJSONArray("participants");
                 List<JSONObject> userList = new ArrayList<>();
@@ -40,7 +39,6 @@ public class DebateBox extends Model {
                 }
                 debateBox.setUserList(userList);
             }
-
             JSONArray debatePositions = jsonObject.getJSONObject("group_context").getJSONArray("positions");
             JSONObject votesCount = jsonObject.getJSONObject("votes_count");
             JSONArray votesCountKeys = votesCount.names();

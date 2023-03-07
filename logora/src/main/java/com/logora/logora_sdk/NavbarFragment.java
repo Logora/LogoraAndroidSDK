@@ -54,20 +54,17 @@ public class NavbarFragment extends Fragment {
             loginLinkView.setVisibility(View.GONE);
             notificationContainer.setVisibility(View.VISIBLE);
             userProfileView.setVisibility(View.VISIBLE);
-
             if (auth.getCurrentUser().getNotificationsCount() > 0) {
                 notificationsBadge.setText(String.valueOf(auth.getCurrentUser().getNotificationsCount()));
             } else {
                 notificationsBadge.setVisibility(View.GONE);
             }
-
             notificationButtonView.init(R.drawable.ic_bell, "Alertes", null, null);
             notificationButtonView.setOnClickListener(v -> {
                 HashMap<String, String> routeParams = new HashMap<>();
                 notificationsBadge.setVisibility(View.GONE);
                 router.navigate(Router.getRoute("NOTIFICATIONS"), routeParams);
             });
-
             userProfileView.init(0, "Profil", null, auth.getCurrentUser().getImageUrl());
             userProfileView.setOnClickListener(v -> {
                 HashMap<String, String> routeParams = new HashMap<>();
@@ -78,9 +75,7 @@ public class NavbarFragment extends Fragment {
 
         indexButtonView.init(R.drawable.ic_home, "Débats", "infoAllDebates", null);
         indexButtonView.setOnClickListener(v -> router.navigate(Router.getRoute("INDEX"), null));
-
         loginLinkView.init(R.drawable.ic_login, "Connexion", null, null);
-
         loginLinkView.setOnClickListener(v -> {
             try {
                 Uri.Builder builder = Uri.parse(settings.get("")).buildUpon();
@@ -91,10 +86,8 @@ public class NavbarFragment extends Fragment {
                 String authUrl = builder.build().toString();
                 this.goToUrl(authUrl);
             }catch (Exception e){
-                System.out.println("errrrrrrrrrrrrrrrrrrrrrrrrrroooorrrrrrrrrrrrrrrrr"+e.toString());
+                System.out.println("problem in login"+e.toString());
             }
-
-
         });
 
         searchButtonView.init(R.drawable.ic_search, "Recherche", null, null);

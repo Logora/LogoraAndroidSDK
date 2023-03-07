@@ -39,7 +39,6 @@ public class ShareView extends LinearLayout {
         Resources res = this.getContext().getResources();
         inflate(getContext(), R.layout.share_layout, this);
         mobileShareView = this.findViewById(R.id.mobile_share_button);
-
         mobileShareView.setOnClickListener(v -> {
             this.openShareDialog(res.getString(R.string.share_content));
         });

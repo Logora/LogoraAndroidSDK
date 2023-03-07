@@ -28,13 +28,10 @@ public class DebateBoxViewHolder extends ListViewHolder {
 
     public DebateBoxViewHolder(View itemView, Context context) {
         super(itemView);
-
         findViews(itemView);
         LinearLayoutManager layoutManager
                 = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         debateUserListView.setLayoutManager(layoutManager);
-
-
     }
 
     private void findViews(View view) {
@@ -49,23 +46,18 @@ public class DebateBoxViewHolder extends ListViewHolder {
     public void updateWithObject(Object object) {
         DebateBox debateBox = (DebateBox) object;
         debateNameView.setText(debateBox.getName());
-
         Glide.with(debateImageView.getContext())
                 .load(Uri.parse(debateBox.getImageUrl()))
                 .into(debateImageView);
         debateImageView.setClipToOutline(true);
-
         String debateVote = debateBox.getVotePercentage() + " %" + " " + debateBox.getVotePosition();
         debateVoteView.setText(debateVote);
-
         List<JSONObject> userList = debateBox.getUserList();
         UserIconListAdapter userIconListAdapter = new UserIconListAdapter(userList);
         debateUserListView.setAdapter(userIconListAdapter);
-
         if(userList.size() == 0) {
             debateUserListView.setVisibility(View.GONE);
             debateUserListEmpty.setVisibility(View.VISIBLE);
         }
-
     }
 }

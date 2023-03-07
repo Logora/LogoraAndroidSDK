@@ -76,7 +76,6 @@ public class VoteBoxView extends RelativeLayout {
     private void initView() {
         inflate(getContext(), R.layout.vote_box, this);
         findViews();
-
         voteFirstPositionButton.setOnClickListener(v -> {
             if(auth.getIsLoggedIn()) {
                 this.vote(debate.getPositionList().get(0).getId());
@@ -85,7 +84,6 @@ public class VoteBoxView extends RelativeLayout {
                 loginDialog.show(getContext());
             }
         });
-
         voteSecondPositionButton.setOnClickListener(v -> {
             if(auth.getIsLoggedIn()) {
                 this.vote(debate.getPositionList().get(1).getId());
@@ -94,7 +92,6 @@ public class VoteBoxView extends RelativeLayout {
                 loginDialog.show(getContext());
             }
         });
-
         voteEditView.setOnClickListener(v -> {
             this.showButtons();
         });
@@ -204,13 +201,10 @@ public class VoteBoxView extends RelativeLayout {
         voteFirstPositionResultText.setTypeface(null, Typeface.NORMAL);
         voteSecondPositionResultText.setTypeface(null, Typeface.NORMAL);
 
-
         String firstPositionPrimaryColor = settings.get("theme.firstPositionColorPrimary");
         String secondPositionPrimaryColor = settings.get("theme.secondPositionColorPrimary");
-
         voteFirstPositionButton.setBackgroundColor(Color.parseColor(firstPositionPrimaryColor));
         voteSecondPositionButton.setBackgroundColor(Color.parseColor(secondPositionPrimaryColor));
-
         voteFirstPositionButton.setText(this.debate.getPositionList().get(0).getName());
         voteSecondPositionButton.setText(this.debate.getPositionList().get(1).getName());
 
@@ -226,13 +220,10 @@ public class VoteBoxView extends RelativeLayout {
         this.active = true;
         voteContainer.setVisibility(GONE);
         voteResultsContainer.setVisibility(VISIBLE);
-
         voteFirstPositionResultText.setText(this.debate.getPositionList().get(0).getName());
         voteSecondPositionResultText.setText(this.debate.getPositionList().get(1).getName());
-
         voteFirstPositionProgress.setProgressTintList(ColorStateList.valueOf(Color.parseColor(firstPositionPrimaryColor)));
         voteSecondPositionProgress.setProgressTintList(ColorStateList.valueOf(Color.parseColor(secondPositionPrimaryColor)));
-
         List<Position> positionList = this.debate.getPositionList();
         for(Integer i = 0; i < positionList.size(); i++){
             if(positionList.get(i).getId().equals(votePositionId) && i.equals(0)){
@@ -243,17 +234,13 @@ public class VoteBoxView extends RelativeLayout {
                 secondPositionSuccessVote.setVisibility(VISIBLE);
             }
         }
-
         voteFirstPositionProgressPercentage = debate.getPositionPercentage(this.debate.getPositionList().get(0).getId());
         voteSecondPositionProgressPercentage = debate.getPositionPercentage(this.debate.getPositionList().get(1).getId());
-
         if(voteFirstPositionProgressPercentage != null && voteSecondPositionProgressPercentage != null){
             setUpObserver();
         }
-
         voteFirstPositionProgressResult.setText(voteFirstPositionProgressPercentage + "%");
         voteSecondPositionProgressResult.setText(voteSecondPositionProgressPercentage + "%");
-
         int count = debate.getTotalVotesCount();
         Resources res = getResources();
         String votesCount = res.getQuantityString(R.plurals.debate_votes_count, count, count);
@@ -280,7 +267,6 @@ public class VoteBoxView extends RelativeLayout {
     private void startAnimation(ProgressBar progressBar, float startPercent, float endPercent) {
         int width = progressBar.getWidth();
         progressBar.setMax(width);
-
         int start = (int) (startPercent * width);
         int end = (int) (endPercent * width);
         ValueAnimator animator = ValueAnimator.ofInt(start, end);

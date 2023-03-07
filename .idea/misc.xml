@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/app/src/main/res/layout/activity_main.xml" value="0.14266304347826086" />
+        <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/background_argument.xml" value="0.1325" />
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/box_background.xml" value="0.1" />
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/button_active_background.xml" value="0.141" />
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/button_inactive_background.xml" value="0.141" />
@@ -14,7 +15,9 @@
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_arrow_left.xml" value="0.1" />
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_baseline_star_24.xml" value="0.1" />
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_bell.xml" value="0.1" />
+        <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_next.xml" value="0.1" />
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_point.xml" value="0.1115" />
+        <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_point_cercle.xml" value="0.1" />
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_point_elo.xml" value="0.1325" />
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_reply.xml" value="0.1125" />
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_send.xml" value="0.1385" />

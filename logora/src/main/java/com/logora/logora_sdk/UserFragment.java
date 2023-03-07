@@ -150,12 +150,10 @@ public class UserFragment extends Fragment {
         userDisciplesCountValue = view.findViewById(R.id.user_disciples_count_value);
         userDisciplesCountText = view.findViewById(R.id.user_disciples_count_text);
         userTagsList = view.findViewById(R.id.user_tags_list);
-
         userArgumentsContainer = view.findViewById(R.id.user_arguments_container);
         userBadgesContainer = view.findViewById(R.id.user_badges_container);
         userMentorsContainer = view.findViewById(R.id.user_mentors_container);
         userDisciplesContainer = view.findViewById(R.id.user_disciples_container);
-
         tabLayout = view.findViewById(R.id.tab_layout);
         argumentsTab = tabLayout.getTabAt(0);
         badgesTab = tabLayout.getTabAt(1);

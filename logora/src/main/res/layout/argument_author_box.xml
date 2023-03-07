@@ -54,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:background="@drawable/eloquence"
+                android:background="@drawable/background_argument"
                 >
                 <TextView
                     android:id="@+id/eloquence_text"
@@ -77,7 +77,6 @@
                 android:id="@+id/user_level_icon"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
-                android:layout_toEndOf="@id/eloquence_text"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="4dp"
                 android:scaleType="fitXY"

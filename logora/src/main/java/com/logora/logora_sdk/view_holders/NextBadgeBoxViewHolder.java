@@ -32,7 +32,6 @@ public class NextBadgeBoxViewHolder extends ListViewHolder {
         titleView.setText(nextBadgeBox.getTitle());
         descriptionView.setText(nextBadgeBox.getDescription());
         progressView.setProgress((nextBadgeBox.getProgress() / nextBadgeBox.getSteps()) * 100);
-
         Glide.with(iconView.getContext())
                 .load(Uri.parse(nextBadgeBox.getIconUrl()))
                 .into(iconView);

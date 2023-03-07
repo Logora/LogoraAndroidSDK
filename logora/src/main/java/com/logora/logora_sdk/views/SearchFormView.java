@@ -37,11 +37,9 @@ public class SearchFormView extends RelativeLayout {
     private void initView() {
         inflate(getContext(), R.layout.search_form, this);
         findViews();
-
         backIconView.setOnClickListener(v -> {
             this.setVisibility(GONE);
         });
-
         searchSubmit.setOnClickListener(v -> {
             InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
             imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);

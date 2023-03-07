@@ -32,7 +32,6 @@ public class NotificationFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         try {
             super.onViewCreated(view, savedInstanceState);
-
             findViews(view);
             String primaryColor = settings.get("theme.callPrimaryColor");
             readAllButton.setTextColor(Color.parseColor(primaryColor));
@@ -47,10 +46,8 @@ public class NotificationFragment extends Fragment {
                             }
                         }, Throwable::printStackTrace);
             });
-
             NotificationListAdapter notificationListAdapter = new NotificationListAdapter();
             notificationList = new PaginatedListFragment("notifications", "USER", notificationListAdapter, null, null, null, null);
-
             getChildFragmentManager()
                     .beginTransaction()
                     .add(R.id.notification_list_container, notificationList)

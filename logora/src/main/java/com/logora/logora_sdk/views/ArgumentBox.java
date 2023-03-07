@@ -142,7 +142,6 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
         String secondPositionPrimaryColor = settings.get("theme.secondPositionColorPrimary");
         String callPrimaryColor = settings.get("theme.callPrimaryColor");
         LayerDrawable shape = (LayerDrawable) ContextCompat.getDrawable(context, R.drawable.position_background);
-
         positionIndex = debate.getPositionIndex(argument.getPosition().getId());
         if (positionIndex == 0) {
             GradientDrawable gradientDrawable = (GradientDrawable) shape.findDrawableByLayerId(R.id.shape);
@@ -151,15 +150,12 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
             GradientDrawable gradientDrawable = (GradientDrawable) shape.findDrawableByLayerId(R.id.shape);
             gradientDrawable.setColor(Color.parseColor(secondPositionPrimaryColor));
         }
-
         if(argument.getIsReply()) {
             this.setReplyStyle();
         }
-
         if(this.depth == 2) {
             argumentReplyButton.setVisibility(GONE);
         }
-
         sideLabelView.setBackground(shape);
         sideLabelView.setText(argument.getPosition().getName());
         dateView.setText(DateUtil.getTimeAgo(argument.getPublishedDate()));
@@ -177,7 +173,6 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
         argumentMoreButton.setOnClickListener(v -> {
             openMoreActionsDialog();
         });
-
         // Add read more on contentView
         int MAX_LINES = 15;
         String TWO_SPACES = "  ";
@@ -204,7 +199,6 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
                 }
             }
         });
-
         // Reply input
         argumentReplyButton.setOnClickListener(v -> {
             if(authClient.getIsLoggedIn()) {
@@ -219,30 +213,24 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
         buttonGradientDrawable.setColor(Color.parseColor(callPrimaryColor));
         replySendButton.setBackground(buttonShape);
         replySendButton.setColorFilter(Color.WHITE);
-
         if (authClient.getIsLoggedIn()) {
             Glide.with(replyInputUserImage.getContext())
                     .load(Uri.parse(authClient.getCurrentUser().getImageUrl()))
                     .into(replyInputUserImage);
         }
-
         replySendButton.setOnClickListener(v -> {
             InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
             imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
             createReply(argument.getId());
         });
-
         argumentRepliesList.setId(argumentBoxId);
         String resourceName = "messages/" + argument.getId() + "/replies";
         repliesListAdapter = new ArgumentListAdapter(debate, depth + 1);
         repliesList = new PaginatedListFragment(resourceName, "CLIENT", repliesListAdapter, null, null, null, null);
-
         fragmentManager = ((AppCompatActivity) getContext()).getSupportFragmentManager();
-
         argumentRepliesFooter.setOnClickListener(v -> {
             this.toggleReplies(argumentBoxId);
         });
-
         if(argument.getRepliesCount() > 0) {
             argumentRepliesFooter.setVisibility(VISIBLE);
             argumentRepliesAuthorsListAdapter = new UserIconListAdapter();
@@ -252,7 +240,6 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
             argumentRepliesAuthorsList.setAdapter(argumentRepliesAuthorsListAdapter);
             argumentRepliesAuthorsListAdapter.setItems(authorsList);
         }
-
         setModerated();
     }
 
@@ -372,7 +359,6 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
 
     private void showToastMessage(String message) {
         int duration = Toast.LENGTH_SHORT;
-
         Toast toast = Toast.makeText(getContext(), message, duration);
         toast.show();
     }
