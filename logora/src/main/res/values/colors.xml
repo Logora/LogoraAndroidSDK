@@ -8,4 +8,6 @@
     <color name="text_secondary">#777777</color>
     <color name="text_tertiary">#FAFAFA</color>
     <color name="progress_background">#e9ecef</color>
+    <color name="background_eloquence">#E4E5E8</color>
+
 </resources>

@@ -59,10 +59,9 @@ public class PaginatedListFragment extends Fragment   {
     public void setQuery(String query) {
         this.listViewModel.setQuery(query);
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                              Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_paginated_list, container, false);
         try {
             findViews(view);
@@ -75,7 +74,7 @@ public class PaginatedListFragment extends Fragment   {
                 listViewModel.updateList().observe(getViewLifecycleOwner(), itemList -> loader.setVisibility(View.GONE));
             });
 
-           if (sortOptions != null) {
+            if (sortOptions != null) {
                 sortView.setVisibility(View.VISIBLE);
                 List<String> spinnerOptions = getSpinnerOptions();
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, spinnerOptions);
@@ -83,10 +82,10 @@ public class PaginatedListFragment extends Fragment   {
                 sortView.setAdapter(adapter);
                 sortView.setSelection(0);
 
-              sortView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                   // cette méthode est appelée lorsqu'un élément est sélectionné dans l'AdapterView
-                   @Override
-                   public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                sortView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    // cette méthode est appelée lorsqu'un élément est sélectionné dans l'AdapterView
+                    @Override
+                    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                         if (spinnerSelected) {
                             if(filterOptions != null) {
                                 if (position <= sortOptions.size() - 1) {
@@ -208,5 +207,4 @@ public class PaginatedListFragment extends Fragment   {
         }
         return finalOptions;
     }
-
-}
+    }

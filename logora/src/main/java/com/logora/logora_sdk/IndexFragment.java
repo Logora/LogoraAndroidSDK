@@ -33,27 +33,18 @@ public class IndexFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         try {
             super.onViewCreated(view, savedInstanceState);
-            String debateResourceName = "groups";
+           String debateResourceName = "groups";
             DebateBoxListAdapter debateListAdapter = new DebateBoxListAdapter();
-
             String userResourceName = "users/index/trending";
             UserBoxListAdapter userListAdapter = new UserBoxListAdapter();
-
-
             ArrayList<SortOption> debateListSortOptions = new ArrayList<>();
-
             debateListSortOptions.add(new SortOption("Le plus récent", "-created_at", null));
             debateListSortOptions.add(new SortOption("Le plus pertinent", "-score", null));
             debateListSortOptions.add(new SortOption("Le plus ancien", "+created_at", null));
-
-
-
-            //debateList = new PaginatedListFragment(debateResourceName, "CLIENT", debateListAdapter, null, debateListSortOptions, null, "-created_at");
-
-
+            debateList = new PaginatedListFragment(debateResourceName, "CLIENT", debateListAdapter, null, debateListSortOptions, null, "-created_at");
             getChildFragmentManager()
                     .beginTransaction()
-                    .add(R.id.trending_debates_list, new PaginatedListFragment(debateResourceName, "CLIENT", debateListAdapter, null, debateListSortOptions, null, null))
+                    .add(R.id.trending_debates_list,debateList)
                     .add(R.id.trending_users_list, new PaginatedListFragment(userResourceName, "CLIENT", userListAdapter, null, null, null, null))
                     .commit();
         } catch (Exception e) {

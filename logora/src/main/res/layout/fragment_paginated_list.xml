@@ -5,16 +5,19 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".PaginatedListFragment">
+    tools:context=".PaginatedListFragment"
 
+    >
     <TextView
         android:id="@+id/empty_list_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginVertical="16dp"
+        android:layout_marginVertical="45dp"
         android:text="@string/list_empty"
-        android:visibility="gone" />
+        android:visibility="gone"
+        />
+
 
     <Spinner
         android:id="@+id/sort_view"
@@ -31,6 +34,8 @@
         android:nestedScrollingEnabled="false"
         android:layout_below="@id/sort_view"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+
 
     <ProgressBar
         android:id="@+id/loader"

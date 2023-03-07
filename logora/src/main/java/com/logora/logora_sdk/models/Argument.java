@@ -22,10 +22,11 @@ public class Argument extends Model {
     private Date publishedDate;
     private List<JSONObject> votesList;
     private Boolean isReply;
-    private Integer repliesCount;
+    private Integer repliesCount = 0;
     private Integer parentArgumentId = null;
     private String status;
     private List <JSONObject> repliesAuthorsList;
+
 
     public Argument() {}
 
@@ -36,16 +37,13 @@ public class Argument extends Model {
             argument.setAuthor(UserBox.objectFromJson(jsonObject.getJSONObject("author")));
             argument.setVotesCount(jsonObject.getInt("upvotes"));
             argument.setContent(jsonObject.getString("content"));
-
             argument.setPosition(Position.objectFromJson(jsonObject.getJSONObject("position")));
             argument.setIsReply(jsonObject.getBoolean("is_reply"));
             argument.setStatus(jsonObject.getString("status"));
-
             String replyToId = jsonObject.getString("reply_to_id");
             if(!replyToId.equals("null")) {
                 argument.setParentArgumentId(Integer.parseInt(replyToId));
             }
-
             if(jsonObject.has("number_replies")) {
                 argument.setRepliesCount(jsonObject.getInt("number_replies"));
             } else {
@@ -66,7 +64,7 @@ public class Argument extends Model {
             }
             argument.setVotesList(votesList);
 
-            if (jsonObject.has("replies_authors")) {
+           if (jsonObject.has("replies_authors")) {
                 JSONArray repliesAuthorsObjects = jsonObject.getJSONArray("replies_authors");
                 List<JSONObject> repliesAuthorsList = new ArrayList<>();
                 for (int i = 0; i < repliesAuthorsObjects.length(); i++) {

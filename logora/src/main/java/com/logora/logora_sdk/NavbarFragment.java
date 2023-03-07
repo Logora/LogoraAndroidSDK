@@ -80,14 +80,21 @@ public class NavbarFragment extends Fragment {
         indexButtonView.setOnClickListener(v -> router.navigate(Router.getRoute("INDEX"), null));
 
         loginLinkView.init(R.drawable.ic_login, "Connexion", null, null);
+
         loginLinkView.setOnClickListener(v -> {
-           Uri.Builder builder = Uri.parse(settings.get("auth.login_url")).buildUpon();
-           builder.appendQueryParameter("response_type", "code")
-                    .appendQueryParameter("redirect_uri", "https://app.logora.fr/auth/callback")
-                    .appendQueryParameter("client_id", settings.get("auth.clientId"))
-                    .appendQueryParameter("scope", settings.get("auth.scope"));
-           String authUrl = builder.build().toString();
-            this.goToUrl(authUrl);
+            try {
+                Uri.Builder builder = Uri.parse(settings.get("")).buildUpon();
+                builder.appendQueryParameter("response_type", "code")
+                        .appendQueryParameter("redirect_uri", "https://app.logora.fr/auth/callback")
+                        .appendQueryParameter("client_id", settings.get("auth.clientId"))
+                        .appendQueryParameter("scope", settings.get("auth.scope"));
+                String authUrl = builder.build().toString();
+                this.goToUrl(authUrl);
+            }catch (Exception e){
+                System.out.println("errrrrrrrrrrrrrrrrrrrrrrrrrroooorrrrrrrrrrrrrrrrr"+e.toString());
+            }
+
+
         });
 
         searchButtonView.init(R.drawable.ic_search, "Recherche", null, null);

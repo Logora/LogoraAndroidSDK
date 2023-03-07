@@ -29,6 +29,7 @@ public class UserShowViewModel extends ViewModel {
         LogoraApiClient apiClient = LogoraApiClient.getInstance();
         apiClient.getUser(
             response -> {
+                System.out.println("afficher les informations de l'utilisateur"+response);
                 try {
                     JSONObject responseData = response.getJSONObject("data").getJSONObject("data").getJSONObject("resource");
                     User userObject = new User();

@@ -8,12 +8,17 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+
 import com.bumptech.glide.Glide;
 import com.logora.logora_sdk.R;
 import com.logora.logora_sdk.models.Argument;
+import com.logora.logora_sdk.models.UserBox;
 import com.logora.logora_sdk.utils.Auth;
 import com.logora.logora_sdk.utils.Router;
 import com.logora.logora_sdk.utils.Settings;
+
+import org.json.JSONException;
 
 import java.util.HashMap;
 
@@ -22,7 +27,7 @@ public class ArgumentAuthorBox extends RelativeLayout {
     private final Router router = Router.getInstance();
     private Auth authClient = Auth.getInstance();
     private TextView fullNameView;
-    private TextView userLevelView;
+    private TextView eloquence_point;
     private ImageView userImageView;
     private ImageView levelIconView;
     private Argument argument;
@@ -52,52 +57,56 @@ public class ArgumentAuthorBox extends RelativeLayout {
         fullNameView = findViewById(R.id.user_full_name);
         levelIconView = findViewById(R.id.user_level_icon);
         userImageView = findViewById(R.id.user_image);
-        userLevelView = findViewById(R.id.user_level);
+        eloquence_point=findViewById(R.id.eloquence_text);
+
     }
 
-    public void init(Argument argument){
-        this.argument = argument;
-        fullNameView.setOnClickListener(v -> {
-            HashMap<String, String> routeParams = new HashMap<>();
-            if (authClient.getIsLoggedIn() == true) {
-                routeParams.put("userSlug", authClient.getCurrentUser().getSlug());
-            } else {
-                routeParams.put("userSlug", argument.getAuthor().getSlug());
-            }
-            router.navigate(Router.getRoute("USER"), routeParams);
-        });
-        userImageView.setOnClickListener(v -> {
-            HashMap<String, String> routeParams = new HashMap<>();
-            routeParams.put("userSlug", argument.getAuthor().getSlug());
-            router.navigate(Router.getRoute("USER"), routeParams);
-        });
-        if (argument != null) {
-            fullNameView.setText(argument.getAuthor().getFullName());
-            Glide.with(levelIconView.getContext())
-                    .load(Uri.parse(argument.getAuthor().getLevelIconUrl()))
-                    .into(levelIconView);
-            Glide.with(userImageView.getContext())
-                    .load(Uri.parse(argument.getAuthor().getImageUrl()))
-                    .into(userImageView);
-        } else {
-            if (authClient.getIsLoggedIn() == true) {
-                fullNameView.setText(authClient.getCurrentUser().getFullName());
-                Glide.with(levelIconView.getContext())
-                        .load(Uri.parse(authClient.getCurrentUser().getLevelIconUrl()))
-                        .into(levelIconView);
-                Glide.with(userImageView.getContext())
-                        .load(Uri.parse(authClient.getCurrentUser().getImageUrl()))
-                        .into(userImageView);
-            } else {
-                Resources res = getResources();
-                userLevelView.setText(res.getString(R.string.author_box_default_level));
-                Glide.with(levelIconView.getContext())
-                        .load(Uri.parse("https://d2vtyvk9fq7442.cloudfront.net/level_1.png"))
-                        .into(levelIconView);
-                Glide.with(userImageView.getContext())
-                        .load(Uri.parse("https://d1afevl9u7zxbe.cloudfront.net/static/default_user_80x80.jpg"))
-                        .into(userImageView);
-            }
-        }
-    }
-}
+   public void init(Argument argument) {
+       this.argument = argument;
+       fullNameView.setOnClickListener(v -> {
+           HashMap<String, String> routeParams = new HashMap<>();
+           if (authClient.getIsLoggedIn() == true) {
+               routeParams.put("userSlug", authClient.getCurrentUser().getSlug());
+           } else {
+               routeParams.put("userSlug", argument.getAuthor().getSlug());
+           }
+           router.navigate(Router.getRoute("USER"), routeParams);
+       });
+       userImageView.setOnClickListener(v -> {
+           HashMap<String, String> routeParams = new HashMap<>();
+           routeParams.put("userSlug", argument.getAuthor().getSlug());
+           router.navigate(Router.getRoute("USER"), routeParams);
+       });
+       if (argument != null) {
+           try {
+               fullNameView.setText(argument.getAuthor().getFullName());
+               Glide.with(userImageView.getContext())
+                       .load(Uri.parse(argument.getAuthor().getImageUrl()))
+                       .into(userImageView);
+               eloquence_point.setText(String.valueOf(argument.getAuthor().getPoints()));
+           }catch(Exception e){
+
+               System.out.println("voici l'erreur"+e.toString());
+           }
+           } else {
+               if (authClient.getIsLoggedIn() == true) {
+                   fullNameView.setText(authClient.getCurrentUser().getFullName());
+                   Glide.with(levelIconView.getContext())
+                           .load(Uri.parse(authClient.getCurrentUser().getLevelIconUrl()))
+                           .into(levelIconView);
+                   Glide.with(userImageView.getContext())
+                           .load(Uri.parse(authClient.getCurrentUser().getImageUrl()))
+                           .into(userImageView);
+               } else {
+                   Resources res = getResources();
+                  // userLevelView.setText(res.getString(R.string.author_box_default_level));
+                   /*Glide.with(levelIconView.getContext())
+                           .load(Uri.parse("https://d2vtyvk9fq7442.cloudfront.net/level_1.png"))
+                           .into(levelIconView);*/
+                   Glide.with(userImageView.getContext())
+                           .load(Uri.parse("https://d1afevl9u7zxbe.cloudfront.net/static/default_user_80x80.jpg"))
+                           .into(userImageView);
+               }
+           }
+       }
+   }

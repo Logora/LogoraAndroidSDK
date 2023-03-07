@@ -8,20 +8,28 @@ public class UserBox extends Model {
     private String imageUrl;
     private String slug;
     private Integer id;
-    private String levelName;
-    private String levelIconUrl;
+    private Integer votesCount = 0;
+    private Integer argumentsCount = 0;
+    private Integer points = 0;
 
     public UserBox() {}
 
     public static UserBox objectFromJson(JSONObject jsonObject) {
         UserBox userBox = new UserBox();
         try {
+            userBox.setId(jsonObject.getInt("id"));
             userBox.setFullName(jsonObject.getString("full_name"));
             userBox.setSlug(jsonObject.getString("slug"));
             userBox.setImageUrl(jsonObject.getString("image_url"));
-            userBox.setLevelIconUrl(jsonObject.getJSONObject("level").getString("icon_url"));
-            userBox.setId(jsonObject.getInt("id"));
-            userBox.setLevelName(jsonObject.getJSONObject("level").getString("name"));
+            if(jsonObject.has("points")){
+                userBox.setPoints(jsonObject.getInt("points"));
+            }
+            if(jsonObject.has("upvotes") || userBox.votesCount == 0) {
+                userBox.setVotesCount(jsonObject.getInt("upvotes"));
+            }
+            if(jsonObject.has("messages_count")) {
+                userBox.setArgumentsCount(jsonObject.getInt("messages_count"));
+            }
             return userBox;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -53,11 +61,23 @@ public class UserBox extends Model {
         this.imageUrl = imageUrl;
     }
 
-    public String getLevelName() { return levelName; }
+    public Integer getVotesCount() {
+        return votesCount;
+    }
 
-    public void setLevelName(String levelName) { this.levelName = levelName; }
+    public void setVotesCount(Integer votesCount) {
+        this.votesCount = votesCount;
+    }
 
-    public String getLevelIconUrl() { return levelIconUrl; }
+    public Integer getPoints() { return points; }
 
-    public void setLevelIconUrl(String levelIconUrl) { this.levelIconUrl = levelIconUrl; }
+    public void setPoints(Integer points) { this.points = points; }
+
+    public Integer getArgumentsCount() {
+        return argumentsCount;
+    }
+
+    public void setArgumentsCount(Integer argumentsCount) {
+        this.argumentsCount = argumentsCount;
+    }
 }

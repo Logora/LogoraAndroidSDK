@@ -74,6 +74,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
     private ArgumentListAdapter argumentListAdapter;
     private PaginatedListFragment relatedDebateList;
     private DebateBoxListAdapter relatedDebateListAdapter;
+    private Argument argument;
 
     public DebateFragment() {
         super(R.layout.fragment_debate);
@@ -92,18 +93,14 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
             super.onViewCreated(view, savedInstanceState);
             inputProvider.setListener(this);
             findViews(view);
-
             TagListAdapter debateTagListAdapter = new TagListAdapter();
             debatePresentationContainerView.setVisibility(View.GONE);
-             loader.setVisibility(View.VISIBLE);
-
+            loader.setVisibility(View.VISIBLE);
             DebateShowViewModel debateShowViewModel = new DebateShowViewModel();
-             debateShowViewModel.getDebate(this.debateSlug);
-
+            debateShowViewModel.getDebate(this.debateSlug);
             debateShowViewModel.getDebate(this.debateSlug).observe(getViewLifecycleOwner(), debate -> {
                 this.debate = debate;
                 debateNameView.setText(debate.getName());
-
                 // Argument Input
                 //j'ai commenter ca
                 argumentAuthorBox.init(null);
@@ -120,7 +117,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                     // en fonction du statut de connexion de l'utilisateur. Si l'utilisateur est connecté,
                     // l'élément UI s'affiche ;
                     // sinon, l'utilisateur est invité à se connecter avant de pouvoir interagir avec cet élément.
-                 @Override
+                    @Override
                     public void onFocusChange(View view, boolean hasFocus) {
                         if (hasFocus) {
                             if (auth.getIsLoggedIn()) {
@@ -134,8 +131,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                 });
 
 //j'ai commenter ca
-
-               argumentSend.setOnClickListener(v -> {
+                argumentSend.setOnClickListener(v -> {
                     InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
                     imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
                     if (inputProvider.getUpdateArgument() != null) {
@@ -150,43 +146,34 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                 });
 
                 debatePublishedDateView.setText(DateUtil.getDateText(debate.getPublishedDate()));
-               debateTagListAdapter.setItems(debate.getTagList());
+                debateTagListAdapter.setItems(debate.getTagList());
                 debateTagList.setAdapter(debateTagListAdapter);
-
                 voteBoxView.init(debate);
-
                 followDebateButtonView.init(debate);
                 shareView.setShareText(debate.getName());
                 loader.setVisibility(View.GONE);
                 debatePresentationContainerView.setVisibility(View.VISIBLE);
-                String argumentResourceName = "groups/" + debate.getSlug() + "/messages";
+                String argumentResourceName ="groups/" + debate.getSlug() + "/messages";
                 ArgumentListAdapter argumentListAdapter = new ArgumentListAdapter(debate, 0);
                 this.argumentListAdapter = argumentListAdapter;
-
-               ArrayList<SortOption> argumentListSortOptions = new ArrayList<>();
+                ArrayList<SortOption> argumentListSortOptions = new ArrayList<>();
                 argumentListSortOptions.add(new SortOption("Le plus récent", "-created_at", null));
                 argumentListSortOptions.add(new SortOption("Le plus pertinent", "-score", null));
                 argumentListSortOptions.add(new SortOption("Le plus ancien", "+created_at", null));
-
-               argumentList = new PaginatedListFragment(argumentResourceName, "CLIENT", argumentListAdapter, null, argumentListSortOptions, null, "-score");
-//j'ai commenter ca
-              getChildFragmentManager()
+                argumentList = new PaginatedListFragment(argumentResourceName, "CLIENT", argumentListAdapter, null, argumentListSortOptions, null, "-score");
+              //j'ai commenter ca
+               getChildFragmentManager()
                         .beginTransaction()
                         .add(R.id.argument_list, argumentList)
                         .commit();
-
                 String relatedDebateResourceName = "groups/" + debate.getSlug() + "/related";
                 this.relatedDebateListAdapter = new DebateBoxListAdapter();
-
                 relatedDebateList = new PaginatedListFragment(relatedDebateResourceName, "CLIENT", relatedDebateListAdapter, null, null, null, null);
-//j'ai commenter ca
-
+               //j'ai commenter ca
                getChildFragmentManager()
                         .beginTransaction()
                         .add(R.id.related_debates_list, relatedDebateList)
                         .commit();
-
-
             });
         } catch(Exception e) {
             Toast.makeText(getContext(), "Une erreur est survenue  ", Toast.LENGTH_LONG).show();
@@ -302,7 +289,6 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
         argumentAuthorBox = view.findViewById(R.id.argument_author_box_container);
         argumentInputControls = view.findViewById(R.id.argument_input_controls);
         argumentInput = view.findViewById(R.id.argument_input);
-        //problem de d'affichage d'icon
         argumentSend = view.findViewById(R.id.argument_input_send_button);
     }
 

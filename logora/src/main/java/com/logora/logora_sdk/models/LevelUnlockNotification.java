@@ -29,7 +29,6 @@ public class LevelUnlockNotification extends Notification<UserBox, Object, Objec
             return null;
         }
     }
-
-    public String getImageUrl() { return this.getTarget().getLevelIconUrl(); }
+    //public String getImageUrl() { return this.getTarget().getLevelIconUrl(); }
 }
 

@@ -103,8 +103,8 @@ public class NotificationViewHolder extends ListViewHolder {
                 break;
             case "level_unlock":
                 LevelUnlockNotification levelUnlockNotification = (LevelUnlockNotification) object;
-                content = Html.fromHtml(res.getString(R.string.notifications_level_up) + " " + "<b>" + levelUnlockNotification.getTarget().getLevelName() + "</b>");
-                notificationContent.setText(content);
+                //content = Html.fromHtml(res.getString(R.string.notifications_level_up) + " " + "<b>" + levelUnlockNotification.getTarget().getLevelName() + "</b>");
+                //notificationContent.setText(content);
                 Glide.with(notificationImage.getContext())
                         .load(Uri.parse(levelUnlockNotification.getImageUrl()))
                         .into(notificationImage);
@@ -167,8 +167,8 @@ public class NotificationViewHolder extends ListViewHolder {
                 });
                 break;
             case "user_follow_level_unlock":
-                content = Html.fromHtml("<b>" + notification.getActor().getFullName() + "</b>" + " " + res.getString(R.string.notifications_mentor_level_up) + " " + notification.getActor().getLevelName());
-                notificationContent.setText(content);
+              //content = Html.fromHtml("<b>" + notification.getActor().getFullName() + "</b>" + " " + res.getString(R.string.notifications_mentor_level_up) + " " + notification.getActor().getLevelName());
+              // notificationContent.setText(content);
                 this.itemView.setOnClickListener(v -> {
                     this.apiClient.readNotification(response -> {
                 try {

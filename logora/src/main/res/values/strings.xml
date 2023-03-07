@@ -47,9 +47,21 @@
     <string name="debate_published_date">Date de publication du débat</string>
     <string name="debate_first_position">Oui</string>
     <string name="debate_second_position">Non</string>
+    <plurals name="eloquence_point">
+        <item quantity="one">%d eloquence point</item>
+        <item quantity="other">%d eloquence points</item>
+    </plurals>
     <plurals name="debate_votes_count">
         <item quantity="one">%d vote</item>
         <item quantity="other">%d votes</item>
+    </plurals>
+    <plurals name="user_vote_count">
+        <item quantity="one">%d vote</item>
+        <item quantity="other">%d votes</item>
+    </plurals>
+    <plurals name="user_argument_count">
+        <item quantity="one">%d argument</item>
+        <item quantity="other">%d arguments</item>
     </plurals>
     <string name="debate_edit_vote">Modifier</string>
     <string name="debate_first_position_progress_text">50%</string>

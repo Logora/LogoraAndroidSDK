@@ -46,22 +46,38 @@
             android:id="@+id/user_level_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/user_full_name">
+            android:layout_below="@+id/user_full_name"
+            android:background="@drawable/eloquence">
 
-            <TextView
-                android:id="@+id/user_level"
+            <LinearLayout
+                android:id="@+id/user_eloquence_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:textColor="@color/text_primary"
-                android:textSize="13sp"
-                android:text="@string/user_box_level" />
+                android:orientation="horizontal"
+                android:background="@drawable/eloquence"
+                >
+                <TextView
+                    android:id="@+id/eloquence_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp"
+                    android:layout_marginRight="5dp"/>
+                <TextView
+                    android:id="@+id/icon_argument"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/ic_point_cercle" />
+
+
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/user_level_icon"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
-                android:layout_toEndOf="@id/user_level"
+                android:layout_toEndOf="@id/eloquence_text"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="4dp"
                 android:scaleType="fitXY"

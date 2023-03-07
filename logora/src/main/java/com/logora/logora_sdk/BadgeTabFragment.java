@@ -51,36 +51,28 @@ public class BadgeTabFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         findViews(view);
-
         listViewModel = new UserBadgesViewModel("users/" + userSlug + "/badges");
         NextBadgeBoxListAdapter nextBadgesListAdapter = new NextBadgeBoxListAdapter();
         nextBadgesList.setAdapter(nextBadgesListAdapter);
-
         BadgeBoxListAdapter badgesListAdapter = new BadgeBoxListAdapter();
         badgesList.setAdapter(badgesListAdapter);
-
         nextBadgesLoader.setVisibility(View.VISIBLE);
         badgesLoader.setVisibility(View.VISIBLE);
-
         listViewModel.getUserBadges().observe(getViewLifecycleOwner(), items -> {
             try {
                 JSONArray nextBadgesArray = items.getJSONArray("next_badges");
                 JSONArray badgesArray = items.getJSONArray("badges");
-
                 List<JSONObject> nextBadges = new ArrayList<>();
                 for(int i = 0; i < 2; i++) {
                     nextBadges.add(nextBadgesArray.getJSONObject(i));
                 }
-
                 List<JSONObject> badges = new ArrayList<>();
                 for(int i = 0; i < badgesArray.length(); i++) {
                     badges.add(badgesArray.getJSONObject(i));
                 }
-
                 nextBadgesListAdapter.setItems(nextBadges);
                 nextBadgesList.setLayoutManager(new LinearLayoutManager(this.getContext()));
                 nextBadgesLoader.setVisibility(View.GONE);
-
                 badgesListAdapter.setItems(badges);
                 badgesList.setLayoutManager(new LinearLayoutManager(this.getContext()));
                 badgesLoader.setVisibility(View.GONE);
@@ -93,7 +85,6 @@ public class BadgeTabFragment extends Fragment {
             }
         });
     }
-
     private void findViews(View view) {
         nextBadgesList = view.findViewById(R.id.next_badges_list);
         badgesList = view.findViewById(R.id.badges_list);

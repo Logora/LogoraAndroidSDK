@@ -6,13 +6,13 @@ import org.json.JSONObject;
 public class User {
     private String fullName;
     private String slug;
-    private String uid;
+    private String uid = " ";
     private Integer id;
     private String imageUrl;
-    private Integer debatesCount;
-    private Integer votesCount;
-    private Integer disciplesCount;
-    private Integer notificationsCount;
+    private Integer debatesCount = 0;
+    private Integer votesCount = 0;
+    private Integer disciplesCount = 0;
+    private Integer notificationsCount = 0;
     private String levelIconUrl;
 
     public User() {}
@@ -24,10 +24,11 @@ public class User {
                 user.setUid(jsonObject.getString("uid"));
             }
             user.setSlug(jsonObject.getString("slug"));
+            user.setVotes(jsonObject.getInt("upvotes"));
             user.setId(jsonObject.getInt("id"));
             user.setImageUrl(jsonObject.getString("image_url"));
             user.setFullName(jsonObject.getString("full_name"));
-            user.setLevelIconUrl(jsonObject.getJSONObject("level").getString("icon_url"));
+            //user.setLevelIconUrl(jsonObject.getJSONObject("level").getString("icon_url"));
             if (jsonObject.has("debates_count")) {
                 user.setDebatesCount(jsonObject.getInt("debates_count"));
             }
@@ -46,7 +47,12 @@ public class User {
             return null;
         }
     }
-
+    public Integer getVotes() {
+        return votesCount;
+    }
+    public void setVotes(Integer votesCount) {
+        this.votesCount = votesCount;
+    }
     public String getFullName() { return fullName; }
 
     public void setFullName(String fullName) {

@@ -61,15 +61,12 @@ public class UserFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         try {
             super.onViewCreated(view, savedInstanceState);
-
             TextView userFullNameView = view.findViewById(R.id.user_full_name);
             ImageView userImageView = view.findViewById(R.id.user_image);
             this.findViews(view);
-
             setTabsText();
             setStyles();
             userArgumentsContainer.setVisibility(View.VISIBLE);
-
             ProgressBar spinner = view.findViewById(R.id.loader);
             spinner.setVisibility(View.VISIBLE);
             UserShowViewModel userViewModel = new UserShowViewModel();
@@ -79,11 +76,9 @@ public class UserFragment extends Fragment {
                 userVotesCountValue.setText(String.valueOf(user.getVotesCount()));
                 userDisciplesCountValue.setText(String.valueOf(user.getDisciplesCount()));
                 spinner.setVisibility(View.GONE);
-
                 Glide.with(userImageView.getContext())
                         .load(Uri.parse(user.getImageUrl()))
                         .into(userImageView);
-
                 UserBoxListAdapter userDisciplesListAdapter = new UserBoxListAdapter();
                 UserBoxListAdapter userMentorsListAdapter = new UserBoxListAdapter();
                 UserMessagesListAdapter userMessagesListAdapter = new UserMessagesListAdapter();
@@ -92,15 +87,12 @@ public class UserFragment extends Fragment {
                 argumentListSortOptions.add(new SortOption("Le plus récent", "-created_at", null));
                 argumentListSortOptions.add(new SortOption("Le plus pertinent", "-score", null));
                 argumentListSortOptions.add(new SortOption("Le plus ancien", "+created_at", null));
-
                 ArrayList<FilterOption> argumentListFilterOptions = new ArrayList<>();
                 argumentListFilterOptions.add(new FilterOption("Réponses", "is_reply", "true", null));
-
                 PaginatedListFragment userMessagesFragment = new PaginatedListFragment("users/" + userSlug + "/messages", "CLIENT", userMessagesListAdapter, null, argumentListSortOptions, argumentListFilterOptions, "-score");
                 BadgeTabFragment userBadgesFragment = new BadgeTabFragment(userSlug);
                 PaginatedListFragment userDisciplesFragment = new PaginatedListFragment("users/" + userSlug + "/disciples", "CLIENT", userDisciplesListAdapter, null, null, null, null);
                 PaginatedListFragment userMentorsFragment = new PaginatedListFragment("users/" + userSlug + "/mentors", "CLIENT", userMentorsListAdapter, null, null, null, null);
-
                 getChildFragmentManager()
                         .beginTransaction()
                         .add(R.id.user_arguments_list, userMessagesFragment)
@@ -109,7 +101,6 @@ public class UserFragment extends Fragment {
                         .add(R.id.user_mentors_list, userMentorsFragment)
                         .commit();
             });
-
             tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                @Override
                 public void onTabSelected(TabLayout.Tab tab) {
@@ -136,10 +127,8 @@ public class UserFragment extends Fragment {
                         userDisciplesContainer.setVisibility(View.VISIBLE);
                     }
                 }
-
                 @Override
                 public void onTabUnselected(TabLayout.Tab tab) {}
-
                 @Override
                 public void onTabReselected(TabLayout.Tab tab) {}
             });

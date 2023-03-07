@@ -90,21 +90,28 @@ public class ListViewModel extends ViewModel {
     }
 
     private void loadItems() {
-       apiClient.getList(
-            response -> {
+        // Call the apiClient.getList() method with a success callback and an error callback
+        apiClient.getList(
+                // The success callback receives a JSONObject response
+                response -> {
                 try {
                     //System.out.println("hello"+response);
                     //System.out.println("");
+                    // Extract the list of items from the response's "data" field
                     JSONArray itemsJson = response.getJSONObject("data").getJSONArray("data");
                     for (int i = 0; i < itemsJson.length(); i++) {
+                        // Add each item to the "items" member variable
                         this.items.add(itemsJson.getJSONObject(i));
                     }
-                   JSONObject headers = response.getJSONObject("headers");
+                    // Extract some pagination information from the response headers
+                    JSONObject headers = response.getJSONObject("headers");
                     this.total = headers.getInt("Total");
                     this.totalPages = headers.getInt("Total-Pages");
+                    // Update the LiveData object with the new list of items
                     itemsLiveData.setValue(this.items);
 
                 } catch (JSONException e) {
+                    // Handle any JSON parsing errors by setting the LiveData object to an empty list
                     e.printStackTrace();
                     itemsLiveData.setValue(new ArrayList<>());
                 }
@@ -112,6 +119,8 @@ public class ListViewModel extends ViewModel {
             error -> {
                 Log.i("ERROR", String.valueOf(error));
                 itemsLiveData.setValue(new ArrayList<>());
-            }, this.resourceName, this.resourceType, this.currentPage, this.perPage, this.sort, 0, this.query, this.extraArguments, this.filter);
+            },
+                // Other arguments passed to the apiClient.getList() method
+                this.resourceName, this.resourceType, this.currentPage, this.perPage, this.sort, 0, this.query, this.extraArguments, this.filter);
     }
 }
