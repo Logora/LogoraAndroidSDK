@@ -1,5 +1,6 @@
 package com.logora.logora_sdk;
 
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,7 +10,6 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,6 +47,7 @@ public class UserFragment extends Fragment {
     private RelativeLayout userBadgesContainer;
     private RelativeLayout userMentorsContainer;
     private RelativeLayout userDisciplesContainer;
+    private TextView userPoint;
 
     public UserFragment() {
         super(R.layout.fragment_user);
@@ -62,6 +63,7 @@ public class UserFragment extends Fragment {
         try {
             super.onViewCreated(view, savedInstanceState);
             TextView userFullNameView = view.findViewById(R.id.user_full_name);
+            TextView userPoint=view.findViewById(R.id.user_point);
             ImageView userImageView = view.findViewById(R.id.user_image);
             this.findViews(view);
             setTabsText();
@@ -72,8 +74,12 @@ public class UserFragment extends Fragment {
             UserShowViewModel userViewModel = new UserShowViewModel();
             userViewModel.getUser(this.userSlug).observe(getViewLifecycleOwner(), user -> {
                 userFullNameView.setText(user.getFullName());
+                Resources res = getContext().getResources();
+                int pointCount = user.getPoints();
+                String pointsCount = res.getQuantityString(R.plurals.user_points, pointCount,pointCount);
+                userPoint.setText(pointsCount);
                 userDebatesCountValue.setText(String.valueOf(user.getDebatesCount()));
-                userVotesCountValue.setText(String.valueOf(user.getVotesCount()));
+                userVotesCountValue.setText(String.valueOf(user.getVotes()));
                 userDisciplesCountValue.setText(String.valueOf(user.getDisciplesCount()));
                 spinner.setVisibility(View.GONE);
                 Glide.with(userImageView.getContext())
@@ -95,7 +101,7 @@ public class UserFragment extends Fragment {
                 PaginatedListFragment userMentorsFragment = new PaginatedListFragment("users/" + userSlug + "/mentors", "CLIENT", userMentorsListAdapter, null, null, null, null);
                 getChildFragmentManager()
                         .beginTransaction()
-                        .add(R.id.user_arguments_list, userMessagesFragment)
+                         .add(R.id.user_arguments_list, userMessagesFragment)
                         .add(R.id.user_badges_list, userBadgesFragment)
                         .add(R.id.user_disciples_list, userDisciplesFragment)
                         .add(R.id.user_mentors_list, userMentorsFragment)

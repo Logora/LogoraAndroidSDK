@@ -39,7 +39,7 @@ public class IndexFragment extends Fragment {
             UserBoxListAdapter userListAdapter = new UserBoxListAdapter();
             ArrayList<SortOption> debateListSortOptions = new ArrayList<>();
             debateListSortOptions.add(new SortOption("Le plus récent", "-created_at", null));
-            debateListSortOptions.add(new SortOption("Le plus pertinent", "-score", null));
+            debateListSortOptions.add(new SortOption("Le plus tendance", "-score", null));
             debateListSortOptions.add(new SortOption("Le plus ancien", "+created_at", null));
             debateList = new PaginatedListFragment(debateResourceName, "CLIENT", debateListAdapter, null, debateListSortOptions, null, "-created_at");
             getChildFragmentManager()

@@ -34,6 +34,8 @@ public class UserShowViewModel extends ViewModel {
                     JSONObject responseData = response.getJSONObject("data").getJSONObject("data").getJSONObject("resource");
                     User userObject = new User();
                     userObject.setFullName(responseData.getString("full_name"));
+                    userObject.setPoints(responseData.getInt("points"));
+                    userObject.setVotes(responseData.getInt("upvotes"));
                     userObject.setSlug(responseData.getString("slug"));
                     userObject.setUid(responseData.getString("uid"));
                     userObject.setImageUrl(responseData.getString("image_url"));

@@ -11,8 +11,10 @@ public class User {
     private String imageUrl;
     private Integer debatesCount = 0;
     private Integer votesCount = 0;
+    private Integer vote = 0;
     private Integer disciplesCount = 0;
     private Integer notificationsCount = 0;
+    private Integer userPoint = 0;
     private String levelIconUrl;
 
     public User() {}
@@ -40,6 +42,9 @@ public class User {
             if (jsonObject.has("notifications_count")) {
                 user.setNotificationsCount(jsonObject.getInt("notifications_count"));
             }
+            if (jsonObject.has("points")) {
+                user.setPoints(jsonObject.getInt("points"));
+            }
             return user;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -47,11 +52,11 @@ public class User {
         }
     }
     public Integer getVotes() {
-        return votesCount;
+        return vote;
     }
 
-    public void setVotes(Integer votesCount) {
-        this.votesCount = votesCount;
+    public void setVotes(Integer vote) {
+        this.vote = vote;
     }
 
     public String getFullName() { return fullName; }
@@ -109,5 +114,9 @@ public class User {
     }
 
     public String getLevelIconUrl() { return levelIconUrl; }
+
+    public Integer getPoints() { return userPoint; }
+
+    public void setPoints(Integer userPoint) { this.userPoint = userPoint; }
 
 }
