@@ -95,7 +95,8 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
             findViews(view);
             TagListAdapter debateTagListAdapter = new TagListAdapter();
             debatePresentationContainerView.setVisibility(View.GONE);
-            loader.setVisibility(View.VISIBLE);
+            //changer
+            loader.setVisibility(View.INVISIBLE);
             DebateShowViewModel debateShowViewModel = new DebateShowViewModel();
             debateShowViewModel.getDebate(this.debateSlug);
             debateShowViewModel.getDebate(this.debateSlug).observe(getViewLifecycleOwner(), debate -> {
@@ -140,7 +141,6 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                         createArgument(null);
                     }
                 });
-
                 debatePublishedDateView.setText(DateUtil.getDateText(debate.getPublishedDate()));
                 debateTagListAdapter.setItems(debate.getTagList());
                 debateTagList.setAdapter(debateTagListAdapter);
@@ -153,8 +153,8 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                 ArgumentListAdapter argumentListAdapter = new ArgumentListAdapter(debate, 0);
                 this.argumentListAdapter = argumentListAdapter;
                 ArrayList<SortOption> argumentListSortOptions = new ArrayList<>();
-                argumentListSortOptions.add(new SortOption("Le plus récent", "-created_at", null));
-                argumentListSortOptions.add(new SortOption("Le plus pertinent", "-score", null));
+                argumentListSortOptions.add(new SortOption("Le plus  ", "-created_at", null));
+                argumentListSortOptions.add(new SortOption("Le plus récent", "-score", null));
                 argumentListSortOptions.add(new SortOption("Le plus ancien", "+created_at", null));
                 argumentList = new PaginatedListFragment(argumentResourceName, "CLIENT", argumentListAdapter, null, argumentListSortOptions, null, "-score");
                getChildFragmentManager()

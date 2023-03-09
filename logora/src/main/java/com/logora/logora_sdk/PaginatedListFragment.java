@@ -66,14 +66,12 @@ public class PaginatedListFragment extends Fragment   {
         try {
             findViews(view);
             recyclerView.setAdapter(listAdapter);
-
             init();
             paginationButton.setOnClickListener(v -> {loader.setVisibility(View.VISIBLE);
                 paginationButton.setVisibility(View.GONE);
                 listViewModel.incrementCurrentPage();
                 listViewModel.updateList().observe(getViewLifecycleOwner(), itemList -> loader.setVisibility(View.GONE));
             });
-
             if (sortOptions != null) {
                 sortView.setVisibility(View.VISIBLE);
                 List<String> spinnerOptions = getSpinnerOptions();
@@ -86,7 +84,9 @@ public class PaginatedListFragment extends Fragment   {
                     @Override
                     public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                         if (spinnerSelected) {
+
                             if(filterOptions != null) {
+
                                 if (position <= sortOptions.size() - 1) {
                                     // cette méthode définit le tri en utilisant
                                     // la valeur de l'option de tri correspondante.
@@ -108,7 +108,6 @@ public class PaginatedListFragment extends Fragment   {
                             spinnerSelected = true;
                         }
                     }
-
                     @Override
                     public void onNothingSelected(AdapterView<?> parentView) {
                     }

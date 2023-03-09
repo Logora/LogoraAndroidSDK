@@ -70,7 +70,7 @@ public class UserFragment extends Fragment {
             setStyles();
             userArgumentsContainer.setVisibility(View.VISIBLE);
             ProgressBar spinner = view.findViewById(R.id.loader);
-            spinner.setVisibility(View.VISIBLE);
+            spinner.setVisibility(View.INVISIBLE);
             UserShowViewModel userViewModel = new UserShowViewModel();
             userViewModel.getUser(this.userSlug).observe(getViewLifecycleOwner(), user -> {
                 userFullNameView.setText(user.getFullName());
@@ -90,12 +90,12 @@ public class UserFragment extends Fragment {
                 UserMessagesListAdapter userMessagesListAdapter = new UserMessagesListAdapter();
 
                 ArrayList<SortOption> argumentListSortOptions = new ArrayList<>();
-                argumentListSortOptions.add(new SortOption("Le plus récent", "-created_at", null));
-                argumentListSortOptions.add(new SortOption("Le plus pertinent", "-score", null));
+                argumentListSortOptions.add(new SortOption("Le plus récent", "-score", null));
+                argumentListSortOptions.add(new SortOption("Le plus pertinent", "-created_at", null));
                 argumentListSortOptions.add(new SortOption("Le plus ancien", "+created_at", null));
                 ArrayList<FilterOption> argumentListFilterOptions = new ArrayList<>();
-                argumentListFilterOptions.add(new FilterOption("Réponses", "is_reply", "true", null));
-                PaginatedListFragment userMessagesFragment = new PaginatedListFragment("users/" + userSlug + "/messages", "CLIENT", userMessagesListAdapter, null, argumentListSortOptions, argumentListFilterOptions, "-score");
+                //argumentListFilterOptions.add(new FilterOption("Réponses", "is_reply", "true", null));
+                PaginatedListFragment userMessagesFragment = new PaginatedListFragment("users/" + userSlug + "/messages", "CLIENT", userMessagesListAdapter, null, argumentListSortOptions, null, "-score");
                 BadgeTabFragment userBadgesFragment = new BadgeTabFragment(userSlug);
                 PaginatedListFragment userDisciplesFragment = new PaginatedListFragment("users/" + userSlug + "/disciples", "CLIENT", userDisciplesListAdapter, null, null, null, null);
                 PaginatedListFragment userMentorsFragment = new PaginatedListFragment("users/" + userSlug + "/mentors", "CLIENT", userMentorsListAdapter, null, null, null, null);

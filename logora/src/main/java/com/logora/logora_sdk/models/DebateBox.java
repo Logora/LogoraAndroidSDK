@@ -41,8 +41,14 @@ public class DebateBox extends Model {
             }
             JSONArray debatePositions = jsonObject.getJSONObject("group_context").getJSONArray("positions");
             JSONObject votesCount = jsonObject.getJSONObject("votes_count");
+            System.out.println("voici le keyyyyyyyyyyyyyyy"+votesCount);
             JSONArray votesCountKeys = votesCount.names();
+            System.out.println("votesCountKeyssssssssssssssssss"+votesCountKeys);
             int maxPercentage = 0;
+            int var=0;
+            int percentage=0;
+            int variable=0;
+            int resultat=0;
             Integer maxId = null;
             if(votesCountKeys == null || votesCountKeys.length() == 0) {
                 maxPercentage = 50;
@@ -50,17 +56,36 @@ public class DebateBox extends Model {
             } else {
                 for (int i = 0; i < votesCountKeys.length(); i++) {
                     String key = votesCountKeys.getString(i);
+                    String key1= votesCountKeys.getString(votesCountKeys.length()-1);
+                    variable = votesCount.getInt(key1) ;
+                    System.out.println("voir laaaaaaaaaaaaaaaaaaa"+variable);
+
+                   // System.out.println("voir ici"+key1);
+
+                    System.out.println("keyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"+key);
                     if(key.equals("total")) {
                         continue;
                     }
-                    int percentage = votesCount.getInt(key);
-                    if(percentage > maxPercentage) {
-                        maxPercentage = percentage;
+                     percentage = votesCount.getInt(key) ;
+                     resultat=(percentage*100)/variable;
+                     System.out.println("resultat est:"+resultat);
+                   if(resultat > maxPercentage) {
+
+                       maxPercentage = resultat;
+                        System.out.println("maxPercentageeeee"+maxPercentage);
                         maxId = Integer.parseInt(key);
+                        System.out.println("maxid"+maxId);
                     }
+
                 }
+
             }
+           // int var=votesCount.getInt("total");
+            //String varr=String.valueOf(var);
+            //System.out.print("la valeur du var"+var);
+            //System.out.print("la valeur du maxpercentage"+maxPercentage);
             debateBox.setVotePercentage(maxPercentage);
+            //System.out.println("voilaaaaaaaaaaaaaaaaaaaaaaa"+resultat);
             debateBox.setVotePosition(getVotePosition(debatePositions, maxId));
             return debateBox;
         } catch (JSONException e) {
@@ -101,7 +126,7 @@ public class DebateBox extends Model {
 
     public void setVotePosition(String votePosition) { this.votePosition = votePosition; }
 
-    public Integer getVotePercentage() { return votePercentage * 10; }
+    public Integer getVotePercentage() { return votePercentage  ; }
 
     public void setVotePercentage(Integer votePercentage) { this.votePercentage = votePercentage; }
 
