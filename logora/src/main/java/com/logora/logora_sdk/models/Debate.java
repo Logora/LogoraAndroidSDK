@@ -53,13 +53,16 @@ public class Debate {
             JSONArray votesCountKeys = votesCount.names();
             int maxPercentage = 0;
             Integer maxId = null;
+            int percentage=0;
+            int variable=0;
+            int resultat=0;
             if(votesCountKeys == null || votesCountKeys.length() == 0) {
                 // S'il n'y a pas de votes, définissez le pourcentage de victoires sur 50 % et la position gagnante sur null
                 maxPercentage = 50;
                 maxId = null;
             } else {
                 // Itérer sur le nombre de votes et trouver celui avec le pourcentage le plus élevé
-                for (int i = 0; i < votesCountKeys.length(); i++) {
+                /*for (int i = 0; i < votesCountKeys.length(); i++) {
                     String key = votesCountKeys.getString(i);
                     if(key.equals("total")) {
                         continue;
@@ -69,6 +72,30 @@ public class Debate {
                         maxPercentage = percentage;
                         maxId = Integer.parseInt(key);
                     }
+                }*/
+                for (int i = 0; i < votesCountKeys.length(); i++) {
+                    String key = votesCountKeys.getString(i);
+                    String key1= votesCountKeys.getString(votesCountKeys.length()-1);
+                    variable = votesCount.getInt(key1) ;
+                    System.out.println("voir laaaaaaaaaaaaaaaaaaa"+variable);
+
+                    // System.out.println("voir ici"+key1);
+
+                    System.out.println("keyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"+key);
+                    if(key.equals("total")) {
+                        continue;
+                    }
+                    percentage = votesCount.getInt(key) ;
+                    resultat=(percentage*100)/variable;
+                    System.out.println("resultat est:"+resultat);
+                    if(resultat > maxPercentage) {
+
+                        maxPercentage = resultat;
+                        System.out.println("maxPercentageeeee"+maxPercentage);
+                        maxId = Integer.parseInt(key);
+                        System.out.println("maxid"+maxId);
+                    }
+
                 }
             }
             debate.setVotePercentage(maxPercentage);
@@ -177,7 +204,7 @@ public class Debate {
         this.positionList = positionList;
     }
 
-    public Integer getVotePercentage() { return votePercentage * 10; }
+    public Integer getVotePercentage() { return votePercentage ; }
 
     public void setVotePercentage(Integer votePercentage) { this.votePercentage = votePercentage; }
 
