@@ -5,10 +5,12 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -45,7 +47,12 @@ import com.logora.logora_sdk.views.ShareView;
 import com.logora.logora_sdk.views.VoteBoxView;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -75,6 +82,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
     private PaginatedListFragment relatedDebateList;
     private DebateBoxListAdapter relatedDebateListAdapter;
     private Argument argument;
+    private Button debat;
 
     public DebateFragment() {
         super(R.layout.fragment_debate);
@@ -152,11 +160,35 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                 String argumentResourceName ="groups/" + debate.getSlug() + "/messages";
                 ArgumentListAdapter argumentListAdapter = new ArgumentListAdapter(debate, 0);
                 this.argumentListAdapter = argumentListAdapter;
-                ArrayList<SortOption> argumentListSortOptions = new ArrayList<>();
-                argumentListSortOptions.add(new SortOption("Le plus  ", "-created_at", null));
-                argumentListSortOptions.add(new SortOption("Le plus récent", "-score", null));
-                argumentListSortOptions.add(new SortOption("Le plus ancien", "+created_at", null));
-                argumentList = new PaginatedListFragment(argumentResourceName, "CLIENT", argumentListAdapter, null, argumentListSortOptions, null, "-score");
+
+                try {
+                    String queryString = "%2B";
+                    //String query = URLEncoder.encode("%2B", UTF_8.name());
+                    //String urlEncoded =   Uri.encode(queryString) + "created_at";
+                    //String normal="This normal string";
+                    //String utf=StringFormatter.convertStringToUTF8(normal);
+
+                    //System.out.println("this is encode"+urlEncoded);
+                   // String encodedUrl = urlEncoded+"created_at";
+                    //System.out.print("voir ca"+encodedUrl);
+                    //ajouter dans apiclient//////
+                    String query = URLEncoder.encode("+", "utf-8");
+                    String url = query + "created_at";
+                    System.out.println("le code est"+url);
+                    Resources res = getContext().getResources();
+
+                    ArrayList<SortOption> argumentListSortOptions = new ArrayList<>();
+                    argumentListSortOptions.add(new SortOption(res.getString(R.string.list_recent), "-created_at", null));
+                    argumentListSortOptions.add(new SortOption(res.getString(R.string.list_tendance), "-score", null));
+                    argumentListSortOptions.add(new SortOption(res.getString(R.string.list_ancien), url, null));
+
+                    argumentList = new PaginatedListFragment(argumentResourceName, "CLIENT", argumentListAdapter, null, argumentListSortOptions, null, "-created_at");
+
+
+                } catch (Exception e) {
+                    System.out.print("somaya"+e.toString());
+                }
+
                getChildFragmentManager()
                         .beginTransaction()
                         .add(R.id.argument_list, argumentList)
@@ -170,9 +202,14 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                         .commit();
             });
         } catch(Exception e) {
-            Toast.makeText(getContext(), "Une erreur est survenue  ", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), R.string.error_debate, Toast.LENGTH_LONG).show();
 
         }
+        debat.setOnClickListener(v -> {
+            HashMap<String, String> routeParams = new HashMap<>();
+            router.navigate(Router.getRoute("INDEX"), routeParams);
+
+        });
     }
 
 
@@ -283,6 +320,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
         argumentInputControls = view.findViewById(R.id.argument_input_controls);
         argumentInput = view.findViewById(R.id.argument_input);
         argumentSend = view.findViewById(R.id.argument_input_send_button);
+        debat=view.findViewById(R.id.index_button);
     }
 
     private void showToastMessage(String message) {

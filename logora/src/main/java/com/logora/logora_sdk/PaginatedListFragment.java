@@ -84,9 +84,7 @@ public class PaginatedListFragment extends Fragment   {
                     @Override
                     public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                         if (spinnerSelected) {
-
                             if(filterOptions != null) {
-
                                 if (position <= sortOptions.size() - 1) {
                                     // cette méthode définit le tri en utilisant
                                     // la valeur de l'option de tri correspondante.
@@ -115,7 +113,7 @@ public class PaginatedListFragment extends Fragment   {
             }
             return view;
         } catch(Exception e) {
-            Toast.makeText(getContext(), "Une erreur est survenue", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), R.string.request_error, Toast.LENGTH_LONG).show();
             sortView.setVisibility(View.GONE);
             recyclerView.setVisibility(View.GONE);
             emptyView.setVisibility(View.VISIBLE);
@@ -147,6 +145,7 @@ public class PaginatedListFragment extends Fragment   {
     public void update() {
         showLoader();
         listViewModel.resetList().observe(getViewLifecycleOwner(), itemList -> {
+
             if(itemList.size() == 0) {
                 loader.setVisibility(View.GONE);
                 emptyView.setVisibility(View.VISIBLE);
@@ -161,7 +160,9 @@ public class PaginatedListFragment extends Fragment   {
                     paginationButton.setVisibility(View.VISIBLE);
                 }
             }
+
         });
+
     }
 
     private void showLoader() {
@@ -184,7 +185,7 @@ public class PaginatedListFragment extends Fragment   {
     public List<String> getSpinnerOptions() {
         List<String> finalOptions = new ArrayList<>();
         for(SortOption sortOption: sortOptions) {
-            if (this.currentSort != null) {
+           if (this.currentSort != null) {
                 if (sortOption.getValue().equals(this.currentSort)) {
                     finalOptions.add(0, sortOption.getName());
                 } else {
@@ -201,4 +202,4 @@ public class PaginatedListFragment extends Fragment   {
         }
         return finalOptions;
     }
-    }
+}

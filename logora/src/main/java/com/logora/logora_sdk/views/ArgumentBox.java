@@ -91,6 +91,8 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
     private ArgumentListAdapter repliesListAdapter;
     private TextView argumentRepliesToggle;
     private TextView argumentRepliesArrow;
+     Resources res = getContext().getResources();
+
 
     public ArgumentBox(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -137,7 +139,6 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
         this.context = context;
         this.argument = (Argument) object;
         this.debate = debate;
-
         String firstPositionPrimaryColor = settings.get("theme.firstPositionColorPrimary");
         String secondPositionPrimaryColor = settings.get("theme.secondPositionColorPrimary");
         String callPrimaryColor = settings.get("theme.callPrimaryColor");
@@ -168,7 +169,8 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
         argumentVote.init(argument, debate);
         contentView.setText(argument.getContent());
         argumentShareButton.setOnClickListener(v -> {
-            openShareDialog("Cet argument devrait vous intéresser.");
+
+            openShareDialog(res.getString(R.string.argument_interessant));
         });
         argumentMoreButton.setOnClickListener(v -> {
             openMoreActionsDialog();
@@ -289,16 +291,16 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
         Intent share = new Intent(Intent.ACTION_SEND);
         share.setType("text/plain");
         share.putExtra(Intent.EXTRA_TEXT, subject);
-        this.context.startActivity(Intent.createChooser(share, "Partager l'argument"));
+        this.context.startActivity(Intent.createChooser(share, res.getString(R.string.partager_argument)));
     }
 
     private void openMoreActionsDialog() {
         String[] actionsList;
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         if(authClient.getIsLoggedIn() && argument.getAuthor().getId().equals(authClient.getCurrentUser().getId())) {
-            actionsList = new String[]{"Modifier", "Supprimer", "Signaler"};
+            actionsList = new String[]{res.getString(R.string.modifier),res.getString(R.string.supprimer),res.getString(R.string.signaler)};
         } else {
-            actionsList = new String[]{"Signaler"};
+            actionsList = new String[]{res.getString(R.string.signaler)};
         }
         builder.setItems(actionsList, (dialog, which) -> {
             if(actionsList.length > 1) {

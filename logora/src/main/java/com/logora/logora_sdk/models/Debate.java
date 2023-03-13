@@ -61,35 +61,20 @@ public class Debate {
                 maxPercentage = 50;
                 maxId = null;
             } else {
-                // Itérer sur le nombre de votes et trouver celui avec le pourcentage le plus élevé
-                /*for (int i = 0; i < votesCountKeys.length(); i++) {
-                    String key = votesCountKeys.getString(i);
-                    if(key.equals("total")) {
-                        continue;
-                    }
-                    int percentage = votesCount.getInt(key);
-                    if(percentage > maxPercentage) {
-                        maxPercentage = percentage;
-                        maxId = Integer.parseInt(key);
-                    }
-                }*/
+
                 for (int i = 0; i < votesCountKeys.length(); i++) {
                     String key = votesCountKeys.getString(i);
                     String key1= votesCountKeys.getString(votesCountKeys.length()-1);
                     variable = votesCount.getInt(key1) ;
                     System.out.println("voir laaaaaaaaaaaaaaaaaaa"+variable);
-
                     // System.out.println("voir ici"+key1);
-
                     System.out.println("keyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"+key);
                     if(key.equals("total")) {
                         continue;
                     }
-                    percentage = votesCount.getInt(key) ;
-                    resultat=(percentage*100)/variable;
+                    //resultat=(percentage*100)/variable;
                     System.out.println("resultat est:"+resultat);
                     if(resultat > maxPercentage) {
-
                         maxPercentage = resultat;
                         System.out.println("maxPercentageeeee"+maxPercentage);
                         maxId = Integer.parseInt(key);
@@ -97,6 +82,7 @@ public class Debate {
                     }
 
                 }
+
             }
             debate.setVotePercentage(maxPercentage);
             debate.setVotePosition(getVotePosition(debatePositions, maxId));

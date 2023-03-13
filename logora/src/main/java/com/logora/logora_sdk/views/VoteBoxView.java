@@ -56,6 +56,8 @@ public class VoteBoxView extends RelativeLayout {
     private TextView voteEditView;
     private ImageView firstPositionSuccessVote;
     private ImageView secondPositionSuccessVote;
+    Resources res = getResources();
+
 
     public VoteBoxView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -239,8 +241,8 @@ public class VoteBoxView extends RelativeLayout {
         if(voteFirstPositionProgressPercentage != null && voteSecondPositionProgressPercentage != null){
             setUpObserver();
         }
-        voteFirstPositionProgressResult.setText(voteFirstPositionProgressPercentage + "%");
-        voteSecondPositionProgressResult.setText(voteSecondPositionProgressPercentage + "%");
+        voteFirstPositionProgressResult.setText(voteFirstPositionProgressPercentage + res.getString(R.string.percentage));
+        voteSecondPositionProgressResult.setText(voteSecondPositionProgressPercentage + res.getString(R.string.percentage));
         int count = debate.getTotalVotesCount();
         Resources res = getResources();
         String votesCount = res.getQuantityString(R.plurals.debate_votes_count, count, count);

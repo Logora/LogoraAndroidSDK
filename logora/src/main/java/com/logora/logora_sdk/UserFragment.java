@@ -23,6 +23,8 @@ import com.logora.logora_sdk.models.SortOption;
 import com.logora.logora_sdk.utils.Settings;
 import com.logora.logora_sdk.view_models.UserShowViewModel;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 /**
@@ -88,14 +90,22 @@ public class UserFragment extends Fragment {
                 UserBoxListAdapter userDisciplesListAdapter = new UserBoxListAdapter();
                 UserBoxListAdapter userMentorsListAdapter = new UserBoxListAdapter();
                 UserMessagesListAdapter userMessagesListAdapter = new UserMessagesListAdapter();
-
+                String query = null;
+                try {
+                    query = URLEncoder.encode("+", "utf-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                String url = query + "created_at";
+                System.out.println("le code est"+url);
                 ArrayList<SortOption> argumentListSortOptions = new ArrayList<>();
-                argumentListSortOptions.add(new SortOption("Le plus récent", "-score", null));
-                argumentListSortOptions.add(new SortOption("Le plus pertinent", "-created_at", null));
-                argumentListSortOptions.add(new SortOption("Le plus ancien", "+created_at", null));
+                argumentListSortOptions.add(new SortOption( res.getString(R.string.list_recent), "-created_at", null));
+                argumentListSortOptions.add(new SortOption(res.getString(R.string.list_tendance), "-score", null));
+                argumentListSortOptions.add(new SortOption( res.getString(R.string.list_ancien),url, null));
+
                 ArrayList<FilterOption> argumentListFilterOptions = new ArrayList<>();
-                //argumentListFilterOptions.add(new FilterOption("Réponses", "is_reply", "true", null));
-                PaginatedListFragment userMessagesFragment = new PaginatedListFragment("users/" + userSlug + "/messages", "CLIENT", userMessagesListAdapter, null, argumentListSortOptions, null, "-score");
+                argumentListFilterOptions.add(new FilterOption("Réponses", "is_reply", "true", null));
+                PaginatedListFragment userMessagesFragment = new PaginatedListFragment("users/" + userSlug + "/messages", "CLIENT", userMessagesListAdapter, null, argumentListSortOptions, null, "-created_at");
                 BadgeTabFragment userBadgesFragment = new BadgeTabFragment(userSlug);
                 PaginatedListFragment userDisciplesFragment = new PaginatedListFragment("users/" + userSlug + "/disciples", "CLIENT", userDisciplesListAdapter, null, null, null, null);
                 PaginatedListFragment userMentorsFragment = new PaginatedListFragment("users/" + userSlug + "/mentors", "CLIENT", userMentorsListAdapter, null, null, null, null);
@@ -139,7 +149,7 @@ public class UserFragment extends Fragment {
                 public void onTabReselected(TabLayout.Tab tab) {}
             });
         } catch(Exception e) {
-            Toast.makeText(getContext(), "Une erreur est survenue", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), R.string.request_error, Toast.LENGTH_LONG).show();
         }
     }
 

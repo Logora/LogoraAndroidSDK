@@ -49,7 +49,7 @@ public class WidgetFragment extends Fragment {
             findViews(view);
             getDebate();
         } catch(Exception e) {
-            Toast.makeText(getContext(), "Une erreur est survenue", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), R.string.request_error, Toast.LENGTH_LONG).show();
         }
 
         return view;

@@ -151,4 +151,15 @@
     <string name="link_copied">Lien copié !</string>
     <string name="share_debate">Partager le débat</string>
     <string name="request_error">Une erreur est survenue lors de votre requête</string>
+    <string name="error_debate">Une erreur est survenue </string>
+    <string name="list_recent">Le plus récent</string>
+    <string name="list_tendance">Le plus tendance</string>
+    <string name="list_ancien">Le plus ancien</string>
+    <string name="argument_interessant">Cet argument devrait vous intéresser</string>
+    <string name="partager_argument">Partager l\'argument</string>
+    <string name="modifier">Modifier</string>
+    <string name="supprimer">Supprimer</string>
+    <string name="signaler">Signaler</string>
+    <string name="percentage">%</string>
+
 </resources>

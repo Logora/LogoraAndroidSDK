@@ -53,7 +53,7 @@ public class NotificationFragment extends Fragment {
                     .add(R.id.notification_list_container, notificationList)
                     .commit();
         } catch(Exception e) {
-            Toast.makeText(getContext(), "Une erreur est survenue", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), R.string.request_error, Toast.LENGTH_LONG).show();
         }
     }
 
