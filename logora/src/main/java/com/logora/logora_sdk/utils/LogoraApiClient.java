@@ -3,8 +3,8 @@ package com.logora.logora_sdk.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkError;
@@ -91,7 +91,7 @@ public class LogoraApiClient {
                                    Response.ErrorListener errorListener, String resourceName, String resourceType, Integer page,
                                    Integer perPage, String sort, Integer outset, String query,
                                     HashMap<String, String> extraArguments, HashMap<String, String> filter) {
-        HashMap<String, String> queryParams = new HashMap<>();
+       HashMap<String, String> queryParams = new HashMap<>();
         queryParams.put("page", String.valueOf(page));
         queryParams.put("per_page", String.valueOf(perPage));
         queryParams.put("sort", sort);
@@ -111,6 +111,21 @@ public class LogoraApiClient {
         } else {
             this.client_get(route, queryParams, listener, errorListener);
         }
+    }
+
+    // 4 fonctions :
+    // getOne(resource, id, queryParams, listener, errorListener)
+    // getOneWithToken(resource, id, queryParams, listener, errorListener)
+    // getList
+    // create(resource, bodyParams, queryParams, listener, errorListener)
+    // update(resource, bodyParams, queryParams, listener, errorListener)
+    // delete(resource, id, queryParams, listener, errorListener)
+
+    public void getOne(String resource, String id, HashMap<String, String> queryParams,
+                       Response.Listener<JSONObject> listener,
+                       Response.ErrorListener errorListener) {
+        String route = "/" + resource + "/" + id;
+        this.client_get(route, queryParams, listener, errorListener);
     }
 
     public void getDebate(Response.Listener<JSONObject> listener,
@@ -312,38 +327,20 @@ public class LogoraApiClient {
                      Response.Listener<JSONObject> listener,
                      Response.ErrorListener errorListener) {
         queryParams.put("api_key", this.apiKey);
-        String paramsString = this.paramsToQueryString(queryParams);
-        String requestUrl = this.apiUrl + route + paramsString;
+
+        Uri.Builder builder = Uri.parse(this.apiUrl + route).buildUpon();
+        for(Map.Entry<String, String> entry : queryParams.entrySet()) {
+            builder.appendQueryParameter(entry.getKey(), entry.getValue());
+        }
+        String requestUrl = builder.build().toString();
+
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
-            requestUrl, null, listener, error -> {
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    Toast.makeText(context,
-                            context.getString(R.string.request_error),
-                            Toast.LENGTH_LONG).show();
-                } else if (error instanceof AuthFailureError) {
-                    Toast.makeText(context,
-                            context.getString(R.string.request_error),
-                            Toast.LENGTH_LONG).show();
-                } else if (error instanceof ServerError) {
-                    Toast.makeText(context,
-                            context.getString(R.string.request_error),
-                            Toast.LENGTH_LONG).show();
-                } else if (error instanceof NetworkError) {
-                    Toast.makeText(context,
-                            context.getString(R.string.request_error),
-                            Toast.LENGTH_LONG).show();
-                } else if (error instanceof ParseError) {
-                    Toast.makeText(context,
-                            context.getString(R.string.request_error),
-                            Toast.LENGTH_LONG).show();
-                }
-            }
-        ) {
+            requestUrl, null, listener, errorListener)
+        {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String>  params = new HashMap<>();
                 params.put("Content-Type", "application/json");
-                params.put("Origin", "https://logora.fr");
                 return params;
             }
 
@@ -370,8 +367,12 @@ public class LogoraApiClient {
                             HashMap<String, String> bodyParams,
                             Response.Listener<JSONObject> listener,
                             Response.ErrorListener errorListener) {
-        String paramsString = this.paramsToQueryString(queryParams);
-        String requestUrl = url + route + paramsString;
+        Uri.Builder builder = Uri.parse(url + route).buildUpon();
+        for(Map.Entry<String, String> entry : queryParams.entrySet()) {
+            builder.appendQueryParameter(entry.getKey(), entry.getValue());
+        }
+        String requestUrl = builder.build().toString();
+
         JSONObject bodyJson = new JSONObject();
         if(bodyParams != null) {
             bodyJson = new JSONObject(bodyParams);
@@ -382,7 +383,6 @@ public class LogoraApiClient {
             public Map<String, String> getHeaders() {
                 Map<String, String>  params = new HashMap<>();
                 params.put("Content-Type", "application/json");
-                params.put("Origin", "https://logora.fr");
                 return params;
             }
         };
@@ -390,11 +390,14 @@ public class LogoraApiClient {
     }
 
     /* USER METHODS */
-    private void user_get(String route, HashMap<String, String> params,
+    private void user_get(String route, HashMap<String, String> queryParams,
                             Response.Listener<JSONObject> listener,
                             Response.ErrorListener errorListener) {
-        String paramsString = this.paramsToQueryString(params);
-        String requestUrl = this.apiUrl + route + paramsString;
+        Uri.Builder builder = Uri.parse(this.apiUrl + route).buildUpon();
+        for(Map.Entry<String, String> entry : queryParams.entrySet()) {
+            builder.appendQueryParameter(entry.getKey(), entry.getValue());
+        }
+        String requestUrl = builder.build().toString();
 
         String userAuthorizationHeader = this.getUserAuthorizationHeader();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
@@ -402,7 +405,7 @@ public class LogoraApiClient {
         ) {
             @Override
             public Map<String, String> getHeaders() {
-                Map<String, String>  params = new HashMap<>();
+                Map<String, String> params = new HashMap<>();
                 params.put("Content-Type", "application/json");
                 params.put("Authorization", userAuthorizationHeader);
                 return params;
@@ -427,12 +430,16 @@ public class LogoraApiClient {
         this.addToQueueWithRefresh(request);
     }
 
-    private void user_post(String route, HashMap<String, String> params,
+    private void user_post(String route, HashMap<String, String> queryParams,
                           HashMap<String, String> bodyParams,
                           Response.Listener<JSONObject> listener,
                           Response.ErrorListener errorListener) {
-        String paramsString = this.paramsToQueryString(params);
-        String requestUrl = this.apiUrl + route + paramsString;
+        Uri.Builder builder = Uri.parse(this.apiUrl + route).buildUpon();
+        for(Map.Entry<String, String> entry : queryParams.entrySet()) {
+            builder.appendQueryParameter(entry.getKey(), entry.getValue());
+        }
+        String requestUrl = builder.build().toString();
+
         JSONObject bodyJson = new JSONObject();
         if(bodyParams != null) {
             bodyJson = new JSONObject(bodyParams);
@@ -454,12 +461,16 @@ public class LogoraApiClient {
         this.addToQueueWithRefresh(request);
     }
 
-    private void user_patch(String route, HashMap<String, String> params,
+    private void user_patch(String route, HashMap<String, String> queryParams,
                            HashMap<String, String> bodyParams,
                            Response.Listener<JSONObject> listener,
                            Response.ErrorListener errorListener) {
-        String paramsString = this.paramsToQueryString(params);
-        String requestUrl = this.apiUrl + route + paramsString;
+        Uri.Builder builder = Uri.parse(this.apiUrl + route).buildUpon();
+        for(Map.Entry<String, String> entry : queryParams.entrySet()) {
+            builder.appendQueryParameter(entry.getKey(), entry.getValue());
+        }
+        String requestUrl = builder.build().toString();
+
         JSONObject bodyJson = new JSONObject();
         if(bodyParams != null) {
             bodyJson = new JSONObject(bodyParams);
@@ -480,11 +491,14 @@ public class LogoraApiClient {
         this.addToQueueWithRefresh(request);
     }
 
-    private void user_delete(String route, HashMap<String, String> params,
+    private void user_delete(String route, HashMap<String, String> queryParams,
                            Response.Listener<JSONObject> listener,
                            Response.ErrorListener errorListener) {
-        String paramsString = this.paramsToQueryString(params);
-        String requestUrl = this.apiUrl + route + paramsString;
+        Uri.Builder builder = Uri.parse(this.apiUrl + route).buildUpon();
+        for(Map.Entry<String, String> entry : queryParams.entrySet()) {
+            builder.appendQueryParameter(entry.getKey(), entry.getValue());
+        }
+        String requestUrl = builder.build().toString();
 
         String userAuthorizationHeader = this.getUserAuthorizationHeader();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.DELETE,
@@ -514,21 +528,6 @@ public class LogoraApiClient {
 
     private String getUserAuthorizationHeader() {
         return "Bearer " + this.getUserToken();
-    }
-
-    private String paramsToQueryString(HashMap<String, String> params) {
-        StringBuilder sb = new StringBuilder();
-        int index = 0;
-        for (Map.Entry<String, String> stringEntry : params.entrySet()) {
-            if(index == 0) {
-                sb.append('?');
-            } else {
-                sb.append('&');
-            }
-            sb.append(stringEntry.getKey()).append("=").append(stringEntry.getValue());
-            index ++;
-        }
-        return sb.toString();
     }
 
     /* TOKEN FUNCTIONS */

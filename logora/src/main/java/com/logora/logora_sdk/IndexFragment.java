@@ -42,7 +42,7 @@ public class IndexFragment extends Fragment {
             ArrayList<SortOption> debateListSortOptions = new ArrayList<>();
             debateListSortOptions.add(new SortOption(res.getString(R.string.list_recent), "-created_at", null));
             debateListSortOptions.add(new SortOption(res.getString(R.string.list_tendance), "-score", null));
-            debateListSortOptions.add(new SortOption(res.getString(R.string.list_ancien), "created_at", null));
+            debateListSortOptions.add(new SortOption(res.getString(R.string.list_ancien), "+created_at", null));
             debateList = new PaginatedListFragment(debateResourceName, "CLIENT", debateListAdapter, null, debateListSortOptions, null, "-created_at");
             getChildFragmentManager()
                     .beginTransaction()

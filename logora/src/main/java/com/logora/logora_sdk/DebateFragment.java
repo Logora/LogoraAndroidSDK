@@ -180,10 +180,9 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                     ArrayList<SortOption> argumentListSortOptions = new ArrayList<>();
                     argumentListSortOptions.add(new SortOption(res.getString(R.string.list_recent), "-created_at", null));
                     argumentListSortOptions.add(new SortOption(res.getString(R.string.list_tendance), "-score", null));
-                    argumentListSortOptions.add(new SortOption(res.getString(R.string.list_ancien), url, null));
+                    argumentListSortOptions.add(new SortOption(res.getString(R.string.list_ancien), "+created_at", null));
 
                     argumentList = new PaginatedListFragment(argumentResourceName, "CLIENT", argumentListAdapter, null, argumentListSortOptions, null, "-created_at");
-
 
                 } catch (Exception e) {
                     System.out.print("somaya"+e.toString());

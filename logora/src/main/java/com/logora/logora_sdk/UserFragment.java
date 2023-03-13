@@ -101,7 +101,8 @@ public class UserFragment extends Fragment {
                 ArrayList<SortOption> argumentListSortOptions = new ArrayList<>();
                 argumentListSortOptions.add(new SortOption( res.getString(R.string.list_recent), "-created_at", null));
                 argumentListSortOptions.add(new SortOption(res.getString(R.string.list_tendance), "-score", null));
-                argumentListSortOptions.add(new SortOption( res.getString(R.string.list_ancien),url, null));
+                argumentListSortOptions.add(new SortOption( res.getString(R.string.list_ancien),"+created_at", null));
+                System.out.println("urlllllllllllllll"+url);
 
                 ArrayList<FilterOption> argumentListFilterOptions = new ArrayList<>();
                 argumentListFilterOptions.add(new FilterOption("Réponses", "is_reply", "true", null));
