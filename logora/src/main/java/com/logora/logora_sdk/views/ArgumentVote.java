@@ -21,6 +21,8 @@ import com.logora.logora_sdk.utils.Settings;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 public class ArgumentVote extends LinearLayout {
     private final Settings settings = Settings.getInstance();
     private Context context;
@@ -108,8 +110,10 @@ public class ArgumentVote extends LinearLayout {
     public void toggleVoteAction() {
         if (authClient.getIsLoggedIn() == true) {
             if (hasVoted) {
+
                 argument.decrementVotesCount();
-                this.apiClient.deleteVote(
+                HashMap<String, String> queryParams = new HashMap<String, String>();
+                this.apiClient.delete("votes", String.valueOf(voteId), queryParams,
                     response -> {
                         try {
                             boolean success = response.getBoolean("success");
@@ -122,10 +126,22 @@ public class ArgumentVote extends LinearLayout {
                     }, error -> {
                         // Increment ?
                         Log.i("ERROR", "error");
-                    }, voteId);
+                    });
             } else {
                 argument.incrementVotesCount();
-                this.apiClient.createVote(
+                HashMap<String, String> queryParams = new HashMap<>();
+                Integer voteableId=0;
+                String voteableType="";
+                Integer positionId=0;
+                HashMap<String, String> bodyParams = new HashMap<String,String>(){{
+                    put("voteable_id", String.valueOf(voteableId));
+                    put("voteable_type", voteableType);
+                    if (positionId != null) {
+                        put("position_id", String.valueOf(positionId));
+                    }
+                }};
+
+                this.apiClient.create("votes",bodyParams,queryParams,
                     response -> {
                         try {
                             boolean success = response.getBoolean("success");
@@ -140,7 +156,7 @@ public class ArgumentVote extends LinearLayout {
                     }, error -> {
                         // Decrement ?
                         Log.i("ERROR", "error");
-                    }, Integer.parseInt(String.valueOf(argument.getId())), "Message", null);
+                    });
             }
         } else {
             openLoginDialog();

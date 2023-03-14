@@ -18,6 +18,8 @@ import com.logora.logora_sdk.utils.Settings;
 
 import org.json.JSONException;
 
+import java.util.HashMap;
+
 public class FollowDebateButtonView extends androidx.appcompat.widget.AppCompatButton implements View.OnClickListener {
     private final Settings settings = Settings.getInstance();
     private final Auth auth = Auth.getInstance();
@@ -110,7 +112,8 @@ public class FollowDebateButtonView extends androidx.appcompat.widget.AppCompatB
     public void init(Debate debate) {
         this.debate = debate;
         if(this.auth.getIsLoggedIn()) {
-            this.apiClient.getDebateFollow(
+            HashMap<String, String> queryParams = new HashMap<String, String>();
+            this.apiClient.getOne("group_followings", String.valueOf(Integer.valueOf(debate.getId())), queryParams,
                 response -> {
                     try {
                         boolean success = response.getJSONObject("data").getBoolean("success");
@@ -121,7 +124,7 @@ public class FollowDebateButtonView extends androidx.appcompat.widget.AppCompatB
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                }, Throwable::printStackTrace, Integer.valueOf(debate.getId()));
+                }, Throwable::printStackTrace);
         }
     }
 

@@ -343,9 +343,10 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
     public void onDelete(Boolean deleteArgument) {
         Resources res = getContext().getResources();
         if(deleteArgument) {
-            apiClient.deleteArgument( response -> {
+            HashMap<String, String> queryParams = new HashMap<String, String>();
+            apiClient.delete( "messages",String.valueOf(argument.getId()),queryParams,response -> {
                 try {
-                    boolean success = response.getBoolean("success");
+                    boolean success = response.getBoolean("suiuccess");
                     if (success) {
                         inputProvider.setRemoveArgument(argument);
                         showToastMessage(res.getString(R.string.argument_delete_success));
@@ -355,7 +356,7 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
                 }
             }, error -> {
                 showToastMessage(res.getString(R.string.issue));
-            }, argument.getId());
+            });
         }
     }
 
@@ -377,7 +378,24 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
     private void createReply(Integer replyToId) {
         Resources res = this.getContext().getResources();
         replyInput.clearFocus();
-        this.apiClient.createArgument(response -> {
+        HashMap<String, String> queryParams = new HashMap<>();
+        String argumentContent="";
+        Integer debateId=0;
+        Integer messageId=0;
+        String isReply="";
+        HashMap<String, String> bodyParams = new HashMap<String, String>() {{
+            put("position_id", String.valueOf(replyToId));
+            put("group_id", String.valueOf(debateId));
+            put("content", argumentContent);
+            if (messageId != null) {
+                put("message_id", String.valueOf(messageId));
+            } else {
+                put("message_id", null);
+            }
+            put("is_reply", isReply);
+
+        }};
+        this.apiClient.create("messages",bodyParams,queryParams,response -> {
             try {
                 boolean success = response.getBoolean("success");
                 JSONObject argument = response.getJSONObject("data").getJSONObject("resource");
@@ -396,7 +414,7 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
             }
         }, error -> {
             showToastMessage(res.getString(R.string.issue));
-        }, String.valueOf(replyInput.getText()), Integer.parseInt(debate.getId()), replyToId, argument.getPosition().getId(), "true");
+        });
     }
 
     public void setDepth(int depth) {

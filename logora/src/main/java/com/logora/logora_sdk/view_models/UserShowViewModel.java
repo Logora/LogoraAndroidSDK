@@ -1,7 +1,6 @@
 package com.logora.logora_sdk.view_models;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -12,6 +11,8 @@ import com.logora.logora_sdk.utils.LogoraApiClient;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
 
 public class UserShowViewModel extends ViewModel {
     private String TAG = UserShowViewModel.class.getSimpleName();
@@ -27,7 +28,7 @@ public class UserShowViewModel extends ViewModel {
 
     private void loadUser(String slug) {
         LogoraApiClient apiClient = LogoraApiClient.getInstance();
-        apiClient.getUser(
+        apiClient.getOne("users",slug,new HashMap<String,String>(),
             response -> {
                 System.out.println("afficher les informations de l'utilisateur"+response);
                 try {
@@ -50,6 +51,7 @@ public class UserShowViewModel extends ViewModel {
             },
             error -> {
                 Log.i("ERROR", String.valueOf(error));
-            }, slug);
+                //user.setValue(null);
+            });
     }
 }

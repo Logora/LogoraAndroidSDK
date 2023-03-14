@@ -27,6 +27,7 @@ import com.logora.logora_sdk.utils.Settings;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class VoteBoxView extends RelativeLayout {
@@ -121,21 +122,21 @@ public class VoteBoxView extends RelativeLayout {
         this.debate = debate;
         showButtons();
         if(this.auth.getIsLoggedIn()) {
-            this.apiClient.getGroupVote(
-                response -> {
-                    try {
-                        boolean success = response.getJSONObject("data").getBoolean("success");
-                        boolean vote = response.getJSONObject("data").getJSONObject("data").getBoolean("vote");
-                        if(success && vote) {
-                            JSONObject voteObject = response.getJSONObject("data").getJSONObject("data").getJSONObject("resource");
-                            this.voteId = voteObject.getInt("id");
-                            this.votePositionId = voteObject.getInt("position_id");
-                            showResults();
+            this.apiClient.getOne("groups",String.valueOf(Integer.parseInt(debate.getId())), new HashMap<String,String>(),
+                    response -> {
+                        try {
+                            boolean success = response.getJSONObject("data").getBoolean("success");
+                            boolean vote = response.getJSONObject("data").getJSONObject("data").getBoolean("vote");
+                            if(success && vote) {
+                                JSONObject voteObject = response.getJSONObject("data").getJSONObject("data").getJSONObject("resource");
+                                this.voteId = voteObject.getInt("id");
+                                this.votePositionId = voteObject.getInt("position_id");
+                                showResults();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }, Throwable::printStackTrace, Integer.parseInt(debate.getId()));
+                    }, Throwable::printStackTrace);
         }
     }
 
@@ -157,7 +158,9 @@ public class VoteBoxView extends RelativeLayout {
     }
 
     public void createVote(Integer positionId) {
-        this.apiClient.createVote(
+        HashMap<String, String> bodyParams = new HashMap<>();
+        HashMap<String, String> queryParams = new HashMap<>();
+        this.apiClient.create("votes",bodyParams,queryParams,
             response -> {
                 try {
                     boolean success = response.getBoolean("success");
@@ -172,11 +175,17 @@ public class VoteBoxView extends RelativeLayout {
                 }
             }, error -> {
                 Log.i("ERROR", String.valueOf(error));
-            }, Integer.parseInt(debate.getId()), "Group", positionId);
+            });
     }
 
     public void updateVote(Integer positionId) {
-        this.apiClient.updateVote(
+        HashMap<String, String> queryParams = new HashMap<>();
+        HashMap<String, String> bodyParams = new HashMap<String, String>() {{
+            put("position_id", String.valueOf(positionId));
+
+        }};
+        bodyParams.put("position_id", String.valueOf(positionId));
+        this.apiClient.update("votes",String.valueOf(positionId),bodyParams,queryParams,
             response -> {
                 try {
                     boolean success = response.getBoolean("success");
@@ -191,7 +200,7 @@ public class VoteBoxView extends RelativeLayout {
                 }
             }, error -> {
                 Log.i("ERROR", String.valueOf(error));
-            }, this.voteId, positionId);
+            });
     }
 
     private void showButtons() {

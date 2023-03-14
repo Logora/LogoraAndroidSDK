@@ -15,6 +15,8 @@ import com.logora.logora_sdk.utils.Settings;
 
 import org.json.JSONException;
 
+import java.util.HashMap;
+
 /**
  * A {@link Fragment} subclass containing the debate space notification center when the user is connected.
  */
@@ -36,7 +38,9 @@ public class NotificationFragment extends Fragment {
             String primaryColor = settings.get("theme.callPrimaryColor");
             readAllButton.setTextColor(Color.parseColor(primaryColor));
             readAllButton.setOnClickListener(v -> {
-                this.apiClient.readAllNotifications(
+                HashMap<String, String> queryParams = new HashMap<>();
+                HashMap<String, String> bodyParams = new HashMap<>();
+                this.apiClient.create("notifications/read/all",bodyParams,queryParams,
                         response -> {
                             try {
                                 boolean success = response.getBoolean("success");

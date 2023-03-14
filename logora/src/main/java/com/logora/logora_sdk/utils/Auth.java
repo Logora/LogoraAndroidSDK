@@ -5,6 +5,8 @@ import com.logora.logora_sdk.models.User;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
 public class Auth {
     private final LogoraApiClient apiClient = LogoraApiClient.getInstance();
     private static Auth instance = null;
@@ -56,7 +58,8 @@ public class Auth {
     }
 
     public void fetchUser() {
-        this.apiClient.getCurrentUser(
+        HashMap<String, String> queryParams = new HashMap<String, String>();
+        this.apiClient.getOne("me",null , queryParams,
             response -> {
                 try {
                     if(!response.getJSONObject("data").getBoolean("success")) {

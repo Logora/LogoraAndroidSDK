@@ -162,30 +162,13 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                 this.argumentListAdapter = argumentListAdapter;
 
                 try {
-                    String queryString = "%2B";
-                    //String query = URLEncoder.encode("%2B", UTF_8.name());
-                    //String urlEncoded =   Uri.encode(queryString) + "created_at";
-                    //String normal="This normal string";
-                    //String utf=StringFormatter.convertStringToUTF8(normal);
-
-                    //System.out.println("this is encode"+urlEncoded);
-                   // String encodedUrl = urlEncoded+"created_at";
-                    //System.out.print("voir ca"+encodedUrl);
-                    //ajouter dans apiclient//////
-                    String query = URLEncoder.encode("+", "utf-8");
-                    String url = query + "created_at";
-                    System.out.println("le code est"+url);
                     Resources res = getContext().getResources();
-
                     ArrayList<SortOption> argumentListSortOptions = new ArrayList<>();
                     argumentListSortOptions.add(new SortOption(res.getString(R.string.list_recent), "-created_at", null));
                     argumentListSortOptions.add(new SortOption(res.getString(R.string.list_tendance), "-score", null));
                     argumentListSortOptions.add(new SortOption(res.getString(R.string.list_ancien), "+created_at", null));
-
                     argumentList = new PaginatedListFragment(argumentResourceName, "CLIENT", argumentListAdapter, null, argumentListSortOptions, null, "-created_at");
-
                 } catch (Exception e) {
-                    System.out.print("somaya"+e.toString());
                 }
 
                getChildFragmentManager()
@@ -229,7 +212,24 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
         if (auth.getIsLoggedIn() == true) {
             if (positionId != null) {
                 Integer argumentPosition = positionId;
-                this.apiClient.createArgument(
+                HashMap<String, String> queryParams = new HashMap<>();
+                String argumentContent="";
+                Integer debateId=0;
+                Integer messageId=0;
+                String isReply="";
+                HashMap<String, String> bodyParams = new HashMap<String, String>() {{
+                    put("position_id", String.valueOf(positionId));
+                    put("group_id", String.valueOf(debateId));
+                    put("content", argumentContent);
+                    if (messageId != null) {
+                        put("message_id", String.valueOf(messageId));
+                    } else {
+                        put("message_id", null);
+                    }
+                    put("is_reply", isReply);
+
+                }};
+                this.apiClient.create("messages",bodyParams,queryParams,
                         response -> {
                             try {
                                 boolean success = response.getBoolean("success");
@@ -249,10 +249,27 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                             }
                         }, error -> {
                             showToastMessage(res.getString(R.string.issue));
-                        }, String.valueOf(argumentInput.getText()), Integer.parseInt(debate.getId()), null, argumentPosition, "false");
+                        });
             } else {
                 if (inputProvider.getUserPositions().get(Integer.parseInt(debate.getId())) != null) {
-                    this.apiClient.createArgument(
+                    HashMap<String, String> queryParams = new HashMap<>();
+                    String argumentContent="";
+                    Integer debateId=0;
+                    Integer messageId=0;
+                    String isReply="";
+                    HashMap<String, String> bodyParams = new HashMap<String, String>() {{
+                        put("position_id", String.valueOf(positionId));
+                        put("group_id", String.valueOf(debateId));
+                        put("content", argumentContent);
+                        if (messageId != null) {
+                            put("message_id", String.valueOf(messageId));
+                        } else {
+                            put("message_id", null);
+                        }
+                        put("is_reply", isReply);
+
+                    }};
+                    this.apiClient.create("messages",bodyParams,queryParams,
                             response -> {
                                 try {
                                     boolean success = response.getBoolean("success");
@@ -273,7 +290,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                                 }
                             }, error -> {
                                 showToastMessage(res.getString(R.string.issue));
-                            }, String.valueOf(argumentInput.getText()), Integer.parseInt(debate.getId()), null, inputProvider.getUserPositions().get(Integer.parseInt(debate.getId())), "false");
+                            });
                 } else {
                     openSideDialog();
                 }
@@ -285,7 +302,13 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
     private void updateArgument(Argument argument) throws JSONException {
         Resources res = this.getContext().getResources();
         argumentListAdapter.removeItem(argument.getId());
-        this.apiClient.updateArgument(response -> {
+        String argumentContent = "";
+        HashMap<String, String> bodyParams = new HashMap<String, String>() {{
+            put("content",argumentContent );
+        }};
+        HashMap<String, String> queryParams = new HashMap<>();
+
+        this.apiClient.update("messages",String.valueOf(argument.getId()),bodyParams,queryParams,response -> {
             try {
                 boolean success = response.getBoolean("success");
                 JSONObject updatedArgument = response.getJSONObject("data").getJSONObject("resource");
@@ -302,7 +325,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
             }
         }, error -> {
             showToastMessage(res.getString(R.string.issue));
-        }, argument.getId(), String.valueOf(argumentInput.getText()));
+        });
     }
 
     private void findViews(View view) {
