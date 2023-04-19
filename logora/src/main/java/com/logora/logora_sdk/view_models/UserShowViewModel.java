@@ -28,30 +28,30 @@ public class UserShowViewModel extends ViewModel {
 
     private void loadUser(String slug) {
         LogoraApiClient apiClient = LogoraApiClient.getInstance();
-        apiClient.getOne("users",slug,new HashMap<String,String>(),
-            response -> {
-                System.out.println("afficher les informations de l'utilisateur"+response);
-                try {
-                    JSONObject responseData = response.getJSONObject("data").getJSONObject("data").getJSONObject("resource");
-                    User userObject = new User();
-                    userObject.setFullName(responseData.getString("full_name"));
-                    userObject.setPoints(responseData.getInt("points"));
-                    userObject.setVotes(responseData.getInt("upvotes"));
-                    userObject.setSlug(responseData.getString("slug"));
-                    userObject.setUid(responseData.getString("uid"));
-                    userObject.setImageUrl(responseData.getString("image_url"));
-                    userObject.setDebatesCount(responseData.getInt("debates_count"));
-                    userObject.setVotesCount(responseData.getInt("debates_votes_count"));
-                    userObject.setDisciplesCount(responseData.getInt("followers_count"));
-                    user.setValue(userObject);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    user.setValue(null);
-                }
-            },
-            error -> {
-                Log.i("ERROR", String.valueOf(error));
-                //user.setValue(null);
-            });
+        apiClient.getOne("users", slug, new HashMap<String, String>(),
+                response -> {
+                    try {
+                        JSONObject responseData = response.getJSONObject("data").getJSONObject("data").getJSONObject("resource");
+                        User userObject = new User();
+                        userObject.setId(responseData.getInt("id"));
+                        System.out.println("the id is"+responseData.getInt("id"));
+                        userObject.setFullName(responseData.getString("full_name"));
+                        userObject.setPoints(responseData.getInt("points"));
+                        userObject.setVotes(responseData.getInt("upvotes"));
+                        userObject.setSlug(responseData.getString("slug"));
+                        userObject.setUid(responseData.getString("uid"));
+                        userObject.setImageUrl(responseData.getString("image_url"));
+                        userObject.setDebatesCount(responseData.getInt("debates_count"));
+                        userObject.setVotesCount(responseData.getInt("debates_votes_count"));
+                        userObject.setDisciplesCount(responseData.getInt("followers_count"));
+                        user.setValue(userObject);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        user.setValue(null);
+                    }
+                },
+                error -> {
+                    Log.i("ERROR", String.valueOf(error));
+                });
     }
 }

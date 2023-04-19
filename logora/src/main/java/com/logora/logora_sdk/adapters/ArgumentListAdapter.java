@@ -1,5 +1,6 @@
 package com.logora.logora_sdk.adapters;
 
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,4 +52,7 @@ public class ArgumentListAdapter extends ListAdapter {
     public Argument getObjectFromJson(JSONObject jsonObject) {
         return Argument.objectFromJson(jsonObject);
     }
+
+
+
 }

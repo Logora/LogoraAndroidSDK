@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 
 import androidx.core.content.ContextCompat;
+
 import com.logora.logora_sdk.R;
 import com.logora.logora_sdk.dialogs.LoginDialog;
 import com.logora.logora_sdk.models.Debate;
@@ -17,8 +18,6 @@ import com.logora.logora_sdk.utils.LogoraApiClient;
 import com.logora.logora_sdk.utils.Settings;
 
 import org.json.JSONException;
-
-import java.util.HashMap;
 
 public class FollowDebateButtonView extends androidx.appcompat.widget.AppCompatButton implements View.OnClickListener {
     private final Settings settings = Settings.getInstance();
@@ -53,8 +52,8 @@ public class FollowDebateButtonView extends androidx.appcompat.widget.AppCompatB
 
     @Override
     public void onClick(View view) {
-        if(auth.getIsLoggedIn()){
-            if(this.active) {
+        if (auth.getIsLoggedIn()) {
+            if (this.active) {
                 this.unfollow();
             } else {
                 this.follow();
@@ -72,7 +71,7 @@ public class FollowDebateButtonView extends androidx.appcompat.widget.AppCompatB
                 response -> {
                     try {
                         boolean success = response.getBoolean("success");
-                        if(success) {
+                        if (success) {
                             this.setEnabled(true);
                         } else {
                             setInactive();
@@ -84,47 +83,51 @@ public class FollowDebateButtonView extends androidx.appcompat.widget.AppCompatB
                 },
                 error -> {
                     setInactive();
-                }, this.debate.getSlug());
+                }, "group", Integer.valueOf(this.debate.getId()));
     }
 
     public void unfollow() {
         this.setInactive();
         this.setEnabled(false);
         this.apiClient.unfollowDebate(
-            response -> {
-                try {
-                    boolean success = response.getBoolean("success");
-                    if(success) {
-                        this.setEnabled(true);
-                    } else {
+
+                response -> {
+                    try {
+                        boolean success = response.getBoolean("success");
+                        if (success) {
+                            this.setEnabled(true);
+                        } else {
+                            setActive();
+                        }
+                    } catch (JSONException e) {
                         setActive();
+                        e.printStackTrace();
                     }
-                } catch (JSONException e) {
+                },
+                error -> {
                     setActive();
-                    e.printStackTrace();
-                }
-            },
-            error -> {
-                setActive();
-            }, this.debate.getSlug());
+                }, "group", Integer.valueOf(this.debate.getId()));
     }
 
     public void init(Debate debate) {
         this.debate = debate;
-        if(this.auth.getIsLoggedIn()) {
-            HashMap<String, String> queryParams = new HashMap<String, String>();
-            this.apiClient.getOne("group_followings", String.valueOf(Integer.valueOf(debate.getId())), queryParams,
-                response -> {
-                    try {
-                        boolean success = response.getJSONObject("data").getBoolean("success");
-                        boolean follow = response.getJSONObject("data").getJSONObject("data").getBoolean("follow");
-                        if(success && follow) {
-                            setActive();
+        if (this.auth.getIsLoggedIn()) {
+            this.apiClient.getDebateFollow(
+                    response -> {
+                        try {
+                            boolean success = response.getJSONObject("data").getBoolean("success");
+                            boolean follow = true;
+                            if (response.getJSONObject("data").getJSONObject("data").has("follow")) {
+                                follow = response.getJSONObject("data").getJSONObject("data").getBoolean("follow");
+
+                            }
+                            if (success && follow) {
+                                setActive();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }, Throwable::printStackTrace);
+                    }, Throwable::printStackTrace, "group", Integer.valueOf(debate.getId()));
         }
     }
 
@@ -134,17 +137,15 @@ public class FollowDebateButtonView extends androidx.appcompat.widget.AppCompatB
         this.setPadding(35, 10, 35, 10);
         String primaryColor = settings.get("theme.callPrimaryColor");
         String debateFollowActiveText = settings.get("layout.actionFollow");
-        if(debateFollowActiveText != null) {
+        if (debateFollowActiveText != null) {
             this.setText(debateFollowActiveText);
         } else {
             this.setText(R.string.debate_follow_active);
         }
-
-        this.setTextColor(Color.WHITE);
-        LayerDrawable shape = (LayerDrawable) ContextCompat.getDrawable(this.context, R.drawable.button_active_background);
-        GradientDrawable gradientDrawable = (GradientDrawable) shape.findDrawableByLayerId(R.id.shape);
-        gradientDrawable.setColor(Color.parseColor(primaryColor));
+        this.setTextColor(Color.GRAY);
+        LayerDrawable shape = (LayerDrawable) ContextCompat.getDrawable(this.context, R.drawable.button_inactive_background);
         this.setBackground(shape);
+
     }
 
     private void setInactive() {
@@ -152,15 +153,14 @@ public class FollowDebateButtonView extends androidx.appcompat.widget.AppCompatB
         this.setEnabled(true);
         String primaryColor = settings.get("theme.callPrimaryColor");
         String debateFollowInactiveText = settings.get("layout.actionFollowedDebate");
-        if(debateFollowInactiveText != null) {
+        if (debateFollowInactiveText != null) {
             this.setText(debateFollowInactiveText);
         } else {
             this.setText(R.string.debate_follow_inactive);
         }
-        this.setTextColor(Color.parseColor(primaryColor));
-        LayerDrawable shape = (LayerDrawable) ContextCompat.getDrawable(this.context, R.drawable.button_inactive_background);
-        GradientDrawable gradientDrawable = (GradientDrawable) shape.findDrawableByLayerId(R.id.border);
-        gradientDrawable.setColor(Color.parseColor(primaryColor));
+        this.setTextColor(Color.BLACK);
+        LayerDrawable shape = (LayerDrawable) ContextCompat.getDrawable(this.context, R.drawable.inactive_button_follow);
         this.setBackground(shape);
     }
+
 }

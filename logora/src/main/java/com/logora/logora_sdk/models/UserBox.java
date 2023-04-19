@@ -8,11 +8,12 @@ public class UserBox extends Model {
     private String imageUrl;
     private String slug;
     private Integer id;
-    private Integer votesCount ;
+    private Integer votesCount;
     private Integer argumentsCount = 0;
     private Integer points = 0;
 
-    public UserBox() {}
+    public UserBox() {
+    }
 
     public static UserBox objectFromJson(JSONObject jsonObject) {
         UserBox userBox = new UserBox();
@@ -21,13 +22,13 @@ public class UserBox extends Model {
             userBox.setFullName(jsonObject.getString("full_name"));
             userBox.setSlug(jsonObject.getString("slug"));
             userBox.setImageUrl(jsonObject.getString("image_url"));
-            if(jsonObject.has("points")){
+            if (jsonObject.has("points")) {
                 userBox.setPoints(jsonObject.getInt("points"));
             }
-            if(jsonObject.has("upvotes")) {
+            if (jsonObject.has("upvotes")) {
                 userBox.setVotesCount(jsonObject.getInt("upvotes"));
             }
-            if(jsonObject.has("messages_count")) {
+            if (jsonObject.has("messages_count")) {
                 userBox.setArgumentsCount(jsonObject.getInt("messages_count"));
             }
             return userBox;
@@ -45,13 +46,21 @@ public class UserBox extends Model {
         this.fullName = fullName;
     }
 
-    public String getSlug() { return slug; }
+    public String getSlug() {
+        return slug;
+    }
 
-    public void setSlug(String slug) { this.slug = slug; }
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
 
-    public Integer getId() { return id; }
+    public Integer getId() {
+        return id;
+    }
 
-    public void setId(Integer id) { this.id = id; }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getImageUrl() {
         return imageUrl;
@@ -69,9 +78,13 @@ public class UserBox extends Model {
         this.votesCount = votesCount;
     }
 
-    public Integer getPoints() { return points; }
+    public Integer getPoints() {
+        return points;
+    }
 
-    public void setPoints(Integer points) { this.points = points; }
+    public void setPoints(Integer points) {
+        this.points = points;
+    }
 
     public Integer getArgumentsCount() {
         return argumentsCount;

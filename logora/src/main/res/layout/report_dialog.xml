@@ -47,7 +47,7 @@
         android:textCursorDrawable="@null"
         android:inputType="textMultiLine"
         android:lines="3"
-        android:minLines="3"
+        android:minLines="1"
         android:gravity="top"
         android:maxLines="10"
         android:autofillHints="Description" />

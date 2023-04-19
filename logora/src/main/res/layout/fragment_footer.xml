@@ -16,5 +16,6 @@
         android:layout_centerVertical="true"
         android:gravity="center"
         android:textColor="@color/text_secondary"
-        android:text="Propulsé par Logora" />
+        android:text="Propulsé par Logora"
+        android:background="@drawable/border_footer"/>
 </RelativeLayout>

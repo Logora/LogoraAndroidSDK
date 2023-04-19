@@ -51,6 +51,7 @@ public class ArgumentVote extends LinearLayout {
         super(context);
         initView();
     }
+
     private void findViews() {
         clapButtonView = findViewById(R.id.argument_clap_button);
         votesCountView = findViewById(R.id.argument_votes_count);
@@ -76,7 +77,7 @@ public class ArgumentVote extends LinearLayout {
         setInactive();
         if (authClient.getIsLoggedIn() == true) {
             Integer currentUserId = authClient.getCurrentUser().getId();
-            if(argument.getHasUserVoted(currentUserId)) {
+            if (argument.getHasUserVoted(currentUserId)) {
                 voteId = argument.getUserVoteId(currentUserId);
                 setActive();
             }
@@ -114,49 +115,37 @@ public class ArgumentVote extends LinearLayout {
                 argument.decrementVotesCount();
                 HashMap<String, String> queryParams = new HashMap<String, String>();
                 this.apiClient.delete("votes", String.valueOf(voteId), queryParams,
-                    response -> {
-                        try {
-                            boolean success = response.getBoolean("success");
-                            if(success) {
-                                setInactive();
+                        response -> {
+                            try {
+                                boolean success = response.getBoolean("success");
+                                if (success) {
+                                    setInactive();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }, error -> {
-                        // Increment ?
-                        Log.i("ERROR", "error");
-                    });
+                        }, error -> {
+                            // Increment ?
+                            Log.i("ERROR", "error");
+                        });
             } else {
                 argument.incrementVotesCount();
-                HashMap<String, String> queryParams = new HashMap<>();
-                Integer voteableId=0;
-                String voteableType="";
-                Integer positionId=0;
-                HashMap<String, String> bodyParams = new HashMap<String,String>(){{
-                    put("voteable_id", String.valueOf(voteableId));
-                    put("voteable_type", voteableType);
-                    if (positionId != null) {
-                        put("position_id", String.valueOf(positionId));
-                    }
-                }};
-
-                this.apiClient.create("votes",bodyParams,queryParams,
-                    response -> {
-                        try {
-                            boolean success = response.getBoolean("success");
-                            JSONObject vote = response.getJSONObject("data").getJSONObject("resource");
-                            if(success) {
-                                this.voteId = vote.getInt("id");
-                                setActive();
+                this.apiClient.createVote(
+                        response -> {
+                            try {
+                                boolean success = response.getBoolean("success");
+                                JSONObject vote = response.getJSONObject("data").getJSONObject("resource");
+                                if (success) {
+                                    this.voteId = vote.getInt("id");
+                                    setActive();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }, error -> {
-                        // Decrement ?
-                        Log.i("ERROR", "error");
-                    });
+                        }, error -> {
+                            // Decrement ?
+                            Log.i("ERROR", "error");
+                        }, Integer.parseInt(String.valueOf(argument.getId())), "Message", null);
             }
         } else {
             openLoginDialog();

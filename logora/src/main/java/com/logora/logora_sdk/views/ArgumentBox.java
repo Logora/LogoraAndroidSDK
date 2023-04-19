@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
@@ -26,13 +27,16 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.Resource;
+import com.logora.logora_sdk.DividerItemDecorator;
 import com.logora.logora_sdk.PaginatedListFragment;
 import com.logora.logora_sdk.R;
 import com.logora.logora_sdk.adapters.ArgumentListAdapter;
@@ -55,7 +59,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.List;
 
-public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.DeleteArgumentListener{
+public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.DeleteArgumentListener {
     private Context context;
     private final Router router = Router.getInstance();
     private final Settings settings = Settings.getInstance();
@@ -91,7 +95,7 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
     private ArgumentListAdapter repliesListAdapter;
     private TextView argumentRepliesToggle;
     private TextView argumentRepliesArrow;
-     Resources res = getContext().getResources();
+    Resources res = getContext().getResources();
 
 
     public ArgumentBox(Context context, AttributeSet attrs, int defStyle) {
@@ -141,6 +145,7 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
         this.debate = debate;
         String firstPositionPrimaryColor = settings.get("theme.firstPositionColorPrimary");
         String secondPositionPrimaryColor = settings.get("theme.secondPositionColorPrimary");
+        String thirdPositionPrimaryColor = settings.get("theme.thirdPositionColorPrimary");
         String callPrimaryColor = settings.get("theme.callPrimaryColor");
         LayerDrawable shape = (LayerDrawable) ContextCompat.getDrawable(context, R.drawable.position_background);
         positionIndex = debate.getPositionIndex(argument.getPosition().getId());
@@ -151,10 +156,10 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
             GradientDrawable gradientDrawable = (GradientDrawable) shape.findDrawableByLayerId(R.id.shape);
             gradientDrawable.setColor(Color.parseColor(secondPositionPrimaryColor));
         }
-        if(argument.getIsReply()) {
+        if (argument.getIsReply()) {
             this.setReplyStyle();
         }
-        if(this.depth == 2) {
+        if (this.depth == 2) {
             argumentReplyButton.setVisibility(GONE);
         }
         sideLabelView.setBackground(shape);
@@ -168,13 +173,18 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
         });
         argumentVote.init(argument, debate);
         contentView.setText(argument.getContent());
+        int id = argument.getId();
         argumentShareButton.setOnClickListener(v -> {
-
-            openShareDialog(res.getString(R.string.argument_interessant));
+            Resources res = getContext().getResources();
+            String url = "https://app.logora.fr/share/a/" + id;
+            openShareDialog(res.getString(R.string.share_argument) + url);
         });
         argumentMoreButton.setOnClickListener(v -> {
             openMoreActionsDialog();
+
         });
+
+
         // Add read more on contentView
         int MAX_LINES = 15;
         String TWO_SPACES = "  ";
@@ -203,7 +213,7 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
         });
         // Reply input
         argumentReplyButton.setOnClickListener(v -> {
-            if(authClient.getIsLoggedIn()) {
+            if (authClient.getIsLoggedIn()) {
                 replyInputContainer.setVisibility(View.VISIBLE);
             } else {
                 LoginDialog loginDialog = new LoginDialog(getContext());
@@ -225,15 +235,18 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
             imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
             createReply(argument.getId());
         });
-        argumentRepliesList.setId(argumentBoxId);
+         argumentRepliesList.setId(argumentBoxId);
         String resourceName = "messages/" + argument.getId() + "/replies";
         repliesListAdapter = new ArgumentListAdapter(debate, depth + 1);
         repliesList = new PaginatedListFragment(resourceName, "CLIENT", repliesListAdapter, null, null, null, null);
         fragmentManager = ((AppCompatActivity) getContext()).getSupportFragmentManager();
         argumentRepliesFooter.setOnClickListener(v -> {
             this.toggleReplies(argumentBoxId);
+
+
+
         });
-        if(argument.getRepliesCount() > 0) {
+        if (argument.getRepliesCount() > 0) {
             argumentRepliesFooter.setVisibility(VISIBLE);
             argumentRepliesAuthorsListAdapter = new UserIconListAdapter();
             List<JSONObject> authorsList = argument.getRepliesAuthorsList();
@@ -242,20 +255,21 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
             argumentRepliesAuthorsList.setAdapter(argumentRepliesAuthorsListAdapter);
             argumentRepliesAuthorsListAdapter.setItems(authorsList);
         }
-        setModerated();
     }
 
     private void toggleReplies(Integer boxId) {
         Resources res = this.getContext().getResources();
-        if(this.toggleReplies) {
-            fragmentManager.beginTransaction()
+        if (this.toggleReplies) {
+             fragmentManager.beginTransaction()
                     .hide(repliesList)
                     .commit();
             this.toggleReplies = false;
             argumentRepliesToggle.setText(res.getString(R.string.argument_view_replies));
             argumentRepliesArrow.setText(res.getString(R.string.arrow_down));
+
+
         } else {
-            if(!this.initReplies) {
+            if (!this.initReplies) {
                 fragmentManager.beginTransaction()
                         .add(boxId, repliesList)
                         .commit();
@@ -264,6 +278,7 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
                 fragmentManager.beginTransaction()
                         .show(repliesList)
                         .commit();
+
             }
             this.toggleReplies = true;
             argumentRepliesToggle.setText(res.getString(R.string.argument_hide_replies));
@@ -276,6 +291,7 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
         String secondPositionPrimaryColor = settings.get("theme.secondPositionColorPrimary");
         LayerDrawable borderLeft = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.reply_left_border);
         positionIndex = debate.getPositionIndex(argument.getPosition().getId());
+
         if (positionIndex == 0) {
             GradientDrawable gradientDrawable = (GradientDrawable) borderLeft.findDrawableByLayerId(R.id.leftStroke);
             gradientDrawable.setColor(Color.parseColor(firstPositionPrimaryColor));
@@ -283,7 +299,7 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
             GradientDrawable gradientDrawable = (GradientDrawable) borderLeft.findDrawableByLayerId(R.id.leftStroke);
             gradientDrawable.setColor(Color.parseColor(secondPositionPrimaryColor));
         }
-        argumentContainer.setBackgroundColor(getResources().getColor(R.color.text_tertiary));
+        //argumentContainer.setBackgroundColor(getResources().getColor(R.color.text_tertiary));
         argumentContainer.setBackground(borderLeft);
     }
 
@@ -297,13 +313,13 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
     private void openMoreActionsDialog() {
         String[] actionsList;
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        if(authClient.getIsLoggedIn() && argument.getAuthor().getId().equals(authClient.getCurrentUser().getId())) {
-            actionsList = new String[]{res.getString(R.string.modifier),res.getString(R.string.supprimer),res.getString(R.string.signaler)};
+        if (authClient.getIsLoggedIn() && argument.getAuthor().getId().equals(authClient.getCurrentUser().getId())) {
+            actionsList = new String[]{res.getString(R.string.modifier), res.getString(R.string.supprimer), res.getString(R.string.signaler)};
         } else {
             actionsList = new String[]{res.getString(R.string.signaler)};
         }
         builder.setItems(actionsList, (dialog, which) -> {
-            if(actionsList.length > 1) {
+            if (actionsList.length > 1) {
                 switch (which) {
                     case 0:
                         inputProvider.setUpdateArgument(argument);
@@ -316,7 +332,7 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
                         break;
                 }
             } else {
-                if(which == 0) {
+                if (which == 0) {
                     openReportDialog();
                 }
             }
@@ -326,7 +342,7 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
     }
 
     private void openReportDialog() {
-        if(authClient.getIsLoggedIn()) {
+        if (authClient.getIsLoggedIn()) {
             ReportDialog.show(context, argument);
         } else {
             LoginDialog loginDialog = new LoginDialog(getContext());
@@ -342,9 +358,9 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
     @Override
     public void onDelete(Boolean deleteArgument) {
         Resources res = getContext().getResources();
-        if(deleteArgument) {
+        if (deleteArgument) {
             HashMap<String, String> queryParams = new HashMap<String, String>();
-            apiClient.delete( "messages",String.valueOf(argument.getId()),queryParams,response -> {
+            apiClient.delete("messages", String.valueOf(argument.getId()), queryParams, response -> {
                 try {
                     boolean success = response.getBoolean("suiuccess");
                     if (success) {
@@ -366,23 +382,14 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
         toast.show();
     }
 
-    private void setModerated(){
-        Resources res = getResources();
-        if (argument.getStatus().equals("rejected") || argument.getStatus().equals("pending")) {
-            float opacity = 0.4f;
-            argumentContainer.setAlpha(opacity);
-            dateView.setText(res.getString(R.string.moderated_argument));
-        }
-    }
-
     private void createReply(Integer replyToId) {
         Resources res = this.getContext().getResources();
         replyInput.clearFocus();
         HashMap<String, String> queryParams = new HashMap<>();
-        String argumentContent="";
-        Integer debateId=0;
-        Integer messageId=0;
-        String isReply="";
+        String argumentContent = "";
+        Integer debateId = 0;
+        Integer messageId = 0;
+        String isReply = "";
         HashMap<String, String> bodyParams = new HashMap<String, String>() {{
             put("position_id", String.valueOf(replyToId));
             put("group_id", String.valueOf(debateId));
@@ -395,7 +402,7 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
             put("is_reply", isReply);
 
         }};
-        this.apiClient.create("messages",bodyParams,queryParams,response -> {
+        this.apiClient.createArgument(response -> {
             try {
                 boolean success = response.getBoolean("success");
                 JSONObject argument = response.getJSONObject("data").getJSONObject("resource");
@@ -414,8 +421,12 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
             }
         }, error -> {
             showToastMessage(res.getString(R.string.issue));
-        });
+
+        }, String.valueOf(replyInput.getText()), Integer.parseInt(debate.getId()), replyToId, argument.getPosition().getId(), "true");
     }
+
+
+
 
     public void setDepth(int depth) {
         this.depth = depth;

@@ -12,7 +12,7 @@ public class User {
     private Integer debatesCount ;
     private Integer votesCount = 0;
     private Integer vote ;
-    private Integer disciplesCount ;
+    private Integer disciplesCount = 0 ;
     private Integer notificationsCount = 0;
     private Integer userPoint = 0;
     private String levelIconUrl;

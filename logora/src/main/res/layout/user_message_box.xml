@@ -32,7 +32,7 @@
                 android:id="@+id/user_messages_participants_count_image"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
-                android:src="@drawable/ic_users"
+                android:src="@drawable/ic_voteboxicon"
                 android:layout_marginHorizontal="6dp"
                 android:gravity="center"
                 android:clickable="true"

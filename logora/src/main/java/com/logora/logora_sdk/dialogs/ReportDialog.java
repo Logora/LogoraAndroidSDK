@@ -111,11 +111,11 @@ public class ReportDialog extends LinearLayout {
             put("classification", reportClassification);
             put("description", reportDescription);
         }};
-        this.apiClient.create("reports", bodyParams, queryParams,
+        this.apiClient.createReport(
                 response -> {
                     try {
                         boolean success = response.getBoolean("success");
-                        if (success) {
+                        if(success) {
                             showToastMessage(res.getString(R.string.report_success));
                         }
                     } catch (JSONException e) {
@@ -124,8 +124,9 @@ public class ReportDialog extends LinearLayout {
                 }, error -> {
                     Log.i("ERROR", String.valueOf(error));
                     showToastMessage(res.getString(R.string.report_error));
-                });
+                }, argumentId, "Message", reportClassification, reportDescription);
     }
+
     private void showToastMessage(String message) {
         int duration = Toast.LENGTH_SHORT;
 

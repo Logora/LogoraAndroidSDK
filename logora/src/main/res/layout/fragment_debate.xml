@@ -1,37 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/debate_fragment_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="12dp"
     tools:context=".DebateFragment">
 
+
     <ProgressBar
         android:id="@+id/loader"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:indeterminate="true"
-        android:indeterminateTintMode="src_atop"
         android:indeterminateTint="@android:color/black"
+        android:indeterminateTintMode="src_atop"
         android:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/debate_presentation_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/box_background"
-        android:layout_marginVertical="12dp"
-        android:paddingTop="16dp">
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/box_background">
 
         <TextView
             android:id="@+id/debate_published_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:paddingHorizontal="12dp"
             android:text="@string/debate_published_date"
             android:textColor="@color/text_secondary"
-            android:paddingHorizontal="12dp"
             android:textSize="14sp" />
 
         <TextView
@@ -40,11 +43,74 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/debate_published_date"
             android:layout_marginVertical="12dp"
+            android:layout_marginLeft="10dp"
             android:paddingHorizontal="12dp"
             android:text="@string/debate_name"
             android:textColor="@color/text_primary"
             android:textSize="26sp"
             android:textStyle="bold" />
+
+        <RelativeLayout
+            android:id="@+id/icons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/debate_name">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/border_icon">
+
+                <ImageView
+                    android:id="@+id/user_messages_participants_count_image"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_marginHorizontal="6dp"
+                    android:clickable="true"
+                    android:contentDescription="@string/participants_count"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:src="@drawable/ic_users" />
+
+                <TextView
+                    android:id="@+id/user_messages_participants_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/user_messages_participants_count_image"
+                    android:text="--"
+                    android:textColor="@color/black" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="170px"
+                android:background="@drawable/border_icon">
+
+                <ImageView
+                    android:id="@+id/user_messages_messages_count_image"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_marginHorizontal="6dp"
+                    android:layout_toEndOf="@id/user_messages_participants_count"
+                    android:clickable="true"
+                    android:contentDescription="@string/participants_count"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:src="@drawable/ic_messages" />
+
+                <TextView
+                    android:id="@+id/user_messages_messages_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/user_messages_messages_count_image"
+                    android:text="--"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+
+        </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/debate_tag_list"
@@ -52,21 +118,20 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/debate_name"
             android:layout_marginVertical="6dp"
-            android:paddingHorizontal="12dp"
-            android:nestedScrollingEnabled="false" />
+            android:nestedScrollingEnabled="false"
+            android:paddingHorizontal="12dp" />
 
         <com.logora.logora_sdk.views.VoteBoxView
             android:id="@+id/debate_vote_box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/debate_tag_list" />
+            android:layout_below="@+id/icons" />
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="12dp"
-            android:layout_marginVertical="8dp"
-            android:layout_below="@+id/debate_vote_box">
+            android:layout_below="@+id/debate_vote_box"
+            android:layout_marginVertical="8dp">
 
             <com.logora.logora_sdk.views.ShareView
                 android:id="@+id/debate_share"
@@ -74,6 +139,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerInParent="true"
+                android:layout_marginStart="280px"
                 android:gravity="center" />
 
             <com.logora.logora_sdk.views.FollowDebateButtonView
@@ -81,21 +147,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:layout_alignParentEnd="true"
-                android:paddingHorizontal="25dp"
-                android:text="@string/debate_follow_inactive"
+                android:layout_marginEnd="15px"
+                android:drawableLeft="@drawable/ic_alarm"
                 tools:ignore="RelativeOverlap" />
 
         </RelativeLayout>
+
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/argument_input_container"
         android:layout_width="wrap_content"
-        android:minHeight="80dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/debate_presentation_container"
+        android:layout_marginBottom="12dp"
         android:background="@drawable/box_background"
-        android:padding="10dp"
-        android:layout_marginBottom="12dp">
+        android:minHeight="80dp"
+        android:padding="10dp">
 
         <com.logora.logora_sdk.views.ArgumentAuthorBox
             android:id="@+id/argument_author_box_container"
@@ -107,41 +175,48 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/argument_author_box_container"
-            android:background="@android:color/transparent"
-            android:textCursorDrawable="@drawable/black_cursor"
             android:layout_marginStart="12dp"
+            android:background="@android:color/transparent"
             android:hint="@string/argument_input_placeholder"
-            android:textSize="14dp"
             android:paddingTop="10dp"
-            android:paddingBottom="10dp"/>
+            android:paddingBottom="10dp"
+            android:textCursorDrawable="@drawable/black_cursor"
+            android:textSize="14dp" />
 
         <RelativeLayout
-
             android:id="@+id/argument_input_controls"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/argument_input"
+            android:layout_marginTop="75dp"
             android:gravity="right"
-            android:paddingVertical="10dp">
+            android:padding="5dp">
 
             <ImageView
                 android:id="@+id/argument_input_send_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_send"
                 android:layout_gravity="right"
                 android:clickable="true"
                 android:focusable="true"
-                android:padding="6dp" />
+                android:src="@drawable/ic_send"
+                android:paddingLeft="6dp"
+                android:paddingRight="6dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
+
+                />
 
         </RelativeLayout>
+
+
     </RelativeLayout>
+
     <FrameLayout
         android:id="@+id/argument_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/argument_input_container"/>
+        android:layout_below="@+id/argument_input_container"
+        android:layout_marginTop="10dp" />
 
     <com.logora.logora_sdk.views.TextWrapper
         android:id="@+id/related_debates_header"
@@ -149,10 +224,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/argument_list"
         android:layout_marginTop="12dp"
-        android:textStyle="bold"
+        android:text="@string/infoRelatedDebates"
         android:textSize="16sp"
-        app:textKey="infoRelatedDebates"
-        android:text="@string/infoRelatedDebates" />
+        android:textStyle="bold"
+        app:textKey="infoRelatedDebates" />
 
     <FrameLayout
         android:id="@+id/related_debates_list"
@@ -163,14 +238,12 @@
 
     <com.logora.logora_sdk.views.PrimaryButton
         android:id="@+id/index_button"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/related_debates_list"
-        android:text="@string/see_all_debates"
         style="@style/PrimaryButton"
-        android:layout_marginBottom="10dp"/>
-
-
+        android:layout_below="@id/related_debates_list"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="10dp"
+        android:text="@string/see_all_debates" />
 
 
 </RelativeLayout>

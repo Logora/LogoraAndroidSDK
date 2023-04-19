@@ -50,7 +50,7 @@ public class NavbarFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         findViews(view);
 
-        if(auth.getIsLoggedIn()) {
+        if (auth.getIsLoggedIn()) {
             loginLinkView.setVisibility(View.GONE);
             notificationContainer.setVisibility(View.VISIBLE);
             userProfileView.setVisibility(View.VISIBLE);
@@ -73,23 +73,20 @@ public class NavbarFragment extends Fragment {
             });
         }
 
-        indexButtonView.init(R.drawable.ic_home, "Débats", "infoAllDebates", null);
+        indexButtonView.init(R.drawable.ic_chat, "Débats", "infoAllDebates", null);
         indexButtonView.setOnClickListener(v -> router.navigate(Router.getRoute("INDEX"), null));
         loginLinkView.init(R.drawable.ic_login, "Connexion", null, null);
         loginLinkView.setOnClickListener(v -> {
-            try {
-                Uri.Builder builder = Uri.parse(settings.get("")).buildUpon();
-                builder.appendQueryParameter("response_type", "code")
-                        .appendQueryParameter("redirect_uri", "https://app.logora.fr/auth/callback")
-                        .appendQueryParameter("client_id", settings.get("auth.clientId"))
-                        .appendQueryParameter("scope", settings.get("auth.scope"));
-                String authUrl = builder.build().toString();
-                this.goToUrl(authUrl);
-            }catch (Exception e){
-                System.out.println("problem in login"+e.toString());
-            }
-        });
 
+            Uri.Builder builder = Uri.parse(settings.get("auth.login_url")).buildUpon();
+            builder.appendQueryParameter("response_type", "code")
+                    .appendQueryParameter("redirect_uri", "https://app.logora.fr/auth/callback")
+                    .appendQueryParameter("client_id", settings.get("auth.clientId"))
+                    .appendQueryParameter("scope", settings.get("auth.scope"));
+            String authUrl = builder.build().toString();
+            goToUrl(authUrl);
+
+        });
         searchButtonView.init(R.drawable.ic_search, "Recherche", null, null);
         searchButtonView.setOnClickListener(v -> {
             this.searchFormView.setVisibility(View.VISIBLE);

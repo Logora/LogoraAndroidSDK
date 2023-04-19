@@ -1,6 +1,7 @@
 package com.logora.logora_sdk;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
@@ -15,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +26,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.logora.logora_sdk.adapters.ArgumentListAdapter;
 import com.logora.logora_sdk.adapters.DebateBoxListAdapter;
 import com.logora.logora_sdk.adapters.TagListAdapter;
@@ -45,12 +48,10 @@ import com.logora.logora_sdk.views.FollowDebateButtonView;
 import com.logora.logora_sdk.views.PrimaryButton;
 import com.logora.logora_sdk.views.ShareView;
 import com.logora.logora_sdk.views.VoteBoxView;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -58,6 +59,7 @@ import java.util.HashMap;
  * A simple {@link Fragment} subclass.
  */
 public class DebateFragment extends Fragment implements SideDialog.ArgumentInputListener, InputProvider.InputProviderUpdateListener {
+    private static final String TAG = "MyActivity";
     private final Auth auth = Auth.getInstance();
     private final Router router = Router.getInstance();
     private final InputProvider inputProvider = InputProvider.getInstance();
@@ -82,7 +84,9 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
     private PaginatedListFragment relatedDebateList;
     private DebateBoxListAdapter relatedDebateListAdapter;
     private Argument argument;
-    private Button debat;
+    private Button all_debat;
+    TextView argumentsCount;
+    TextView participantsCount;
 
     public DebateFragment() {
         super(R.layout.fragment_debate);
@@ -103,13 +107,14 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
             findViews(view);
             TagListAdapter debateTagListAdapter = new TagListAdapter();
             debatePresentationContainerView.setVisibility(View.GONE);
-            //changer
             loader.setVisibility(View.INVISIBLE);
             DebateShowViewModel debateShowViewModel = new DebateShowViewModel();
             debateShowViewModel.getDebate(this.debateSlug);
             debateShowViewModel.getDebate(this.debateSlug).observe(getViewLifecycleOwner(), debate -> {
                 this.debate = debate;
                 debateNameView.setText(debate.getName());
+                argumentsCount.setText(String.valueOf(debate.getUsersCount()));
+                participantsCount.setText(String.valueOf(debate.getArgumentsCount()));
                 // Argument Input
                 argumentAuthorBox.init(null);
                 String primaryColor = settings.get("theme.callPrimaryColor");
@@ -118,12 +123,8 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                 gradientDrawable.setColor(Color.parseColor(primaryColor));
                 argumentSend.setBackground(shape);
                 argumentSend.setColorFilter(Color.WHITE);
-                argumentInputControls.setVisibility(View.GONE);
+                argumentInputControls.setVisibility(View.VISIBLE);
                 argumentInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                    // il semble que ce code contrôle la visibilité de certains éléments de l'interface utilisateur
-                    // en fonction du statut de connexion de l'utilisateur. Si l'utilisateur est connecté,
-                    // l'élément UI s'affiche ;
-                    // sinon, l'utilisateur est invité à se connecter avant de pouvoir interagir avec cet élément.
                     @Override
                     public void onFocusChange(View view, boolean hasFocus) {
                         if (hasFocus) {
@@ -149,20 +150,24 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                         createArgument(null);
                     }
                 });
+                Resources res = getContext().getResources();
                 debatePublishedDateView.setText(DateUtil.getDateText(debate.getPublishedDate()));
                 debateTagListAdapter.setItems(debate.getTagList());
                 debateTagList.setAdapter(debateTagListAdapter);
                 voteBoxView.init(debate);
                 followDebateButtonView.init(debate);
-                shareView.setShareText(debate.getName());
-                loader.setVisibility(View.GONE);
+                String id = debate.getId();
+                shareView.setOnClickListener(v -> {
+                    String url = res.getString(R.string.share_debat) + "https://app.logora.fr/share/g/" + id;
+                    shareView.openShareDialog(url);
+                });
+
+                loader.setVisibility(View.INVISIBLE);
                 debatePresentationContainerView.setVisibility(View.VISIBLE);
-                String argumentResourceName ="groups/" + debate.getSlug() + "/messages";
+                String argumentResourceName = "groups/" + debate.getSlug() + "/messages";
                 ArgumentListAdapter argumentListAdapter = new ArgumentListAdapter(debate, 0);
                 this.argumentListAdapter = argumentListAdapter;
-
                 try {
-                    Resources res = getContext().getResources();
                     ArrayList<SortOption> argumentListSortOptions = new ArrayList<>();
                     argumentListSortOptions.add(new SortOption(res.getString(R.string.list_recent), "-created_at", null));
                     argumentListSortOptions.add(new SortOption(res.getString(R.string.list_tendance), "-score", null));
@@ -171,23 +176,30 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                 } catch (Exception e) {
                 }
 
-               getChildFragmentManager()
+                getChildFragmentManager()
                         .beginTransaction()
                         .add(R.id.argument_list, argumentList)
                         .commit();
-                String relatedDebateResourceName = "groups/" + debate.getSlug() + "/related";
-                this.relatedDebateListAdapter = new DebateBoxListAdapter();
-                relatedDebateList = new PaginatedListFragment(relatedDebateResourceName, "CLIENT", relatedDebateListAdapter, null, null, null, null);
-               getChildFragmentManager()
-                        .beginTransaction()
-                        .add(R.id.related_debates_list, relatedDebateList)
-                        .commit();
+                try {
+                    String relatedDebateResourceName = "groups/" + debate.getSlug() + "/related";
+                    Log.d(TAG, "onViewCreated: " + debate.getSlug());
+                    this.relatedDebateListAdapter = new DebateBoxListAdapter();
+                    relatedDebateList = new PaginatedListFragment(relatedDebateResourceName, "CLIENT", relatedDebateListAdapter, null, null, null, null);
+                    getChildFragmentManager()
+                            .beginTransaction()
+                            .add(R.id.related_debates_list, relatedDebateList)
+                            .commit();
+
+                } catch (Exception e) {
+                    System.out.println("ERROR" + e.toString());
+                }
+
             });
-        } catch(Exception e) {
+        } catch (Exception e) {
             Toast.makeText(getContext(), R.string.error_debate, Toast.LENGTH_LONG).show();
 
         }
-        debat.setOnClickListener(v -> {
+        all_debat.setOnClickListener(v -> {
             HashMap<String, String> routeParams = new HashMap<>();
             router.navigate(Router.getRoute("INDEX"), routeParams);
 
@@ -195,10 +207,16 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
     }
 
 
-
     private void openSideDialog() {
         SideDialog sideDialog = new SideDialog(getContext(), debate, this);
         sideDialog.show(getContext(), debate, this);
+    }
+
+    private void openShareDialog(String subject) {
+        Intent share = new Intent(Intent.ACTION_SEND);
+        share.setType("text/plain");
+        share.putExtra(Intent.EXTRA_TEXT, subject);
+        startActivity(Intent.createChooser(share, "partage"));
     }
 
     private void openLoginDialog() {
@@ -212,24 +230,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
         if (auth.getIsLoggedIn() == true) {
             if (positionId != null) {
                 Integer argumentPosition = positionId;
-                HashMap<String, String> queryParams = new HashMap<>();
-                String argumentContent="";
-                Integer debateId=0;
-                Integer messageId=0;
-                String isReply="";
-                HashMap<String, String> bodyParams = new HashMap<String, String>() {{
-                    put("position_id", String.valueOf(positionId));
-                    put("group_id", String.valueOf(debateId));
-                    put("content", argumentContent);
-                    if (messageId != null) {
-                        put("message_id", String.valueOf(messageId));
-                    } else {
-                        put("message_id", null);
-                    }
-                    put("is_reply", isReply);
-
-                }};
-                this.apiClient.create("messages",bodyParams,queryParams,
+                this.apiClient.createArgument(
                         response -> {
                             try {
                                 boolean success = response.getBoolean("success");
@@ -249,27 +250,10 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                             }
                         }, error -> {
                             showToastMessage(res.getString(R.string.issue));
-                        });
+                        }, String.valueOf(argumentInput.getText()), Integer.parseInt(debate.getId()), null, argumentPosition, "false");
             } else {
                 if (inputProvider.getUserPositions().get(Integer.parseInt(debate.getId())) != null) {
-                    HashMap<String, String> queryParams = new HashMap<>();
-                    String argumentContent="";
-                    Integer debateId=0;
-                    Integer messageId=0;
-                    String isReply="";
-                    HashMap<String, String> bodyParams = new HashMap<String, String>() {{
-                        put("position_id", String.valueOf(positionId));
-                        put("group_id", String.valueOf(debateId));
-                        put("content", argumentContent);
-                        if (messageId != null) {
-                            put("message_id", String.valueOf(messageId));
-                        } else {
-                            put("message_id", null);
-                        }
-                        put("is_reply", isReply);
-
-                    }};
-                    this.apiClient.create("messages",bodyParams,queryParams,
+                    this.apiClient.createArgument(
                             response -> {
                                 try {
                                     boolean success = response.getBoolean("success");
@@ -285,12 +269,11 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                                         showToastMessage(res.getString(R.string.argument_create_success));
                                     }
                                 } catch (JSONException e) {
-                                   // System.out.println("recu");
                                     e.printStackTrace();
                                 }
                             }, error -> {
                                 showToastMessage(res.getString(R.string.issue));
-                            });
+                            }, String.valueOf(argumentInput.getText()), Integer.parseInt(debate.getId()), null, inputProvider.getUserPositions().get(Integer.parseInt(debate.getId())), "false");
                 } else {
                     openSideDialog();
                 }
@@ -299,16 +282,16 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
             openLoginDialog();
         }
     }
+
     private void updateArgument(Argument argument) throws JSONException {
         Resources res = this.getContext().getResources();
         argumentListAdapter.removeItem(argument.getId());
         String argumentContent = "";
         HashMap<String, String> bodyParams = new HashMap<String, String>() {{
-            put("content",argumentContent );
+            put("content", argumentContent);
         }};
         HashMap<String, String> queryParams = new HashMap<>();
-
-        this.apiClient.update("messages",String.valueOf(argument.getId()),bodyParams,queryParams,response -> {
+        this.apiClient.updateArgument(response -> {
             try {
                 boolean success = response.getBoolean("success");
                 JSONObject updatedArgument = response.getJSONObject("data").getJSONObject("resource");
@@ -325,12 +308,13 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
             }
         }, error -> {
             showToastMessage(res.getString(R.string.issue));
-        });
+        }, argument.getId(), String.valueOf(argumentInput.getText()));
     }
+
 
     private void findViews(View view) {
         loader = view.findViewById(R.id.loader);
-         debatePresentationContainerView = view.findViewById(R.id.debate_presentation_container);
+        debatePresentationContainerView = view.findViewById(R.id.debate_presentation_container);
         debatePublishedDateView = view.findViewById(R.id.debate_published_date);
         debateNameView = view.findViewById(R.id.debate_name);
         debateTagList = view.findViewById(R.id.debate_tag_list);
@@ -342,7 +326,9 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
         argumentInputControls = view.findViewById(R.id.argument_input_controls);
         argumentInput = view.findViewById(R.id.argument_input);
         argumentSend = view.findViewById(R.id.argument_input_send_button);
-        debat=view.findViewById(R.id.index_button);
+        all_debat = view.findViewById(R.id.index_button);
+        argumentsCount = view.findViewById(R.id.user_messages_participants_count);
+        participantsCount = view.findViewById(R.id.user_messages_messages_count);
     }
 
     private void showToastMessage(String message) {
@@ -357,7 +343,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
     }
 
     @Override
-    public void onInputProviderUpdate(){
+    public void onInputProviderUpdate() {
         if (inputProvider.getUpdateArgument() != null) {
             argumentInput.setText(inputProvider.getUpdateArgument().getContent());
         }
@@ -367,4 +353,4 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
             inputProvider.removeRemoveArgument();
         }
     }
-        }
+}

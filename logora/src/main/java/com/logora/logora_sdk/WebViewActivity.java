@@ -8,6 +8,7 @@ import android.util.Log;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
 import com.logora.logora_sdk.utils.LogoraApiClient;
 import com.logora.logora_sdk.utils.Route;
 import com.logora.logora_sdk.utils.Router;
@@ -22,9 +23,10 @@ public class WebViewActivity extends Activity {
         setContentView(R.layout.webview);
         Intent i = getIntent();
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        String url= i.getStringExtra("url");
+        String url = i.getStringExtra("url");
         WebView webView = findViewById(R.id.webview);
         webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setDomStorageEnabled(true);
         webView.setWebViewClient(new LogoraWebViewClient());
         webView.loadUrl(url);
     }
@@ -32,7 +34,7 @@ public class WebViewActivity extends Activity {
     private class LogoraWebViewClient extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-            if(request.getUrl().toString().contains("code=")) {
+            if (request.getUrl().toString().contains("?code=") || request.getUrl().toString().contains("&code=")) {
                 Uri uri = Uri.parse(request.getUrl().toString());
                 String code = uri.getQueryParameter("code");
                 Intent intent = new Intent(getBaseContext(), LogoraAppActivity.class);
@@ -40,7 +42,11 @@ public class WebViewActivity extends Activity {
                 intent.putExtra("authAssertion", code);
                 Route currentRoute = router.getCurrentRoute();
                 intent.putExtra("routeName", currentRoute.getName());
-                intent.putExtra("routeParam", String.valueOf(currentRoute.getParams().values().toArray()[0]));
+                try {
+                    intent.putExtra("routeParam", String.valueOf(currentRoute.getParams().values().toArray()[0]));
+                } catch (Exception e) {
+                    System.out.println("ERROR" + e.toString());
+                }
                 startActivity(intent);
                 return true;
             }

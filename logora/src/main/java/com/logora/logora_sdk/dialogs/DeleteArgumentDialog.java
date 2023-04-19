@@ -9,6 +9,7 @@ import android.graphics.drawable.LayerDrawable;
 import android.util.AttributeSet;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 
@@ -57,12 +58,14 @@ public class DeleteArgumentDialog extends LinearLayout {
         LayerDrawable shape = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.button_primary_background);
         GradientDrawable gradientDrawable = (GradientDrawable) shape.findDrawableByLayerId(R.id.shape);
         gradientDrawable.setColor(Color.parseColor(callPrimaryColor));
-        deleteButton.setBackground(shape);
-        cancelButton.setBackground(shape);
+       // deleteButton.setBackground(shape);
+        //cancelButton.setBackground(shape);
 
         deleteButton.setOnClickListener(v -> {
             if (deleteArgumentListener != null) {
                 deleteArgumentListener.onDelete(true);
+                showToastMessage(res.getString(R.string.argument_delete_success));
+
             }
             dialog.dismiss();
         });
@@ -98,5 +101,10 @@ public class DeleteArgumentDialog extends LinearLayout {
 
     public interface DeleteArgumentListener {
         void onDelete(Boolean deleteArgument);
+    }
+    private void showToastMessage(String message) {
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(getContext(), message, duration);
+        toast.show();
     }
 }

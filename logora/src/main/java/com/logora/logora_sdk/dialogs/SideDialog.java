@@ -28,6 +28,7 @@ public class SideDialog extends LinearLayout {
     private TextView debateTitle;
     private TextView firstPositionButton;
     private TextView secondPositionButton;
+    private TextView thirdPositionButton;
     private ArgumentInputListener argumentInputListener;
 
     public SideDialog(Context context, AttributeSet attrs, int defStyle) {
@@ -57,16 +58,23 @@ public class SideDialog extends LinearLayout {
         debateTitle.setText(debate.getName());
         String firstPositionPrimaryColor = settings.get("theme.firstPositionColorPrimary");
         String secondPositionPrimaryColor = settings.get("theme.secondPositionColorPrimary");
-        LayerDrawable firstShape = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.button_primary_background);
+        //String thirdPositionPrimaryColor= settings.get("theme.thirdPositionColorPrimary");
+        /*LayerDrawable firstShape = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.button_primary_background);
         GradientDrawable firstGradientDrawable = (GradientDrawable) firstShape.findDrawableByLayerId(R.id.shape);
         firstGradientDrawable.setColor(Color.parseColor(firstPositionPrimaryColor));
-        firstPositionButton.setBackground(firstShape);
-        LayerDrawable secondShape = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.button_primary_background);
+        firstPositionButton.setBackground(firstShape);*/
+       /* LayerDrawable secondShape = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.button_primary_background);
         GradientDrawable secondGradientDrawable = (GradientDrawable) secondShape.findDrawableByLayerId(R.id.shape);
         secondGradientDrawable.setColor(Color.parseColor(secondPositionPrimaryColor));
-        secondPositionButton.setBackground(secondShape);
+        secondPositionButton.setBackground(secondShape);*/
+        //thirdPositionButton.setBackground(thirdShape);
         firstPositionButton.setText(debate.getPositionList().get(0).getName());
         secondPositionButton.setText(debate.getPositionList().get(1).getName());
+        try{
+            thirdPositionButton.setText(debate.getPositionList().get(2).getName());
+        }catch(Exception e){
+            System.out.println("ERROR"+e.toString());
+        }
         firstPositionButton.setOnClickListener(v -> {
             inputProvider.addUserPosition(Integer.parseInt(debate.getId()), debate.getPositionList().get(0).getId());
             if (argumentInputListener != null) {
@@ -81,6 +89,8 @@ public class SideDialog extends LinearLayout {
             }
             dialog.dismiss();
         });
+
+
     }
 
     private void findViews() {

@@ -7,6 +7,9 @@ import com.logora.logora_sdk.IndexFragment;
 import com.logora.logora_sdk.NotificationFragment;
 import com.logora.logora_sdk.SearchFragment;
 import com.logora.logora_sdk.UserFragment;
+import com.logora.logora_sdk.WidgetFragment;
+import com.logora.logora_sdk.views.ArgumentAuthorBox;
+import com.logora.logora_sdk.views.ArgumentBox;
 
 import java.util.HashMap;
 
@@ -25,6 +28,7 @@ public class Router {
         Route debateRoute = new Route("DEBATE", "/debat/:debateSlug", debateRouteParamDef);
         Router.routes.put(debateRoute.getName(), debateRoute);
 
+
         HashMap<String, String> userRouteParamDef = new HashMap<>();
         debateRouteParamDef.put("userSlug", "");
         Route userRoute = new Route("USER", "/utilisateur/:userSlug", userRouteParamDef);
@@ -35,8 +39,13 @@ public class Router {
         Route searchRoute = new Route("SEARCH", "/recherche", searchRouteQueryParamDef);
         Router.routes.put(searchRoute.getName(), searchRoute);
 
+    
+
+
         Route notificationRoute = new Route("NOTIFICATIONS", "/notifications", null);
         Router.routes.put(notificationRoute.getName(), notificationRoute);
+
+
     }
 
     public static Route getRoute(String routeName) {
@@ -50,7 +59,10 @@ public class Router {
         if (routeListener != null) routeListener.onRouteChange(previousRoute, this.currentRoute);
     }
 
-    public void setCurrentRoute(Route currentRoute) { this.currentRoute = currentRoute; }
+    public void setCurrentRoute(Route currentRoute) {
+        this.currentRoute = currentRoute;
+    }
+
     public Route getCurrentRoute() {
         return this.currentRoute;
     }
@@ -67,7 +79,7 @@ public class Router {
                 break;
             case "SEARCH":
                 routeParams.put("q", routeParam);
-                break;
+
         }
         route.setParams(routeParams);
         return route;
@@ -83,13 +95,14 @@ public class Router {
                 return new SearchFragment(route.getParams().get("q"));
             case "NOTIFICATIONS":
                 return new NotificationFragment();
+
             default:
                 return new IndexFragment();
         }
     }
 
     public static Router getInstance() {
-        if(Router.instance == null) {
+        if (Router.instance == null) {
             Router.instance = new Router();
             Router.defineRoutes();
         }
@@ -99,6 +112,7 @@ public class Router {
     public RouteListener getListener() {
         return routeListener;
     }
+
     public void setListener(RouteListener routeListener) {
         this.routeListener = routeListener;
     }

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+
 import com.logora.logora_sdk.models.DebateSynthesis;
 import com.logora.logora_sdk.utils.LogoraApiClient;
 import com.logora.logora_sdk.utils.Settings;
@@ -32,7 +33,9 @@ public class WidgetFragment extends Fragment {
     private String pageUid;
     private String applicationName;
 
-    public WidgetFragment() { super(R.layout.fragment_widget); }
+    public WidgetFragment() {
+        super(R.layout.fragment_widget);
+    }
 
     public WidgetFragment(Context context, String pageUid, String applicationName) {
         super(R.layout.fragment_widget);
@@ -48,8 +51,8 @@ public class WidgetFragment extends Fragment {
         try {
             findViews(view);
             getDebate();
-        } catch(Exception e) {
-            Toast.makeText(getContext(), R.string.request_error, Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            Toast.makeText(getContext(), getResources().getString(R.string.error_debate), Toast.LENGTH_LONG).show();
         }
 
         return view;
@@ -70,27 +73,29 @@ public class WidgetFragment extends Fragment {
         });
     }
 
-    public void getDebate(){
+    public void getDebate() {
         SettingsViewModel model = new SettingsViewModel();
         model.getSettings().observe(getViewLifecycleOwner(), settings -> {
             apiClient.getSynthesis(
-                response -> {
-                    try {
-                        boolean success = response.getBoolean("success");
-                        JSONObject debateObject = response.getJSONObject("debate");
-                        if (success) {
-                            debate = DebateSynthesis.objectFromJson(debateObject);
-                            if(debate != null) {
-                                setWidget(debate);
-                                rootLayout.setVisibility(View.VISIBLE);
+                    response -> {
+                        try {
+                            boolean success = response.getBoolean("success");
+                            if (response.has("debate")) {
+                                JSONObject debateObject = response.getJSONObject("debate");
+                                if (success) {
+                                    debate = DebateSynthesis.objectFromJson(debateObject);
+                                    if (debate != null) {
+                                        setWidget(debate);
+                                        rootLayout.setVisibility(View.VISIBLE);
+                                    }
+                                }
                             }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }, error -> {
-                    Log.e("ERROR", String.valueOf(error));
-                }, pageUid, apiClient.getApplicationName());
+                    }, error -> {
+                        Log.e("ERROR", String.valueOf(error));
+                    }, pageUid, apiClient.getApplicationName(), true);
         });
     }
 

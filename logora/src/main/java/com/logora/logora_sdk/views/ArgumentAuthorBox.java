@@ -53,59 +53,62 @@ public class ArgumentAuthorBox extends RelativeLayout {
         findViews();
     }
 
-    private void findViews(){
+    private void findViews() {
         fullNameView = findViewById(R.id.user_full_name);
         levelIconView = findViewById(R.id.user_level_icon);
         userImageView = findViewById(R.id.user_image);
-        eloquence_point=findViewById(R.id.eloquence_text);
+        eloquence_point = findViewById(R.id.eloquence_text);
     }
 
-   public void init(Argument argument) {
-       this.argument = argument;
-       fullNameView.setOnClickListener(v -> {
-           HashMap<String, String> routeParams = new HashMap<>();
-           if (authClient.getIsLoggedIn() == true) {
-               routeParams.put("userSlug", authClient.getCurrentUser().getSlug());
-           } else {
-               routeParams.put("userSlug", argument.getAuthor().getSlug());
-           }
-           router.navigate(Router.getRoute("USER"), routeParams);
-       });
-       userImageView.setOnClickListener(v -> {
-           HashMap<String, String> routeParams = new HashMap<>();
-           routeParams.put("userSlug", argument.getAuthor().getSlug());
-           router.navigate(Router.getRoute("USER"), routeParams);
-       });
-       if (argument != null) {
-           try {
-               fullNameView.setText(argument.getAuthor().getFullName());
-               Glide.with(userImageView.getContext())
-                       .load(Uri.parse(argument.getAuthor().getImageUrl()))
-                       .into(userImageView);
-               eloquence_point.setText(String.valueOf(argument.getAuthor().getPoints()));
-           }catch(Exception e){
+    public void init(Argument argument) {
+        this.argument = argument;
+        fullNameView.setOnClickListener(v -> {
+            HashMap<String, String> routeParams = new HashMap<>();
+            if (authClient.getIsLoggedIn() == true) {
+                routeParams.put("userSlug", authClient.getCurrentUser().getSlug());
+            } else {
+                routeParams.put("userSlug", argument.getAuthor().getSlug());
+            }
+            router.navigate(Router.getRoute("USER"), routeParams);
+        });
+        userImageView.setOnClickListener(v -> {
+            HashMap<String, String> routeParams = new HashMap<>();
+            routeParams.put("userSlug", argument.getAuthor().getSlug());
+            router.navigate(Router.getRoute("USER"), routeParams);
+        });
+        if (argument != null) {
+            try {
+                fullNameView.setText(argument.getAuthor().getFullName());
+                Glide.with(userImageView.getContext())
+                        .load(Uri.parse(argument.getAuthor().getImageUrl()))
+                        .into(userImageView);
 
-               System.out.println("voici l'erreur"+e.toString());
-           }
-           } else {
-               if (authClient.getIsLoggedIn() == true) {
-                   fullNameView.setText(authClient.getCurrentUser().getFullName());
-                   Glide.with(levelIconView.getContext())
-                           .load(Uri.parse(authClient.getCurrentUser().getLevelIconUrl()))
-                           .into(levelIconView);
-                   Glide.with(userImageView.getContext())
-                           .load(Uri.parse(authClient.getCurrentUser().getImageUrl()))
-                           .into(userImageView);
-               } else {
-                   Resources res = getResources();
-                  // userLevelView.setText(res.getString(R.string.author_box_default_level));
-                   /*Glide.with(levelIconView.getContext())
-                           .load(Uri.parse("https://d2vtyvk9fq7442.cloudfront.net/level_1.png"))
-                           .into(levelIconView);*/
-                   Glide.with(userImageView.getContext())
-                           .load(Uri.parse("https://d1afevl9u7zxbe.cloudfront.net/static/default_user_80x80.jpg"))
-                           .into(userImageView);
-               }
-           }
-       }
-   }
+                Resources res = getContext().getResources();
+                int pointCount = argument.getAuthor().getPoints();
+                String pointsCount = res.getQuantityString(R.plurals.user_points, pointCount, pointCount);
+                eloquence_point.setText(pointsCount);
+
+            } catch (Exception e) {
+
+                System.out.println("ERROR" + e.toString());
+            }
+        } else {
+            if (authClient.getIsLoggedIn() == true) {
+                fullNameView.setText(authClient.getCurrentUser().getFullName());
+                try {
+                    eloquence_point.setText(Integer.toString(authClient.getCurrentUser().getPoints()));
+                } catch (Exception e) {
+                    System.out.println("ERROR" + e.toString());
+                }
+                Glide.with(userImageView.getContext())
+                        .load(Uri.parse(authClient.getCurrentUser().getImageUrl()))
+                        .into(userImageView);
+            } else {
+                Glide.with(userImageView.getContext())
+                        .load(Uri.parse("https://d1afevl9u7zxbe.cloudfront.net/static/default_user_80x80.jpg"))
+                        .into(userImageView);
+                eloquence_point.setText(Integer.toString(0));
+            }
+        }
+    }
+}

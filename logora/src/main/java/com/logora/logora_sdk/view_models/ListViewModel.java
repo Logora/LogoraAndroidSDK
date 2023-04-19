@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
 import com.logora.logora_sdk.utils.LogoraApiClient;
 
 import org.json.JSONArray;
@@ -27,9 +28,9 @@ public class ListViewModel extends ViewModel {
     private Integer currentPage = 1;
     private Integer perPage = 10;
     private String sort = "-created_at";
-    private HashMap<String,String> filter = null;
+    private HashMap<String, String> filter = null;
     private String query = null;
-    private HashMap<String,String> extraArguments;
+    private HashMap<String, String> extraArguments;
 
     public ListViewModel(String resourceName, String resourceType) {
         this.resourceName = resourceName;
@@ -56,17 +57,25 @@ public class ListViewModel extends ViewModel {
         this.sort = sort;
     }
 
-    public void setFilter(HashMap<String, String> filter) { this.filter = filter ; }
+    public void setFilter(HashMap<String, String> filter) {
+        this.filter = filter;
+    }
 
-    public String getSort() { return sort; }
+    public String getSort() {
+        return sort;
+    }
 
-    public void setExtraArguments(HashMap<String,String> extraArguments) {
+    public void setExtraArguments(HashMap<String, String> extraArguments) {
         this.extraArguments = extraArguments;
     }
 
-    public void setQuery(String query) { this.query = query; }
+    public void setQuery(String query) {
+        this.query = query;
+    }
 
-    public Boolean isLastPage() { return this.currentPage.equals(this.totalPages); }
+    public Boolean isLastPage() {
+        return this.currentPage.equals(this.totalPages);
+    }
 
     public LiveData<List<JSONObject>> getList() {
         if (itemsLiveData == null) {
@@ -77,7 +86,7 @@ public class ListViewModel extends ViewModel {
     }
 
     public LiveData<List<JSONObject>> updateList() {
-         loadItems();
+        loadItems();
         return itemsLiveData;
     }
 
@@ -90,37 +99,27 @@ public class ListViewModel extends ViewModel {
     }
 
     private void loadItems() {
-        // Call the apiClient.getList() method with a success callback and an error callback
         apiClient.getList(
-                // The success callback receives a JSONObject response
                 response -> {
-                try {
-                    //System.out.println("hello"+response);
-                    //System.out.println("");
-                    // Extract the list of items from the response's "data" field
-                    JSONArray itemsJson = response.getJSONObject("data").getJSONArray("data");
-                    for (int i = 0; i < itemsJson.length(); i++) {
-                        // Add each item to the "items" member variable
-                        this.items.add(itemsJson.getJSONObject(i));
-                    }
-                    // Extract some pagination information from the response headers
-                    JSONObject headers = response.getJSONObject("headers");
-                    this.total = headers.getInt("Total");
-                    this.totalPages = headers.getInt("Total-Pages");
-                    // Update the LiveData object with the new list of items
-                    itemsLiveData.setValue(this.items);
+                    try {
+                        JSONArray itemsJson = response.getJSONObject("data").getJSONArray("data");
+                        for (int i = 0; i < itemsJson.length(); i++) {
+                            this.items.add(itemsJson.getJSONObject(i));
+                        }
+                        JSONObject headers = response.getJSONObject("headers");
+                        this.total = headers.getInt("Total");
+                        this.totalPages = headers.getInt("Total-Pages");
+                        itemsLiveData.setValue(this.items);
 
-                } catch (JSONException e) {
-                    // Handle any JSON parsing errors by setting the LiveData object to an empty list
-                    e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        itemsLiveData.setValue(new ArrayList<>());
+                    }
+                },
+                error -> {
+                    Log.i("ERROR", String.valueOf(error));
                     itemsLiveData.setValue(new ArrayList<>());
-                }
-            },
-            error -> {
-                Log.i("ERROR", String.valueOf(error));
-                itemsLiveData.setValue(new ArrayList<>());
-            },
-                // Other arguments passed to the apiClient.getList() method
+                },
                 this.resourceName, this.resourceType, this.currentPage, this.perPage, this.sort, 0, this.query, this.extraArguments, this.filter);
     }
 }

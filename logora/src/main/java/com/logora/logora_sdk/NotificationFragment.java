@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+
 import com.logora.logora_sdk.adapters.NotificationListAdapter;
 import com.logora.logora_sdk.utils.LogoraApiClient;
 import com.logora.logora_sdk.utils.Router;
@@ -22,13 +23,14 @@ import java.util.HashMap;
  */
 
 public class NotificationFragment extends Fragment {
-    private final Router router = Router.getInstance();
     private final Settings settings = Settings.getInstance();
     private LogoraApiClient apiClient = LogoraApiClient.getInstance();
     private PaginatedListFragment notificationList;
     private TextView readAllButton;
 
-    public NotificationFragment() { super(R.layout.fragment_notification); }
+    public NotificationFragment() {
+        super(R.layout.fragment_notification);
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -38,9 +40,14 @@ public class NotificationFragment extends Fragment {
             String primaryColor = settings.get("theme.callPrimaryColor");
             readAllButton.setTextColor(Color.parseColor(primaryColor));
             readAllButton.setOnClickListener(v -> {
-                HashMap<String, String> queryParams = new HashMap<>();
+                String pageUid = "";
+                String applicationName = "";
+                HashMap<String, String> queryParams = new HashMap<String, String>() {{
+                    put("shortname", applicationName);
+                    put("uid", pageUid);
+                }};
                 HashMap<String, String> bodyParams = new HashMap<>();
-                this.apiClient.create("notifications/read/all",bodyParams,queryParams,
+                this.apiClient.create("notifications/read/all", null, queryParams,
                         response -> {
                             try {
                                 boolean success = response.getBoolean("success");
@@ -56,7 +63,7 @@ public class NotificationFragment extends Fragment {
                     .beginTransaction()
                     .add(R.id.notification_list_container, notificationList)
                     .commit();
-        } catch(Exception e) {
+        } catch (Exception e) {
             Toast.makeText(getContext(), R.string.request_error, Toast.LENGTH_LONG).show();
         }
     }

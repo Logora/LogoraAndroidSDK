@@ -79,6 +79,13 @@ public class LogoraApiClient {
         }
         return LogoraApiClient.instance;
     }
+    public void readNotification(Response.Listener<JSONObject> listener,
+                                 Response.ErrorListener errorListener, Integer notificationId) {
+        HashMap<String, String> queryParams = new HashMap<>();
+        String route = "/notifications/read/" + notificationId;
+        this.user_post(route, queryParams, null, listener, errorListener);
+    }
+
 
     /* CLIENT METHODS */
     public void getSettings(Response.Listener<JSONObject> listener,
@@ -87,6 +94,16 @@ public class LogoraApiClient {
         queryParams.put("shortname", this.applicationName);
         String url = this.apiUrl;
         String route = "/settings";
+        this.client_post(url, route, queryParams, null, listener, errorListener);
+    }
+
+    public void getSynthesis(Response.Listener<JSONObject> listener,
+                             Response.ErrorListener errorListener, String pageUid, String applicationName, Boolean noHtml) {
+        HashMap<String, String> queryParams = new HashMap<>();
+        queryParams.put("shortname", applicationName);
+        queryParams.put("uid", pageUid);
+        String url = this.apiRenderUrl;
+        String route = "/synthesis";
         this.client_post(url, route, queryParams, null, listener, errorListener);
     }
 
@@ -140,37 +157,25 @@ public class LogoraApiClient {
 
     public void delete(String resource, String id, HashMap<String, String> queryParams, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         String route = "/" + resource + "/" + id;
-        this.user_delete(route, queryParams, listener, errorListener);
+        this.user_delete(route, queryParams, queryParams, listener, errorListener);
     }
 
-    public void getSynthesis(Response.Listener<JSONObject> listener,
-                             Response.ErrorListener errorListener, String pageUid, String applicationName) {
+
+    public void getCurrentUser(Response.Listener<JSONObject> listener,
+                               Response.ErrorListener errorListener) {
         HashMap<String, String> queryParams = new HashMap<>();
-        queryParams.put("shortname", applicationName);
-        queryParams.put("uid", pageUid);
-        String url = this.apiRenderUrl;
-        String route = "/synthesis";
-        this.client_post(url, route, queryParams, null, listener, errorListener);
-    }
-    public void followDebate(Response.Listener<JSONObject> listener,
-                             Response.ErrorListener errorListener, String debateSlug) {
-        HashMap<String, String> queryParams = new HashMap<>();
-        String route = "/groups/" + debateSlug + "/follow";
-        this.user_post(route, queryParams, null, listener, errorListener);
+        String route = "/me";
+        this.user_get(route, queryParams, listener, errorListener);
     }
 
-    public void unfollowDebate(Response.Listener<JSONObject> listener,
-                               Response.ErrorListener errorListener, String debateSlug) {
-        HashMap<String, String> queryParams = new HashMap<>();
-        String route = "/groups/" + debateSlug + "/unfollow";
-        this.user_post(route, queryParams, null, listener, errorListener);
+
+    public void createtwo(String resource, String id, HashMap<String, String> bodyParams, HashMap<String, String> queryParams,
+                          Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+
+        String route = "/" + resource + "/" + id;
+        this.user_post(route, queryParams, bodyParams, listener, errorListener);
     }
-    public void readNotification(Response.Listener<JSONObject> listener,
-                                 Response.ErrorListener errorListener, Integer notificationId) {
-        HashMap<String, String> queryParams = new HashMap<>();
-        String route = "/notifications/read/" + notificationId;
-        this.user_post(route, queryParams, null, listener, errorListener);
-    }
+
     /* AUTH METHODS */
     public void userAuth(Response.Listener<JSONObject> listener,
                          Response.ErrorListener errorListener) {
@@ -178,7 +183,7 @@ public class LogoraApiClient {
         bodyParams.put("grant_type", "assertion");
         bodyParams.put("assertion", this.authAssertion);
         bodyParams.put("assertion_type", "oauth2_server");
-        bodyParams.put("provider", "logora-demo");
+        bodyParams.put("provider", "logora-demo-app");
         String requestUrl = this.authUrl + "/token";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
                 requestUrl, new JSONObject(bodyParams), listener, errorListener) {
@@ -258,7 +263,6 @@ public class LogoraApiClient {
             builder.appendQueryParameter(entry.getKey(), entry.getValue());
         }
         String requestUrl = builder.build().toString();
-
         JSONObject bodyJson = new JSONObject();
         if (bodyParams != null) {
             bodyJson = new JSONObject(bodyParams);
@@ -377,7 +381,135 @@ public class LogoraApiClient {
         this.addToQueueWithRefresh(request);
     }
 
-    private void user_delete(String route, HashMap<String, String> queryParams,
+    ///
+    public void createVote(Response.Listener<JSONObject> listener,
+                           Response.ErrorListener errorListener,
+                           Integer voteableId, String voteableType, Integer positionId) {
+        HashMap<String, String> queryParams = new HashMap<>();
+        HashMap<String, String> bodyParams = new HashMap<>();
+        bodyParams.put("voteable_id", String.valueOf(voteableId));
+        bodyParams.put("voteable_type", voteableType);
+        if (positionId != null) {
+            bodyParams.put("position_id", String.valueOf(positionId));
+        }
+        String route = "/votes";
+        this.user_post(route, queryParams, bodyParams, listener, errorListener);
+    }
+
+    ///updateVote
+    public void updateVote(Response.Listener<JSONObject> listener,
+                           Response.ErrorListener errorListener,
+                           Integer voteId, Integer positionId) {
+        HashMap<String, String> queryParams = new HashMap<>();
+        HashMap<String, String> bodyParams = new HashMap<>();
+        bodyParams.put("position_id", String.valueOf(positionId));
+        String route = "/votes/" + voteId;
+        this.user_patch(route, queryParams, bodyParams, listener, errorListener);
+    }
+
+    ////debatefollow
+    public void getDebateFollow(Response.Listener<JSONObject> listener,
+                                Response.ErrorListener errorListener, String followable_type, Integer followable_id) {
+        HashMap<String, String> queryParams = new HashMap<>();
+        String route = "/follows/" + followable_type + "/" + followable_id;
+        this.user_get(route, queryParams, listener, errorListener);
+    }
+
+    //follow debate
+    public void followDebate(Response.Listener<JSONObject> listener,
+                             Response.ErrorListener errorListener, String followable_type, Integer followable_id) {
+        HashMap<String, String> queryParams = new HashMap<>();
+        String route = "/follows/" + followable_type + "/" + followable_id;
+        this.user_post(route, queryParams, null, listener, errorListener);
+    }
+
+    //unfollow debate
+    public void unfollowDebate(Response.Listener<JSONObject> listener,
+                               Response.ErrorListener errorListener, String followable_type, Integer followable_id) {
+        HashMap<String, String> queryParams = new HashMap<>();
+        HashMap<String, String> params = new HashMap<>();
+        String route = "/follows/" + followable_type + "/" + followable_id;
+        this.user_delete(route, params, queryParams, listener, errorListener);
+    }
+
+    ////userfollow
+    public void getUserFollow(Response.Listener<JSONObject> listener,
+                              Response.ErrorListener errorListener, String followable_type, Integer followable_id) {
+        HashMap<String, String> queryParams = new HashMap<>();
+        String route = "/follows/" + followable_type + "/" + followable_id;
+        this.user_get(route, queryParams, listener, errorListener);
+    }
+
+    //follow USER
+    public void followUser(Response.Listener<JSONObject> listener,
+                           Response.ErrorListener errorListener, String followable_type, Integer followable_id) {
+        HashMap<String, String> queryParams = new HashMap<>();
+        String route = "/follows/" + followable_type + "/" + followable_id;
+        this.user_post(route, queryParams, null, listener, errorListener);
+    }
+
+    //unfollow user
+    public void unfollowUser(Response.Listener<JSONObject> listener,
+                             Response.ErrorListener errorListener, String followable_type, Integer followable_id) {
+        HashMap<String, String> queryParams = new HashMap<>();
+        HashMap<String, String> params = new HashMap<>();
+        String route = "/follows/" + followable_type + "/" + followable_id;
+        this.user_delete(route, params, queryParams, listener, errorListener);
+    }
+
+    ///getGroupVote////
+    public void getGroupVote(Response.Listener<JSONObject> listener,
+                             Response.ErrorListener errorListener, Integer groupId) {
+        HashMap<String, String> queryParams = new HashMap<>();
+        String route = "/users/group/" + groupId + "/vote";
+        this.user_get(route, queryParams, listener, errorListener);
+    }
+
+    ///create argument
+    public void createArgument(Response.Listener<JSONObject> listener,
+                               Response.ErrorListener errorListener,
+                               String argumentContent, Integer debateId, Integer messageId, Integer positionId, String isReply) {
+        HashMap<String, String> queryParams = new HashMap<>();
+        HashMap<String, String> bodyParams = new HashMap<>();
+        bodyParams.put("position_id", String.valueOf(positionId));
+        bodyParams.put("group_id", String.valueOf(debateId));
+        bodyParams.put("content", argumentContent);
+        if (messageId != null) {
+            bodyParams.put("message_id", String.valueOf(messageId));
+        } else {
+            bodyParams.put("message_id", null);
+        }
+        bodyParams.put("is_reply", isReply);
+        String route = "/messages";
+        this.user_post(route, queryParams, bodyParams, listener, errorListener);
+    }
+
+    ///create report
+    public void createReport(Response.Listener<JSONObject> listener,
+                             Response.ErrorListener errorListener,
+                             Integer reportableId, String reportableType, String classification, String description) {
+        HashMap<String, String> queryParams = new HashMap<>();
+        HashMap<String, String> bodyParams = new HashMap<>();
+        bodyParams.put("reportable_id", String.valueOf(reportableId));
+        bodyParams.put("reportable_type", reportableType);
+        bodyParams.put("classification", classification);
+        bodyParams.put("description", description);
+        String route = "/reports";
+        this.user_post(route, queryParams, bodyParams, listener, errorListener);
+    }
+
+    ///updateArgument
+    public void updateArgument(Response.Listener<JSONObject> listener,
+                               Response.ErrorListener errorListener,
+                               Integer argumentId, String argumentContent) {
+        HashMap<String, String> queryParams = new HashMap<>();
+        HashMap<String, String> bodyParams = new HashMap<>();
+        bodyParams.put("content", argumentContent);
+        String route = "/messages/" + argumentId;
+        this.user_patch(route, queryParams, bodyParams, listener, errorListener);
+    }
+
+    private void user_delete(String route, HashMap<String, String> params, HashMap<String, String> queryParams,
                              Response.Listener<JSONObject> listener,
                              Response.ErrorListener errorListener) {
         Uri.Builder builder = Uri.parse(this.apiUrl + route).buildUpon();
@@ -489,6 +621,4 @@ public class LogoraApiClient {
         editor.remove(key);
         editor.apply();
     }
-
-
 }

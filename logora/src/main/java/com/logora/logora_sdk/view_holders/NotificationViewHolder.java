@@ -40,7 +40,7 @@ public class NotificationViewHolder extends ListViewHolder {
         findViews(itemView);
     }
 
-    private void findViews(View view){
+    private void findViews(View view) {
         notificationContainer = view.findViewById(R.id.notification_container);
         notificationContent = view.findViewById(R.id.notification_main_content);
         notificationImage = view.findViewById(R.id.notification_image);
@@ -56,7 +56,8 @@ public class NotificationViewHolder extends ListViewHolder {
             notificationContainer.setBackgroundColor(res.getColor(R.color.text_tertiary));
         }
         notificationDate.setText(DateUtil.getTimeAgo(notification.getPublishedDate()));
-        switch(notification.getNotifyType()) {
+        System.out.println("notificationget"+notification.getPublishedDate());
+        switch (notification.getNotifyType()) {
             case "get_badge":
                 BadgeNotification badgeNotification = (BadgeNotification) object;
                 content = Html.fromHtml(res.getString(R.string.notifications_new_badge) + " " + "<b>" + badgeNotification.getSecondTarget().getTitle() + "</b>");
@@ -65,6 +66,7 @@ public class NotificationViewHolder extends ListViewHolder {
                         .load(Uri.parse(badgeNotification.getImageUrl()))
                         .into(notificationImage);
                 this.itemView.setOnClickListener(v -> {
+                    HashMap<String, String> queryParams = new HashMap<>();
                     this.apiClient.readNotification(response -> {
                         try {
                             boolean success = response.getBoolean("success");
@@ -79,16 +81,17 @@ public class NotificationViewHolder extends ListViewHolder {
                 break;
             case "group_reply":
                 GroupReplyNotification groupReplyNotification = (GroupReplyNotification) object;
-                if(notification.getActorCount() > 1) {
+                if (notification.getActorCount() > 1) {
                     content = Html.fromHtml("<b>" + groupReplyNotification.getActor().getFullName() + "</b>" + " et " + String.valueOf(notification.getActorCount() - 1) + " " + res.getString(R.string.notifications_multiple_answers) + " " + res.getString(R.string.notifications_subject) + " " + "<b>" + groupReplyNotification.getSecondTarget().getName() + "</b>");
                 } else {
-                    content = Html.fromHtml("<b>" + groupReplyNotification.getActor().getFullName() + "</b>" + " " + res.getString(R.string.notifications_answer) + " " + res.getString(R.string.notifications_subject) + " " + "<b>" +groupReplyNotification.getSecondTarget().getName() + "</b>");
+                    content = Html.fromHtml("<b>" + groupReplyNotification.getActor().getFullName() + "</b>" + " " + res.getString(R.string.notifications_answer) + " " + res.getString(R.string.notifications_subject) + " " + "<b>" + groupReplyNotification.getSecondTarget().getName() + "</b>");
                 }
                 notificationContent.setText(content);
                 Glide.with(notificationImage.getContext())
                         .load(Uri.parse(groupReplyNotification.getImageUrl()))
                         .into(notificationImage);
                 this.itemView.setOnClickListener(v -> {
+                    HashMap<String, String> queryParams = new HashMap<>();
                     this.apiClient.readNotification(response -> {
                         try {
                             boolean success = response.getBoolean("success");
@@ -103,12 +106,11 @@ public class NotificationViewHolder extends ListViewHolder {
                 break;
             case "level_unlock":
                 LevelUnlockNotification levelUnlockNotification = (LevelUnlockNotification) object;
-                //content = Html.fromHtml(res.getString(R.string.notifications_level_up) + " " + "<b>" + levelUnlockNotification.getTarget().getLevelName() + "</b>");
-                //notificationContent.setText(content);
                 Glide.with(notificationImage.getContext())
                         .load(Uri.parse(levelUnlockNotification.getImageUrl()))
                         .into(notificationImage);
                 this.itemView.setOnClickListener(v -> {
+                    HashMap<String, String> queryParams = new HashMap<>();
                     this.apiClient.readNotification(response -> {
                         try {
                             boolean success = response.getBoolean("success");
@@ -123,9 +125,13 @@ public class NotificationViewHolder extends ListViewHolder {
                 break;
             case "get_vote":
                 GetVoteNotification getVoteNotification = (GetVoteNotification) object;
-                if(notification.getActorCount() > 1) {
+               if(notification.getActorCount()==2){
+                   content = Html.fromHtml("<b>" + getVoteNotification.getActor().getFullName() + "</b>" + " et " + String.valueOf(notification.getActorCount() - 1) + " " + res.getString(R.string.notifications_one_support) + " " + res.getString(R.string.notifications_subject_argument));
+
+               }
+                else if (notification.getActorCount() > 1 ) {
                     content = Html.fromHtml("<b>" + getVoteNotification.getActor().getFullName() + "</b>" + " et " + String.valueOf(notification.getActorCount() - 1) + " " + res.getString(R.string.notifications_multiple_support) + " " + res.getString(R.string.notifications_subject_argument));
-                } else {
+                }else {
                     content = Html.fromHtml("<b>" + getVoteNotification.getActor().getFullName() + "</b>" + " " + res.getString(R.string.notifications_support) + " " + res.getString(R.string.notifications_subject_argument));
                 }
                 notificationContent.setText(content);
@@ -133,6 +139,7 @@ public class NotificationViewHolder extends ListViewHolder {
                         .load(Uri.parse(getVoteNotification.getImageUrl()))
                         .into(notificationImage);
                 this.itemView.setOnClickListener(v -> {
+                    HashMap<String, String> queryParams = new HashMap<>();
                     this.apiClient.readNotification(response -> {
                         try {
                             boolean success = response.getBoolean("success");
@@ -147,36 +154,36 @@ public class NotificationViewHolder extends ListViewHolder {
                 break;
             case "group_follow_argument":
                 GroupFollowArgumentNotification groupFollowArgumentNotification = (GroupFollowArgumentNotification) object;
-                if(notification.getActorCount() > 1) {
+                if (notification.getActorCount() > 1) {
                     content = Html.fromHtml("<b>" + groupFollowArgumentNotification.getActor().getFullName() + "</b>" + " " + res.getString(R.string.notifications_participation) + " " + res.getString(R.string.notifications_subject_debate) + " " + "<b>" + groupFollowArgumentNotification.getSecondTarget().getName() + "</b>");
                 } else {
                     content = Html.fromHtml("<b>" + groupFollowArgumentNotification.getActor().getFullName() + "</b>" + " et " + String.valueOf(notification.getActorCount() - 1) + " " + res.getString(R.string.notifications_multiple_participations) + " " + res.getString(R.string.notifications_subject_debate) + " " + "<b>" + groupFollowArgumentNotification.getSecondTarget().getName() + "</b>");
                 }
                 notificationContent.setText(content);
                 this.itemView.setOnClickListener(v -> {
+                    HashMap<String, String> queryParams = new HashMap<>();
                     this.apiClient.readNotification(response -> {
-                try {
-                    boolean success = response.getBoolean("success");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }, Throwable::printStackTrace, notification.getId());
+                        try {
+                            boolean success = response.getBoolean("success");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }, Throwable::printStackTrace, notification.getId());
                     HashMap<String, String> routeParams = new HashMap<>();
                     routeParams.put("debateSlug", groupFollowArgumentNotification.getSecondTarget().getSlug());
                     router.navigate(Router.getRoute("DEBATE"), routeParams);
                 });
                 break;
             case "user_follow_level_unlock":
-              //content = Html.fromHtml("<b>" + notification.getActor().getFullName() + "</b>" + " " + res.getString(R.string.notifications_mentor_level_up) + " " + notification.getActor().getLevelName());
-              // notificationContent.setText(content);
                 this.itemView.setOnClickListener(v -> {
+                    HashMap<String, String> queryParams = new HashMap<>();
                     this.apiClient.readNotification(response -> {
-                try {
-                    boolean success = response.getBoolean("success");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }, Throwable::printStackTrace, notification.getId());
+                        try {
+                            boolean success = response.getBoolean("success");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }, Throwable::printStackTrace, notification.getId());
                     HashMap<String, String> routeParams = new HashMap<>();
                     routeParams.put("userSlug", notification.getActor().getSlug());
                     router.navigate(Router.getRoute("USER"), routeParams);
@@ -189,13 +196,14 @@ public class NotificationViewHolder extends ListViewHolder {
                         .load(Uri.parse(notification.getActor().getImageUrl()))
                         .into(notificationImage);
                 this.itemView.setOnClickListener(v -> {
+                    HashMap<String, String> queryParams = new HashMap<>();
                     this.apiClient.readNotification(response -> {
-                try {
-                    boolean success = response.getBoolean("success");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }, Throwable::printStackTrace, notification.getId());
+                        try {
+                            boolean success = response.getBoolean("success");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }, Throwable::printStackTrace, notification.getId());
                     HashMap<String, String> routeParams = new HashMap<>();
                     routeParams.put("userSlug", notification.getActor().getSlug());
                     router.navigate(Router.getRoute("USER"), routeParams);

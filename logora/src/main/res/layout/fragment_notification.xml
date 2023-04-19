@@ -2,33 +2,33 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/notifications_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
+        android:layout_marginTop="90px"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/notifications"
             android:layout_marginStart="12dp"
+            android:text="@string/notifications"
             android:textSize="16sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <com.logora.logora_sdk.views.TextWrapper
             android:id="@+id/read_all_button"
-            android:gravity="right"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"
-            app:textKey="notificationsReadAll"
-            android:text="@string/notifications_read_all" />
+            android:gravity="right"
+            android:text="@string/notifications_read_all"
+            app:textKey="notificationsReadAll" />
 
     </LinearLayout>
 
@@ -36,6 +36,6 @@
         android:id="@+id/notification_list_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/notifications_header"/>
+        android:layout_below="@id/notifications_header" />
 
 </RelativeLayout>

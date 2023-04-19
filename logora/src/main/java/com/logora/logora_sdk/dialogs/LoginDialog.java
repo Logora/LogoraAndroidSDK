@@ -94,13 +94,12 @@ public class LoginDialog extends LinearLayout {
     }
 
     public void goToLoginUrl(View view) {
-        Uri.Builder builder = Uri.parse(settings.get("auth.authDialogEndpoint")).buildUpon();
+        Uri.Builder builder = Uri.parse(settings.get("auth.login_url")).buildUpon();
         builder.appendQueryParameter("response_type", "code")
                 .appendQueryParameter("redirect_uri", "https://app.logora.fr/auth/callback")
                 .appendQueryParameter("client_id", settings.get("auth.clientId"))
                 .appendQueryParameter("scope", settings.get("auth.scope"));
         String authUrl = builder.build().toString();
-        Log.d("OAUTH2", authUrl);
         goToUrl(authUrl);
     }
 
@@ -109,5 +108,4 @@ public class LoginDialog extends LinearLayout {
         intent.putExtra("url", url);
         getContext().startActivity(intent);
     }
-
 }

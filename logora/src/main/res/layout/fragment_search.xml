@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="40dp"
     tools:context=".SearchFragment">
 
     <com.logora.logora_sdk.views.TextWrapper
         android:id="@+id/search_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="12dp"
         android:layout_marginVertical="10dp"
+        android:paddingHorizontal="12dp"
+        android:text="@string/search_header"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:textKey="searchHeader"
-        android:text="@string/search_header" />
+        app:textKey="searchHeader" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout"
@@ -23,37 +24,37 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/search_header"
         android:paddingHorizontal="12dp"
-        app:tabPaddingStart="16dp"
-        app:tabPaddingEnd="16dp"
-        app:tabMode="fixed"
         app:tabGravity="start"
         app:tabIndicatorColor="@color/call_primary"
+        app:tabMode="fixed"
+        app:tabPaddingEnd="16dp"
+        app:tabPaddingStart="16dp"
         app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
         app:tabTextColor="@color/text_primary">
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/debate_tab"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:paddingHorizontal="6dp"
             android:text="@string/search_debate_tab" />
 
         <com.google.android.material.tabs.TabItem
             android:id="@+id/user_tab"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:paddingHorizontal="6dp"
             android:text="@string/search_user_tab" />
     </com.google.android.material.tabs.TabLayout>
 
     <RelativeLayout
         android:id="@+id/debate_results_container"
-        android:layout_below="@id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/tab_layout"
         android:orientation="vertical"
-        android:paddingVertical="5dp"
-        android:paddingHorizontal="12dp">
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="5dp">
 
         <FrameLayout
             android:id="@+id/debate_list"
@@ -63,13 +64,13 @@
 
     <RelativeLayout
         android:id="@+id/user_results_container"
-        android:layout_below="@id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
+        android:layout_below="@id/tab_layout"
         android:orientation="vertical"
+        android:paddingHorizontal="12dp"
         android:paddingVertical="5dp"
-        android:paddingHorizontal="12dp">
+        android:visibility="gone">
 
         <FrameLayout
             android:id="@+id/user_list"
