@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         Sentry.captureMessage("testing SDK setup");
 
         setContentView(R.layout.activity_main);
-        String applicationName = "logora-demo-app";
+         String applicationName = "logora-demo-app";
         Intent intent = new Intent(MainActivity.this, LogoraAppActivity.class);
         intent.putExtra("applicationName", "logora-demo-app");
         intent.putExtra("routeName", "INDEX");
