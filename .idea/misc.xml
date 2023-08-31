@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/app/src/main/res/layout/activity_main.xml" value="0.14266304347826086" />
+        <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.136" />
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/background_argument.xml" value="0.1325" />
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/background_point_user.xml" value="0.1325" />
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/badge_background.xml" value="0.1335" />
@@ -30,23 +31,35 @@
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_baseline_star_24.xml" value="0.1" />
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_bell.xml" value="0.1" />
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_chat.xml" value="0.1335" />
+        <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_clap.xml" value="0.136" />
+        <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_email.xml" value="0.136" />
+        <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_facebook.xml" value="0.136" />
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_home.xml" value="0.1335" />
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_icon_send.xml" value="0.1335" />
+        <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_launcher_background.xml" value="0.136" />
+        <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_left_arrow.xml" value="0.136" />
+        <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_link.xml" value="0.136" />
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_login.xml" value="0.1335" />
+        <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_messages.xml" value="0.136" />
+        <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_more.xml" value="0.136" />
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_next.xml" value="0.1" />
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_point.xml" value="0.1115" />
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_point_cercle.xml" value="0.1" />
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_point_elo.xml" value="0.1325" />
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_reply.xml" value="0.1125" />
+        <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_search.xml" value="0.136" />
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_send.xml" value="0.1385" />
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_send_icon.xml" value="0.1335" />
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_send_icon2.xml" value="0.1335" />
+        <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_share.xml" value="0.136" />
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_success.xml" value="0.141" />
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_svg_pointtt.xml" value="0.1125" />
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_svg_share.xml" value="0.1335" />
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_test_circle.xml" value="0.1325" />
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_twitter.xml" value="0.1" />
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_users.xml" value="0.1" />
+        <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/ic_voteboxicon.xml" value="0.136" />
+        <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/icon_background.xml" value="0.136" />
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/inactive_button_follow.xml" value="0.1335" />
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/navbar_background.xml" value="0.1125" />
         <entry key="..\:/Users/21268/AndroidStudioProjects/LogoraAndroidSDK/logora/src/main/res/drawable/position_background.xml" value="0.1305" />

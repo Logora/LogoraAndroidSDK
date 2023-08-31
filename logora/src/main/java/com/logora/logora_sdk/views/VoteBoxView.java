@@ -213,8 +213,9 @@ public class VoteBoxView extends RelativeLayout {
                         if (success) {
                             this.voteId = vote.getInt("id");
                             this.votePositionId = vote.getJSONObject("position").getInt("id");
-                            showResults();
+                           //
                         }
+                        showResults();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -319,9 +320,10 @@ public class VoteBoxView extends RelativeLayout {
             System.out.println("ERROR"+e.toString());
         }
         if (voteFirstPositionProgressPercentage != null && voteSecondPositionProgressPercentage != null && voteThirdPositionProgressPercentage != null) {
+            System.out.print("different de null");
             setUpObserver();
         }
-        voteFirstPositionProgressResult.setText(voteFirstPositionProgressPercentage + res.getString(R.string.percentage));
+       voteFirstPositionProgressResult.setText(voteFirstPositionProgressPercentage + res.getString(R.string.percentage));
         voteSecondPositionProgressResult.setText(voteSecondPositionProgressPercentage + res.getString(R.string.percentage));
         voteThirdPositionProgressResult.setText(voteThirdPositionProgressPercentage + res.getString(R.string.percentage));
         int count = debate.getTotalVotesCount();
@@ -329,10 +331,6 @@ public class VoteBoxView extends RelativeLayout {
         String votesCount = res.getQuantityString(R.plurals.debate_votes_count, count, count);
         voteResultsCountView.setText(votesCount);
         final Router router = Router.getInstance();
-
-
-
-
 
     }
 

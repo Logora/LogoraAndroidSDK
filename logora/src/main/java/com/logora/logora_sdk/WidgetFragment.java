@@ -78,6 +78,7 @@ public class WidgetFragment extends Fragment {
         model.getSettings().observe(getViewLifecycleOwner(), settings -> {
             apiClient.getSynthesis(
                     response -> {
+                        System.out.println("la repose est"+response);
                         try {
                             boolean success = response.getBoolean("success");
                             if (response.has("debate")) {
@@ -96,6 +97,7 @@ public class WidgetFragment extends Fragment {
                     }, error -> {
                         Log.e("ERROR", String.valueOf(error));
                     }, pageUid, apiClient.getApplicationName(), true);
+
         });
     }
 

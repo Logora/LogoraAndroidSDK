@@ -39,4 +39,5 @@ public class ArgumentViewHolder extends ListViewHolder {
             }
         }
     }
+
 }

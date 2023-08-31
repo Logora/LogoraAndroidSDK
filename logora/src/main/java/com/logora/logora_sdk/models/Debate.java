@@ -48,7 +48,13 @@ public class Debate {
             String publishedDate = jsonObject.getString("created_at");
             debate.setPublishedDate(DateUtil.parseDate(publishedDate));
             JSONObject votesCountObject = jsonObject.getJSONObject("votes_count");
-            debate.setTotalVotesCount(Integer.parseInt(votesCountObject.getString("total")));
+            //debate.setTotalVotesCount(Integer.parseInt(votesCountObject.getString("total")));
+            if (votesCountObject.has("total")) {
+                debate.setTotalVotesCount(Integer.parseInt(votesCountObject.getString("total")));
+            } else {
+                // Gérer le cas où la clé "total" n'est pas présente dans l'objet JSON
+                // Vous pourriez attribuer une valeur par défaut ou lever une exception selon votre logique.
+            }
             votesCountObject.remove("total");
             debate.setVotesCountObject(debate.convertToHashMap(votesCountObject));
             JSONArray debatePositions = jsonObject.getJSONObject("group_context").getJSONArray("positions");

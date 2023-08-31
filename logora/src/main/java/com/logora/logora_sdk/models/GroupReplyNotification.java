@@ -15,7 +15,13 @@ public class GroupReplyNotification extends Notification<Argument, Debate, Argum
             groupReplyNotification.setId(jsonObject.getInt("id"));
             groupReplyNotification.setActor(UserBox.objectFromJson(jsonObject.getJSONObject("actor")));
             groupReplyNotification.setNotifyType(jsonObject.getString("notify_type"));
-            groupReplyNotification.setRedirectUrl(jsonObject.getString("redirect_url"));
+           // groupReplyNotification.setRedirectUrl(jsonObject.getString("redirect_url"));
+            if (jsonObject.has("redirect_url")) {
+                groupReplyNotification.setRedirectUrl(jsonObject.getString("redirect_url"));
+            } else {
+                // Gérer le cas où la clé "redirect_url" est absente
+                // Peut-être définir une valeur par défaut ou loguer un avertissement
+            }
             groupReplyNotification.setActorCount(jsonObject.getInt("actor_count"));
             groupReplyNotification.setIsOpened(jsonObject.getBoolean("is_opened"));
             groupReplyNotification.setTarget(Argument.objectFromJson(jsonObject.getJSONObject("target")));

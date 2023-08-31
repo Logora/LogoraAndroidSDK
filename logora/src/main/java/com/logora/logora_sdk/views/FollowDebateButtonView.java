@@ -131,7 +131,7 @@ public class FollowDebateButtonView extends androidx.appcompat.widget.AppCompatB
         }
     }
 
-    private void setActive() {
+    /*private void setActive() {
         this.active = true;
         this.setEnabled(true);
         this.setPadding(35, 10, 35, 10);
@@ -160,6 +160,41 @@ public class FollowDebateButtonView extends androidx.appcompat.widget.AppCompatB
         }
         this.setTextColor(Color.BLACK);
         LayerDrawable shape = (LayerDrawable) ContextCompat.getDrawable(this.context, R.drawable.inactive_button_follow);
+        this.setBackground(shape);
+    }*/
+    private void setActive() {
+        this.active = true;
+        this.setEnabled(true);
+        this.setPadding(10,10,10,10);
+        String primaryColor = settings.get("theme.callPrimaryColor");
+        String debateFollowActiveText = settings.get("layout.actionFollow");
+        if (debateFollowActiveText != null) {
+            this.setText(debateFollowActiveText);
+
+        } else {
+            this.setText(R.string.user_follow_active);
+        }
+        this.setTextColor(Color.parseColor(primaryColor));
+        LayerDrawable shape = (LayerDrawable) ContextCompat.getDrawable(this.context, R.drawable.button_inactive_background);
+        this.setBackground(shape);
+    }
+
+    private void setInactive() {
+        this.active = false;
+        this.setEnabled(true);
+        this.setPadding(10,10,10,10);
+        String primaryColor = settings.get("theme.callPrimaryColor");
+        String debateFollowInactiveText = settings.get("layout.actionFollowedDebate");
+        if (debateFollowInactiveText != null) {
+            this.setText(debateFollowInactiveText);
+        } else {
+            this.setText(R.string.debate_follow_inactive);
+
+        }
+        this.setTextColor(Color.WHITE);
+        LayerDrawable shape = (LayerDrawable) ContextCompat.getDrawable(this.context, R.drawable.button_active_background);
+        GradientDrawable gradientDrawable = (GradientDrawable) shape.findDrawableByLayerId(R.id.shape);
+        gradientDrawable.setColor(Color.parseColor(primaryColor));
         this.setBackground(shape);
     }
 

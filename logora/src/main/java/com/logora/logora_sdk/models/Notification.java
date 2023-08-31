@@ -25,7 +25,13 @@ public class Notification<T1, T2, T3> extends Model {
             notification.setId(jsonObject.getInt("id"));
             notification.setActor(UserBox.objectFromJson(jsonObject.getJSONObject("actor")));
             notification.setNotifyType(jsonObject.getString("notify_type"));
-            notification.setRedirectUrl(jsonObject.getString("redirect_url"));
+            //notification.setRedirectUrl(jsonObject.getString("redirect_url"));
+            if (jsonObject.has("redirect_url")) {
+                String redirectUrl = jsonObject.getString("redirect_url");
+                // Utilisez la valeur redirectUrl ici
+            } else {
+                // La clé "redirect_url" n'existe pas dans l'objet JSON
+            }
             notification.setActorCount(jsonObject.getInt("actor_count"));
             notification.setIsOpened(jsonObject.getBoolean("is_opened"));
             String publishedDate = jsonObject.getString("created_at");

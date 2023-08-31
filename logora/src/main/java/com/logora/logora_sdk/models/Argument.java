@@ -39,7 +39,13 @@ public class Argument extends Model {
             argument.setContent(jsonObject.getString("content"));
             argument.setPosition(Position.objectFromJson(jsonObject.getJSONObject("position")));
             argument.setIsReply(jsonObject.getBoolean("is_reply"));
-            argument.setStatus(jsonObject.getString("status"));
+            //argument.setStatus(jsonObject.getString("status"));
+            if (jsonObject.has("status")) {
+                argument.setStatus(jsonObject.getString("status"));
+            } else {
+                // Gérer le cas où la clé "status" est absente
+                // Peut-être définir une valeur par défaut ou loguer un avertissement
+            }
             String replyToId = jsonObject.getString("reply_to_id");
             if(!replyToId.equals("null")) {
                 argument.setParentArgumentId(Integer.parseInt(replyToId));

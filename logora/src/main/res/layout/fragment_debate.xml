@@ -148,7 +148,6 @@
                 android:layout_height="35dp"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="15px"
-                android:drawableLeft="@drawable/ic_alarm"
                 tools:ignore="RelativeOverlap" />
 
         </RelativeLayout>
