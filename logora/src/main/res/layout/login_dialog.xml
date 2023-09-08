@@ -3,39 +3,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingHorizontal="25dp"
-    android:paddingVertical="25dp"
-    >
+    android:paddingVertical="25dp">
 
     <ImageView
         android:id="@+id/next_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_next"
         android:layout_centerHorizontal="true"
-        />
+        android:src="@drawable/ic_next" />
 
     <TextView
         android:id="@+id/login_text"
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/next_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/login_info"
+        android:layout_below="@id/next_icon"
         android:layout_centerHorizontal="true"
-        android:gravity="center_horizontal" />
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:text="@string/login_info" />
 
     <Button
         android:id="@+id/login_button"
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/login_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/login_sign_up"
-        android:textColor="@android:color/white"
+        android:layout_below="@id/login_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
         android:paddingHorizontal="10dp"
         android:paddingVertical="6dp"
-        android:layout_centerHorizontal="true"
-        />
+        android:text="@string/login_sign_up"
+        android:textColor="@android:color/white" />
 
     <LinearLayout
         android:id="@+id/connection_container"
@@ -46,41 +43,40 @@
         android:layout_marginTop="20dp">
 
         <TextView
-            android:layout_below="@+id/login_button"
             android:id="@+id/connection_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/login_button"
+            android:paddingRight="2dp"
             android:text="@string/already_have_account"
             android:textColor="#777"
-            android:paddingRight="2dp"
-            android:textSize="12dp"/>
+            android:textSize="12dp" />
 
         <TextView
             android:id="@+id/connection_button"
-            android:layout_toEndOf="@id/connection_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/connection_text"
             android:text="@string/login_sign_in"
-            android:textSize="12dp"/>
+            android:textSize="12dp" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/login_cgu"
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/connection_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/login_cgu"
+        android:layout_below="@id/connection_container"
         android:layout_centerHorizontal="true"
-        android:gravity="center_horizontal"
+        android:layout_marginTop="20dp"
         android:alpha="0.7"
-        android:textSize="12dp"/>
+        android:gravity="center_horizontal"
+        android:text="@string/login_cgu"
+        android:textSize="12dp" />
 
-    <WebView  xmlns:android="http://schemas.android.com/apk/res/android"
+    <WebView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        />
+        android:visibility="gone" />
 
 </RelativeLayout>

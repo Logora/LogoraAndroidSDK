@@ -7,7 +7,8 @@ public class Tag extends Model {
     private String displayName;
     private Integer count;
 
-    public Tag() {}
+    public Tag() {
+    }
 
     public static Tag objectFromJson(JSONObject jsonObject) {
         Tag tag = new Tag();
@@ -28,7 +29,11 @@ public class Tag extends Model {
         this.displayName = displayName;
     }
 
-    public Integer getCount() { return count; }
+    public Integer getCount() {
+        return count;
+    }
 
-    public void setCount(Integer count) { this.count = count; }
+    public void setCount(Integer count) {
+        this.count = count;
+    }
 }

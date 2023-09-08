@@ -1,7 +1,6 @@
 package com.logora.logora_sdk;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.logora.logora_sdk.adapters.ListAdapter;
 import com.logora.logora_sdk.models.FilterOption;
 import com.logora.logora_sdk.models.SortOption;
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class PaginatedListFragment extends Fragment   {
+public class PaginatedListFragment extends Fragment {
     private RecyclerView recyclerView;
     private ProgressBar loader;
     private Button paginationButton;
@@ -38,13 +38,13 @@ public class PaginatedListFragment extends Fragment   {
     private String currentSort;
 
 
-    public PaginatedListFragment(String resourceName, String resourceType, ListAdapter listAdapter, HashMap<String,String> extraArguments, ArrayList<SortOption> sortOptions, ArrayList<FilterOption> filterOptions, String currentSort) {
+    public PaginatedListFragment(String resourceName, String resourceType, ListAdapter listAdapter, HashMap<String, String> extraArguments, ArrayList<SortOption> sortOptions, ArrayList<FilterOption> filterOptions, String currentSort) {
         this.listAdapter = listAdapter;
         this.sortOptions = sortOptions;
         this.filterOptions = filterOptions;
         this.currentSort = currentSort;
         listViewModel = new ListViewModel(resourceName, resourceType);
-        if(extraArguments != null) {
+        if (extraArguments != null) {
             listViewModel.setExtraArguments(extraArguments);
         }
     }
@@ -54,11 +54,14 @@ public class PaginatedListFragment extends Fragment   {
         this.listViewModel.setSort(sort);
     }
 
-    public void setFilter(HashMap<String, String> filter) { this.listViewModel.setFilter(filter); }
+    public void setFilter(HashMap<String, String> filter) {
+        this.listViewModel.setFilter(filter);
+    }
 
     public void setQuery(String query) {
         this.listViewModel.setQuery(query);
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -67,7 +70,8 @@ public class PaginatedListFragment extends Fragment   {
             findViews(view);
             recyclerView.setAdapter(listAdapter);
             init();
-            paginationButton.setOnClickListener(v -> {loader.setVisibility(View.VISIBLE);
+            paginationButton.setOnClickListener(v -> {
+                loader.setVisibility(View.VISIBLE);
                 paginationButton.setVisibility(View.GONE);
                 listViewModel.incrementCurrentPage();
                 listViewModel.updateList().observe(getViewLifecycleOwner(), itemList -> loader.setVisibility(View.GONE));
@@ -80,19 +84,15 @@ public class PaginatedListFragment extends Fragment   {
                 sortView.setAdapter(adapter);
                 sortView.setSelection(0);
                 sortView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                    // cette méthode est appelée lorsqu'un élément est sélectionné dans l'AdapterView
                     @Override
                     public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                         if (spinnerSelected) {
-                            if(filterOptions != null) {
+                            if (filterOptions != null) {
                                 if (position <= sortOptions.size() - 1) {
-                                    // cette méthode définit le tri en utilisant
-                                    // la valeur de l'option de tri correspondante.
+
                                     setSort(sortOptions.get(position).getValue());
                                 } else {
-                                    // cette partie de code récupère l'option de filtre correspondante à l'élément sélectionné,
-                                    // puis crée une HashMap contenant les informations de filtre pour cette option.
-                                    // Enfin elle appelle la méthode setFilter() pour définir le filtre en utilisant la HashMap créée.
+
                                     FilterOption currentFilter = filterOptions.get(position - sortOptions.size());
                                     HashMap<String, String> finalFilter = new HashMap<>();
                                     finalFilter.put(currentFilter.getApiName(), currentFilter.getValue());
@@ -106,13 +106,14 @@ public class PaginatedListFragment extends Fragment   {
                             spinnerSelected = true;
                         }
                     }
+
                     @Override
                     public void onNothingSelected(AdapterView<?> parentView) {
                     }
                 });
             }
             return view;
-        } catch(Exception e) {
+        } catch (Exception e) {
             Toast.makeText(getContext(), R.string.request_error, Toast.LENGTH_LONG).show();
             sortView.setVisibility(View.GONE);
             recyclerView.setVisibility(View.GONE);
@@ -125,7 +126,7 @@ public class PaginatedListFragment extends Fragment   {
     public void init() {
         showLoader();
         listViewModel.getList().observe(getViewLifecycleOwner(), itemList -> {
-            if(itemList.size() == 0) {
+            if (itemList.size() == 0) {
                 loader.setVisibility(View.GONE);
                 emptyView.setVisibility(View.VISIBLE);
             } else {
@@ -135,7 +136,7 @@ public class PaginatedListFragment extends Fragment   {
                 if (this.sortOptions != null) {
                     sortView.setVisibility(View.VISIBLE);
                 }
-                if(!listViewModel.isLastPage()) {
+                if (!listViewModel.isLastPage()) {
                     paginationButton.setVisibility(View.VISIBLE);
                 }
             }
@@ -146,7 +147,7 @@ public class PaginatedListFragment extends Fragment   {
         showLoader();
         listViewModel.resetList().observe(getViewLifecycleOwner(), itemList -> {
 
-            if(itemList.size() == 0) {
+            if (itemList.size() == 0) {
                 loader.setVisibility(View.GONE);
                 emptyView.setVisibility(View.VISIBLE);
             } else {
@@ -156,7 +157,7 @@ public class PaginatedListFragment extends Fragment   {
                 if (this.sortOptions != null) {
                     sortView.setVisibility(View.VISIBLE);
                 }
-                if(!listViewModel.isLastPage()) {
+                if (!listViewModel.isLastPage()) {
                     paginationButton.setVisibility(View.VISIBLE);
                 }
             }
@@ -184,8 +185,8 @@ public class PaginatedListFragment extends Fragment   {
 
     public List<String> getSpinnerOptions() {
         List<String> finalOptions = new ArrayList<>();
-        for(SortOption sortOption: sortOptions) {
-           if (this.currentSort != null) {
+        for (SortOption sortOption : sortOptions) {
+            if (this.currentSort != null) {
                 if (sortOption.getValue().equals(this.currentSort)) {
                     finalOptions.add(0, sortOption.getName());
                 } else {
@@ -195,8 +196,8 @@ public class PaginatedListFragment extends Fragment   {
                 finalOptions.add(sortOption.getName());
             }
         }
-        if(filterOptions != null) {
-            for(int i = 0; i < filterOptions.size(); i++){
+        if (filterOptions != null) {
+            for (int i = 0; i < filterOptions.size(); i++) {
                 finalOptions.add(filterOptions.get(i).getName());
             }
         }

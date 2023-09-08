@@ -29,7 +29,7 @@ import java.util.HashMap;
 public class NotificationViewHolder extends ListViewHolder {
     private final Settings settings = Settings.getInstance();
     private final Router router = Router.getInstance();
-    private LogoraApiClient apiClient = LogoraApiClient.getInstance();
+    private final LogoraApiClient apiClient = LogoraApiClient.getInstance();
     TextView notificationContent;
     TextView notificationDate;
     ImageView notificationImage;
@@ -56,7 +56,6 @@ public class NotificationViewHolder extends ListViewHolder {
             notificationContainer.setBackgroundColor(res.getColor(R.color.text_tertiary));
         }
         notificationDate.setText(DateUtil.getTimeAgo(notification.getPublishedDate()));
-        System.out.println("notificationget"+notification.getPublishedDate());
         switch (notification.getNotifyType()) {
             case "get_badge":
                 BadgeNotification badgeNotification = (BadgeNotification) object;
@@ -66,10 +65,10 @@ public class NotificationViewHolder extends ListViewHolder {
                         .load(Uri.parse(badgeNotification.getImageUrl()))
                         .into(notificationImage);
                 this.itemView.setOnClickListener(v -> {
-                    HashMap<String, String> queryParams = new HashMap<>();
                     this.apiClient.readNotification(response -> {
                         try {
                             boolean success = response.getBoolean("success");
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -82,7 +81,7 @@ public class NotificationViewHolder extends ListViewHolder {
             case "group_reply":
                 GroupReplyNotification groupReplyNotification = (GroupReplyNotification) object;
                 if (notification.getActorCount() > 1) {
-                    content = Html.fromHtml("<b>" + groupReplyNotification.getActor().getFullName() + "</b>" + " et " + String.valueOf(notification.getActorCount() - 1) + " " + res.getString(R.string.notifications_multiple_answers) + " " + res.getString(R.string.notifications_subject) + " " + "<b>" + groupReplyNotification.getSecondTarget().getName() + "</b>");
+                    content = Html.fromHtml("<b>" + groupReplyNotification.getActor().getFullName() + "</b>" + " et " + (notification.getActorCount() - 1) + " " + res.getString(R.string.notifications_multiple_answers) + " " + res.getString(R.string.notifications_subject) + " " + "<b>" + groupReplyNotification.getSecondTarget().getName() + "</b>");
                 } else {
                     content = Html.fromHtml("<b>" + groupReplyNotification.getActor().getFullName() + "</b>" + " " + res.getString(R.string.notifications_answer) + " " + res.getString(R.string.notifications_subject) + " " + "<b>" + groupReplyNotification.getSecondTarget().getName() + "</b>");
                 }
@@ -125,13 +124,12 @@ public class NotificationViewHolder extends ListViewHolder {
                 break;
             case "get_vote":
                 GetVoteNotification getVoteNotification = (GetVoteNotification) object;
-               if(notification.getActorCount()==2){
-                   content = Html.fromHtml("<b>" + getVoteNotification.getActor().getFullName() + "</b>" + " et " + String.valueOf(notification.getActorCount() - 1) + " " + res.getString(R.string.notifications_one_support) + " " + res.getString(R.string.notifications_subject_argument));
+                if (notification.getActorCount() == 2) {
+                    content = Html.fromHtml("<b>" + getVoteNotification.getActor().getFullName() + "</b>" + " et " + (notification.getActorCount() - 1) + " " + res.getString(R.string.notifications_one_support) + " " + res.getString(R.string.notifications_subject_argument));
 
-               }
-                else if (notification.getActorCount() > 1 ) {
-                    content = Html.fromHtml("<b>" + getVoteNotification.getActor().getFullName() + "</b>" + " et " + String.valueOf(notification.getActorCount() - 1) + " " + res.getString(R.string.notifications_multiple_support) + " " + res.getString(R.string.notifications_subject_argument));
-                }else {
+                } else if (notification.getActorCount() > 1) {
+                    content = Html.fromHtml("<b>" + getVoteNotification.getActor().getFullName() + "</b>" + " et " + (notification.getActorCount() - 1) + " " + res.getString(R.string.notifications_multiple_support) + " " + res.getString(R.string.notifications_subject_argument));
+                } else {
                     content = Html.fromHtml("<b>" + getVoteNotification.getActor().getFullName() + "</b>" + " " + res.getString(R.string.notifications_support) + " " + res.getString(R.string.notifications_subject_argument));
                 }
                 notificationContent.setText(content);
@@ -157,7 +155,7 @@ public class NotificationViewHolder extends ListViewHolder {
                 if (notification.getActorCount() > 1) {
                     content = Html.fromHtml("<b>" + groupFollowArgumentNotification.getActor().getFullName() + "</b>" + " " + res.getString(R.string.notifications_participation) + " " + res.getString(R.string.notifications_subject_debate) + " " + "<b>" + groupFollowArgumentNotification.getSecondTarget().getName() + "</b>");
                 } else {
-                    content = Html.fromHtml("<b>" + groupFollowArgumentNotification.getActor().getFullName() + "</b>" + " et " + String.valueOf(notification.getActorCount() - 1) + " " + res.getString(R.string.notifications_multiple_participations) + " " + res.getString(R.string.notifications_subject_debate) + " " + "<b>" + groupFollowArgumentNotification.getSecondTarget().getName() + "</b>");
+                    content = Html.fromHtml("<b>" + groupFollowArgumentNotification.getActor().getFullName() + "</b>" + " et " + (notification.getActorCount() - 1) + " " + res.getString(R.string.notifications_multiple_participations) + " " + res.getString(R.string.notifications_subject_debate) + " " + "<b>" + groupFollowArgumentNotification.getSecondTarget().getName() + "</b>");
                 }
                 notificationContent.setText(content);
                 this.itemView.setOnClickListener(v -> {

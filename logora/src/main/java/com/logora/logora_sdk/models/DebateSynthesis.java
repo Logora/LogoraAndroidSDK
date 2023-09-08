@@ -6,8 +6,10 @@ import org.json.JSONObject;
 public class DebateSynthesis {
     private String name;
     private String slug;
+    private Integer totalVotesCount = 0;
 
-    public DebateSynthesis() {}
+    public DebateSynthesis() {
+    }
 
     public static DebateSynthesis objectFromJson(JSONObject jsonObject) {
         DebateSynthesis debateSynthesis = new DebateSynthesis();
@@ -19,6 +21,7 @@ public class DebateSynthesis {
             e.printStackTrace();
             return null;
         }
+
     }
 
     public String getName() {
@@ -35,5 +38,13 @@ public class DebateSynthesis {
 
     public void setSlug(String slug) {
         this.slug = slug;
+    }
+
+    public Integer getTotalVotesCount() {
+        return totalVotesCount;
+    }
+
+    public void setTotalVotesCount(Integer totalVotesCount) {
+        this.totalVotesCount = totalVotesCount;
     }
 }

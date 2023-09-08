@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".PaginatedListFragment"
 
     >
+
     <TextView
         android:id="@+id/empty_list_text"
         android:layout_width="wrap_content"
@@ -15,8 +16,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginVertical="45dp"
         android:text="@string/list_empty"
-        android:visibility="gone"
-        />
+        android:visibility="gone" />
 
 
     <Spinner
@@ -31,10 +31,9 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:nestedScrollingEnabled="false"
         android:layout_below="@id/sort_view"
+        android:nestedScrollingEnabled="false"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
 
 
     <ProgressBar
@@ -43,18 +42,18 @@
         android:layout_height="50dp"
         android:layout_below="@id/recycler_view"
         android:indeterminate="true"
-        android:indeterminateTintMode="src_atop"
         android:indeterminateTint="@android:color/black"
+        android:indeterminateTintMode="src_atop"
         android:visibility="gone" />
 
     <com.logora.logora_sdk.views.PrimaryButton
         android:id="@+id/pagination_button"
-        android:layout_marginVertical="4dp"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
+        style="@style/PrimaryButton"
         android:layout_below="@+id/loader"
-        android:visibility="gone"
-        app:buttonTextKey="infoSeeMore"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginVertical="4dp"
         android:text="@string/view_more"
-        style="@style/PrimaryButton" />
+        android:visibility="gone"
+        app:buttonTextKey="infoSeeMore" />
 </RelativeLayout>

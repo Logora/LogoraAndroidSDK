@@ -8,7 +8,8 @@ public class BadgeBox extends Model {
     private String description;
     private String iconUrl;
 
-    public BadgeBox() {}
+    public BadgeBox() {
+    }
 
     public static BadgeBox objectFromJson(JSONObject jsonObject) {
         BadgeBox badgeBox = new BadgeBox();

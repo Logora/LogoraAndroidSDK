@@ -15,7 +15,6 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 public class UserShowViewModel extends ViewModel {
-    private String TAG = UserShowViewModel.class.getSimpleName();
     private MutableLiveData<User> user;
 
     public LiveData<User> getUser(String slug) {
@@ -34,7 +33,6 @@ public class UserShowViewModel extends ViewModel {
                         JSONObject responseData = response.getJSONObject("data").getJSONObject("data").getJSONObject("resource");
                         User userObject = new User();
                         userObject.setId(responseData.getInt("id"));
-                        System.out.println("the id is"+responseData.getInt("id"));
                         userObject.setFullName(responseData.getString("full_name"));
                         userObject.setPoints(responseData.getInt("points"));
                         userObject.setVotes(responseData.getInt("upvotes"));

@@ -3,6 +3,7 @@ package com.logora.logora_sdk.view_holders;
 import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
+
 import com.bumptech.glide.Glide;
 import com.logora.logora_sdk.R;
 import com.logora.logora_sdk.models.UserIcon;

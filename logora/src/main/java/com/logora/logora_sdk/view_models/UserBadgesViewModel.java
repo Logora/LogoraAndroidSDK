@@ -12,8 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class UserBadgesViewModel extends ViewModel {
-    private String TAG = UserBadgesViewModel.class.getSimpleName();
-    private String resourceName;
+    private final String resourceName;
     private MutableLiveData<JSONObject> userBadges;
 
     public UserBadgesViewModel(String resourceName) {
@@ -31,18 +30,18 @@ public class UserBadgesViewModel extends ViewModel {
     private void loadUserBadges() {
         LogoraApiClient apiClient = LogoraApiClient.getInstance();
         apiClient.getList(
-            response -> {
-                try {
-                    JSONObject responseData = response.getJSONObject("data").getJSONObject("data");
-                    userBadges.setValue(responseData);
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                response -> {
+                    try {
+                        JSONObject responseData = response.getJSONObject("data").getJSONObject("data");
+                        userBadges.setValue(responseData);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        userBadges.setValue(null);
+                    }
+                },
+                error -> {
+                    Log.i("ERROR", String.valueOf(error));
                     userBadges.setValue(null);
-                }
-            },
-            error -> {
-                Log.i("ERROR", String.valueOf(error));
-                userBadges.setValue(null);
-            }, resourceName, "CLIENT", 1, 10, null, 0, null, null, null);
+                }, resourceName, "CLIENT", 1, 10, null, 0, null, null, null);
     }
 }

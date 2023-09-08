@@ -4,7 +4,9 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
+
 import com.logora.logora_sdk.R;
 import com.logora.logora_sdk.models.UserIcon;
 import com.logora.logora_sdk.utils.Router;
@@ -12,6 +14,7 @@ import com.logora.logora_sdk.view_holders.ListViewHolder;
 import com.logora.logora_sdk.view_holders.UserIconViewHolder;
 
 import org.json.JSONObject;
+
 import java.util.List;
 
 public class UserIconListAdapter extends ListAdapter {
@@ -36,7 +39,7 @@ public class UserIconListAdapter extends ListAdapter {
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
         UserIcon userIcon = this.getObjectFromJson(this.items.get(position));
-        if( userIcon != null) {
+        if (userIcon != null) {
             holder.updateWithObject(userIcon);
         }
     }

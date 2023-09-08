@@ -19,7 +19,7 @@ import com.logora.logora_sdk.utils.InputProvider;
 import com.logora.logora_sdk.utils.Settings;
 
 public class DeleteArgumentDialog extends LinearLayout {
-    private Context context;
+    private final Context context;
     private final Settings settings = Settings.getInstance();
     private AlertDialog dialog;
     private Argument argument;
@@ -58,8 +58,6 @@ public class DeleteArgumentDialog extends LinearLayout {
         LayerDrawable shape = (LayerDrawable) ContextCompat.getDrawable(getContext(), R.drawable.button_primary_background);
         GradientDrawable gradientDrawable = (GradientDrawable) shape.findDrawableByLayerId(R.id.shape);
         gradientDrawable.setColor(Color.parseColor(callPrimaryColor));
-       // deleteButton.setBackground(shape);
-        //cancelButton.setBackground(shape);
 
         deleteButton.setOnClickListener(v -> {
             if (deleteArgumentListener != null) {
@@ -102,6 +100,7 @@ public class DeleteArgumentDialog extends LinearLayout {
     public interface DeleteArgumentListener {
         void onDelete(Boolean deleteArgument);
     }
+
     private void showToastMessage(String message) {
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(getContext(), message, duration);

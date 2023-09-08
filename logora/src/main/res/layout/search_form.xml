@@ -28,11 +28,11 @@
         android:layout_toEndOf="@+id/search_back_icon"
         android:backgroundTint="@color/text_secondary"
         android:hint="@string/search_placeholder"
+        android:imeOptions="actionSearch"
         android:inputType="text"
-        android:textCursorDrawable="@null"
-        tools:ignore="LabelFor"
         android:singleLine="true"
-        android:imeOptions="actionSearch"/>
+        android:textCursorDrawable="@null"
+        tools:ignore="LabelFor" />
 
     <ImageView
         android:id="@+id/search_submit"

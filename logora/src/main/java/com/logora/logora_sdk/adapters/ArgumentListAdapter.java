@@ -54,5 +54,4 @@ public class ArgumentListAdapter extends ListAdapter {
     }
 
 
-
 }

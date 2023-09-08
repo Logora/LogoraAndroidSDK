@@ -32,7 +32,7 @@ public abstract class ListAdapter extends RecyclerView.Adapter<ListViewHolder> {
     public abstract Object getObjectFromJson(JSONObject jsonObject);
 
     public void update(List<JSONObject> items) {
-        if(this.items.size() != 0) {
+        if (this.items.size() != 0) {
             this.items.clear();
         }
         this.items.addAll(items);
@@ -45,9 +45,9 @@ public abstract class ListAdapter extends RecyclerView.Adapter<ListViewHolder> {
 
     public void removeItem(Integer id) {
         JSONObject currentArgument = null;
-        for(int i = 0; i < this.items.size(); i++){
+        for (int i = 0; i < this.items.size(); i++) {
             try {
-                if(this.items.get(i).getInt("id") == id) {
+                if (this.items.get(i).getInt("id") == id) {
                     currentArgument = this.items.get(i);
                 }
             } catch (JSONException e) {
@@ -62,7 +62,11 @@ public abstract class ListAdapter extends RecyclerView.Adapter<ListViewHolder> {
         return this.items.size();
     }
 
-    public List<JSONObject> getItems() { return this.items; }
+    public List<JSONObject> getItems() {
+        return this.items;
+    }
 
-    public void setItems(List<JSONObject> items) { this.items = items; }
+    public void setItems(List<JSONObject> items) {
+        this.items = items;
+    }
 }

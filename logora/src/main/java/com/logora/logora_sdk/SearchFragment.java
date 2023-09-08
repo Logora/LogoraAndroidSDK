@@ -37,11 +37,10 @@ public class SearchFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-         try {
+        try {
             super.onViewCreated(view, savedInstanceState);
             findViews(view);
             String newHeader = textHeader.getText().toString() + ' ' + '"' + query + '"';
-            System.out.println("newHeader"+newHeader);
             textHeader.setText(newHeader);
             TabLayout.Tab debateTab = tabLayout.getTabAt(0);
             TabLayout.Tab userTab = tabLayout.getTabAt(1);
@@ -58,7 +57,6 @@ public class SearchFragment extends Fragment {
             UserBoxListAdapter userListAdapter = new UserBoxListAdapter();
             PaginatedListFragment debateListFragment = new PaginatedListFragment("groups", "CLIENT", debateListAdapter, null, null, null, null);
             debateListFragment.setQuery(query);
-            System.out.println("query!"+query);
             PaginatedListFragment userListFragment = new PaginatedListFragment("users", "CLIENT", userListAdapter, null, null, null, null);
             userListFragment.setQuery(query);
             getChildFragmentManager()
@@ -89,7 +87,7 @@ public class SearchFragment extends Fragment {
                 public void onTabReselected(TabLayout.Tab tab) {
                 }
             });
-        } catch(Exception e) {
+        } catch (Exception e) {
             Toast.makeText(getContext(), R.string.request_error, Toast.LENGTH_LONG).show();
         }
     }

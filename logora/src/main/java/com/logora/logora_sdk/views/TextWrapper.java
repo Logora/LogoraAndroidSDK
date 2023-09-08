@@ -15,7 +15,7 @@ public class TextWrapper extends androidx.appcompat.widget.AppCompatTextView {
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.TextWrapper);
         String textKey = a.getString(R.styleable.TextWrapper_textKey);
         String textValue = settings.get("layout." + textKey);
-        if(textValue != null) {
+        if (textValue != null) {
             this.setText(textValue);
         }
         a.recycle();

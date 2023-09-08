@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Debate {
     private String id;
@@ -19,76 +20,65 @@ public class Debate {
     private String slug;
     private Date publishedDate;
     private Integer totalVotesCount = 0;
-    private Integer usersCount;
-    private Integer argumentsCount;
+    private Integer usersCount = 0;
+    private Integer argumentsCount = 0;
     private List<JSONObject> tagList;
     private List<Position> positionList;
-    private String votePosition;
     private HashMap<Integer, Integer> votesCountObject = new HashMap<Integer, Integer>() {{
     }};
-    private HashMap<Integer, Integer> votesPercentages = new HashMap<>();
-    private Integer votePercentage;
-    private Integer firstPositionPercentage;
-    private Integer secondPositionPercentage;
+    private final HashMap<Integer, Integer> votesPercentages = new HashMap<>();
+    private Integer voteMaxPercentage = 0;
+    private String voteMaxPosition;
 
     public Debate() {
+
     }
 
     public static Debate objectFromJson(JSONObject jsonObject) {
         Debate debate = new Debate();
         try {
             debate.setName(jsonObject.getString("name"));
-
             if (jsonObject.has("id")) {
                 debate.setId(jsonObject.getString("id"));
             }
             debate.setSlug(jsonObject.getString("slug"));
-            debate.setUsersCount(jsonObject.getInt("participants_count"));
-            debate.setArgumentsCount(jsonObject.getInt("messages_count"));
             String publishedDate = jsonObject.getString("created_at");
             debate.setPublishedDate(DateUtil.parseDate(publishedDate));
-            JSONObject votesCountObject = jsonObject.getJSONObject("votes_count");
-            //debate.setTotalVotesCount(Integer.parseInt(votesCountObject.getString("total")));
-            if (votesCountObject.has("total")) {
-                debate.setTotalVotesCount(Integer.parseInt(votesCountObject.getString("total")));
-            } else {
-                // Gérer le cas où la clé "total" n'est pas présente dans l'objet JSON
-                // Vous pourriez attribuer une valeur par défaut ou lever une exception selon votre logique.
-            }
-            votesCountObject.remove("total");
-            debate.setVotesCountObject(debate.convertToHashMap(votesCountObject));
-            JSONArray debatePositions = jsonObject.getJSONObject("group_context").getJSONArray("positions");
-            JSONObject votesCount = jsonObject.getJSONObject("votes_count");
-            JSONArray votesCountKeys = votesCount.names();
-            int maxPercentage = 0;
-            Integer maxId = null;
-            int resultat = 0;
-            if (votesCountKeys == null || votesCountKeys.length() == 0) {
-                maxPercentage = 0;
-                maxId = null;
-            } else {
-
-                for (int i = 0; i < votesCountKeys.length(); i++) {
-                    String key = votesCountKeys.getString(i);
-                    if (key.equals("total")) {
-                        continue;
+            debate.setUsersCount(jsonObject.getInt("participants_count"));
+            debate.setArgumentsCount(jsonObject.getInt("messages_count"));
+            if (jsonObject.has("group_context")) {
+                JSONObject groupContext = jsonObject.getJSONObject("group_context");
+                if (groupContext.has("tags")) {
+                    JSONArray tagObjects = groupContext.getJSONArray("tags");
+                    List<JSONObject> tagList = new ArrayList<>();
+                    for (int i = 0; i < tagObjects.length(); i++) {
+                        tagList.add(tagObjects.getJSONObject(i));
                     }
-                    if (resultat > maxPercentage) {
-                        maxPercentage = resultat;
-                        maxId = Integer.parseInt(key);
+                    debate.setTagList(tagList);
+                }
+                if (groupContext.has("positions")) {
+                    JSONArray debatePositions = groupContext.getJSONArray("positions");
+                    List<Position> positionsList = new ArrayList<>();
+                    for (int i = 0; i < debatePositions.length(); i++) {
+                        positionsList.add(Position.objectFromJson(debatePositions.getJSONObject(i)));
                     }
+                    debate.setPositionList(positionsList);
                 }
             }
-            debate.setVotePercentage(maxPercentage);
-            debate.setVotePosition(getVotePosition(debatePositions, maxId));
-            JSONArray positionsObject = jsonObject.getJSONObject("group_context").getJSONArray("positions");
-            List<Position> positionsList = new ArrayList<>();
-            for (int i = 0; i < positionsObject.length(); i++) {
-                positionsList.add(Position.objectFromJson(positionsObject.getJSONObject(i)));
+
+            JSONObject votesCountObject = jsonObject.getJSONObject("votes_count");
+            if (votesCountObject.has("total")) {
+                votesCountObject.remove("total");
             }
-            debate.setPositionList(positionsList);
-            debate.setVotePosition(getVotePosition(positionsList, null));
-            debate.initVotePercentage();
+            debate.setVotesCountObject(debate.convertToHashMap(votesCountObject));
+
+            int totalVotes = 0;
+            for (float value : debate.votesCountObject.values()) {
+                totalVotes += value;
+            }
+            debate.setTotalVotesCount(totalVotes);
+
+            debate.calculateVotePercentage();
             return debate;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -128,12 +118,12 @@ public class Debate {
         this.publishedDate = publishedDate;
     }
 
-    public String getVotePosition() {
-        return votePosition;
+    public String getVoteMaxPosition() {
+        return voteMaxPosition;
     }
 
-    public void setVotePosition(String votePosition) {
-        this.votePosition = votePosition;
+    public void setVoteMaxPosition(String voteMaxPosition) {
+        this.voteMaxPosition = voteMaxPosition;
     }
 
     public Integer getUsersCount() {
@@ -160,14 +150,6 @@ public class Debate {
         this.totalVotesCount = totalVotesCount;
     }
 
-    public void incrementTotalVotesCount() {
-        this.totalVotesCount += 1;
-    }
-
-    public void decrementTotalVotesCount() {
-        this.totalVotesCount -= 1;
-    }
-
     public HashMap<Integer, Integer> getVotesCountObject() {
         return this.votesCountObject;
     }
@@ -192,28 +174,12 @@ public class Debate {
         this.positionList = positionList;
     }
 
-    public Integer getVotePercentage() {
-        return votePercentage;
+    public Integer getVoteMaxPercentage() {
+        return voteMaxPercentage;
     }
 
-    public void setVotePercentage(Integer votePercentage) {
-        this.votePercentage = votePercentage;
-    }
-
-    public Integer getFirstPositionPercentage() {
-        return firstPositionPercentage;
-    }
-
-    public void setFirstPositionPercentage(Integer firstPositionPercentage) {
-        this.firstPositionPercentage = firstPositionPercentage;
-    }
-
-    public Integer getSecondPositionPercentage() {
-        return secondPositionPercentage;
-    }
-
-    public void setSecondPositionPercentage(Integer secondPositionPercentage) {
-        this.secondPositionPercentage = secondPositionPercentage;
+    public void setVoteMaxPercentage(Integer voteMaxPercentage) {
+        this.voteMaxPercentage = voteMaxPercentage;
     }
 
     public int getPositionIndex(Integer index) {
@@ -228,72 +194,64 @@ public class Debate {
         return 0;
     }
 
-    public void initVotePercentage() {
-        this.setVotesCountObject(votesCountObject);
-        List<Integer> votesCountKeys = new ArrayList<>(votesCountObject.keySet());
-        Integer maxValue = 0;
-        for (int i = 0; i < votesCountKeys.size(); i++) {
-            Integer positionId = votesCountKeys.get(i);
+    public void calculateVotePercentage() {
+        int maxPercentage = 0;
+        Integer maxPositionId = 0;
+        for (Position position : positionList) {
+            if (!votesCountObject.containsKey(position.getId())) {
+                votesCountObject.put(position.getId(), 0);
+            }
+        }
 
-            Integer percentage = (100 * votesCountObject.get(positionId)) / totalVotesCount;
-            if (percentage > maxValue) {
-                this.setVotePercentage(percentage);
+        for (Map.Entry<Integer, Integer> entry : votesCountObject.entrySet()) {
+            Integer positionId = entry.getKey();
+            Integer numberVotes = entry.getValue();
+            int percentage = 0;
+            if (totalVotesCount != 0) {
+                percentage = (100 * numberVotes) / totalVotesCount;
+            }
+            if (percentage > maxPercentage) {
+                maxPercentage = percentage;
+                maxPositionId = positionId;
             }
             this.votesPercentages.put(positionId, percentage);
         }
+
+        this.setVoteMaxPercentage(maxPercentage);
+        this.setVoteMaxPosition(getPositionNameFromId(maxPositionId));
     }
 
-    public void calculateVotePercentage(String positionId, Boolean isUpdate) {
+    public void updateVote(Integer positionId, Integer oldPositionId) {
+        votesCountObject.put(positionId, votesCountObject.get(positionId) + 1);
 
-        List<Integer> votesCountKeys = new ArrayList<>(votesCountObject.keySet());
-        for (int i = 0; i < votesCountKeys.size(); i++) {
-            Integer key = votesCountKeys.get(i);
-            if (key.equals(Integer.parseInt(positionId))) {
-                votesCountObject.put(key, votesCountObject.get(key) + 1);
-            } else {
-                if (isUpdate) {
-                    votesCountObject.put(key, votesCountObject.get(key) - 1);
-                }
-            }
+        if (oldPositionId != null) {
+            votesCountObject.put(oldPositionId, votesCountObject.get(oldPositionId) - 1);
+        } else {
+            totalVotesCount += 1;
         }
-        this.initVotePercentage();
+
+        this.calculateVotePercentage();
     }
 
     public Integer getPositionPercentage(Integer positionId) {
         return votesPercentages.get(positionId);
     }
 
-    private static String getVotePosition(JSONArray positions, Integer id) throws JSONException {
-        for (int i = 0; i < positions.length(); i++) {
-            JSONObject position = positions.getJSONObject(i);
-            if (i == 0 && id == null) {
-                return position.getString("name");
-            }
-            Integer positionId = position.getInt("id");
-            if (positionId.equals(id)) {
-                return position.getString("name");
-            }
-        }
-        return "";
-    }
-
-
     public HashMap<Integer, Integer> convertToHashMap(JSONObject jsonObject) throws JSONException {
         HashMap<Integer, Integer> result = new HashMap<>();
         JSONArray jsonObjectKeys = jsonObject.names();
-        for (int i = 0; i < jsonObjectKeys.length(); i++) {
-            String key = jsonObjectKeys.getString(i);
-            result.put(Integer.parseInt(key), Integer.parseInt(jsonObject.getString(key)));
+        if (jsonObjectKeys != null) {
+            for (int i = 0; i < jsonObjectKeys.length(); i++) {
+                String key = jsonObjectKeys.getString(i);
+                result.put(Integer.parseInt(key), Integer.parseInt(jsonObject.getString(key)));
+            }
         }
         return result;
     }
 
-    private static String getVotePosition(List<Position> positions, Integer id) throws JSONException {
-        for (int i = 0; i < positions.size(); i++) {
-            Position position = positions.get(i);
-            if (i == 0 && id == null) {
-                return position.getName();
-            }
+    private String getPositionNameFromId(Integer id) {
+        for (int i = 0; i < positionList.size(); i++) {
+            Position position = positionList.get(i);
             Integer positionId = position.getId();
             if (positionId.equals(id)) {
                 return position.getName();

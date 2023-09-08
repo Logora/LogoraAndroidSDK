@@ -8,14 +8,15 @@ public class UserIcon extends Model {
     private String imageUrl;
     private String slug = " ";
 
-    public UserIcon() {}
+    public UserIcon() {
+    }
 
     public static UserIcon objectFromJson(JSONObject jsonObject) {
         UserIcon userIcon = new UserIcon();
         try {
             userIcon.setFullName(jsonObject.getString("full_name"));
             userIcon.setImageUrl(jsonObject.getString("image_url"));
-            if(jsonObject.has("slug")) {
+            if (jsonObject.has("slug")) {
                 userIcon.setSlug(jsonObject.getString("slug"));
             }
             return userIcon;
@@ -33,9 +34,13 @@ public class UserIcon extends Model {
         this.fullName = fullName;
     }
 
-    public String getSlug() { return slug; }
+    public String getSlug() {
+        return slug;
+    }
 
-    public void setSlug(String slug) { this.slug = slug; }
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
 
     public String getImageUrl() {
         return imageUrl;

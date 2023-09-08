@@ -24,7 +24,7 @@ import org.json.JSONException;
 import java.util.HashMap;
 
 public class ReportDialog extends LinearLayout {
-    private Context context;
+    private final Context context;
     private final LogoraApiClient apiClient = LogoraApiClient.getInstance();
     private final Settings settings = Settings.getInstance();
     private AlertDialog dialog;
@@ -38,17 +38,20 @@ public class ReportDialog extends LinearLayout {
         this.context = context;
         initView();
     }
+
     public ReportDialog(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
         initView();
     }
+
     public ReportDialog(Context context, Argument argument) {
         super(context);
         this.context = context;
         this.argument = argument;
         initView();
     }
+
     private void initView() {
         inflate(getContext(), R.layout.report_dialog, this);
         Resources res = this.getContext().getResources();
@@ -85,6 +88,7 @@ public class ReportDialog extends LinearLayout {
                         break;
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> parentView) {
             }
@@ -95,11 +99,13 @@ public class ReportDialog extends LinearLayout {
             dialog.dismiss();
         });
     }
+
     private void findViews() {
         reportDropdown = this.findViewById(R.id.report_reason_select);
         reportInput = this.findViewById(R.id.tell_us_more_input);
         reportSubmitButton = this.findViewById(R.id.report_dialog_submit);
     }
+
     private void createReport(Integer argumentId, String reportClassification, String reportDescription) {
         Resources res = this.getContext().getResources();
         HashMap<String, String> queryParams = new HashMap<>();
@@ -115,7 +121,7 @@ public class ReportDialog extends LinearLayout {
                 response -> {
                     try {
                         boolean success = response.getBoolean("success");
-                        if(success) {
+                        if (success) {
                             showToastMessage(res.getString(R.string.report_success));
                         }
                     } catch (JSONException e) {
@@ -137,6 +143,7 @@ public class ReportDialog extends LinearLayout {
     public void setDialog(AlertDialog dialog) {
         this.dialog = dialog;
     }
+
     public static void show(Context context, Argument argument) {
         Resources res = context.getResources();
         AlertDialog.Builder builder = new AlertDialog.Builder(context);

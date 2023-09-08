@@ -28,7 +28,6 @@ public class DebateBoxListAdapter extends ListAdapter {
     }
 
 
-
     @NonNull
     @Override
     public ListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

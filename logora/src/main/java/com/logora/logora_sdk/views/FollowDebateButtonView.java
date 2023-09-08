@@ -60,7 +60,7 @@ public class FollowDebateButtonView extends androidx.appcompat.widget.AppCompatB
             }
         } else {
             LoginDialog loginDialog = new LoginDialog(getContext());
-            loginDialog.show(getContext());
+            LoginDialog.show(getContext());
         }
     }
 
@@ -131,41 +131,11 @@ public class FollowDebateButtonView extends androidx.appcompat.widget.AppCompatB
         }
     }
 
-    /*private void setActive() {
-        this.active = true;
-        this.setEnabled(true);
-        this.setPadding(35, 10, 35, 10);
-        String primaryColor = settings.get("theme.callPrimaryColor");
-        String debateFollowActiveText = settings.get("layout.actionFollow");
-        if (debateFollowActiveText != null) {
-            this.setText(debateFollowActiveText);
-        } else {
-            this.setText(R.string.debate_follow_active);
-        }
-        this.setTextColor(Color.GRAY);
-        LayerDrawable shape = (LayerDrawable) ContextCompat.getDrawable(this.context, R.drawable.button_inactive_background);
-        this.setBackground(shape);
 
-    }
-
-    private void setInactive() {
-        this.active = false;
-        this.setEnabled(true);
-        String primaryColor = settings.get("theme.callPrimaryColor");
-        String debateFollowInactiveText = settings.get("layout.actionFollowedDebate");
-        if (debateFollowInactiveText != null) {
-            this.setText(debateFollowInactiveText);
-        } else {
-            this.setText(R.string.debate_follow_inactive);
-        }
-        this.setTextColor(Color.BLACK);
-        LayerDrawable shape = (LayerDrawable) ContextCompat.getDrawable(this.context, R.drawable.inactive_button_follow);
-        this.setBackground(shape);
-    }*/
     private void setActive() {
         this.active = true;
         this.setEnabled(true);
-        this.setPadding(10,10,10,10);
+        this.setPadding(10, 10, 10, 10);
         String primaryColor = settings.get("theme.callPrimaryColor");
         String debateFollowActiveText = settings.get("layout.actionFollow");
         if (debateFollowActiveText != null) {
@@ -182,7 +152,7 @@ public class FollowDebateButtonView extends androidx.appcompat.widget.AppCompatB
     private void setInactive() {
         this.active = false;
         this.setEnabled(true);
-        this.setPadding(10,10,10,10);
+        this.setPadding(10, 10, 10, 10);
         String primaryColor = settings.get("theme.callPrimaryColor");
         String debateFollowInactiveText = settings.get("layout.actionFollowedDebate");
         if (debateFollowInactiveText != null) {

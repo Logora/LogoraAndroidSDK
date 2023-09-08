@@ -79,6 +79,7 @@ public class LogoraApiClient {
         }
         return LogoraApiClient.instance;
     }
+
     public void readNotification(Response.Listener<JSONObject> listener,
                                  Response.ErrorListener errorListener, Integer notificationId) {
         HashMap<String, String> queryParams = new HashMap<>();
@@ -168,13 +169,6 @@ public class LogoraApiClient {
         this.user_get(route, queryParams, listener, errorListener);
     }
 
-
-    public void createtwo(String resource, String id, HashMap<String, String> bodyParams, HashMap<String, String> queryParams,
-                          Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
-
-        String route = "/" + resource + "/" + id;
-        this.user_post(route, queryParams, bodyParams, listener, errorListener);
-    }
 
     /* AUTH METHODS */
     public void userAuth(Response.Listener<JSONObject> listener,
@@ -381,7 +375,6 @@ public class LogoraApiClient {
         this.addToQueueWithRefresh(request);
     }
 
-    ///
     public void createVote(Response.Listener<JSONObject> listener,
                            Response.ErrorListener errorListener,
                            Integer voteableId, String voteableType, Integer positionId) {
@@ -396,7 +389,6 @@ public class LogoraApiClient {
         this.user_post(route, queryParams, bodyParams, listener, errorListener);
     }
 
-    ///updateVote
     public void updateVote(Response.Listener<JSONObject> listener,
                            Response.ErrorListener errorListener,
                            Integer voteId, Integer positionId) {
@@ -407,7 +399,6 @@ public class LogoraApiClient {
         this.user_patch(route, queryParams, bodyParams, listener, errorListener);
     }
 
-    ////debatefollow
     public void getDebateFollow(Response.Listener<JSONObject> listener,
                                 Response.ErrorListener errorListener, String followable_type, Integer followable_id) {
         HashMap<String, String> queryParams = new HashMap<>();
@@ -415,7 +406,6 @@ public class LogoraApiClient {
         this.user_get(route, queryParams, listener, errorListener);
     }
 
-    //follow debate
     public void followDebate(Response.Listener<JSONObject> listener,
                              Response.ErrorListener errorListener, String followable_type, Integer followable_id) {
         HashMap<String, String> queryParams = new HashMap<>();
@@ -423,7 +413,6 @@ public class LogoraApiClient {
         this.user_post(route, queryParams, null, listener, errorListener);
     }
 
-    //unfollow debate
     public void unfollowDebate(Response.Listener<JSONObject> listener,
                                Response.ErrorListener errorListener, String followable_type, Integer followable_id) {
         HashMap<String, String> queryParams = new HashMap<>();
@@ -432,7 +421,6 @@ public class LogoraApiClient {
         this.user_delete(route, params, queryParams, listener, errorListener);
     }
 
-    ////userfollow
     public void getUserFollow(Response.Listener<JSONObject> listener,
                               Response.ErrorListener errorListener, String followable_type, Integer followable_id) {
         HashMap<String, String> queryParams = new HashMap<>();
@@ -440,7 +428,6 @@ public class LogoraApiClient {
         this.user_get(route, queryParams, listener, errorListener);
     }
 
-    //follow USER
     public void followUser(Response.Listener<JSONObject> listener,
                            Response.ErrorListener errorListener, String followable_type, Integer followable_id) {
         HashMap<String, String> queryParams = new HashMap<>();
@@ -448,7 +435,6 @@ public class LogoraApiClient {
         this.user_post(route, queryParams, null, listener, errorListener);
     }
 
-    //unfollow user
     public void unfollowUser(Response.Listener<JSONObject> listener,
                              Response.ErrorListener errorListener, String followable_type, Integer followable_id) {
         HashMap<String, String> queryParams = new HashMap<>();
@@ -457,7 +443,6 @@ public class LogoraApiClient {
         this.user_delete(route, params, queryParams, listener, errorListener);
     }
 
-    ///getGroupVote////
     public void getGroupVote(Response.Listener<JSONObject> listener,
                              Response.ErrorListener errorListener, Integer groupId) {
         HashMap<String, String> queryParams = new HashMap<>();
@@ -465,7 +450,6 @@ public class LogoraApiClient {
         this.user_get(route, queryParams, listener, errorListener);
     }
 
-    ///create argument
     public void createArgument(Response.Listener<JSONObject> listener,
                                Response.ErrorListener errorListener,
                                String argumentContent, Integer debateId, Integer messageId, Integer positionId, String isReply) {
@@ -484,7 +468,6 @@ public class LogoraApiClient {
         this.user_post(route, queryParams, bodyParams, listener, errorListener);
     }
 
-    ///create report
     public void createReport(Response.Listener<JSONObject> listener,
                              Response.ErrorListener errorListener,
                              Integer reportableId, String reportableType, String classification, String description) {
@@ -498,7 +481,6 @@ public class LogoraApiClient {
         this.user_post(route, queryParams, bodyParams, listener, errorListener);
     }
 
-    ///updateArgument
     public void updateArgument(Response.Listener<JSONObject> listener,
                                Response.ErrorListener errorListener,
                                Integer argumentId, String argumentContent) {

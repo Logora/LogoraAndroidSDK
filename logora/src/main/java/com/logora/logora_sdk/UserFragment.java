@@ -45,11 +45,9 @@ import java.util.HashMap;
 public class UserFragment extends Fragment {
     private final Settings settings = Settings.getInstance();
     private String userSlug;
-    private TextView userDebatesCountValue;
     private TextView userDebatesCountText;
     private TextView userVotesCountValue;
     private TextView userVotesCountText;
-    private TextView userDisciplesCountValue;
     private TextView userDisciplesCountText;
     private RecyclerView userTagsList;
     private TabLayout tabLayout;
@@ -91,22 +89,22 @@ public class UserFragment extends Fragment {
             spinner.setVisibility(View.INVISIBLE);
             UserShowViewModel userViewModel = new UserShowViewModel();
             userViewModel.getUser(this.userSlug).observe(getViewLifecycleOwner(), user -> {
-                try{
-                    if(auth.getCurrentUser().getId().equals(user.getId())){
-                        followUserButtonView.setVisibility(view.GONE);
-                    }else{
-                        followUserButtonView.setVisibility(view.VISIBLE);
+                try {
+                    if (auth.getCurrentUser().getId().equals(user.getId())) {
+                        followUserButtonView.setVisibility(View.GONE);
+                    } else {
+                        followUserButtonView.setVisibility(View.VISIBLE);
                     }
-                }catch(Exception e){
+                } catch (Exception e) {
                     System.out.println("error");
                 }
-                try{
-                    if(auth.getCurrentUser().getId().equals(user.getId())){
-                        logoutButton.setVisibility(view.VISIBLE);
-                    }else{
-                        logoutButton.setVisibility(view.GONE);
+                try {
+                    if (auth.getCurrentUser().getId().equals(user.getId())) {
+                        logoutButton.setVisibility(View.VISIBLE);
+                    } else {
+                        logoutButton.setVisibility(View.GONE);
                     }
-                }catch(Exception e){
+                } catch (Exception e) {
                     System.out.println("error");
                 }
 
@@ -121,10 +119,10 @@ public class UserFragment extends Fragment {
                 String pointsCount = res.getQuantityString(R.plurals.user_points, pointCount, pointCount);
                 userPoint.setText(pointsCount);
                 int argument = user.getVotesCount();
-                String argumentCount = res.getQuantityString(R.plurals.user_debates_count_text,argument ,argument);
+                String argumentCount = res.getQuantityString(R.plurals.user_debates_count_text, argument, argument);
                 userDebatesCountText.setText(String.valueOf(argumentCount));
                 int vote = user.getVotes();
-                String voteCount = res.getQuantityString(R.plurals.user_votes_count_text,vote ,vote);
+                String voteCount = res.getQuantityString(R.plurals.user_votes_count_text, vote, vote);
                 userVotesCountText.setText(String.valueOf(voteCount));
                 int disciple = user.getDisciplesCount();
                 String discipleCount = res.getQuantityString(R.plurals.user_disciples_count_text, disciple, disciple);
@@ -201,7 +199,7 @@ public class UserFragment extends Fragment {
     }
 
     private void findViews(View view) {
-        userVotesCountValue=view.findViewById(R.id.user_votes_count_value);
+        userVotesCountValue = view.findViewById(R.id.user_votes_count_value);
         userDebatesCountText = view.findViewById(R.id.user_debates_count_text);
         userVotesCountValue = view.findViewById(R.id.user_votes_count_value);
         userVotesCountText = view.findViewById(R.id.user_votes_count_text);

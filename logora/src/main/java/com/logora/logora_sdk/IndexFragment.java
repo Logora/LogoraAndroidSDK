@@ -24,10 +24,10 @@ import java.util.ArrayList;
  * A {@link Fragment} subclass containing the debate space index.
  */
 public class IndexFragment extends Fragment {
-    private final Router router = Router.getInstance();
-    private PaginatedListFragment debateList;
 
-    public IndexFragment() { super(R.layout.fragment_index); }
+    public IndexFragment() {
+        super(R.layout.fragment_index);
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -46,7 +46,6 @@ public class IndexFragment extends Fragment {
             debateListSortOptions.add(new SortOption("Le plus pertinent", "-score", null));
             debateListSortOptions.add(new SortOption("Le plus ancien", "+created_at", null));
 
-            //debateList = new PaginatedListFragment(debateResourceName, "CLIENT", debateListAdapter, null, debateListSortOptions, null, "-created_at");
             getChildFragmentManager()
                     .beginTransaction()
                     .add(R.id.trending_debates_list, new PaginatedListFragment(debateResourceName, "CLIENT", debateListAdapter, null, debateListSortOptions, null, null))

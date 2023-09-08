@@ -9,6 +9,11 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.media.Image;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
+import android.text.style.StyleSpan;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -74,7 +79,6 @@ public class VoteBoxView extends RelativeLayout {
     private ImageView thirdPositionSuccessVote;
     Resources res = getResources();
 
-
     public VoteBoxView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initView();
@@ -99,7 +103,7 @@ public class VoteBoxView extends RelativeLayout {
                 this.vote(debate.getPositionList().get(0).getId());
             } else {
                 LoginDialog loginDialog = new LoginDialog(getContext());
-                loginDialog.show(getContext());
+                LoginDialog.show(getContext());
             }
         });
         voteSecondPositionButton.setOnClickListener(v -> {
@@ -107,7 +111,7 @@ public class VoteBoxView extends RelativeLayout {
                 this.vote(debate.getPositionList().get(1).getId());
             } else {
                 LoginDialog loginDialog = new LoginDialog(getContext());
-                loginDialog.show(getContext());
+                LoginDialog.show(getContext());
             }
         });
         voteThirdPositionButton.setOnClickListener(v -> {
@@ -115,27 +119,24 @@ public class VoteBoxView extends RelativeLayout {
                 this.vote(debate.getPositionList().get(2).getId());
             } else {
                 LoginDialog loginDialog = new LoginDialog(getContext());
-                loginDialog.show(getContext());
+                LoginDialog.show(getContext());
             }
         });
-        String résultat=votesCountView+"-Voir le résultat";
         votesCountView.setOnClickListener(v -> {
             if (auth.getIsLoggedIn()) {
                 this.showResults();
 
             } else {
                 LoginDialog loginDialog = new LoginDialog(getContext());
-                loginDialog.show(getContext());
+                LoginDialog.show(getContext());
             }
         });
+
+
         voteEditView.setPaintFlags(voteEditView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         voteEditView.setOnClickListener(v -> {
             this.showButtons();
         });
-
-
-
-
     }
 
     private void findViews() {
@@ -163,11 +164,14 @@ public class VoteBoxView extends RelativeLayout {
 
     public void init(Debate debate) {
         this.debate = debate;
-        showButtons();
 
+        showButtons();
         if (this.auth.getIsLoggedIn()) {
+            //showButtons();
+            showResults();
             this.apiClient.getGroupVote(
                     response -> {
+
                         try {
                             boolean success = response.getJSONObject("data").getBoolean("success");
                             boolean vote = response.getJSONObject("data").getJSONObject("data").getBoolean("vote");
@@ -186,18 +190,14 @@ public class VoteBoxView extends RelativeLayout {
 
     public void vote(Integer positionId) {
 
-        if (this.voteId != null) {
-            inputProvider.addUserPosition(Integer.parseInt(debate.getId()), positionId);
-            if (!positionId.equals(this.votePositionId)) {
-                debate.calculateVotePercentage(String.valueOf(positionId), true);
-            }
-            if (!positionId.equals(this.votePositionId)) {
-                this.updateVote(positionId);
-            }
+        if (this.voteId != null && this.votePositionId != null) {
+            System.out.println("the vote is different null");
+            debate.updateVote(positionId, this.votePositionId);
+            this.updateVote(positionId);
         } else {
-            this.debate.incrementTotalVotesCount();
+            System.out.println("the vote is null");
             inputProvider.addUserPosition(Integer.parseInt(debate.getId()), positionId);
-            debate.calculateVotePercentage(String.valueOf(positionId), false);
+            debate.updateVote(positionId, null);
             this.createVote(positionId);
         }
     }
@@ -213,7 +213,6 @@ public class VoteBoxView extends RelativeLayout {
                         if (success) {
                             this.voteId = vote.getInt("id");
                             this.votePositionId = vote.getJSONObject("position").getInt("id");
-                           //
                         }
                         showResults();
                     } catch (JSONException e) {
@@ -225,7 +224,7 @@ public class VoteBoxView extends RelativeLayout {
     }
 
     public void updateVote(Integer positionId) {
-        showButtons();
+        // showButtons();
         this.apiClient.updateVote(
                 response -> {
                     try {
@@ -234,8 +233,8 @@ public class VoteBoxView extends RelativeLayout {
                         if (success) {
                             this.voteId = vote.getInt("id");
                             this.votePositionId = vote.getJSONObject("position").getInt("id");
-                            showResults();
                         }
+                        showResults();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -264,19 +263,20 @@ public class VoteBoxView extends RelativeLayout {
         voteThirdPositionButton.setBackgroundColor(Color.parseColor(thirdPositionPrimaryColor));
         voteFirstPositionButton.setText(this.debate.getPositionList().get(0).getName());
         voteSecondPositionButton.setText(this.debate.getPositionList().get(1).getName());
-        try{
+        try {
             voteThirdPositionButton.setText(this.debate.getPositionList().get(2).getName());
-        }catch(Exception e){
-            System.out.println("ERROR"+e.toString());
+        } catch (Exception e) {
+            System.out.println("ERROR" + e);
         }
-
-
         int count = debate.getTotalVotesCount();
         Resources res = getResources();
         String votesCount = res.getQuantityString(R.plurals.debate_votes_count, count, count);
-        votesCountView.setText(votesCount+res.getString(R.string.resultat));
-        votesCountView.setPaintFlags(votesCountView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-
+        String resultatText = res.getString(R.string.resultat);
+        SpannableString spannableResultat = new SpannableString(resultatText);
+        spannableResultat.setSpan(new StyleSpan(Typeface.BOLD), 0, spannableResultat.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        CharSequence finalText = TextUtils.concat(votesCount, " ", spannableResultat);
+        votesCountView.setText(finalText);
+        votesCountView.setPaintFlags(votesCountView.getPaintFlags() & (~Paint.UNDERLINE_TEXT_FLAG));
 
     }
 
@@ -285,15 +285,15 @@ public class VoteBoxView extends RelativeLayout {
         String secondPositionPrimaryColor = settings.get("theme.secondPositionColorPrimary");
         String thirdPositionPrimaryColor = settings.get("theme.thirdPositionColorPrimary");
         this.active = true;
-        showButtons();
+        //showButtons();
         voteContainer.setVisibility(GONE);
         voteResultsContainer.setVisibility(VISIBLE);
         voteFirstPositionResultText.setText(this.debate.getPositionList().get(0).getName());
         voteSecondPositionResultText.setText(this.debate.getPositionList().get(1).getName());
-        try{
+        try {
             voteThirdPositionResultText.setText(this.debate.getPositionList().get(2).getName());
-        }catch(Exception e){
-            System.out.println("ERROR"+e.toString());
+        } catch (Exception e) {
+            System.out.println("ERROR" + e);
         }
         voteFirstPositionProgress.setProgressTintList(ColorStateList.valueOf(Color.parseColor(firstPositionPrimaryColor)));
         voteSecondPositionProgress.setProgressTintList(ColorStateList.valueOf(Color.parseColor(secondPositionPrimaryColor)));
@@ -313,25 +313,23 @@ public class VoteBoxView extends RelativeLayout {
         }
         voteFirstPositionProgressPercentage = debate.getPositionPercentage(this.debate.getPositionList().get(0).getId());
         voteSecondPositionProgressPercentage = debate.getPositionPercentage(this.debate.getPositionList().get(1).getId());
-        try{
+        try {
             voteThirdPositionProgressPercentage = debate.getPositionPercentage(this.debate.getPositionList().get(2).getId());
-
-        }catch(Exception e){
-            System.out.println("ERROR"+e.toString());
+        } catch (Exception e) {
+            System.out.println("ERROR" + e);
         }
+
         if (voteFirstPositionProgressPercentage != null && voteSecondPositionProgressPercentage != null && voteThirdPositionProgressPercentage != null) {
-            System.out.print("different de null");
             setUpObserver();
         }
-       voteFirstPositionProgressResult.setText(voteFirstPositionProgressPercentage + res.getString(R.string.percentage));
+        voteFirstPositionProgressResult.setText(voteFirstPositionProgressPercentage + res.getString(R.string.percentage));
         voteSecondPositionProgressResult.setText(voteSecondPositionProgressPercentage + res.getString(R.string.percentage));
         voteThirdPositionProgressResult.setText(voteThirdPositionProgressPercentage + res.getString(R.string.percentage));
+
         int count = debate.getTotalVotesCount();
         Resources res = getResources();
         String votesCount = res.getQuantityString(R.plurals.debate_votes_count, count, count);
         voteResultsCountView.setText(votesCount);
-        final Router router = Router.getInstance();
-
     }
 
     private void setUpObserver() {
@@ -339,6 +337,7 @@ public class VoteBoxView extends RelativeLayout {
             @Override
             public void onGlobalLayout() {
                 startAnimation(voteFirstPositionProgress, 0, (float) voteFirstPositionProgressPercentage / 100);
+
                 voteFirstPositionProgress.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
@@ -346,6 +345,7 @@ public class VoteBoxView extends RelativeLayout {
             @Override
             public void onGlobalLayout() {
                 startAnimation(voteSecondPositionProgress, 0, (float) voteSecondPositionProgressPercentage / 100);
+
                 voteSecondPositionProgress.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
@@ -353,6 +353,7 @@ public class VoteBoxView extends RelativeLayout {
             @Override
             public void onGlobalLayout() {
                 startAnimation(voteThirdPositionProgress, 0, (float) voteThirdPositionProgressPercentage / 100);
+
                 voteThirdPositionProgress.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
@@ -364,6 +365,8 @@ public class VoteBoxView extends RelativeLayout {
         progressBar.setMax(width);
         int start = (int) (startPercent * width);
         int end = (int) (endPercent * width);
+        Log.d("Debug", "startPercent: " + startPercent);
+        Log.d("Debug", "endPercent: " + endPercent);
         ValueAnimator animator = ValueAnimator.ofInt(start, end);
         animator.setInterpolator(new LinearInterpolator());
         animator.setStartDelay(0);

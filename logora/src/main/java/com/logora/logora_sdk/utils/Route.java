@@ -5,7 +5,7 @@ import java.util.HashMap;
 public class Route {
     private final String name;
     private final String path;
-    private HashMap<String, String> paramDefs;
+    private final HashMap<String, String> paramDefs;
     private HashMap<String, String> params;
 
     public Route(String name, String path, HashMap<String, String> paramDefs) {
@@ -22,7 +22,11 @@ public class Route {
         return this.path;
     }
 
-    public HashMap<String,String> getParams() { return this.params; }
+    public HashMap<String, String> getParams() {
+        return this.params;
+    }
 
-    public void setParams(HashMap<String,String> params) { this.params = params; }
+    public void setParams(HashMap<String, String> params) {
+        this.params = params;
+    }
 }

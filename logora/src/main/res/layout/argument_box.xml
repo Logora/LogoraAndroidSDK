@@ -9,8 +9,8 @@
         android:id="@+id/argument_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/box_background"
-        >
+        android:background="@drawable/box_background">
+
         <com.logora.logora_sdk.views.ArgumentAuthorBox
             android:id="@+id/argument_author_box_container"
             android:layout_width="wrap_content"
@@ -130,8 +130,7 @@
             android:orientation="horizontal"
             android:paddingHorizontal="12dp"
             android:paddingVertical="12dp"
-            android:visibility="gone"
-            >
+            android:visibility="gone">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/argument_replies_authors_list"
@@ -149,8 +148,7 @@
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="6dp"
                 android:text="@string/argument_view_replies"
-                android:textColor="@color/text_primary"
-                />
+                android:textColor="@color/text_primary" />
 
             <TextView
                 android:id="@+id/argument_reply_arrow_down"
@@ -159,47 +157,47 @@
                 android:layout_gravity="center"
                 android:text="@string/arrow_down"
                 android:textColor="@color/text_secondary" />
+
             <View
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:background="#000000"
-                android:layout_marginBottom="80px"/>
+                android:layout_marginBottom="80px"
+                android:background="#000000" />
         </LinearLayout>
 
     </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/reply_left_border"
-        />
+        android:background="@drawable/reply_left_border" />
 
     <LinearLayout
         android:id="@+id/reply_input_container"
-        android:layout_marginTop="15dp"
-        android:layout_below="@id/argument_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_below="@id/argument_container"
+        android:layout_marginTop="15dp"
         android:background="@drawable/box_background"
+        android:orientation="horizontal"
         android:paddingEnd="10dp"
-        android:visibility="gone"
-        >
+        android:visibility="gone">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/reply_input_image_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="2dp"
-            app:cardUseCompatPadding="true"
             app:cardBackgroundColor="@android:color/transparent"
-            app:cardCornerRadius="40dp">
+            app:cardCornerRadius="40dp"
+            app:cardUseCompatPadding="true">
 
             <ImageView
                 android:id="@+id/reply_input_user_image"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:scaleType="fitXY"
-                android:contentDescription="@string/user_icon_content_description" />
+                android:contentDescription="@string/user_icon_content_description"
+                android:scaleType="fitXY" />
         </androidx.cardview.widget.CardView>
 
         <EditText
@@ -211,19 +209,18 @@
             android:layout_weight="1"
             android:background="@android:color/transparent"
             android:gravity="center_vertical"
-            android:textCursorDrawable="@drawable/black_cursor"
-            android:hint="@string/reply_input_placeholder"/>
+            android:hint="@string/reply_input_placeholder"
+            android:textCursorDrawable="@drawable/black_cursor" />
 
         <ImageView
             android:id="@+id/reply_input_send_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_send"
             android:layout_gravity="center_vertical"
             android:clickable="true"
             android:focusable="true"
             android:padding="6dp"
-            />
+            android:src="@drawable/ic_send" />
     </LinearLayout>
 
     <FrameLayout
@@ -231,8 +228,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/reply_input_container"
-        android:layout_marginStart="20dp"
-       />
+        android:layout_marginStart="20dp" />
 
 
 </RelativeLayout>

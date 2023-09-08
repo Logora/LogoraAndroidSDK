@@ -23,7 +23,6 @@ public class DateUtil {
     public static String getTimeAgo(Date startDate) {
 
         long different = System.currentTimeMillis() - startDate.getTime();
-        System.out.println("the difference" + different);
 
 
         long secondsInMilli = 1000;
@@ -33,32 +32,25 @@ public class DateUtil {
 
         long elapsedDays = different / daysInMilli;
         different = different % daysInMilli;
-        System.out.println("elapseDays" + elapsedDays);
 
 
         long elapsedHours = different / hoursInMilli;
         different = different % hoursInMilli;
-        System.out.println("elapsedHours" + elapsedHours);
 
         long elapsedMinutes = different / minutesInMilli;
         different = different % minutesInMilli;
-        System.out.println("elapsedMinutes" + elapsedMinutes);
 
         long elapsedSeconds = different / secondsInMilli;
-        different=different % secondsInMilli;
-        System.out.print("elapseSeconds"+elapsedSeconds);
+        different = different % secondsInMilli;
 
         String output = "il y a ";
-        if ( elapsedDays> 0) {
+        if (elapsedDays > 0) {
             return output + elapsedDays + " jours";
-        }
-        else if (elapsedHours > 0) {
+        } else if (elapsedHours > 0) {
             return output + elapsedHours + " heures";
-        }
-        else if (elapsedMinutes > 0) {
+        } else if (elapsedMinutes > 0) {
             return output + elapsedMinutes + " minutes";
-        }
-        else if (elapsedSeconds > 0) {
+        } else if (elapsedSeconds > 0) {
             return output + elapsedSeconds + " secondes";
         }
         return output;

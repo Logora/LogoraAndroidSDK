@@ -49,7 +49,7 @@ public class NotificationListAdapter extends ListAdapter {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        switch(notifyType){
+        switch (notifyType) {
             case "get_badge":
                 return BadgeNotification.objectFromJson(jsonObject);
             case "group_reply":

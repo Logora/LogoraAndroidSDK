@@ -5,9 +5,10 @@ import com.logora.logora_sdk.utils.DateUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class LevelUnlockNotification extends Notification<UserBox, Object, Object>{
+public class LevelUnlockNotification extends Notification<UserBox, Object, Object> {
 
-    public LevelUnlockNotification() {}
+    public LevelUnlockNotification() {
+    }
 
     public static LevelUnlockNotification objectFromJson(JSONObject jsonObject) {
         LevelUnlockNotification levelUnlockNotification = new LevelUnlockNotification();
@@ -29,6 +30,5 @@ public class LevelUnlockNotification extends Notification<UserBox, Object, Objec
             return null;
         }
     }
-    //public String getImageUrl() { return this.getTarget().getLevelIconUrl(); }
 }
 

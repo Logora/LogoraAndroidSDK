@@ -10,7 +10,8 @@ public class NextBadgeBox extends Model {
     private Integer steps;
     private Integer progress;
 
-    public NextBadgeBox() {}
+    public NextBadgeBox() {
+    }
 
     public static NextBadgeBox objectFromJson(JSONObject jsonObject) {
         NextBadgeBox badgeBox = new NextBadgeBox();

@@ -18,7 +18,7 @@ import java.util.List;
 
 public class ListViewModel extends ViewModel {
     private final LogoraApiClient apiClient = LogoraApiClient.getInstance();
-    private String TAG = ListViewModel.class.getSimpleName();
+    private final String TAG = ListViewModel.class.getSimpleName();
     private final String resourceName;
     private final String resourceType;
     private MutableLiveData<List<JSONObject>> itemsLiveData;

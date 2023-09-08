@@ -10,9 +10,9 @@ public class Settings {
     public String get(String settingsKey) {
         String[] keys = settingsKey.split("\\.");
         JSONObject current = this.settingsObject;
-        for(int i = 0; i < keys.length; i++) {
-            if(current.has(keys[i])) {
-                if(i == keys.length - 1) {
+        for (int i = 0; i < keys.length; i++) {
+            if (current.has(keys[i])) {
+                if (i == keys.length - 1) {
                     try {
                         return current.getString(keys[i]);
                     } catch (JSONException e) {
@@ -32,10 +32,12 @@ public class Settings {
         return null;
     }
 
-    public void store(JSONObject settings) { this.settingsObject = settings; }
+    public void store(JSONObject settings) {
+        this.settingsObject = settings;
+    }
 
     public static Settings getInstance() {
-        if(Settings.instance == null) {
+        if (Settings.instance == null) {
             Settings.instance = new Settings();
         }
         return Settings.instance;

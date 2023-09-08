@@ -28,8 +28,8 @@ public class ArgumentVote extends LinearLayout {
     private Context context;
     private Argument argument;
     private Debate debate;
-    private LogoraApiClient apiClient = LogoraApiClient.getInstance();
-    private Auth authClient = Auth.getInstance();
+    private final LogoraApiClient apiClient = LogoraApiClient.getInstance();
+    private final Auth authClient = Auth.getInstance();
     Integer votesCount = 0;
     Boolean hasVoted = false;
     Integer voteId = null;
@@ -154,6 +154,6 @@ public class ArgumentVote extends LinearLayout {
 
     private void openLoginDialog() {
         LoginDialog loginDialog = new LoginDialog(getContext());
-        loginDialog.show(getContext());
+        LoginDialog.show(getContext());
     }
 }

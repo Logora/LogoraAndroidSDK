@@ -51,7 +51,7 @@ public class IconTextView extends LinearLayout {
         TextView textView = this.findViewById(R.id.text_view);
         ImageView iconView = this.findViewById(R.id.icon_view);
         String mainText = settings.get("layout." + textKey);
-        if(mainText != null) {
+        if (mainText != null) {
             textView.setText(mainText);
         } else {
             textView.setText(textValue);

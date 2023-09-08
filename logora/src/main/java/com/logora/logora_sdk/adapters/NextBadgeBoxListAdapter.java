@@ -11,7 +11,9 @@ import com.logora.logora_sdk.R;
 import com.logora.logora_sdk.models.NextBadgeBox;
 import com.logora.logora_sdk.view_holders.ListViewHolder;
 import com.logora.logora_sdk.view_holders.NextBadgeBoxViewHolder;
+
 import org.json.JSONObject;
+
 import java.util.List;
 
 public class NextBadgeBoxListAdapter extends ListAdapter {

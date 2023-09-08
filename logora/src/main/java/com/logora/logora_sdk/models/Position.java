@@ -8,7 +8,8 @@ public class Position extends Model {
     private Integer id;
     private Integer votesCount;
 
-    public Position() {}
+    public Position() {
+    }
 
     public static Position objectFromJson(JSONObject jsonObject) {
         Position position = new Position();
@@ -30,7 +31,11 @@ public class Position extends Model {
         this.name = name;
     }
 
-    public Integer getId() { return id; }
+    public Integer getId() {
+        return id;
+    }
 
-    public void setId(Integer id) { this.id = id; }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }

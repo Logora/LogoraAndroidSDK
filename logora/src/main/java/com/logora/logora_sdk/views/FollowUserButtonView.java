@@ -26,7 +26,6 @@ public class FollowUserButtonView extends androidx.appcompat.widget.AppCompatBut
     private final LogoraApiClient apiClient = LogoraApiClient.getInstance();
     private final Context context;
     private User user;
-    private FollowUserButtonView followUserButtonView;
     Boolean active = false;
 
     public FollowUserButtonView(Context context) {
@@ -62,7 +61,7 @@ public class FollowUserButtonView extends androidx.appcompat.widget.AppCompatBut
             }
         } else {
             LoginDialog loginDialog = new LoginDialog(getContext());
-            loginDialog.show(getContext());
+            LoginDialog.show(getContext());
         }
     }
 
@@ -108,7 +107,7 @@ public class FollowUserButtonView extends androidx.appcompat.widget.AppCompatBut
                 },
                 error -> {
                     setActive();
-                }, "user",user.getId());
+                }, "user", user.getId());
     }
 
     public void init(User user) {
@@ -119,7 +118,7 @@ public class FollowUserButtonView extends androidx.appcompat.widget.AppCompatBut
                         try {
                             boolean success = response.getJSONObject("data").getBoolean("success");
                             boolean follow = true;
-                            if ( response.getJSONObject("data").getJSONObject("data").has("follow")) {
+                            if (response.getJSONObject("data").getJSONObject("data").has("follow")) {
                                 follow = response.getJSONObject("data").getJSONObject("data").getBoolean("follow");
 
                             }
@@ -136,7 +135,7 @@ public class FollowUserButtonView extends androidx.appcompat.widget.AppCompatBut
     private void setActive() {
         this.active = true;
         this.setEnabled(true);
-        this.setPadding(10,10,10,10);
+        this.setPadding(10, 10, 10, 10);
         String primaryColor = settings.get("theme.callPrimaryColor");
         String debateFollowActiveText = settings.get("layout.actionFollow");
         if (debateFollowActiveText != null) {
@@ -153,7 +152,7 @@ public class FollowUserButtonView extends androidx.appcompat.widget.AppCompatBut
     private void setInactive() {
         this.active = false;
         this.setEnabled(true);
-        this.setPadding(10,10,10,10);
+        this.setPadding(10, 10, 10, 10);
         String primaryColor = settings.get("theme.callPrimaryColor");
         String debateFollowInactiveText = settings.get("layout.actionFollowedDebate");
         if (debateFollowInactiveText != null) {

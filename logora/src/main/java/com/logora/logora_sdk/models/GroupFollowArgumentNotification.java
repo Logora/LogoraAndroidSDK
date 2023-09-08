@@ -7,7 +7,8 @@ import org.json.JSONObject;
 
 public class GroupFollowArgumentNotification extends Notification<Argument, Debate, Argument> {
 
-    public GroupFollowArgumentNotification() {}
+    public GroupFollowArgumentNotification() {
+    }
 
     public static GroupFollowArgumentNotification objectFromJson(JSONObject jsonObject) {
         GroupFollowArgumentNotification groupFollowArgumentNotification = new GroupFollowArgumentNotification();

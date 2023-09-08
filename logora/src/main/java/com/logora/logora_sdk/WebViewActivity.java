@@ -45,7 +45,7 @@ public class WebViewActivity extends Activity {
                 try {
                     intent.putExtra("routeParam", String.valueOf(currentRoute.getParams().values().toArray()[0]));
                 } catch (Exception e) {
-                    System.out.println("ERROR" + e.toString());
+                    System.out.println("ERROR" + e);
                 }
                 startActivity(intent);
                 return true;

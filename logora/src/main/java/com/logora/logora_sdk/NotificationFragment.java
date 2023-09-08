@@ -24,7 +24,7 @@ import java.util.HashMap;
 
 public class NotificationFragment extends Fragment {
     private final Settings settings = Settings.getInstance();
-    private LogoraApiClient apiClient = LogoraApiClient.getInstance();
+    private final LogoraApiClient apiClient = LogoraApiClient.getInstance();
     private PaginatedListFragment notificationList;
     private TextView readAllButton;
 

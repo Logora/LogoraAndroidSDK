@@ -25,7 +25,7 @@ import java.util.HashMap;
 public class ArgumentAuthorBox extends RelativeLayout {
     private final Settings settings = Settings.getInstance();
     private final Router router = Router.getInstance();
-    private Auth authClient = Auth.getInstance();
+    private final Auth authClient = Auth.getInstance();
     private TextView fullNameView;
     private TextView eloquence_point;
     private ImageView userImageView;
@@ -76,6 +76,11 @@ public class ArgumentAuthorBox extends RelativeLayout {
             routeParams.put("userSlug", argument.getAuthor().getSlug());
             router.navigate(Router.getRoute("USER"), routeParams);
         });
+        fullNameView.setOnClickListener(v -> {
+            HashMap<String, String> routeParams = new HashMap<>();
+            routeParams.put("userSlug", argument.getAuthor().getSlug());
+            router.navigate(Router.getRoute("USER"), routeParams);
+        });
         if (argument != null) {
             try {
                 fullNameView.setText(argument.getAuthor().getFullName());
@@ -90,7 +95,7 @@ public class ArgumentAuthorBox extends RelativeLayout {
 
             } catch (Exception e) {
 
-                System.out.println("ERROR" + e.toString());
+                System.out.println("ERROR" + e);
             }
         } else {
             if (authClient.getIsLoggedIn() == true) {
@@ -98,7 +103,7 @@ public class ArgumentAuthorBox extends RelativeLayout {
                 try {
                     eloquence_point.setText(Integer.toString(authClient.getCurrentUser().getPoints()));
                 } catch (Exception e) {
-                    System.out.println("ERROR" + e.toString());
+                    System.out.println("ERROR" + e);
                 }
                 Glide.with(userImageView.getContext())
                         .load(Uri.parse(authClient.getCurrentUser().getImageUrl()))

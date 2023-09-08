@@ -20,6 +20,7 @@ import com.logora.logora_sdk.R;
 import com.logora.logora_sdk.WebViewActivity;
 import com.logora.logora_sdk.utils.InputProvider;
 import com.logora.logora_sdk.utils.Settings;
+
 import androidx.core.content.ContextCompat;
 
 public class LoginDialog extends LinearLayout {
@@ -56,7 +57,6 @@ public class LoginDialog extends LinearLayout {
         Resources res = this.getContext().getResources();
         findViews();
         String callPrimaryColor = settings.get("theme.callPrimaryColor");
-        VectorDrawable nextIcon = (VectorDrawable) ContextCompat.getDrawable(getContext(), R.drawable.ic_next);
 
         signUpButton.setBackgroundColor(Color.parseColor(callPrimaryColor));
         signUpButton.setOnClickListener(v -> {

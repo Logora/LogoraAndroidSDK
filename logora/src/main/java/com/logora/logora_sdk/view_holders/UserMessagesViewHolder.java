@@ -34,23 +34,17 @@ public class UserMessagesViewHolder extends ListViewHolder {
 
     public void updateWithObject(Object object) {
         argument = (Argument) object;
-        String status = argument.getStatus();
-        Debate debate = argument.getDebate();
-        System.out.println("the username"+debate.getName());
-        if (debate != null) {
-            argument.setIsReply(false); // Prevent reply style to be added to user profile
-            userMessageTitle.setText(debate.getName());
 
-            //if(status.equals("accepted")) {
-                argumentBox.updateWithObject(object, debate, context);
-                argumentsCount.setText(String.valueOf(debate.getArgumentsCount()));
-                participantsCount.setText(String.valueOf(debate.getUsersCount()));
-                String debateVoteText = debate.getVotePercentage() + " %" + " " + debate.getVotePosition();
-                debateVote.setText(debateVoteText);
-           /* } else if(status.equals("rejected") || status.equals("pending")) {
-                userMessageContainer.setVisibility(View.GONE);
-                argumentBox.setVisibility(View.GONE);
-            }*/
+        Debate debate = argument.getDebate();
+        if (debate != null) {
+            argument.setIsReply(false);
+            userMessageTitle.setText(debate.getName());
+            argumentBox.updateWithObject(object, debate, context);
+            argumentsCount.setText(String.valueOf(debate.getArgumentsCount()));
+            participantsCount.setText(String.valueOf(debate.getUsersCount()));
+            String debateVoteText = debate.getVoteMaxPercentage() + " %" + " " + debate.getVoteMaxPosition();
+            debateVote.setText(debateVoteText);
+
         }
     }
 }

@@ -15,7 +15,7 @@ import com.logora.logora_sdk.utils.Settings;
 
 public class PrimaryButton extends androidx.appcompat.widget.AppCompatButton {
     Settings settings = Settings.getInstance();
-    private Context context;
+    private final Context context;
 
     public PrimaryButton(final Context context, final AttributeSet attrs) {
         super(context, attrs);
@@ -24,7 +24,7 @@ public class PrimaryButton extends androidx.appcompat.widget.AppCompatButton {
 
         String textKey = a.getString(R.styleable.PrimaryButton_buttonTextKey);
         String textValue = settings.get("layout." + textKey);
-        if(textValue != null) {
+        if (textValue != null) {
             this.setText(textValue);
         }
         a.recycle();

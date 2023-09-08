@@ -39,8 +39,6 @@ public class Router {
         Route searchRoute = new Route("SEARCH", "/recherche", searchRouteQueryParamDef);
         Router.routes.put(searchRoute.getName(), searchRoute);
 
-    
-
 
         Route notificationRoute = new Route("NOTIFICATIONS", "/notifications", null);
         Router.routes.put(notificationRoute.getName(), notificationRoute);

@@ -9,15 +9,16 @@ public class User {
     private String uid = " ";
     private Integer id;
     private String imageUrl;
-    private Integer debatesCount ;
+    private Integer debatesCount;
     private Integer votesCount = 0;
-    private Integer vote ;
-    private Integer disciplesCount = 0 ;
+    private Integer vote;
+    private Integer disciplesCount = 0;
     private Integer notificationsCount = 0;
     private Integer userPoint = 0;
     private String levelIconUrl;
 
-    public User() {}
+    public User() {
+    }
 
     public static User objectFromJson(JSONObject jsonObject) {
         User user = new User();
@@ -51,6 +52,7 @@ public class User {
             return null;
         }
     }
+
     public Integer getVotes() {
         return vote;
     }
@@ -59,27 +61,45 @@ public class User {
         this.vote = vote;
     }
 
-    public String getFullName() { return fullName; }
+    public String getFullName() {
+        return fullName;
+    }
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
 
-    public String getSlug() { return slug; }
+    public String getSlug() {
+        return slug;
+    }
 
-    public void setSlug(String slug) { this.slug = slug; }
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
 
-    public String getUid() { return uid; }
+    public String getUid() {
+        return uid;
+    }
 
-    public void setUid(String uid) { this.uid = uid; }
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
 
-    public Integer getId() { return id; }
+    public Integer getId() {
+        return id;
+    }
 
-    public void setId(Integer id) { this.id = id; }
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-    public String getImageUrl() { return imageUrl; }
+    public String getImageUrl() {
+        return imageUrl;
+    }
 
-    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     public Integer getDebatesCount() {
         return debatesCount;
@@ -113,10 +133,16 @@ public class User {
         return notificationsCount;
     }
 
-    public String getLevelIconUrl() { return levelIconUrl; }
+    public String getLevelIconUrl() {
+        return levelIconUrl;
+    }
 
-    public Integer getPoints() { return userPoint; }
+    public Integer getPoints() {
+        return userPoint;
+    }
 
-    public void setPoints(Integer userPoint) { this.userPoint = userPoint; }
+    public void setPoints(Integer userPoint) {
+        this.userPoint = userPoint;
+    }
 
 }

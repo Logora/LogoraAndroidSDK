@@ -25,19 +25,13 @@ public class Notification<T1, T2, T3> extends Model {
             notification.setId(jsonObject.getInt("id"));
             notification.setActor(UserBox.objectFromJson(jsonObject.getJSONObject("actor")));
             notification.setNotifyType(jsonObject.getString("notify_type"));
-            //notification.setRedirectUrl(jsonObject.getString("redirect_url"));
             if (jsonObject.has("redirect_url")) {
-                String redirectUrl = jsonObject.getString("redirect_url");
-                // Utilisez la valeur redirectUrl ici
-            } else {
-                // La clé "redirect_url" n'existe pas dans l'objet JSON
+                notification.setRedirectUrl(jsonObject.getString("redirect_url"));
             }
             notification.setActorCount(jsonObject.getInt("actor_count"));
             notification.setIsOpened(jsonObject.getBoolean("is_opened"));
             String publishedDate = jsonObject.getString("created_at");
-            System.out.println("publishDate"+publishedDate);
             notification.setPublishedDate(DateUtil.parseDate(publishedDate));
-            System.out.println("parseDate"+DateUtil.parseDate(publishedDate));
             return notification;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -53,43 +47,79 @@ public class Notification<T1, T2, T3> extends Model {
         this.id = id;
     }
 
-    public UserBox getActor() { return actor; }
+    public UserBox getActor() {
+        return actor;
+    }
 
-    public void setActor(UserBox actor) { this.actor = actor; }
+    public void setActor(UserBox actor) {
+        this.actor = actor;
+    }
 
-    public Integer getActorCount() { return actorCount; }
+    public Integer getActorCount() {
+        return actorCount;
+    }
 
-    public void setActorCount(Integer actorCount) { this.actorCount = actorCount; }
+    public void setActorCount(Integer actorCount) {
+        this.actorCount = actorCount;
+    }
 
-    public String getNotifyType() { return notifyType; }
+    public String getNotifyType() {
+        return notifyType;
+    }
 
-    public void setNotifyType(String notifyType) { this.notifyType = notifyType; }
+    public void setNotifyType(String notifyType) {
+        this.notifyType = notifyType;
+    }
 
-    public String getRedirectUrl() { return redirectUrl; }
+    public String getRedirectUrl() {
+        return redirectUrl;
+    }
 
-    public void setRedirectUrl(String redirectUrl) { this.redirectUrl = redirectUrl; }
+    public void setRedirectUrl(String redirectUrl) {
+        this.redirectUrl = redirectUrl;
+    }
 
-    public T1 getTarget() { return target; }
+    public T1 getTarget() {
+        return target;
+    }
 
-    public void setTarget(T1 target) { this.target = target; }
+    public void setTarget(T1 target) {
+        this.target = target;
+    }
 
-    public T2 getSecondTarget() { return secondTarget; }
+    public T2 getSecondTarget() {
+        return secondTarget;
+    }
 
-    public void setSecondTarget(T2 secondTarget) { this.secondTarget = secondTarget; }
+    public void setSecondTarget(T2 secondTarget) {
+        this.secondTarget = secondTarget;
+    }
 
-    public T3 getThirdTarget() { return thirdTarget; }
+    public T3 getThirdTarget() {
+        return thirdTarget;
+    }
 
-    public void setThirdTarget(T3 secondTarget) { this.thirdTarget = thirdTarget; }
+    public void setThirdTarget(T3 secondTarget) {
+        this.thirdTarget = thirdTarget;
+    }
 
     public String getImageUrl() {
         return this.getActor().getImageUrl();
     }
 
-    public Boolean getIsOpened() { return this.isOpened; }
+    public Boolean getIsOpened() {
+        return this.isOpened;
+    }
 
-    public void setIsOpened(Boolean isOpened) { this.isOpened = isOpened; }
+    public void setIsOpened(Boolean isOpened) {
+        this.isOpened = isOpened;
+    }
 
-    public Date getPublishedDate() { return publishedDate; }
+    public Date getPublishedDate() {
+        return publishedDate;
+    }
 
-    public void setPublishedDate(Date publishedDate){ this.publishedDate = publishedDate; }
+    public void setPublishedDate(Date publishedDate) {
+        this.publishedDate = publishedDate;
+    }
 }

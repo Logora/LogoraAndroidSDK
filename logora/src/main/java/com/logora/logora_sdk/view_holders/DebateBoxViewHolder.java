@@ -55,7 +55,7 @@ public class DebateBoxViewHolder extends ListViewHolder {
         List<JSONObject> userList = debateBox.getUserList();
         UserIconListAdapter userIconListAdapter = new UserIconListAdapter(userList);
         debateUserListView.setAdapter(userIconListAdapter);
-        if(userList.size() == 0) {
+        if (userList.size() == 0) {
             debateUserListView.setVisibility(View.GONE);
             debateUserListEmpty.setVisibility(View.VISIBLE);
         }

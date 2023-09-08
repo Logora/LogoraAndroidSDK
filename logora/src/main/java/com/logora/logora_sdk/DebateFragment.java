@@ -63,8 +63,8 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
     private final Auth auth = Auth.getInstance();
     private final Router router = Router.getInstance();
     private final InputProvider inputProvider = InputProvider.getInstance();
-    private LogoraApiClient apiClient = LogoraApiClient.getInstance();
-    private Settings settings = Settings.getInstance();
+    private final LogoraApiClient apiClient = LogoraApiClient.getInstance();
+    private final Settings settings = Settings.getInstance();
     private String debateSlug;
     private ProgressBar loader;
     private RelativeLayout debatePresentationContainerView;
@@ -107,7 +107,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
             findViews(view);
             TagListAdapter debateTagListAdapter = new TagListAdapter();
             debatePresentationContainerView.setVisibility(View.GONE);
-            loader.setVisibility(View.INVISIBLE);
+            loader.setVisibility(View.VISIBLE);
             DebateShowViewModel debateShowViewModel = new DebateShowViewModel();
             debateShowViewModel.getDebate(this.debateSlug);
             debateShowViewModel.getDebate(this.debateSlug).observe(getViewLifecycleOwner(), debate -> {
@@ -191,7 +191,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                             .commit();
 
                 } catch (Exception e) {
-                    System.out.println("ERROR" + e.toString());
+                    System.out.println("ERROR" + e);
                 }
 
             });
@@ -209,7 +209,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
 
     private void openSideDialog() {
         SideDialog sideDialog = new SideDialog(getContext(), debate, this);
-        sideDialog.show(getContext(), debate, this);
+        SideDialog.show(getContext(), debate, this);
     }
 
     private void openShareDialog(String subject) {
@@ -221,7 +221,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
 
     private void openLoginDialog() {
         LoginDialog loginDialog = new LoginDialog(getContext());
-        loginDialog.show(getContext());
+        LoginDialog.show(getContext());
     }
 
     private void createArgument(Integer positionId) {
@@ -240,6 +240,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                                     argumentListAdapter.notifyDataSetChanged();
                                     // Remove entry in userPositions now that the argument is posted
                                     inputProvider.removeUserPosition(Integer.parseInt(debate.getId()));
+
                                     // Clear argumentInput
                                     argumentInput.getText().clear();
                                     // Show toast message

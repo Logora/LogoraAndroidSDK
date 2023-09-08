@@ -48,7 +48,7 @@
             <FrameLayout
                 android:id="@+id/footer_fragment"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/main_fragment"
 
                 />

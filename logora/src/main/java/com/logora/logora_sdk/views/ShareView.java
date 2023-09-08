@@ -30,10 +30,9 @@ import java.io.Serializable;
 
 public class ShareView extends LinearLayout {
     private static final String TAG = "myshare";
-    private Context context;
+    private final Context context;
     private String shareText;
     private ImageView mobileShareView;
-    private LifecycleOwner viewLifecycleOwner;
     private String url;
 
 
@@ -58,15 +57,9 @@ public class ShareView extends LinearLayout {
     private void initView() {
         inflate(getContext(), R.layout.share_layout, this);
         mobileShareView = this.findViewById(R.id.mobile_share_button);
-        /*mobileShareView.setOnClickListener(v -> {
-            Resources res = getContext().getResources();
-            openShareDialog(res.getString(R.string.share_debat));
-        });*/
+
     }
 
-    public void setShareText(String text) {
-        this.shareText = text;
-    }
 
     public void openShareDialog(String subject) {
         Resources res = this.getContext().getResources();

@@ -63,11 +63,11 @@ public class BadgeTabFragment extends Fragment {
                 JSONArray nextBadgesArray = items.getJSONArray("next_badges");
                 JSONArray badgesArray = items.getJSONArray("badges");
                 List<JSONObject> nextBadges = new ArrayList<>();
-                for(int i = 0; i < 2; i++) {
+                for (int i = 0; i < 2; i++) {
                     nextBadges.add(nextBadgesArray.getJSONObject(i));
                 }
                 List<JSONObject> badges = new ArrayList<>();
-                for(int i = 0; i < badgesArray.length(); i++) {
+                for (int i = 0; i < badgesArray.length(); i++) {
                     badges.add(badgesArray.getJSONObject(i));
                 }
                 nextBadgesListAdapter.setItems(nextBadges);
@@ -76,7 +76,7 @@ public class BadgeTabFragment extends Fragment {
                 badgesListAdapter.setItems(badges);
                 badgesList.setLayoutManager(new LinearLayoutManager(this.getContext()));
                 badgesLoader.setVisibility(View.GONE);
-            } catch(JSONException e) {
+            } catch (JSONException e) {
                 Log.i("ERROR", String.valueOf(e));
                 nextBadgesLoader.setVisibility(View.GONE);
                 badgesLoader.setVisibility(View.GONE);
@@ -85,6 +85,7 @@ public class BadgeTabFragment extends Fragment {
             }
         });
     }
+
     private void findViews(View view) {
         nextBadgesList = view.findViewById(R.id.next_badges_list);
         badgesList = view.findViewById(R.id.badges_list);
