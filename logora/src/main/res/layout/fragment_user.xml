@@ -229,14 +229,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="6dp"
-                android:text="@string/user_disciples_tab" />
+                android:text="@string/user_mentors_tab"/>
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/user_mentors_tabs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="6dp"
-                android:text="@string/user_mentors_tab" />
+                android:text="@string/user_disciples_tab"
+                 />
         </com.google.android.material.tabs.TabLayout>
 
         <RelativeLayout

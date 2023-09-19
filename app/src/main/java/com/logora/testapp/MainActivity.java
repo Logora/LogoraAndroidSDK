@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         MainActivity.this.startActivity(intent);
 
 
-        /*WidgetFragment widget = new WidgetFragment(this.getApplicationContext(), "mon-article", "logora-demo-app");
+      /* WidgetFragment widget = new WidgetFragment(this.getApplicationContext(), "mon-article", "logora-demo-app");
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.widget_view_container, widget)
                 .commit();*/

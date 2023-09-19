@@ -17,39 +17,29 @@ import java.util.HashMap;
 public class UserShowViewModel extends ViewModel {
     private MutableLiveData<User> user;
 
-    public LiveData<User> getUser(String slug) {
+    public LiveData<User> getUser(String hashId) {
         if (user == null) {
             user = new MutableLiveData<>();
-            loadUser(slug);
+            loadUser(hashId);
         }
         return user;
     }
 
-    private void loadUser(String slug) {
+    private void loadUser(String hashId) {
         LogoraApiClient apiClient = LogoraApiClient.getInstance();
-        apiClient.getOne("users", slug, new HashMap<String, String>(),
-                response -> {
-                    try {
-                        JSONObject responseData = response.getJSONObject("data").getJSONObject("data").getJSONObject("resource");
-                        User userObject = new User();
-                        userObject.setId(responseData.getInt("id"));
-                        userObject.setFullName(responseData.getString("full_name"));
-                        userObject.setPoints(responseData.getInt("points"));
-                        userObject.setVotes(responseData.getInt("upvotes"));
-                        userObject.setSlug(responseData.getString("slug"));
-                        userObject.setUid(responseData.getString("uid"));
-                        userObject.setImageUrl(responseData.getString("image_url"));
-                        userObject.setDebatesCount(responseData.getInt("debates_count"));
-                        userObject.setVotesCount(responseData.getInt("debates_votes_count"));
-                        userObject.setDisciplesCount(responseData.getInt("followers_count"));
-                        user.setValue(userObject);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        user.setValue(null);
-                    }
-                },
-                error -> {
-                    Log.i("ERROR", String.valueOf(error));
-                });
+        apiClient.getResource("users", hashId, new HashMap<String, String>(),
+            response -> {
+                try {
+                    JSONObject responseData = response.getJSONObject("data").getJSONObject("data").getJSONObject("resource");
+                    User userObject = User.objectFromJson(responseData);
+                    user.setValue(userObject);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    user.setValue(null);
+                }
+            },
+            error -> {
+                Log.i("ERROR", String.valueOf(error));
+            });
     }
 }

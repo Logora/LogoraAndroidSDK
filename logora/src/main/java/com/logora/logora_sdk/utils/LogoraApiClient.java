@@ -134,7 +134,7 @@ public class LogoraApiClient {
         }
     }
 
-    public void getOne(String resource, String id, HashMap<String, String> queryParams,
+    public void getResource(String resource, String id, HashMap<String, String> queryParams,
                        Response.Listener<JSONObject> listener,
                        Response.ErrorListener errorListener) {
         if (queryParams == null) {
@@ -151,10 +151,7 @@ public class LogoraApiClient {
         this.user_post(route, queryParams, bodyParams, listener, errorListener);
     }
 
-    public void update(String resource, String id, HashMap<String, String> bodyParams, HashMap<String, String> queryParams, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
-        String route = "/" + resource + "/" + id;
-        this.user_patch(route, queryParams, bodyParams, listener, errorListener);
-    }
+
 
     public void delete(String resource, String id, HashMap<String, String> queryParams, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         String route = "/" + resource + "/" + id;
@@ -446,7 +443,7 @@ public class LogoraApiClient {
     public void getGroupVote(Response.Listener<JSONObject> listener,
                              Response.ErrorListener errorListener, Integer groupId) {
         HashMap<String, String> queryParams = new HashMap<>();
-        String route = "/users/group/" + groupId + "/vote";
+        String route = "/votes/group/" + groupId ;
         this.user_get(route, queryParams, listener, errorListener);
     }
 

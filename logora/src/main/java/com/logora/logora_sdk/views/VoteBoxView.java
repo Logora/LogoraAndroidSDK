@@ -98,6 +98,7 @@ public class VoteBoxView extends RelativeLayout {
     private void initView() {
         inflate(getContext(), R.layout.vote_box, this);
         findViews();
+
         voteFirstPositionButton.setOnClickListener(v -> {
             if (auth.getIsLoggedIn()) {
                 this.vote(debate.getPositionList().get(0).getId());
@@ -164,14 +165,11 @@ public class VoteBoxView extends RelativeLayout {
 
     public void init(Debate debate) {
         this.debate = debate;
-
         showButtons();
         if (this.auth.getIsLoggedIn()) {
-            //showButtons();
-            showResults();
+              showResults();
             this.apiClient.getGroupVote(
                     response -> {
-
                         try {
                             boolean success = response.getJSONObject("data").getBoolean("success");
                             boolean vote = response.getJSONObject("data").getJSONObject("data").getBoolean("vote");

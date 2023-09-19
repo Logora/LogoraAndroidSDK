@@ -74,7 +74,7 @@ public class NotificationViewHolder extends ListViewHolder {
                         }
                     }, Throwable::printStackTrace, notification.getId());
                     HashMap<String, String> routeParams = new HashMap<>();
-                    routeParams.put("userSlug", badgeNotification.getActor().getSlug());
+                    routeParams.put("userSlug", badgeNotification.getActor().getHashId());
                     router.navigate(Router.getRoute("USER"), routeParams);
                 });
                 break;
@@ -118,7 +118,7 @@ public class NotificationViewHolder extends ListViewHolder {
                         }
                     }, Throwable::printStackTrace, notification.getId());
                     HashMap<String, String> routeParams = new HashMap<>();
-                    routeParams.put("userSlug", levelUnlockNotification.getTarget().getSlug());
+                    routeParams.put("userSlug", levelUnlockNotification.getTarget().getHashId());
                     router.navigate(Router.getRoute("USER"), routeParams);
                 });
                 break;
@@ -183,7 +183,7 @@ public class NotificationViewHolder extends ListViewHolder {
                         }
                     }, Throwable::printStackTrace, notification.getId());
                     HashMap<String, String> routeParams = new HashMap<>();
-                    routeParams.put("userSlug", notification.getActor().getSlug());
+                    routeParams.put("userSlug", notification.getActor().getHashId());
                     router.navigate(Router.getRoute("USER"), routeParams);
                 });
                 break;
@@ -203,7 +203,7 @@ public class NotificationViewHolder extends ListViewHolder {
                         }
                     }, Throwable::printStackTrace, notification.getId());
                     HashMap<String, String> routeParams = new HashMap<>();
-                    routeParams.put("userSlug", notification.getActor().getSlug());
+                    routeParams.put("userSlug", notification.getActor().getHashId());
                     router.navigate(Router.getRoute("USER"), routeParams);
                 });
                 break;

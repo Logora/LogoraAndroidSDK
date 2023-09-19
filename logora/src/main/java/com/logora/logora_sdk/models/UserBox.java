@@ -7,6 +7,7 @@ public class UserBox extends Model {
     private String fullName;
     private String imageUrl;
     private String slug;
+    private String hashId;
     private Integer id;
     private Integer votesCount;
     private Integer argumentsCount = 0;
@@ -21,6 +22,9 @@ public class UserBox extends Model {
             userBox.setId(jsonObject.getInt("id"));
             userBox.setFullName(jsonObject.getString("full_name"));
             userBox.setSlug(jsonObject.getString("slug"));
+            if (jsonObject.has("hash_id")) {
+                userBox.setHashId(jsonObject.getString("hash_id"));
+            }
             userBox.setImageUrl(jsonObject.getString("image_url"));
             if (jsonObject.has("points")) {
                 userBox.setPoints(jsonObject.getInt("points"));
@@ -52,6 +56,14 @@ public class UserBox extends Model {
 
     public void setSlug(String slug) {
         this.slug = slug;
+    }
+
+    public String getHashId() {
+        return hashId;
+    }
+
+    public void setHashId(String hashId) {
+        this.hashId = hashId;
     }
 
     public Integer getId() {

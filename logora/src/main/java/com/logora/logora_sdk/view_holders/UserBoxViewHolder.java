@@ -1,6 +1,5 @@
 package com.logora.logora_sdk.view_holders;
 
-
 import android.content.res.Resources;
 import android.net.Uri;
 import android.view.View;

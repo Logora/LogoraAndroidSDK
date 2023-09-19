@@ -7,6 +7,7 @@ public class UserIcon extends Model {
     private String fullName;
     private String imageUrl;
     private String slug = " ";
+    private String hashId;
 
     public UserIcon() {
     }
@@ -18,6 +19,9 @@ public class UserIcon extends Model {
             userIcon.setImageUrl(jsonObject.getString("image_url"));
             if (jsonObject.has("slug")) {
                 userIcon.setSlug(jsonObject.getString("slug"));
+            }
+            if (jsonObject.has("hash_id")) {
+                userIcon.setHashId(jsonObject.getString("hash_id"));
             }
             return userIcon;
         } catch (JSONException e) {
@@ -32,6 +36,13 @@ public class UserIcon extends Model {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public String getHashId() {
+        return hashId;
+    }
+    public void setHashId(String hashId) {
+        this.hashId = hashId;
     }
 
     public String getSlug() {

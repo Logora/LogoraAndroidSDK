@@ -35,8 +35,9 @@ public class DebateShowViewModel extends ViewModel {
     private void loadDebate(String slug) {
         LogoraApiClient apiClient = LogoraApiClient.getInstance();
         HashMap<String, String> queryParams = new HashMap<String, String>();
-        apiClient.getOne("groups", slug, queryParams,
+        apiClient.getResource("groups", slug, queryParams,
                 response -> {
+            System.out.println("the group is"+response);
                     try {
                         JSONObject responseData = response.getJSONObject("data").getJSONObject("data").getJSONObject("resource");
                         Debate debateObject = Debate.objectFromJson(responseData);

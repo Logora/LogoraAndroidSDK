@@ -57,15 +57,7 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/vote_total"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:layout_marginTop="6dp"
-            android:text="@plurals/debate_votes_count"
-            android:textColor="@color/text_secondary"
-            android:textSize="14sp" />
+
     </LinearLayout>
 
 </RelativeLayout>

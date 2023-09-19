@@ -88,6 +88,7 @@ public class UserFragment extends Fragment {
             ProgressBar spinner = view.findViewById(R.id.loader);
             spinner.setVisibility(View.INVISIBLE);
             UserShowViewModel userViewModel = new UserShowViewModel();
+
             userViewModel.getUser(this.userSlug).observe(getViewLifecycleOwner(), user -> {
                 try {
                     if (auth.getCurrentUser().getId().equals(user.getId())) {
@@ -108,11 +109,6 @@ public class UserFragment extends Fragment {
                     System.out.println("error");
                 }
 
-                logoutButton.setOnClickListener(v -> {
-                    auth.logoutUser();
-                    HashMap<String, String> routeParams = new HashMap<>();
-                    router.navigate(Router.getRoute("INDEX"), routeParams);
-                });
                 userFullNameView.setText(user.getFullName());
                 Resources res = getContext().getResources();
                 int pointCount = user.getPoints();
@@ -132,6 +128,7 @@ public class UserFragment extends Fragment {
                 Glide.with(userImageView.getContext())
                         .load(Uri.parse(user.getImageUrl()))
                         .into(userImageView);
+
                 UserBoxListAdapter userDisciplesListAdapter = new UserBoxListAdapter();
                 UserBoxListAdapter userMentorsListAdapter = new UserBoxListAdapter();
                 UserMessagesListAdapter userMessagesListAdapter = new UserMessagesListAdapter();
@@ -141,10 +138,10 @@ public class UserFragment extends Fragment {
                 argumentListSortOptions.add(new SortOption(res.getString(R.string.list_ancien), "+created_at", null));
                 ArrayList<FilterOption> argumentListFilterOptions = new ArrayList<>();
                 argumentListFilterOptions.add(new FilterOption("Réponses", "is_reply", "true", null));
-                PaginatedListFragment userMessagesFragment = new PaginatedListFragment("users/" + userSlug + "/messages", "CLIENT", userMessagesListAdapter, null, argumentListSortOptions, null, "-created_at");
-                BadgeTabFragment userBadgesFragment = new BadgeTabFragment(userSlug);
-                PaginatedListFragment userDisciplesFragment = new PaginatedListFragment("users/" + userSlug + "/disciples", "CLIENT", userDisciplesListAdapter, null, null, null, null);
-                PaginatedListFragment userMentorsFragment = new PaginatedListFragment("users/" + userSlug + "/mentors", "CLIENT", userMentorsListAdapter, null, null, null, null);
+                PaginatedListFragment userMessagesFragment = new PaginatedListFragment("users/" + user.getSlug() + "/messages", "CLIENT", userMessagesListAdapter, null, argumentListSortOptions, null, "-created_at");
+                BadgeTabFragment userBadgesFragment = new BadgeTabFragment(user.getSlug());
+                PaginatedListFragment userDisciplesFragment = new PaginatedListFragment("users/" + user.getSlug() + "/disciples", "CLIENT", userDisciplesListAdapter, null, null, null, null);
+                PaginatedListFragment userMentorsFragment = new PaginatedListFragment("users/" + user.getSlug() + "/mentors", "CLIENT", userMentorsListAdapter, null, null, null, null);
                 getChildFragmentManager()
                         .beginTransaction()
                         .add(R.id.user_arguments_list, userMessagesFragment)
@@ -152,6 +149,11 @@ public class UserFragment extends Fragment {
                         .add(R.id.user_disciples_list, userDisciplesFragment)
                         .add(R.id.user_mentors_list, userMentorsFragment)
                         .commit();
+            });
+            logoutButton.setOnClickListener(v -> {
+                auth.logoutUser();
+                HashMap<String, String> routeParams = new HashMap<>();
+                router.navigate(Router.getRoute("INDEX"), routeParams);
             });
             tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override

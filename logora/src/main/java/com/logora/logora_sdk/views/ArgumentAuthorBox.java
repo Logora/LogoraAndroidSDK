@@ -73,12 +73,12 @@ public class ArgumentAuthorBox extends RelativeLayout {
         });
         userImageView.setOnClickListener(v -> {
             HashMap<String, String> routeParams = new HashMap<>();
-            routeParams.put("userSlug", argument.getAuthor().getSlug());
+            routeParams.put("userSlug", argument.getAuthor().getHashId());
             router.navigate(Router.getRoute("USER"), routeParams);
         });
         fullNameView.setOnClickListener(v -> {
             HashMap<String, String> routeParams = new HashMap<>();
-            routeParams.put("userSlug", argument.getAuthor().getSlug());
+            routeParams.put("userSlug", argument.getAuthor().getHashId());
             router.navigate(Router.getRoute("USER"), routeParams);
         });
         if (argument != null) {

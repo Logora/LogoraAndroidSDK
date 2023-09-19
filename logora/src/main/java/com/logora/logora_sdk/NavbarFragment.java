@@ -68,7 +68,7 @@ public class NavbarFragment extends Fragment {
             userProfileView.init(0, "Profil", null, auth.getCurrentUser().getImageUrl());
             userProfileView.setOnClickListener(v -> {
                 HashMap<String, String> routeParams = new HashMap<>();
-                routeParams.put("userSlug", auth.getCurrentUser().getSlug());
+                routeParams.put("userSlug", auth.getCurrentUser().getHashId());
                 router.navigate(Router.getRoute("USER"), routeParams);
             });
         }

@@ -28,7 +28,6 @@ public class Router {
         Route debateRoute = new Route("DEBATE", "/debat/:debateSlug", debateRouteParamDef);
         Router.routes.put(debateRoute.getName(), debateRoute);
 
-
         HashMap<String, String> userRouteParamDef = new HashMap<>();
         debateRouteParamDef.put("userSlug", "");
         Route userRoute = new Route("USER", "/utilisateur/:userSlug", userRouteParamDef);
@@ -39,11 +38,8 @@ public class Router {
         Route searchRoute = new Route("SEARCH", "/recherche", searchRouteQueryParamDef);
         Router.routes.put(searchRoute.getName(), searchRoute);
 
-
         Route notificationRoute = new Route("NOTIFICATIONS", "/notifications", null);
         Router.routes.put(notificationRoute.getName(), notificationRoute);
-
-
     }
 
     public static Route getRoute(String routeName) {

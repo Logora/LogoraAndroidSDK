@@ -114,6 +114,8 @@ public class FollowDebateButtonView extends androidx.appcompat.widget.AppCompatB
         if (this.auth.getIsLoggedIn()) {
             this.apiClient.getDebateFollow(
                     response -> {
+                        System.out.println("the debate follow is"+response);
+
                         try {
                             boolean success = response.getJSONObject("data").getBoolean("success");
                             boolean follow = true;

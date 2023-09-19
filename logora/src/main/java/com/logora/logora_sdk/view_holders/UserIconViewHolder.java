@@ -28,7 +28,7 @@ public class UserIconViewHolder extends ListViewHolder {
                 .into(userImageView);
         userImageView.setOnClickListener(v -> {
             HashMap<String, String> routeParams = new HashMap<>();
-            routeParams.put("userSlug", userIcon.getSlug());
+            routeParams.put("userSlug", userIcon.getHashId());
             router.navigate(Router.getRoute("USER"), routeParams);
         });
     }

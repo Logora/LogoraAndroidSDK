@@ -168,7 +168,7 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
         argumentAuthorBox.init(argument);
         argumentAuthorBox.setOnClickListener(v -> {
             HashMap<String, String> routeParams = new HashMap<>();
-            routeParams.put("userSlug", argument.getAuthor().getSlug());
+            routeParams.put("userSlug", argument.getAuthor().getHashId());
             router.navigate(Router.getRoute("USER"), routeParams);
         });
         argumentVote.init(argument, debate);

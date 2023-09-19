@@ -44,7 +44,7 @@ public class UserBoxListAdapter extends ListAdapter {
             holder.updateWithObject(userBox);
             holder.itemView.setOnClickListener(v -> {
                 HashMap<String, String> routeParams = new HashMap<>();
-                routeParams.put("userSlug", userBox.getSlug());
+                routeParams.put("userSlug", userBox.getHashId());
                 router.navigate(Router.getRoute("USER"), routeParams);
             });
         }

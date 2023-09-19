@@ -111,7 +111,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
+                    android:layout_marginEnd="8dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -122,7 +122,6 @@
                         android:text="@plurals/user_argument_count"
                         android:textSize="14sp" />
                 </LinearLayout>
-
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -133,7 +132,6 @@
                         android:id="@+id/user_votes_count_value"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="8dp"
                         android:text="@plurals/user_vote_count"
                         android:textSize="14sp" />
                 </LinearLayout>

@@ -5,17 +5,17 @@ import org.json.JSONObject;
 
 public class User {
     private String fullName;
-    private String slug;
-    private String uid = " ";
-    private Integer id;
     private String imageUrl;
-    private Integer debatesCount;
+    private String slug;
+    private String hashId;
+    private String uid = "";
+    private Integer id;
+    private Integer debatesCount = 0;
     private Integer votesCount = 0;
-    private Integer vote;
+    private Integer vote; // utilisé ??
     private Integer disciplesCount = 0;
     private Integer notificationsCount = 0;
     private Integer userPoint = 0;
-    private String levelIconUrl;
 
     public User() {
     }
@@ -29,6 +29,9 @@ public class User {
             user.setSlug(jsonObject.getString("slug"));
             user.setVotes(jsonObject.getInt("upvotes"));
             user.setId(jsonObject.getInt("id"));
+            if (jsonObject.has("hash_id")) {
+                user.setHashId(jsonObject.getString("hash_id"));
+            }
             user.setImageUrl(jsonObject.getString("image_url"));
             user.setFullName(jsonObject.getString("full_name"));
             if (jsonObject.has("debates_count")) {
@@ -93,6 +96,14 @@ public class User {
         this.id = id;
     }
 
+    public String getHashId() {
+        return hashId;
+    }
+
+    public void setHashId(String hashId) {
+        this.hashId = hashId;
+    }
+
     public String getImageUrl() {
         return imageUrl;
     }
@@ -131,10 +142,6 @@ public class User {
 
     public Integer getNotificationsCount() {
         return notificationsCount;
-    }
-
-    public String getLevelIconUrl() {
-        return levelIconUrl;
     }
 
     public Integer getPoints() {
