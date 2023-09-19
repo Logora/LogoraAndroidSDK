@@ -37,7 +37,6 @@ public class DebateShowViewModel extends ViewModel {
         HashMap<String, String> queryParams = new HashMap<String, String>();
         apiClient.getResource("groups", slug, queryParams,
                 response -> {
-            System.out.println("the group is"+response);
                     try {
                         JSONObject responseData = response.getJSONObject("data").getJSONObject("data").getJSONObject("resource");
                         Debate debateObject = Debate.objectFromJson(responseData);

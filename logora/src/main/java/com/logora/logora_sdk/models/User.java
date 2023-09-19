@@ -12,7 +12,7 @@ public class User {
     private Integer id;
     private Integer debatesCount = 0;
     private Integer votesCount = 0;
-    private Integer vote; // utilisé ??
+    private Integer vote;
     private Integer disciplesCount = 0;
     private Integer notificationsCount = 0;
     private Integer userPoint = 0;
