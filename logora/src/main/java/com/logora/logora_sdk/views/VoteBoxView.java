@@ -189,11 +189,10 @@ public class VoteBoxView extends RelativeLayout {
     public void vote(Integer positionId) {
 
         if (this.voteId != null && this.votePositionId != null) {
-            System.out.println("the vote is different null");
+            inputProvider.addUserPosition(Integer.parseInt(debate.getId()), positionId);
             debate.updateVote(positionId, this.votePositionId);
             this.updateVote(positionId);
         } else {
-            System.out.println("the vote is null");
             inputProvider.addUserPosition(Integer.parseInt(debate.getId()), positionId);
             debate.updateVote(positionId, null);
             this.createVote(positionId);
@@ -222,7 +221,7 @@ public class VoteBoxView extends RelativeLayout {
     }
 
     public void updateVote(Integer positionId) {
-        // showButtons();
+
         this.apiClient.updateVote(
                 response -> {
                     try {

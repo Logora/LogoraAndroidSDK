@@ -202,7 +202,6 @@ public class Debate {
                 votesCountObject.put(position.getId(), 0);
             }
         }
-
         for (Map.Entry<Integer, Integer> entry : votesCountObject.entrySet()) {
             Integer positionId = entry.getKey();
             Integer numberVotes = entry.getValue();
@@ -232,6 +231,7 @@ public class Debate {
 
         this.calculateVotePercentage();
     }
+
 
     public Integer getPositionPercentage(Integer positionId) {
         return votesPercentages.get(positionId);
