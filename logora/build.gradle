@@ -37,6 +37,10 @@ android {
 }
 
 publishing {
+    singleVariant('release') {
+        withSourcesJar()
+    }
+
     repositories {
         maven {
             name = "GitHubPackages"
