@@ -2,11 +2,9 @@ package com.logora.logora_sdk.view_holders;
 
 import android.content.Context;
 import android.view.View;
-
 import com.logora.logora_sdk.R;
 import com.logora.logora_sdk.models.Argument;
 import com.logora.logora_sdk.models.Debate;
-import com.logora.logora_sdk.utils.Auth;
 import com.logora.logora_sdk.views.ArgumentBox;
 
 public class ArgumentViewHolder extends ListViewHolder {

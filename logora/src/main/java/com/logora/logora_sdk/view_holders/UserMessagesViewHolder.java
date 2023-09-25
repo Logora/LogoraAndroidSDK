@@ -1,11 +1,9 @@
 package com.logora.logora_sdk.view_holders;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.logora.logora_sdk.R;
 import com.logora.logora_sdk.models.Argument;
 import com.logora.logora_sdk.models.Debate;

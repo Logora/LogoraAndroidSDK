@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.logora.logora_sdk.R;
 import com.logora.logora_sdk.models.BadgeNotification;
@@ -19,10 +18,7 @@ import com.logora.logora_sdk.models.Notification;
 import com.logora.logora_sdk.utils.DateUtil;
 import com.logora.logora_sdk.utils.LogoraApiClient;
 import com.logora.logora_sdk.utils.Router;
-import com.logora.logora_sdk.utils.Settings;
-
 import org.json.JSONException;
-
 import java.util.HashMap;
 
 public class NotificationViewHolder extends ListViewHolder {

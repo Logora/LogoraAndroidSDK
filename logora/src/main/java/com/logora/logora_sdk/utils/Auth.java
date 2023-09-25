@@ -1,13 +1,10 @@
 package com.logora.logora_sdk.utils;
 
 import android.util.Log;
-
 import com.logora.logora_sdk.models.User;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
 
 public class Auth {
     private final LogoraApiClient apiClient = LogoraApiClient.getInstance();

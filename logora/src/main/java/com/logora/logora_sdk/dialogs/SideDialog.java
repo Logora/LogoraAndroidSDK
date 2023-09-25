@@ -3,15 +3,9 @@ package com.logora.logora_sdk.dialogs;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.LayerDrawable;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import androidx.core.content.ContextCompat;
-
 import com.logora.logora_sdk.R;
 import com.logora.logora_sdk.models.Debate;
 import com.logora.logora_sdk.utils.InputProvider;

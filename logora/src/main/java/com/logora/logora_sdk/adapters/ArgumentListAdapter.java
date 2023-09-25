@@ -5,17 +5,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
-
 import com.logora.logora_sdk.R;
 import com.logora.logora_sdk.models.Argument;
 import com.logora.logora_sdk.models.Debate;
 import com.logora.logora_sdk.view_holders.ArgumentViewHolder;
 import com.logora.logora_sdk.view_holders.ListViewHolder;
-
 import org.json.JSONObject;
-
 import java.util.List;
 
 public class ArgumentListAdapter extends ListAdapter {

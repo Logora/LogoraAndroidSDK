@@ -2,7 +2,6 @@ package com.logora.logora_sdk.view_holders;
 
 import android.view.View;
 import android.widget.TextView;
-
 import com.logora.logora_sdk.R;
 import com.logora.logora_sdk.models.Tag;
 

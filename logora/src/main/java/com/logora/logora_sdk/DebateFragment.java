@@ -6,7 +6,6 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,17 +15,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.core.content.ContextCompat;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.bumptech.glide.Glide;
 import com.logora.logora_sdk.adapters.ArgumentListAdapter;
 import com.logora.logora_sdk.adapters.DebateBoxListAdapter;
 import com.logora.logora_sdk.adapters.TagListAdapter;
@@ -34,7 +29,6 @@ import com.logora.logora_sdk.dialogs.LoginDialog;
 import com.logora.logora_sdk.dialogs.SideDialog;
 import com.logora.logora_sdk.models.Argument;
 import com.logora.logora_sdk.models.Debate;
-import com.logora.logora_sdk.models.FilterOption;
 import com.logora.logora_sdk.models.SortOption;
 import com.logora.logora_sdk.utils.Auth;
 import com.logora.logora_sdk.utils.DateUtil;
@@ -45,13 +39,10 @@ import com.logora.logora_sdk.utils.Settings;
 import com.logora.logora_sdk.view_models.DebateShowViewModel;
 import com.logora.logora_sdk.views.ArgumentAuthorBox;
 import com.logora.logora_sdk.views.FollowDebateButtonView;
-import com.logora.logora_sdk.views.PrimaryButton;
 import com.logora.logora_sdk.views.ShareView;
 import com.logora.logora_sdk.views.VoteBoxView;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 

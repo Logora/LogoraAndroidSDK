@@ -5,20 +5,11 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
 import com.logora.logora_sdk.models.Debate;
-import com.logora.logora_sdk.models.Position;
-import com.logora.logora_sdk.utils.DateUtil;
 import com.logora.logora_sdk.utils.LogoraApiClient;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 
 public class DebateShowViewModel extends ViewModel {
     private MutableLiveData<Debate> debate;

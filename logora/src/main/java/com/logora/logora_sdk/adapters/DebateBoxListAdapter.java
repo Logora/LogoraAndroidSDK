@@ -1,25 +1,17 @@
 package com.logora.logora_sdk.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
-
-import com.logora.logora_sdk.DebateFragment;
-import com.logora.logora_sdk.LogoraAppActivity;
 import com.logora.logora_sdk.models.DebateBox;
 import com.logora.logora_sdk.utils.Router;
 import com.logora.logora_sdk.view_holders.DebateBoxViewHolder;
 import com.logora.logora_sdk.view_holders.ListViewHolder;
 import com.logora.logora_sdk.R;
-
 import org.json.JSONObject;
-
 import java.util.HashMap;
-import java.util.List;
 
 public class DebateBoxListAdapter extends ListAdapter {
     private final Router router = Router.getInstance();

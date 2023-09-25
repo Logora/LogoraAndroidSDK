@@ -1,23 +1,13 @@
 package com.logora.logora_sdk;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
 import com.logora.logora_sdk.adapters.DebateBoxListAdapter;
 import com.logora.logora_sdk.adapters.UserBoxListAdapter;
-import com.logora.logora_sdk.models.FilterOption;
 import com.logora.logora_sdk.models.SortOption;
-import com.logora.logora_sdk.utils.Router;
-
 import java.util.ArrayList;
 
 /**

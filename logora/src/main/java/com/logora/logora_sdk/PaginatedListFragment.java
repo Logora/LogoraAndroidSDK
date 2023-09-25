@@ -11,15 +11,12 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.logora.logora_sdk.adapters.ListAdapter;
 import com.logora.logora_sdk.models.FilterOption;
 import com.logora.logora_sdk.models.SortOption;
 import com.logora.logora_sdk.view_models.ListViewModel;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

@@ -10,12 +10,9 @@ import android.util.AttributeSet;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
 import androidx.core.content.ContextCompat;
-
 import com.logora.logora_sdk.R;
 import com.logora.logora_sdk.models.Argument;
-import com.logora.logora_sdk.utils.InputProvider;
 import com.logora.logora_sdk.utils.Settings;
 
 public class DeleteArgumentDialog extends LinearLayout {

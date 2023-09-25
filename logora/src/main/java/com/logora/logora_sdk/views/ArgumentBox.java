@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
@@ -24,19 +23,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.Resource;
-import com.logora.logora_sdk.DividerItemDecorator;
 import com.logora.logora_sdk.PaginatedListFragment;
 import com.logora.logora_sdk.R;
 import com.logora.logora_sdk.adapters.ArgumentListAdapter;
@@ -52,10 +45,8 @@ import com.logora.logora_sdk.utils.InputProvider;
 import com.logora.logora_sdk.utils.LogoraApiClient;
 import com.logora.logora_sdk.utils.Router;
 import com.logora.logora_sdk.utils.Settings;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.HashMap;
 import java.util.List;
 

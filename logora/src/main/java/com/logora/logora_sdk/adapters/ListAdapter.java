@@ -2,12 +2,9 @@ package com.logora.logora_sdk.adapters;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.logora.logora_sdk.view_holders.ListViewHolder;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 

@@ -5,10 +5,8 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
 import com.logora.logora_sdk.utils.Settings;
 import com.logora.logora_sdk.utils.LogoraApiClient;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 

@@ -4,21 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
-
 import com.logora.logora_sdk.utils.Auth;
 import com.logora.logora_sdk.utils.LogoraApiClient;
 import com.logora.logora_sdk.utils.Route;
 import com.logora.logora_sdk.utils.Router;
 import com.logora.logora_sdk.view_models.SettingsViewModel;
 
-import java.util.HashMap;
 
 public class LogoraAppActivity extends AppCompatActivity implements Router.RouteListener, Auth.AuthListener {
     private final Router router = Router.getInstance();

@@ -1,13 +1,10 @@
 package com.logora.logora_sdk.models;
 
-import android.util.Log;
 
 import com.logora.logora_sdk.utils.DateUtil;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
