@@ -1,6 +1,6 @@
 package com.logora.testapp;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.app.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +11,7 @@ import com.logora.logora_sdk.WidgetFragment;
 import io.sentry.Sentry;
 import io.sentry.android.core.SentryAndroid;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
