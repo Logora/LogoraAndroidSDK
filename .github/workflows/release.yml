@@ -18,7 +18,7 @@ jobs:
 
       - uses: gradle/gradle-build-action@v2
         with:
-          gradle-version: 7.2.2
+          gradle-version: 7.3.3
 
       - name: Build with Gradle
         run: gradle :logora:build
