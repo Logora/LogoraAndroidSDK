@@ -7,7 +7,6 @@ public class Position extends Model {
     private String name;
     private Integer id;
 
-
     public Position() {
     }
 

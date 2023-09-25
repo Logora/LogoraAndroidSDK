@@ -28,7 +28,6 @@ public class Argument extends Model {
     private String status;
     private List<JSONObject> repliesAuthorsList;
 
-
     public Argument() {
     }
 
