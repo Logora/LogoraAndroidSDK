@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/footer_background"
+    android:orientation="horizontal"
+    android:paddingHorizontal="12dp"
+    android:paddingVertical="5dp"
+    tools:context=".FooterFragment">
+
+    <TextView
+        android:id="@+id/firsttext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginEnd="8dp"
+        android:gravity="center"
+        android:text="Charte de modération"
+        android:textColor="@color/text_secondary" />
+
+    <TextView
+        android:id="@+id/secondtext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/firsttext"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center"
+        android:text="Proposer une amélioration"
+        android:textColor="@color/text_secondary" />
+
+    <TextView
+        android:id="@+id/thirdtext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/secondtext"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center"
+        android:text="CGU"
+        android:textColor="@color/text_secondary" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/thirdtext"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_logora_icon" />
+
+        <TextView
+            android:id="@+id/fourtext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Créé par logora"
+            android:textColor="@color/text_secondary" />
+
+    </LinearLayout>
+</RelativeLayout>

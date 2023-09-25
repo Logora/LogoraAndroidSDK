@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/firstShape">
+        <shape
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:shape="rectangle">
+            <stroke
+                android:width="1px"
+                android:color="@color/text_tertiary" />
+            <solid android:color="@android:color/transparent" />
+
+        </shape>
+    </item>
+
+    <item android:top="1dp" android:bottom="1dp" android:id="@+id/secondShape">
+        <shape
+            android:shape="rectangle">
+            <stroke android:width="1px" android:color="@color/text_tertiary" />
+            <solid android:color="@android:color/transparent" />
+        </shape>
+    </item>
+</layer-list>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/navbar_background"
+    android:paddingVertical="8dp"
+    tools:context=".NavbarFragment">
+
+    <LinearLayout
+        android:id="@+id/navbar_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/search_form_container"
+        android:orientation="horizontal">
+
+        <com.logora.logora_sdk.views.IconTextView
+            android:id="@+id/index_button_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1" />
+
+        <com.logora.logora_sdk.views.IconTextView
+            android:id="@+id/search_button_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentTop="true"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center_vertical" />
+
+        <com.logora.logora_sdk.views.IconTextView
+            android:id="@+id/login_link_button"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1" />
+
+        <RelativeLayout
+            android:id="@+id/notification_container"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:visibility="gone">
+
+            <com.logora.logora_sdk.views.IconTextView
+                android:id="@+id/user_notification_button_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:id="@+id/notification_badge"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="-20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="-10dp"
+                android:layout_toEndOf="@id/user_notification_button_view"
+                android:background="@drawable/badge_background"
+                android:gravity="center"
+                android:padding="3dp"
+                android:text="@string/user_notifications_count"
+                android:textColor="@android:color/white"
+                android:textSize="10sp" />
+        </RelativeLayout>
+
+        <com.logora.logora_sdk.views.IconTextView
+            android:id="@+id/user_profile_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <com.logora.logora_sdk.views.SearchFormView
+        android:id="@+id/search_form_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="10dp"
+        android:paddingHorizontal="6dp"
+        android:visibility="gone" />
+</RelativeLayout>

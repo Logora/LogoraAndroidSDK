@@ -1,0 +1,73 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+plugins {
+    id 'com.android.library'
+    id 'maven-publish'
+
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/Logora/LogoraAndroidSDK")
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
+        }
+    }
+}
+
+android {
+    compileSdkVersion 33
+    buildToolsVersion "33.0.2"
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 33
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            multiDexEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    viewBinding {
+        enabled = true
+    }
+    buildFeatures {
+        viewBinding true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'androidx.fragment:fragment:1.3.3'
+    implementation "androidx.recyclerview:recyclerview:1.2.0"
+    implementation "androidx.recyclerview:recyclerview-selection:1.1.0"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.android.volley:volley:1.2.0'
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    implementation 'jp.wasabeef:glide-transformations:4.3.0'
+    implementation 'com.google.android.material:material:1.3.0'
+    implementation 'androidx.test:monitor:1.6.1'
+    implementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'junit:junit:4.12'
+}

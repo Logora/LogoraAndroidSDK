@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/search_form_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/box_background"
+    android:backgroundTint="@android:color/white">
+
+    <ImageView
+        android:id="@+id/search_back_icon"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_centerVertical="true"
+        android:layout_marginHorizontal="6dp"
+        android:clickable="true"
+        android:contentDescription="@string/search_back_icon_content_description"
+        android:focusable="true"
+        android:gravity="center"
+        android:src="@drawable/ic_left_arrow" />
+
+    <EditText
+        android:id="@+id/search_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@+id/search_back_icon"
+        android:backgroundTint="@color/text_secondary"
+        android:hint="@string/search_placeholder"
+        android:imeOptions="actionSearch"
+        android:inputType="text"
+        android:singleLine="true"
+        android:textCursorDrawable="@null"
+        tools:ignore="LabelFor" />
+
+    <ImageView
+        android:id="@+id/search_submit"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginHorizontal="6dp"
+        android:clickable="true"
+        android:contentDescription="@string/search_submit_icon_content_description"
+        android:focusable="true"
+        android:gravity="center"
+        android:src="@drawable/ic_search" />
+</RelativeLayout>

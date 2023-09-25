@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="12dp"
+    android:paddingVertical="5dp"
+    tools:context=".IndexFragment">
+
+
+    <com.logora.logora_sdk.views.TextWrapper
+        android:id="@+id/main_debate_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100px"
+        android:text="@string/headerMainDebate"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:textKey="headerMainDebate" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/main_debate_header"
+        android:layout_centerInParent="true"
+        android:background="@android:drawable/editbox_background"
+        android:drawableRight="@android:drawable/arrow_down_float"
+        android:drawablePadding="35dp"
+        android:padding="20dp" />
+
+    <View
+        android:id="@+id/main_debate_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/main_debate_header"></View>
+
+    <FrameLayout
+        android:id="@+id/trending_debates_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/main_debate_box"
+        android:layout_marginTop="10dp" />
+
+    <com.logora.logora_sdk.views.TextWrapper
+        android:id="@+id/trending_users_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/trending_debates_list"
+        android:layout_marginVertical="10dp"
+        android:text="@string/headerBestUsers"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:textKey="headerBestUsers" />
+
+
+    <FrameLayout
+        android:id="@+id/trending_users_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/trending_users_header" />
+</RelativeLayout>

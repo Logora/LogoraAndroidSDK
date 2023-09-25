@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/report_dialog_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerVertical="true"
+    android:orientation="vertical"
+    android:paddingHorizontal="25dp"
+    android:paddingVertical="25dp">
+
+    <TextView
+        android:id="@+id/report_dialog_subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:text="Raison du signalement :" />
+
+    <Spinner
+        android:id="@+id/report_reason_select"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:textAlignment="textStart" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="10dp"
+        android:background="@android:color/darker_gray" />
+
+    <TextView
+        android:id="@+id/report_dialog_input_subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:labelFor="@+id/tell_us_more_input"
+        android:text="Dites nous en plus :" />
+
+    <EditText
+        android:id="@+id/tell_us_more_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:autofillHints="Description"
+        android:backgroundTint="@color/text_secondary"
+        android:gravity="top"
+        android:inputType="textMultiLine"
+        android:lines="3"
+        android:maxLines="10"
+        android:minLines="1"
+        android:textCursorDrawable="@null" />
+
+    <com.logora.logora_sdk.views.PrimaryButton
+        android:id="@+id/report_dialog_submit"
+        style="@style/PrimaryButton"
+        android:text="@string/report"
+        app:textKey="submit" />
+
+</LinearLayout>

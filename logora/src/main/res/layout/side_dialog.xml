@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingHorizontal="25dp"
+    android:paddingVertical="25dp">
+
+    <TextView
+        android:id="@+id/side_dialog_debate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginVertical="10dp"
+        android:layout_marginEnd="15dp"
+        android:text="Titre du débat"
+        android:textStyle="bold" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/side_dialog_debate"
+        android:layout_centerHorizontal="true">
+
+        <Button
+            android:id="@+id/first_position_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:backgroundTint="@color/call_primary"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="6dp"
+            android:text="Oui"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/second_position_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/first_position_button"
+            android:backgroundTint="@color/first_position_primary"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="6dp"
+            android:text="Non"
+            android:textColor="@android:color/white" />
+    </RelativeLayout>
+
+</RelativeLayout>

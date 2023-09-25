@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context="com.logora.logora_sdk.LogoraAppActivity">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/layout_navbar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/retour_page"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30px">
+
+                <TextView
+                    android:id="@+id/left_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_left_arrow"
+                    android:text="Retour"
+                    android:textSize="19dp" />
+
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/root_loader"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:indeterminate="true"
+                android:indeterminateTint="@android:color/black"
+                android:indeterminateTintMode="src_atop" />
+
+            <FrameLayout
+                android:id="@+id/main_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <FrameLayout
+                android:id="@+id/footer_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/main_fragment"
+
+                />
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/layout_navbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <FrameLayout
+            android:id="@+id/navbar_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:background="@android:color/white"
+
+            />
+    </LinearLayout>
+
+
+</RelativeLayout>

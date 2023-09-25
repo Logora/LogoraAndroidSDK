@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.logora.logora_sdk">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application>
+        <activity android:name="com.logora.logora_sdk.WebViewActivity"
+            android:theme="@android:style/Theme.NoTitleBar"/>
+        <activity
+            android:name="com.logora.logora_sdk.LogoraAppActivity"
+            android:label="@string/activity_name" >
+        </activity>
+    </application>
+</manifest>

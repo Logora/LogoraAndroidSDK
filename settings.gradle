@@ -1,0 +1,3 @@
+include ':logora'
+include ':app'
+rootProject.name = "LogoraAndroidSDK"
