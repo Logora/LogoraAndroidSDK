@@ -48,7 +48,7 @@ public class User extends Model {
                 user.setVotesCount(jsonObject.getInt("debates_votes_count"));
             }
             if (jsonObject.has("messages_count")) {
-                userBox.setArgumentsCount(jsonObject.getInt("messages_count"));
+                user.setArgumentsCount(jsonObject.getInt("messages_count"));
             }
             if (jsonObject.has("followers_count")) {
                 user.setDisciplesCount(jsonObject.getInt("followers_count"));
