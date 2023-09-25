@@ -360,8 +360,6 @@ public class VoteBoxView extends RelativeLayout {
         progressBar.setMax(width);
         int start = (int) (startPercent * width);
         int end = (int) (endPercent * width);
-        Log.d("Debug", "startPercent: " + startPercent);
-        Log.d("Debug", "endPercent: " + endPercent);
         ValueAnimator animator = ValueAnimator.ofInt(start, end);
         animator.setInterpolator(new LinearInterpolator());
         animator.setStartDelay(0);

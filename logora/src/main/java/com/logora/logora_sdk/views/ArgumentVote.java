@@ -111,7 +111,6 @@ public class ArgumentVote extends LinearLayout {
     public void toggleVoteAction() {
         if (authClient.getIsLoggedIn() == true) {
             if (hasVoted) {
-
                 argument.decrementVotesCount();
                 HashMap<String, String> queryParams = new HashMap<String, String>();
                 this.apiClient.delete("votes", String.valueOf(voteId), queryParams,

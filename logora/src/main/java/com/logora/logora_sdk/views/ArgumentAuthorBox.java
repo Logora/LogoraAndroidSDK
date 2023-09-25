@@ -31,7 +31,6 @@ public class ArgumentAuthorBox extends RelativeLayout {
     private ImageView levelIconView;
     private Argument argument;
 
-
     public ArgumentAuthorBox(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initView();

@@ -90,7 +90,6 @@ public class FollowDebateButtonView extends androidx.appcompat.widget.AppCompatB
         this.setInactive();
         this.setEnabled(false);
         this.apiClient.unfollowDebate(
-
                 response -> {
                     try {
                         boolean success = response.getBoolean("success");
@@ -131,7 +130,6 @@ public class FollowDebateButtonView extends androidx.appcompat.widget.AppCompatB
         }
     }
 
-
     private void setActive() {
         this.active = true;
         this.setEnabled(true);
@@ -167,5 +165,4 @@ public class FollowDebateButtonView extends androidx.appcompat.widget.AppCompatB
         gradientDrawable.setColor(Color.parseColor(primaryColor));
         this.setBackground(shape);
     }
-
 }

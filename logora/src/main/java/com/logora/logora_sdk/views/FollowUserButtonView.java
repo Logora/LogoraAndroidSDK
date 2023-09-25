@@ -91,7 +91,6 @@ public class FollowUserButtonView extends androidx.appcompat.widget.AppCompatBut
         this.setInactive();
         this.setEnabled(false);
         this.apiClient.unfollowUser(
-
                 response -> {
                     try {
                         boolean success = response.getBoolean("success");

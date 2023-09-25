@@ -55,10 +55,8 @@ public class SearchFormView extends RelativeLayout {
                     router.navigate(Router.getRoute("SEARCH"), routeParams);
                     return true;
                 }
-
                 return false;
             }
-
         });
         searchSubmit.setOnClickListener(v -> {
             InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -70,7 +68,6 @@ public class SearchFormView extends RelativeLayout {
         });
 
     }
-
 
     private void findViews() {
         searchSubmit = this.findViewById(R.id.search_submit);
