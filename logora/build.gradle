@@ -17,6 +17,8 @@ publishing {
             artifactId = 'logora-sdk'
             version = System.getenv("RELEASE_TAG") ?: '0.1.0'
             
+            from components.java
+            
             pom {
                 name = 'Logora SDK'
                 description = 'Android SDK for the Logora debate space'
