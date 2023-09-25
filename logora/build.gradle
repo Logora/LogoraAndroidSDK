@@ -12,12 +12,12 @@ plugins {
 
 publishing {
      publications {
-        maven(MavenPublication) {
+        release(MavenPublication) {
             groupId = 'com.logora'
             artifactId = 'logora-sdk'
             version = System.getenv("RELEASE_TAG") ?: '0.1.0'
 
-            from components.java
+            from components.release
             
             pom {
                 name = 'Logora SDK'
