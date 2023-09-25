@@ -15,9 +15,7 @@ publishing {
         maven(MavenPublication) {
             groupId = 'com.logora'
             artifactId = 'logora-sdk'
-            version = System.getenv("RELEASE_TAG")
-            
-            from components.release
+            version = System.getenv("RELEASE_TAG") ?: '0.1.0'
             
             pom {
                 name = 'Logora SDK'
