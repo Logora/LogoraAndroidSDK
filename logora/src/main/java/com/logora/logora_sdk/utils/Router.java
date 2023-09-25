@@ -1,16 +1,11 @@
 package com.logora.logora_sdk.utils;
 
 import androidx.fragment.app.Fragment;
-
 import com.logora.logora_sdk.DebateFragment;
 import com.logora.logora_sdk.IndexFragment;
 import com.logora.logora_sdk.NotificationFragment;
 import com.logora.logora_sdk.SearchFragment;
 import com.logora.logora_sdk.UserFragment;
-import com.logora.logora_sdk.WidgetFragment;
-import com.logora.logora_sdk.views.ArgumentAuthorBox;
-import com.logora.logora_sdk.views.ArgumentBox;
-
 import java.util.HashMap;
 
 public class Router {

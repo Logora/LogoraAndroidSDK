@@ -6,10 +6,8 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
 import com.google.android.material.tabs.TabLayout;
 import com.logora.logora_sdk.adapters.DebateBoxListAdapter;
 import com.logora.logora_sdk.adapters.UserBoxListAdapter;

@@ -1,7 +1,6 @@
 package com.logora.logora_sdk.models;
 
 import com.logora.logora_sdk.utils.DateUtil;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 

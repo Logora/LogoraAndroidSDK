@@ -1,10 +1,8 @@
 package com.logora.logora_sdk.models;
 
 import com.logora.logora_sdk.utils.DateUtil;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.Date;
 
 public class Notification<T1, T2, T3> extends Model {

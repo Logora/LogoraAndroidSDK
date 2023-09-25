@@ -5,13 +5,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
 import com.logora.logora_sdk.adapters.NotificationListAdapter;
 import com.logora.logora_sdk.utils.LogoraApiClient;
-import com.logora.logora_sdk.utils.Router;
 import com.logora.logora_sdk.utils.Settings;
 
 import org.json.JSONException;

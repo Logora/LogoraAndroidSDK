@@ -4,15 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
 import com.logora.logora_sdk.utils.Auth;
 import com.logora.logora_sdk.utils.Router;
 import com.logora.logora_sdk.utils.Settings;

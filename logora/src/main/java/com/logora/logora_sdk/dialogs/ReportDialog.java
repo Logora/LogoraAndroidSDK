@@ -12,15 +12,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import com.logora.logora_sdk.R;
 import com.logora.logora_sdk.models.Argument;
 import com.logora.logora_sdk.utils.LogoraApiClient;
 import com.logora.logora_sdk.utils.Settings;
 import com.logora.logora_sdk.views.PrimaryButton;
-
 import org.json.JSONException;
-
 import java.util.HashMap;
 
 public class ReportDialog extends LinearLayout {

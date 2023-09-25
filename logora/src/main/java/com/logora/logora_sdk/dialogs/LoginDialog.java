@@ -5,23 +5,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.graphics.drawable.VectorDrawable;
 import android.net.Uri;
 import android.text.method.LinkMovementMethod;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.logora.logora_sdk.R;
 import com.logora.logora_sdk.WebViewActivity;
 import com.logora.logora_sdk.utils.InputProvider;
 import com.logora.logora_sdk.utils.Settings;
 
-import androidx.core.content.ContextCompat;
 
 public class LoginDialog extends LinearLayout {
     private final Context context;

@@ -5,21 +5,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.logora.logora_sdk.adapters.BadgeBoxListAdapter;
 import com.logora.logora_sdk.adapters.NextBadgeBoxListAdapter;
-import com.logora.logora_sdk.utils.Router;
-import com.logora.logora_sdk.utils.Settings;
 import com.logora.logora_sdk.view_models.UserBadgesViewModel;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 

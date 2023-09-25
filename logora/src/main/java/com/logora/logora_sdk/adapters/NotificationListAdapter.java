@@ -4,9 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
-
 import com.logora.logora_sdk.R;
 import com.logora.logora_sdk.models.BadgeNotification;
 import com.logora.logora_sdk.models.GetVoteNotification;
@@ -15,7 +13,6 @@ import com.logora.logora_sdk.models.GroupReplyNotification;
 import com.logora.logora_sdk.models.Notification;
 import com.logora.logora_sdk.view_holders.ListViewHolder;
 import com.logora.logora_sdk.view_holders.NotificationViewHolder;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 

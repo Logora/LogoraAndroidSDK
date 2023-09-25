@@ -7,19 +7,11 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-
 import com.bumptech.glide.Glide;
 import com.logora.logora_sdk.R;
 import com.logora.logora_sdk.models.Argument;
-import com.logora.logora_sdk.models.User;
 import com.logora.logora_sdk.utils.Auth;
 import com.logora.logora_sdk.utils.Router;
-import com.logora.logora_sdk.utils.Settings;
-
-import org.json.JSONException;
-
 import java.util.HashMap;
 
 public class ArgumentAuthorBox extends RelativeLayout {
