@@ -21,10 +21,7 @@ public class DateUtil {
     }
 
     public static String getTimeAgo(Date startDate) {
-
         long different = System.currentTimeMillis() - startDate.getTime();
-
-
         long secondsInMilli = 1000;
         long minutesInMilli = secondsInMilli * 60;
         long hoursInMilli = minutesInMilli * 60;
@@ -32,7 +29,6 @@ public class DateUtil {
 
         long elapsedDays = different / daysInMilli;
         different = different % daysInMilli;
-
 
         long elapsedHours = different / hoursInMilli;
         different = different % hoursInMilli;

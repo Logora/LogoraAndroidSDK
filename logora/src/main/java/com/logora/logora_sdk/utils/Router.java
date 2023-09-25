@@ -89,7 +89,6 @@ public class Router {
                 return new SearchFragment(route.getParams().get("q"));
             case "NOTIFICATIONS":
                 return new NotificationFragment();
-
             default:
                 return new IndexFragment();
         }

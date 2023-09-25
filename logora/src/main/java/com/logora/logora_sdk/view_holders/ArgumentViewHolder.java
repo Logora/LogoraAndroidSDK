@@ -30,5 +30,4 @@ public class ArgumentViewHolder extends ListViewHolder {
         argumentBox.updateWithObject(object, debate, context);
         argumentBox.setVisibility(View.VISIBLE);
     }
-
 }

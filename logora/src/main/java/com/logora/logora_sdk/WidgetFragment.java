@@ -44,8 +44,6 @@ public class WidgetFragment extends Fragment {
     private Button voteThirdPositionButton;
     private TextView votesCountView;
 
-
-
     public WidgetFragment() {
         super(R.layout.fragment_widget);
     }
@@ -89,19 +87,6 @@ public class WidgetFragment extends Fragment {
         voteFirstPositionButton.setBackgroundColor(Color.parseColor(firstPositionPrimaryColor));
         voteSecondPositionButton.setBackgroundColor(Color.parseColor(secondPositionPrimaryColor));
         voteThirdPositionButton.setBackgroundColor(Color.parseColor(thirdPositionPrimaryColor));
-        /*int count = d.getTotalVotesCount();
-        Resources res = getResources();
-        String votesCount = res.getQuantityString(R.plurals.debate_votes_count, count, count);
-        String resultatText = res.getString(R.string.resultat);
-        SpannableString spannableResultat = new SpannableString(resultatText);
-        spannableResultat.setSpan(new StyleSpan(Typeface.BOLD), 0, spannableResultat.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        CharSequence finalText = TextUtils.concat(votesCount, " ", spannableResultat);
-        votesCountView.setText(finalText);
-        votesCountView.setPaintFlags(votesCountView.getPaintFlags() & (~Paint.UNDERLINE_TEXT_FLAG));*/
-      //  widgetButton.setBackgroundColor(Color.parseColor(callPrimaryColor));
-      /*  widgetButton.setOnClickListener(v -> {
-            startDebate(this.applicationName);
-        });*/
         debateNameView.setOnClickListener(v -> {
             startDebate(this.applicationName);
         });
