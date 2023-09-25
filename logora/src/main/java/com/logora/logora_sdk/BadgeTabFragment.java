@@ -27,8 +27,6 @@ import java.util.List;
  * A {@link Fragment} subclass containing the debate space navbar.
  */
 public class BadgeTabFragment extends Fragment {
-    private final Router router = Router.getInstance();
-    private final Settings settings = Settings.getInstance();
     private String userSlug;
     private RecyclerView nextBadgesList;
     private RecyclerView badgesList;

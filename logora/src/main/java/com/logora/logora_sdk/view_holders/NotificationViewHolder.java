@@ -27,7 +27,6 @@ import org.json.JSONException;
 import java.util.HashMap;
 
 public class NotificationViewHolder extends ListViewHolder {
-    private final Settings settings = Settings.getInstance();
     private final Router router = Router.getInstance();
     private final LogoraApiClient apiClient = LogoraApiClient.getInstance();
     TextView notificationContent;

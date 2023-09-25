@@ -29,11 +29,8 @@ import com.logora.logora_sdk.view_models.DebateShowViewModel;
 import java.io.Serializable;
 
 public class ShareView extends LinearLayout {
-    private static final String TAG = "myshare";
     private final Context context;
-    private String shareText;
     private ImageView mobileShareView;
-    private String url;
 
 
     public ShareView(Context context, AttributeSet attrs, int defStyle) {

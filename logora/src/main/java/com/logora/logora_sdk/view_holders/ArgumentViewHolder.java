@@ -13,7 +13,6 @@ public class ArgumentViewHolder extends ListViewHolder {
     Context context;
     Debate debate;
     int depth;
-    private final Auth authClient = Auth.getInstance();
     ArgumentBox argumentBox;
 
     public ArgumentViewHolder(View itemView, Context context, Debate debate, int depth) {
@@ -28,17 +27,8 @@ public class ArgumentViewHolder extends ListViewHolder {
         Argument argument = (Argument) object;
         String status = argument.getStatus();
         argumentBox.setDepth(this.depth);
-        if (status.equals("accepted")) {
-            argumentBox.updateWithObject(object, debate, context);
-        } else if (status.equals("rejected") || status.equals("pending")) {
-            argumentBox.setVisibility(View.GONE);
-            if (authClient.getIsLoggedIn()) {
-                if (argument.getAuthor().getId().intValue() == authClient.getCurrentUser().getId().intValue()) {
-                    argumentBox.updateWithObject(object, debate, context);
-                    argumentBox.setVisibility(View.VISIBLE);
-                }
-            }
-        }
+        argumentBox.updateWithObject(object, debate, context);
+        argumentBox.setVisibility(View.VISIBLE);
     }
 
 }

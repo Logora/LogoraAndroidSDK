@@ -6,7 +6,7 @@ import org.json.JSONObject;
 public class UserIcon extends Model {
     private String fullName;
     private String imageUrl;
-    private String slug = " ";
+    private String slug = "";
     private String hashId;
 
     public UserIcon() {

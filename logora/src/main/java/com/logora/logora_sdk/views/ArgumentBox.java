@@ -183,9 +183,6 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
             openMoreActionsDialog();
 
         });
-
-
-        // Add read more on contentView
         int MAX_LINES = 15;
         String TWO_SPACES = "  ";
         contentView.post(new Runnable() {

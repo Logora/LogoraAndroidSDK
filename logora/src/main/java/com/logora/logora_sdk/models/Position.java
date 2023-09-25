@@ -6,7 +6,7 @@ import org.json.JSONObject;
 public class Position extends Model {
     private String name;
     private Integer id;
-    private Integer votesCount;
+
 
     public Position() {
     }

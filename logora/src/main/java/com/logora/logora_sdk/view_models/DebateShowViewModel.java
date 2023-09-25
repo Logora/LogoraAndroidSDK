@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class DebateShowViewModel extends ViewModel {
-    private final String TAG = DebateShowViewModel.class.getSimpleName();
     private MutableLiveData<Debate> debate;
 
     public LiveData<Debate> getDebate(String slug) {

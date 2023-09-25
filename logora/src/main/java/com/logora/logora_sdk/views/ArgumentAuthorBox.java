@@ -23,7 +23,6 @@ import org.json.JSONException;
 import java.util.HashMap;
 
 public class ArgumentAuthorBox extends RelativeLayout {
-    private final Settings settings = Settings.getInstance();
     private final Router router = Router.getInstance();
     private final Auth authClient = Auth.getInstance();
     private TextView fullNameView;
@@ -62,15 +61,7 @@ public class ArgumentAuthorBox extends RelativeLayout {
 
     public void init(Argument argument) {
         this.argument = argument;
-        fullNameView.setOnClickListener(v -> {
-            HashMap<String, String> routeParams = new HashMap<>();
-            if (authClient.getIsLoggedIn() == true) {
-                routeParams.put("userSlug", authClient.getCurrentUser().getSlug());
-            } else {
-                routeParams.put("userSlug", argument.getAuthor().getSlug());
-            }
-            router.navigate(Router.getRoute("USER"), routeParams);
-        });
+
         userImageView.setOnClickListener(v -> {
             HashMap<String, String> routeParams = new HashMap<>();
             routeParams.put("userSlug", argument.getAuthor().getHashId());

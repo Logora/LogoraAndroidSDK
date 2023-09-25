@@ -167,7 +167,7 @@ public class VoteBoxView extends RelativeLayout {
         this.debate = debate;
         showButtons();
         if (this.auth.getIsLoggedIn()) {
-              showResults();
+              showButtons();
             this.apiClient.getGroupVote(
                     response -> {
                         try {
@@ -221,7 +221,6 @@ public class VoteBoxView extends RelativeLayout {
     }
 
     public void updateVote(Integer positionId) {
-
         this.apiClient.updateVote(
                 response -> {
                     try {
@@ -282,7 +281,6 @@ public class VoteBoxView extends RelativeLayout {
         String secondPositionPrimaryColor = settings.get("theme.secondPositionColorPrimary");
         String thirdPositionPrimaryColor = settings.get("theme.thirdPositionColorPrimary");
         this.active = true;
-        //showButtons();
         voteContainer.setVisibility(GONE);
         voteResultsContainer.setVisibility(VISIBLE);
         voteFirstPositionResultText.setText(this.debate.getPositionList().get(0).getName());
