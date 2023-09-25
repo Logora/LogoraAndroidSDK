@@ -44,6 +44,7 @@ afterEvaluate {
 android {
     compileSdkVersion 33
     buildToolsVersion "33.0.2"
+    namespace "com.logora.logora-sdk"
 
     defaultConfig {
         minSdkVersion 21
