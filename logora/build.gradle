@@ -11,6 +11,22 @@ plugins {
 }
 
 publishing {
+     publications {
+        maven(MavenPublication) {
+            groupId = 'com.logora'
+            artifactId = 'logora-sdk'
+            version = System.getenv("RELEASE_TAG")
+            
+            from components.release
+            
+            pom {
+                name = 'Logora SDK'
+                description = 'Android SDK for the Logora debate space'
+                url = 'https://github.com/Logora/LogoraAndroidSDK'
+            }
+        }
+    }
+
     repositories {
         maven {
             name = "GitHubPackages"
