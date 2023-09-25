@@ -59,14 +59,7 @@ public class Auth {
                             this.exitLogin("Cannot fetch current user.");
                         } else {
                             JSONObject currentUserObject = response.getJSONObject("data").getJSONObject("data").getJSONObject("resource");
-                            User currentUser = new User();
-                            currentUser.setFullName(currentUserObject.getString("full_name"));
-                            currentUser.setHashId(currentUserObject.getString("hash_id"));
-                            currentUser.setSlug(currentUserObject.getString("slug"));
-                            currentUser.setImageUrl(currentUserObject.getString("image_url"));
-                            currentUser.setId(currentUserObject.getInt("id"));
-                            currentUser.setPoints(currentUserObject.getInt("points"));
-                            currentUser.setNotificationsCount(currentUserObject.getInt("notifications_count"));
+                            User currentUser = User.objectFromJson(currentUserObject);
                             this.setCurrentUser(currentUser);
                             this.setIsLoggedIn(true);
                             this.setIsLoggingIn(false);
