@@ -107,7 +107,7 @@
                 android:contentDescription="@string/share_icon_content_description"
                 android:focusable="true"
                 android:gravity="center_vertical"
-                android:src="@drawable/ic_svg_share" />
+                android:src="@drawable/ic_share" />
 
             <ImageView
                 android:id="@+id/argument_more_button"
@@ -229,6 +229,4 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/reply_input_container"
         android:layout_marginStart="20dp" />
-
-
 </RelativeLayout>

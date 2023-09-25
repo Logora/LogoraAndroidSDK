@@ -12,7 +12,7 @@ public class DividerItemDecorator extends RecyclerView.ItemDecoration {
     private final Drawable mDivider;
 
     public DividerItemDecorator(Context context) {
-        mDivider = ContextCompat.getDrawable(context, R.drawable.diviseur);
+        mDivider = ContextCompat.getDrawable(context, R.drawable.divider);
     }
 
     @Override

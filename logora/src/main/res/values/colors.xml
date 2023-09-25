@@ -9,7 +9,7 @@
     <color name="text_secondary">#777777</color>
     <color name="text_tertiary">#FAFAFA</color>
     <color name="progress_background">#e9ecef</color>
-    <color name="background_eloquence">#E4E5E8</color>
+    <color name="background_secondary">#E4E5E8</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>

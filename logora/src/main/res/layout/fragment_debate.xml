@@ -8,7 +8,6 @@
     android:layout_marginHorizontal="12dp"
     tools:context=".DebateFragment">
 
-
     <ProgressBar
         android:id="@+id/loader"
         android:layout_width="match_parent"
@@ -206,8 +205,6 @@
                 />
 
         </RelativeLayout>
-
-
     </RelativeLayout>
 
     <FrameLayout

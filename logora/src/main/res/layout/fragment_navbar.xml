@@ -79,7 +79,6 @@
 
     </LinearLayout>
 
-
     <com.logora.logora_sdk.views.SearchFormView
         android:id="@+id/search_form_container"
         android:layout_width="match_parent"

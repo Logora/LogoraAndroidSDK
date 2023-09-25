@@ -61,7 +61,7 @@
                     android:id="@+id/user_eloquence_container"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/eloquence"
+                    android:background="@drawable/ic_eloquence"
                     android:orientation="horizontal">
 
                     <TextView

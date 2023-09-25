@@ -36,7 +36,7 @@
                 android:contentDescription="@string/participants_count"
                 android:focusable="true"
                 android:gravity="center"
-                android:src="@drawable/ic_voteboxicon" />
+                android:src="@drawable/ic_vote_box" />
 
             <TextView
                 android:id="@+id/user_messages_participants_count"
