@@ -117,7 +117,7 @@ public class UserFragment extends Fragment {
                 int argument = user.getVotesCount();
                 String argumentCount = res.getQuantityString(R.plurals.user_debates_count_text, argument, argument);
                 userDebatesCountText.setText(String.valueOf(argumentCount));
-                int vote = user.getVotes();
+                int vote = user.getUpvotes();
                 String voteCount = res.getQuantityString(R.plurals.user_votes_count_text, vote, vote);
                 userVotesCountText.setText(String.valueOf(voteCount));
                 int disciple = user.getDisciplesCount();
