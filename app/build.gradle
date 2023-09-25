@@ -1,6 +1,5 @@
 plugins {
     id 'com.android.application'
-    id 'io.sentry.android.gradle' version '3.4.3'
 }
 
 android {
