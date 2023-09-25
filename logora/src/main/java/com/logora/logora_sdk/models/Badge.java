@@ -3,26 +3,33 @@ package com.logora.logora_sdk.models;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class NextBadgeBox extends Model {
+public class Badge extends Model {
     private String title;
     private String description;
     private String iconUrl;
-    private Integer steps;
-    private Integer progress;
+    private Integer steps = 1;
+    private Integer progress = 0;
 
-    public NextBadgeBox() {
+    public Badge() {
     }
 
-    public static NextBadgeBox objectFromJson(JSONObject jsonObject) {
-        NextBadgeBox badgeBox = new NextBadgeBox();
+    public static Badge objectFromJson(JSONObject jsonObject) {
+        Badge badgeBox = new Badge();
         try {
-            JSONObject badgeObject = jsonObject.getJSONObject("badge");
+            JSONObject badgeObject = jsonObject;
+            if (jsonObject.has("badge")) {
+                badgeObject = jsonObject.getJSONObject("badge");
+            }
 
             badgeBox.setTitle(badgeObject.getString("title"));
             badgeBox.setDescription(badgeObject.getString("description"));
             badgeBox.setIconUrl(badgeObject.getString("icon_url"));
-            badgeBox.setSteps(badgeObject.getInt("steps"));
-            badgeBox.setProgress(jsonObject.getInt("progress"));
+            if (jsonObject.has("steps")) {
+                badgeBox.setSteps(badgeObject.getInt("steps"));
+            }
+            if (jsonObject.has("progress")) {
+                badgeBox.setProgress(jsonObject.getInt("progress"));
+            }
             return badgeBox;
         } catch (JSONException e) {
             e.printStackTrace();

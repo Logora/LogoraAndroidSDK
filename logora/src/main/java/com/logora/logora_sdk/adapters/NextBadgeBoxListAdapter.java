@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 
 import com.logora.logora_sdk.R;
-import com.logora.logora_sdk.models.NextBadgeBox;
+import com.logora.logora_sdk.models.Badge;
 import com.logora.logora_sdk.view_holders.ListViewHolder;
 import com.logora.logora_sdk.view_holders.NextBadgeBoxViewHolder;
 
@@ -35,14 +35,14 @@ public class NextBadgeBoxListAdapter extends ListAdapter {
 
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
-        NextBadgeBox nextBadgeBox = this.getObjectFromJson(this.items.get(position));
+        Badge nextBadgeBox = this.getObjectFromJson(this.items.get(position));
         if (nextBadgeBox != null) {
             holder.updateWithObject(nextBadgeBox);
         }
     }
 
     @Override
-    public NextBadgeBox getObjectFromJson(JSONObject jsonObject) {
-        return NextBadgeBox.objectFromJson(jsonObject);
+    public Badge getObjectFromJson(JSONObject jsonObject) {
+        return Badge.objectFromJson(jsonObject);
     }
 }

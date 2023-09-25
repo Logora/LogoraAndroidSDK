@@ -8,10 +8,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.logora.logora_sdk.R;
-import com.logora.logora_sdk.models.NextBadgeBox;
+import com.logora.logora_sdk.models.Badge;
 
 public class NextBadgeBoxViewHolder extends ListViewHolder {
-    NextBadgeBox nextBadgeBox;
+    Badge nextBadgeBox;
     TextView titleView;
     TextView descriptionView;
     ImageView iconView;
@@ -27,7 +27,7 @@ public class NextBadgeBoxViewHolder extends ListViewHolder {
 
     @Override
     public void updateWithObject(Object object) {
-        NextBadgeBox nextBadgeBox = (NextBadgeBox) object;
+        Badge nextBadgeBox = (Badge) object;
         this.nextBadgeBox = nextBadgeBox;
         titleView.setText(nextBadgeBox.getTitle());
         descriptionView.setText(nextBadgeBox.getDescription());

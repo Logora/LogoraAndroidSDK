@@ -5,7 +5,7 @@ import com.logora.logora_sdk.utils.DateUtil;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class BadgeNotification extends Notification<Object, BadgeBox, Object> {
+public class BadgeNotification extends Notification<Object, Badge, Object> {
 
     public BadgeNotification() {
     }
@@ -22,7 +22,7 @@ public class BadgeNotification extends Notification<Object, BadgeBox, Object> {
             }
             badgeNotification.setActorCount(jsonObject.getInt("actor_count"));
             badgeNotification.setTarget(null);
-            badgeNotification.setSecondTarget(BadgeBox.objectFromJson(jsonObject.getJSONObject("second_target")));
+            badgeNotification.setSecondTarget(Badge.objectFromJson(jsonObject.getJSONObject("second_target")));
             badgeNotification.setThirdTarget(null);
             String publishedDate = jsonObject.getString("created_at");
             badgeNotification.setPublishedDate(DateUtil.parseDate(publishedDate));
