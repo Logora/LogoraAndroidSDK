@@ -13,7 +13,7 @@ plugins {
 android {
     compileSdkVersion 33
     buildToolsVersion "33.0.2"
-    namespace "com.logora.logora-sdk"
+    namespace "com.logora.logora_sdk"
 
     defaultConfig {
         minSdkVersion 21
@@ -59,7 +59,7 @@ afterEvaluate {
             release(MavenPublication) {
                 from components.release
                 groupId = 'com.logora'
-                artifactId = 'logora-sdk'
+                artifactId = 'logora_sdk'
                 version = System.getenv("RELEASE_TAG") ?: '0.1.0'
 
                 pom {
