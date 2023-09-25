@@ -5,7 +5,6 @@ import org.json.JSONObject;
 
 public class Tag extends Model {
     private String displayName;
-    private Integer count;
 
     public Tag() {
     }
@@ -27,13 +26,5 @@ public class Tag extends Model {
 
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
-    }
-
-    public Integer getCount() {
-        return count;
-    }
-
-    public void setCount(Integer count) {
-        this.count = count;
     }
 }

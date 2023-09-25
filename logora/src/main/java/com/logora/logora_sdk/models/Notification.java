@@ -12,7 +12,7 @@ public class Notification<T1, T2, T3> extends Model {
     protected UserBox actor;
     protected String notifyType;
     protected String redirectUrl;
-    protected Integer actorCount;
+    protected Integer actorCount = 1;
     protected Boolean isOpened;
     protected Date publishedDate;
     protected T1 target;

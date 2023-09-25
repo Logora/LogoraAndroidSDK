@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 
 import com.logora.logora_sdk.R;
-import com.logora.logora_sdk.models.UserIcon;
+import com.logora.logora_sdk.models.User;
 import com.logora.logora_sdk.utils.Router;
 import com.logora.logora_sdk.view_holders.ListViewHolder;
 import com.logora.logora_sdk.view_holders.UserIconViewHolder;
@@ -38,14 +38,14 @@ public class UserIconListAdapter extends ListAdapter {
 
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
-        UserIcon userIcon = this.getObjectFromJson(this.items.get(position));
+        User userIcon = this.getObjectFromJson(this.items.get(position));
         if (userIcon != null) {
             holder.updateWithObject(userIcon);
         }
     }
 
     @Override
-    public UserIcon getObjectFromJson(JSONObject jsonObject) {
-        return UserIcon.objectFromJson(jsonObject);
+    public User getObjectFromJson(JSONObject jsonObject) {
+        return User.objectFromJson(jsonObject);
     }
 }

@@ -59,8 +59,6 @@ public class Argument extends Model {
             if (jsonObject.has("created_at")) {
                 String publishedDate = jsonObject.getString("created_at");
                 argument.setPublishedDate(DateUtil.parseDate(publishedDate));
-
-            } else {
             }
 
             JSONArray votesObjects = jsonObject.getJSONArray("votes");

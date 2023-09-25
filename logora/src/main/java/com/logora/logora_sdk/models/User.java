@@ -3,19 +3,19 @@ package com.logora.logora_sdk.models;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class User {
+public class User extends Model {
+    private Integer id;
     private String fullName;
     private String imageUrl;
     private String slug;
     private String hashId;
     private String uid = "";
-    private Integer id;
     private Integer debatesCount = 0;
     private Integer votesCount = 0;
-    private Integer vote;
+    private Integer upvotes = 0;
     private Integer disciplesCount = 0;
     private Integer notificationsCount = 0;
-    private Integer userPoint = 0;
+    private Integer points = 0;
 
     public User() {
     }
@@ -23,17 +23,23 @@ public class User {
     public static User objectFromJson(JSONObject jsonObject) {
         User user = new User();
         try {
+            if (jsonObject.has("id")) {
+                user.setId(jsonObject.getInt("id"));
+            }
             if (jsonObject.has("uid")) {
                 user.setUid(jsonObject.getString("uid"));
             }
-            user.setSlug(jsonObject.getString("slug"));
-            user.setVotes(jsonObject.getInt("upvotes"));
-            user.setId(jsonObject.getInt("id"));
             if (jsonObject.has("hash_id")) {
                 user.setHashId(jsonObject.getString("hash_id"));
             }
+            if (jsonObject.has("slug")) {
+                user.setSlug(jsonObject.getString("slug"));
+            }
             user.setImageUrl(jsonObject.getString("image_url"));
             user.setFullName(jsonObject.getString("full_name"));
+            if (jsonObject.has("upvotes")) {
+                user.setUpvotes(jsonObject.getInt("upvotes"));
+            }
             if (jsonObject.has("debates_count")) {
                 user.setDebatesCount(jsonObject.getInt("debates_count"));
             }
@@ -56,12 +62,12 @@ public class User {
         }
     }
 
-    public Integer getVotes() {
-        return vote;
+    public Integer getUpvotes() {
+        return upvotes;
     }
 
-    public void setVotes(Integer vote) {
-        this.vote = vote;
+    public void setUpvotes(Integer upvotes) {
+        this.upvotes = upvotes;
     }
 
     public String getFullName() {
@@ -145,11 +151,10 @@ public class User {
     }
 
     public Integer getPoints() {
-        return userPoint;
+        return points;
     }
 
-    public void setPoints(Integer userPoint) {
-        this.userPoint = userPoint;
+    public void setPoints(Integer points) {
+        this.points = points;
     }
-
 }

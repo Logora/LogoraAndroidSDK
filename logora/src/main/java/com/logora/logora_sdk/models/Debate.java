@@ -24,8 +24,7 @@ public class Debate {
     private Integer argumentsCount = 0;
     private List<JSONObject> tagList;
     private List<Position> positionList;
-    private HashMap<Integer, Integer> votesCountObject = new HashMap<Integer, Integer>() {{
-    }};
+    private HashMap<Integer, Integer> votesCountObject = new HashMap<Integer, Integer>() {{}};
     private final HashMap<Integer, Integer> votesPercentages = new HashMap<>();
     private Integer voteMaxPercentage = 0;
     private String voteMaxPosition;
