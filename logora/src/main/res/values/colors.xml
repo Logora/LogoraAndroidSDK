@@ -4,6 +4,7 @@
     <color name="first_position_primary">#C24D50</color>
     <color name="second_position_primary">#7980BB</color>
     <color name="third_position_primary">#979797</color>
+    <color name="border_primary">#C5C5C5</color>
     <color name="border_light">#072A441A</color>
     <color name="text_primary">#222222</color>
     <color name="text_secondary">#777777</color>
