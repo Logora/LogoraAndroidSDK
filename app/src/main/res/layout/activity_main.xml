@@ -18,8 +18,6 @@
         android:text="Exemple d'Article"
         android:textSize="40px" />
 
-
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,11 +25,9 @@
         android:text="La pratique sportive est une activité bénéfique pour la santé physique et mentale, mais elle n'est pas sans risques. Les blessures liées au sport sont malheureusement courantes et peuvent avoir des conséquences graves sur la vie des athlètes. Il est essentiel de comprendre ces risques et de prendre des mesures pour les minimiser."
         android:textSize="35px" />
 
-
     <FrameLayout
         android:id="@+id/widget_view_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom" />
-
 </LinearLayout>
