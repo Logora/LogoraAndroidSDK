@@ -12,7 +12,6 @@ import com.logora.logora_sdk.models.BadgeNotification;
 import com.logora.logora_sdk.models.GetVoteNotification;
 import com.logora.logora_sdk.models.GroupFollowArgumentNotification;
 import com.logora.logora_sdk.models.GroupReplyNotification;
-import com.logora.logora_sdk.models.LevelUnlockNotification;
 import com.logora.logora_sdk.models.Notification;
 import com.logora.logora_sdk.view_holders.ListViewHolder;
 import com.logora.logora_sdk.view_holders.NotificationViewHolder;
@@ -54,8 +53,6 @@ public class NotificationListAdapter extends ListAdapter {
                 return BadgeNotification.objectFromJson(jsonObject);
             case "group_reply":
                 return GroupReplyNotification.objectFromJson(jsonObject);
-            case "level_unlock":
-                return LevelUnlockNotification.objectFromJson(jsonObject);
             case "get_vote":
                 return GetVoteNotification.objectFromJson(jsonObject);
             case "group_follow_argument":

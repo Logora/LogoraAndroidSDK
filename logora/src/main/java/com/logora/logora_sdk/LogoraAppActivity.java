@@ -20,7 +20,6 @@ import com.logora.logora_sdk.view_models.SettingsViewModel;
 
 import java.util.HashMap;
 
-
 public class LogoraAppActivity extends AppCompatActivity implements Router.RouteListener, Auth.AuthListener {
     private final Router router = Router.getInstance();
     private LogoraApiClient apiClient;

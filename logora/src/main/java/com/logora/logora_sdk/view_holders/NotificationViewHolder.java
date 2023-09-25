@@ -15,7 +15,6 @@ import com.logora.logora_sdk.models.BadgeNotification;
 import com.logora.logora_sdk.models.GetVoteNotification;
 import com.logora.logora_sdk.models.GroupFollowArgumentNotification;
 import com.logora.logora_sdk.models.GroupReplyNotification;
-import com.logora.logora_sdk.models.LevelUnlockNotification;
 import com.logora.logora_sdk.models.Notification;
 import com.logora.logora_sdk.utils.DateUtil;
 import com.logora.logora_sdk.utils.LogoraApiClient;
@@ -100,25 +99,6 @@ public class NotificationViewHolder extends ListViewHolder {
                     HashMap<String, String> routeParams = new HashMap<>();
                     routeParams.put("debateSlug", groupReplyNotification.getSecondTarget().getSlug());
                     router.navigate(Router.getRoute("DEBATE"), routeParams);
-                });
-                break;
-            case "level_unlock":
-                LevelUnlockNotification levelUnlockNotification = (LevelUnlockNotification) object;
-                Glide.with(notificationImage.getContext())
-                        .load(Uri.parse(levelUnlockNotification.getImageUrl()))
-                        .into(notificationImage);
-                this.itemView.setOnClickListener(v -> {
-                    HashMap<String, String> queryParams = new HashMap<>();
-                    this.apiClient.readNotification(response -> {
-                        try {
-                            boolean success = response.getBoolean("success");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }, Throwable::printStackTrace, notification.getId());
-                    HashMap<String, String> routeParams = new HashMap<>();
-                    routeParams.put("userSlug", levelUnlockNotification.getTarget().getHashId());
-                    router.navigate(Router.getRoute("USER"), routeParams);
                 });
                 break;
             case "get_vote":
