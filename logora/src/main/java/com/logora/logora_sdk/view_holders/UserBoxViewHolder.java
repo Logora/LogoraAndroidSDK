@@ -8,10 +8,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.logora.logora_sdk.R;
-import com.logora.logora_sdk.models.UserBox;
+import com.logora.logora_sdk.models.User;
 
 public class UserBoxViewHolder extends ListViewHolder {
-    UserBox userBox;
+    User userBox;
     TextView userFullNameView;
     TextView userVoteCount;
     ImageView userImageView;
@@ -29,7 +29,7 @@ public class UserBoxViewHolder extends ListViewHolder {
 
     @Override
     public void updateWithObject(Object object) {
-        UserBox userBox = (UserBox) object;
+        User userBox = (User) object;
         this.userBox = userBox;
         Resources res = this.itemView.getContext().getResources();
         userFullNameView.setText(userBox.getFullName());

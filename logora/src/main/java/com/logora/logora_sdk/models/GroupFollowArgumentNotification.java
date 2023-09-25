@@ -14,7 +14,7 @@ public class GroupFollowArgumentNotification extends Notification<Argument, Deba
         GroupFollowArgumentNotification groupFollowArgumentNotification = new GroupFollowArgumentNotification();
         try {
             groupFollowArgumentNotification.setId(jsonObject.getInt("id"));
-            groupFollowArgumentNotification.setActor(UserBox.objectFromJson(jsonObject.getJSONObject("actor")));
+            groupFollowArgumentNotification.setActor(User.objectFromJson(jsonObject.getJSONObject("actor")));
             groupFollowArgumentNotification.setTarget(Argument.objectFromJson(jsonObject.getJSONObject("target")));
             groupFollowArgumentNotification.setIsOpened(jsonObject.getBoolean("is_opened"));
             groupFollowArgumentNotification.setNotifyType(jsonObject.getString("notify_type"));

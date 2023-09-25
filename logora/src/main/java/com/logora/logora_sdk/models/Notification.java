@@ -9,7 +9,7 @@ import java.util.Date;
 
 public class Notification<T1, T2, T3> extends Model {
     protected Integer id;
-    protected UserBox actor;
+    protected User actor;
     protected String notifyType;
     protected String redirectUrl;
     protected Integer actorCount = 1;
@@ -23,7 +23,7 @@ public class Notification<T1, T2, T3> extends Model {
         Notification notification = new Notification();
         try {
             notification.setId(jsonObject.getInt("id"));
-            notification.setActor(UserBox.objectFromJson(jsonObject.getJSONObject("actor")));
+            notification.setActor(User.objectFromJson(jsonObject.getJSONObject("actor")));
             notification.setNotifyType(jsonObject.getString("notify_type"));
             if (jsonObject.has("redirect_url")) {
                 notification.setRedirectUrl(jsonObject.getString("redirect_url"));
@@ -47,11 +47,11 @@ public class Notification<T1, T2, T3> extends Model {
         this.id = id;
     }
 
-    public UserBox getActor() {
+    public User getActor() {
         return actor;
     }
 
-    public void setActor(UserBox actor) {
+    public void setActor(User actor) {
         this.actor = actor;
     }
 

@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import com.bumptech.glide.Glide;
 import com.logora.logora_sdk.R;
 import com.logora.logora_sdk.models.Argument;
-import com.logora.logora_sdk.models.UserBox;
+import com.logora.logora_sdk.models.User;
 import com.logora.logora_sdk.utils.Auth;
 import com.logora.logora_sdk.utils.Router;
 import com.logora.logora_sdk.utils.Settings;

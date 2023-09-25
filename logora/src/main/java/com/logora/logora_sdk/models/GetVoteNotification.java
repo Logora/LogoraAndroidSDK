@@ -14,7 +14,7 @@ public class GetVoteNotification extends Notification<Object, Debate, Object> {
         GetVoteNotification getVoteNotification = new GetVoteNotification();
         try {
             getVoteNotification.setId(jsonObject.getInt("id"));
-            getVoteNotification.setActor(UserBox.objectFromJson(jsonObject.getJSONObject("actor")));
+            getVoteNotification.setActor(User.objectFromJson(jsonObject.getJSONObject("actor")));
             getVoteNotification.setTarget(null);
             getVoteNotification.setIsOpened(jsonObject.getBoolean("is_opened"));
             getVoteNotification.setSecondTarget(Debate.objectFromJson(jsonObject.getJSONObject("second_target")));

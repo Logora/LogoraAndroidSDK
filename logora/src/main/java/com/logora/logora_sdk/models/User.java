@@ -14,6 +14,7 @@ public class User extends Model {
     private Integer votesCount = 0;
     private Integer upvotes = 0;
     private Integer disciplesCount = 0;
+    private Integer argumentsCount = 0;
     private Integer notificationsCount = 0;
     private Integer points = 0;
 
@@ -45,6 +46,9 @@ public class User extends Model {
             }
             if (jsonObject.has("debates_votes_count")) {
                 user.setVotesCount(jsonObject.getInt("debates_votes_count"));
+            }
+            if (jsonObject.has("messages_count")) {
+                userBox.setArgumentsCount(jsonObject.getInt("messages_count"));
             }
             if (jsonObject.has("followers_count")) {
                 user.setDisciplesCount(jsonObject.getInt("followers_count"));
@@ -124,6 +128,14 @@ public class User extends Model {
 
     public void setDebatesCount(Integer debatesCount) {
         this.debatesCount = debatesCount;
+    }
+
+    public Integer getArgumentsCount() {
+        return argumentsCount;
+    }
+
+    public void setArgumentsCount(Integer argumentsCount) {
+        this.argumentsCount = argumentsCount;
     }
 
     public Integer getVotesCount() {

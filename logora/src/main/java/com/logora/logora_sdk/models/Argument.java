@@ -15,7 +15,7 @@ import java.util.List;
 public class Argument extends Model {
     private Integer id;
     private String content;
-    private UserBox author;
+    private User author;
     private Position position;
     private Integer votesCount;
     private Integer positionIndex;
@@ -35,7 +35,7 @@ public class Argument extends Model {
         Argument argument = new Argument();
         try {
             argument.setId(jsonObject.getInt("id"));
-            argument.setAuthor(UserBox.objectFromJson(jsonObject.getJSONObject("author")));
+            argument.setAuthor(User.objectFromJson(jsonObject.getJSONObject("author")));
             argument.setVotesCount(jsonObject.getInt("upvotes"));
             argument.setContent(jsonObject.getString("content"));
             argument.setPosition(Position.objectFromJson(jsonObject.getJSONObject("position")));
@@ -90,11 +90,11 @@ public class Argument extends Model {
         this.id = id;
     }
 
-    public UserBox getAuthor() {
+    public User getAuthor() {
         return author;
     }
 
-    public void setAuthor(UserBox author) {
+    public void setAuthor(User author) {
         this.author = author;
     }
 

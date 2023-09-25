@@ -14,7 +14,7 @@ public class BadgeNotification extends Notification<Object, Badge, Object> {
         BadgeNotification badgeNotification = new BadgeNotification();
         try {
             badgeNotification.setId(jsonObject.getInt("id"));
-            badgeNotification.setActor(UserBox.objectFromJson(jsonObject.getJSONObject("actor")));
+            badgeNotification.setActor(User.objectFromJson(jsonObject.getJSONObject("actor")));
             badgeNotification.setIsOpened(jsonObject.getBoolean("is_opened"));
             badgeNotification.setNotifyType(jsonObject.getString("notify_type"));
             if (jsonObject.has("redirect_url")) {

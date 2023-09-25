@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 
 import com.logora.logora_sdk.R;
-import com.logora.logora_sdk.models.UserBox;
+import com.logora.logora_sdk.models.User;
 import com.logora.logora_sdk.utils.Router;
 import com.logora.logora_sdk.view_holders.ListViewHolder;
 import com.logora.logora_sdk.view_holders.UserBoxViewHolder;
@@ -39,7 +39,7 @@ public class UserBoxListAdapter extends ListAdapter {
 
     @Override
     public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
-        UserBox userBox = this.getObjectFromJson(this.items.get(position));
+        User userBox = this.getObjectFromJson(this.items.get(position));
         if (userBox != null) {
             holder.updateWithObject(userBox);
             holder.itemView.setOnClickListener(v -> {
@@ -51,7 +51,7 @@ public class UserBoxListAdapter extends ListAdapter {
     }
 
     @Override
-    public UserBox getObjectFromJson(JSONObject jsonObject) {
-        return UserBox.objectFromJson(jsonObject);
+    public User getObjectFromJson(JSONObject jsonObject) {
+        return User.objectFromJson(jsonObject);
     }
 }

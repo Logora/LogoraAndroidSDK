@@ -21,17 +21,11 @@ import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.logora.logora_sdk.R;
-import com.logora.logora_sdk.models.Debate;
-import com.logora.logora_sdk.models.Tag;
-import com.logora.logora_sdk.models.UserBox;
-import com.logora.logora_sdk.view_models.DebateShowViewModel;
-
 import java.io.Serializable;
 
 public class ShareView extends LinearLayout {
     private final Context context;
     private ImageView mobileShareView;
-
 
     public ShareView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -54,9 +48,7 @@ public class ShareView extends LinearLayout {
     private void initView() {
         inflate(getContext(), R.layout.share_layout, this);
         mobileShareView = this.findViewById(R.id.mobile_share_button);
-
     }
-
 
     public void openShareDialog(String subject) {
         Resources res = this.getContext().getResources();
@@ -65,6 +57,4 @@ public class ShareView extends LinearLayout {
         share.putExtra(Intent.EXTRA_TEXT, subject);
         this.context.startActivity(Intent.createChooser(share, res.getString(R.string.share_debat)));
     }
-
-
 }

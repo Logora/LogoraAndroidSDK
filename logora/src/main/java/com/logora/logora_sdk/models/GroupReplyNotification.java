@@ -14,7 +14,7 @@ public class GroupReplyNotification extends Notification<Argument, Debate, Argum
         GroupReplyNotification groupReplyNotification = new GroupReplyNotification();
         try {
             groupReplyNotification.setId(jsonObject.getInt("id"));
-            groupReplyNotification.setActor(UserBox.objectFromJson(jsonObject.getJSONObject("actor")));
+            groupReplyNotification.setActor(User.objectFromJson(jsonObject.getJSONObject("actor")));
             groupReplyNotification.setNotifyType(jsonObject.getString("notify_type"));
             if (jsonObject.has("redirect_url")) {
                 groupReplyNotification.setRedirectUrl(jsonObject.getString("redirect_url"));
