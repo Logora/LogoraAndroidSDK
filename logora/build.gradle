@@ -10,37 +10,6 @@ plugins {
     id 'maven-publish'
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            release(MavenPublication) {
-                groupId = 'com.logora'
-                artifactId = 'logora-sdk'
-                version = System.getenv("RELEASE_TAG") ?: '0.1.0'
-
-                from components.release
-
-                pom {
-                    name = 'Logora SDK'
-                    description = 'Android SDK for the Logora debate space'
-                    url = 'https://github.com/Logora/LogoraAndroidSDK'
-                }
-            }
-        }
-
-        repositories {
-            maven {
-                name = "GitHubPackages"
-                url = uri("https://maven.pkg.github.com/Logora/LogoraAndroidSDK")
-                credentials {
-                    username = System.getenv("GITHUB_ACTOR")
-                    password = System.getenv("GITHUB_TOKEN")
-                }
-            }
-        }
-    }
-}
-
 android {
     compileSdkVersion 33
     buildToolsVersion "33.0.2"
@@ -64,6 +33,37 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+afterEvaluate {
+    publishing {
+        repositories {
+            maven {
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/Logora/LogoraAndroidSDK")
+                credentials {
+                    username = System.getenv("GITHUB_ACTOR")
+                    password = System.getenv("GITHUB_TOKEN")
+                }
+            }
+        }
+
+        publications {
+            release(MavenPublication) {
+                groupId = 'com.logora'
+                artifactId = 'logora-sdk'
+                version = System.getenv("RELEASE_TAG") ?: '0.1.0'
+
+                from components.release
+
+                pom {
+                    name = 'Logora SDK'
+                    description = 'Android SDK for the Logora debate space'
+                    url = 'https://github.com/Logora/LogoraAndroidSDK'
+                }
+            }
+        }
     }
 }
 
