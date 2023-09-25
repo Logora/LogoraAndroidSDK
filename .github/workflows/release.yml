@@ -16,9 +16,12 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
 
-      - name: Publish package to Github Packages
+      - name: Build with Gradle
+        run: gradle build
+
+      - name: Publish to GitHub Packages
         run: gradle publish
         env:
-          GITHUB_ACTOR: ${{ secrets.GITHUB_ACTOR }}
+          GITHUB_ACTOR: ${{ github.actor }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_TAG: ${{ github.event.release.tag_name }}
