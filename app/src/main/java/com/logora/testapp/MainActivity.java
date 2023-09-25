@@ -1,6 +1,6 @@
 package com.logora.testapp;
 
-import android.app.Activity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +8,7 @@ import android.os.Bundle;
 import com.logora.logora_sdk.LogoraAppActivity;
 import com.logora.logora_sdk.WidgetFragment;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,7 +20,7 @@ public class MainActivity extends Activity {
         intent.putExtra("routeParam", "");
         MainActivity.this.startActivity(intent);
 
-      /* WidgetFragment widget = new WidgetFragment(this.getApplicationContext(), "mon-article", "logora-demo-app");
+        /* WidgetFragment widget = new WidgetFragment(this.getApplicationContext(), "mon-article", "logora-demo-app");
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.widget_view_container, widget)
                 .commit();*/
