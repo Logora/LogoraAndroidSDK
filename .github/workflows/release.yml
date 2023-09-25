@@ -17,7 +17,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Build with Gradle
-        run: gradle build
+        run: gradle build -p logora
 
       - name: Publish to GitHub Packages
         run: gradle publish
