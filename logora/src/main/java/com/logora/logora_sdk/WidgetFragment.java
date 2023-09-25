@@ -87,26 +87,25 @@ public class WidgetFragment extends Fragment {
         SettingsViewModel model = new SettingsViewModel();
         model.getSettings().observe(getViewLifecycleOwner(), settings -> {
             apiClient.getSynthesis(
-                    response -> {
-                        try {
-                            boolean success = response.getBoolean("success");
-                            if (response.has("debate")) {
-                                JSONObject debateObject = response.getJSONObject("debate");
-                                if (success) {
-                                    debate = DebateSynthesis.objectFromJson(debateObject);
-                                    if (debate != null) {
-                                        setWidget(debate);
-                                        rootLayout.setVisibility(View.VISIBLE);
-                                    }
+                response -> {
+                    try {
+                        boolean success = response.getBoolean("success");
+                        if (response.has("debate")) {
+                            JSONObject debateObject = response.getJSONObject("debate");
+                            if (success) {
+                                debate = DebateSynthesis.objectFromJson(debateObject);
+                                if (debate != null) {
+                                    setWidget(debate);
+                                    rootLayout.setVisibility(View.VISIBLE);
                                 }
                             }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
-                    }, error -> {
-                        Log.e("ERROR", String.valueOf(error));
-                    }, pageUid, apiClient.getApplicationName(), true);
-
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }, error -> {
+                    Log.e("ERROR", String.valueOf(error));
+                }, pageUid, apiClient.getApplicationName(), true);
         });
     }
 

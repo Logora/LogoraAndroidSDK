@@ -148,13 +148,10 @@ public class LogoraApiClient {
         this.user_post(route, queryParams, bodyParams, listener, errorListener);
     }
 
-
-
     public void delete(String resource, String id, HashMap<String, String> queryParams, Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
         String route = "/" + resource + "/" + id;
         this.user_delete(route, queryParams, queryParams, listener, errorListener);
     }
-
 
     public void getCurrentUser(Response.Listener<JSONObject> listener,
                                Response.ErrorListener errorListener) {
