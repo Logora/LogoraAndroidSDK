@@ -167,7 +167,7 @@ public class VoteBoxView extends RelativeLayout {
         this.debate = debate;
         showButtons();
         if (this.auth.getIsLoggedIn()) {
-              showButtons();
+            showResults();
             this.apiClient.getGroupVote(
                     response -> {
                         try {
@@ -189,7 +189,6 @@ public class VoteBoxView extends RelativeLayout {
     public void vote(Integer positionId) {
 
         if (this.voteId != null && this.votePositionId != null) {
-            inputProvider.addUserPosition(Integer.parseInt(debate.getId()), positionId);
             debate.updateVote(positionId, this.votePositionId);
             this.updateVote(positionId);
         } else {
