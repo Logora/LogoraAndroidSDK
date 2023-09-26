@@ -153,7 +153,7 @@ public class DebateFragment extends Fragment implements SideDialog.ArgumentInput
                     shareView.openShareDialog(url);
                 });
 
-                loader.setVisibility(View.INVISIBLE);
+                loader.setVisibility(View.GONE);
                 debatePresentationContainerView.setVisibility(View.VISIBLE);
                 String argumentResourceName = "groups/" + debate.getSlug() + "/messages";
                 ArgumentListAdapter argumentListAdapter = new ArgumentListAdapter(debate, 0);
