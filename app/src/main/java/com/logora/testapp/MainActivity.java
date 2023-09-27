@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
         /*Intent intent = new Intent(MainActivity.this, LogoraAppActivity.class);
         intent.putExtra("applicationName", "logora-demo-app");
         intent.putExtra("routeName", "INDEX");
@@ -21,8 +22,9 @@ public class MainActivity extends AppCompatActivity {
         MainActivity.this.startActivity(intent);*/
 
          WidgetFragment widget = new WidgetFragment(this.getApplicationContext(), "mon-article", "logora-demo-app");
-        getSupportFragmentManager().beginTransaction()
+         getSupportFragmentManager().beginTransaction()
                 .add(R.id.widget_view_container, widget)
                 .commit();
+
     }
 }
