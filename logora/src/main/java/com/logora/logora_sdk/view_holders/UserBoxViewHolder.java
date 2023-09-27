@@ -32,7 +32,7 @@ public class UserBoxViewHolder extends ListViewHolder {
         this.userBox = userBox;
         Resources res = this.itemView.getContext().getResources();
         userFullNameView.setText(userBox.getFullName());
-        int votesCount = userBox.getVotesCount();
+        int votesCount = userBox.getUpvotes();
         String voteCount = res.getQuantityString(R.plurals.user_vote_count, votesCount, votesCount);
         userVoteCount.setText(voteCount);
         int argumentCount = userBox.getArgumentsCount();

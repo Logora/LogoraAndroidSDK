@@ -220,11 +220,12 @@ public class Debate {
         votesCountObject.put(positionId, votesCountObject.get(positionId) + 1);
 
         if (oldPositionId != null) {
+            System.out.println("different de null");
             votesCountObject.put(oldPositionId, votesCountObject.get(oldPositionId) - 1);
         } else {
+            System.out.println("egal a null");
             totalVotesCount += 1;
         }
-
         this.calculateVotePercentage();
     }
 

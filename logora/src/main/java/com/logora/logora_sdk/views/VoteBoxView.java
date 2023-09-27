@@ -77,6 +77,7 @@ public class VoteBoxView extends RelativeLayout {
     private ImageView firstPositionSuccessVote;
     private ImageView secondPositionSuccessVote;
     private ImageView thirdPositionSuccessVote;
+
     Resources res = getResources();
 
     public VoteBoxView(Context context, AttributeSet attrs, int defStyle) {
@@ -98,12 +99,10 @@ public class VoteBoxView extends RelativeLayout {
     private void initView() {
         inflate(getContext(), R.layout.vote_box, this);
         findViews();
-
         voteFirstPositionButton.setOnClickListener(v -> {
             if (auth.getIsLoggedIn()) {
                 this.vote(debate.getPositionList().get(0).getId());
             } else {
-                LoginDialog loginDialog = new LoginDialog(getContext());
                 LoginDialog.show(getContext());
             }
         });
@@ -111,7 +110,6 @@ public class VoteBoxView extends RelativeLayout {
             if (auth.getIsLoggedIn()) {
                 this.vote(debate.getPositionList().get(1).getId());
             } else {
-                LoginDialog loginDialog = new LoginDialog(getContext());
                 LoginDialog.show(getContext());
             }
         });
@@ -119,7 +117,6 @@ public class VoteBoxView extends RelativeLayout {
             if (auth.getIsLoggedIn()) {
                 this.vote(debate.getPositionList().get(2).getId());
             } else {
-                LoginDialog loginDialog = new LoginDialog(getContext());
                 LoginDialog.show(getContext());
             }
         });
@@ -128,11 +125,9 @@ public class VoteBoxView extends RelativeLayout {
                 this.showResults();
 
             } else {
-                LoginDialog loginDialog = new LoginDialog(getContext());
                 LoginDialog.show(getContext());
             }
         });
-
 
         voteEditView.setPaintFlags(voteEditView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         voteEditView.setOnClickListener(v -> {
@@ -189,6 +184,8 @@ public class VoteBoxView extends RelativeLayout {
     public void vote(Integer positionId) {
 
         if (this.voteId != null && this.votePositionId != null) {
+            System.out.println("the voteId is "+voteId);
+            System.out.println("the votePositionId is"+votePositionId);
             debate.updateVote(positionId, this.votePositionId);
             this.updateVote(positionId);
         } else {
@@ -199,10 +196,9 @@ public class VoteBoxView extends RelativeLayout {
     }
 
     public void createVote(Integer positionId) {
-        HashMap<String, String> bodyParams = new HashMap<>();
-        HashMap<String, String> queryParams = new HashMap<>();
         this.apiClient.createVote(
                 response -> {
+                    System.out.println("le vote est creer"+response);
                     try {
                         boolean success = response.getBoolean("success");
                         JSONObject vote = response.getJSONObject("data").getJSONObject("resource");
@@ -219,9 +215,11 @@ public class VoteBoxView extends RelativeLayout {
                 }, Integer.parseInt(debate.getId()), "Group", positionId);
     }
 
+
     public void updateVote(Integer positionId) {
         this.apiClient.updateVote(
                 response -> {
+                    System.out.println("le vote est modifier"+response);
                     try {
                         boolean success = response.getBoolean("success");
                         JSONObject vote = response.getJSONObject("data").getJSONObject("resource");
@@ -266,8 +264,8 @@ public class VoteBoxView extends RelativeLayout {
         int count = debate.getTotalVotesCount();
         Resources res = getResources();
         String votesCount = res.getQuantityString(R.plurals.debate_votes_count, count, count);
-        String resultatText = res.getString(R.string.resultat);
-        SpannableString spannableResultat = new SpannableString(resultatText);
+        String showResult= res.getString(R.string.resultat);
+        SpannableString spannableResultat = new SpannableString(showResult);
         spannableResultat.setSpan(new StyleSpan(Typeface.BOLD), 0, spannableResultat.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         CharSequence finalText = TextUtils.concat(votesCount, " ", spannableResultat);
         votesCountView.setText(finalText);

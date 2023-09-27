@@ -109,7 +109,7 @@ public class UserFragment extends Fragment {
                 int pointCount = user.getPoints();
                 String pointsCount = res.getQuantityString(R.plurals.user_points, pointCount, pointCount);
                 userPoint.setText(pointsCount);
-                int argument = user.getVotesCount();
+                int argument = user.getArgumentsCount();
                 String argumentCount = res.getQuantityString(R.plurals.user_debates_count_text, argument, argument);
                 userDebatesCountText.setText(String.valueOf(argumentCount));
                 int vote = user.getUpvotes();
@@ -123,7 +123,6 @@ public class UserFragment extends Fragment {
                 Glide.with(userImageView.getContext())
                         .load(Uri.parse(user.getImageUrl()))
                         .into(userImageView);
-
                 UserBoxListAdapter userDisciplesListAdapter = new UserBoxListAdapter();
                 UserBoxListAdapter userMentorsListAdapter = new UserBoxListAdapter();
                 UserMessagesListAdapter userMessagesListAdapter = new UserMessagesListAdapter();
