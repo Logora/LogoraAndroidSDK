@@ -28,29 +28,32 @@
 
         <Button
             android:id="@+id/vote_first_position_button"
-            android:layout_width="200dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
+            android:layout_gravity="center"
+            android:gravity="left"
             android:text="@string/debate_first_position"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <Button
             android:id="@+id/vote_second_position_button"
-            android:layout_width="200dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
+            android:layout_gravity="center"
+            android:gravity="left"
             android:text="@string/debate_second_position"
             android:textColor="@android:color/white"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <Button
             android:id="@+id/vote_third_position_button"
-            android:layout_width="200dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
+            android:layout_gravity="center"
+            android:gravity="left"
             android:backgroundTint="@android:color/white"
             android:text="@string/vote_third_position_button"
             android:textColor="@android:color/white"

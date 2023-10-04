@@ -25,13 +25,14 @@ public class LogoraApiClient {
     RequestQueue queue;
     private final String apiUrl = "https://app.logora.fr/api/v1";
     private final String apiRenderUrl = "https://render.logora.fr";
-    private final String authUrl = "https://app.logora.fr/oauth";
+    private final String authUrl = "https://app.logora.fr/oauth/token";
     private final String userTokenKey = "logora_user_token";
     private String applicationName;
     private String authAssertion;
     private String apiKey;
     private Context context;
     private static LogoraApiClient instance = null;
+    private final Settings settings = Settings.getInstance();
 
     public LogoraApiClient() {
     }
@@ -167,11 +168,10 @@ public class LogoraApiClient {
         HashMap<String, String> bodyParams = new HashMap<>();
         bodyParams.put("grant_type", "assertion");
         bodyParams.put("assertion", this.authAssertion);
-        bodyParams.put("assertion_type", "oauth2_server");
-        bodyParams.put("provider", "logora-demo-app");
-        String requestUrl = this.authUrl + "/token";
+        bodyParams.put("assertion_type", settings.get("auth.type"));
+        bodyParams.put("provider", this.applicationName);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
-                requestUrl, new JSONObject(bodyParams), listener, errorListener) {
+                this.authUrl, new JSONObject(bodyParams), listener, errorListener) {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<>();
@@ -187,8 +187,7 @@ public class LogoraApiClient {
         HashMap<String, String> bodyParams = new HashMap<>();
         bodyParams.put("refresh_token", this.getUserRefreshToken());
         bodyParams.put("grant_type", "refresh_token");
-        String requestUrl = this.authUrl + "/token";
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, requestUrl,
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, this.authUrl,
                 new JSONObject(bodyParams), listener, errorListener) {
             @Override
             public Map<String, String> getHeaders() {

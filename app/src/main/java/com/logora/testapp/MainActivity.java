@@ -14,15 +14,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-       Intent intent = new Intent(MainActivity.this, LogoraAppActivity.class);
+       /*Intent intent = new Intent(MainActivity.this, LogoraAppActivity.class);
         intent.putExtra("applicationName", "logora-demo-app");
         intent.putExtra("routeName", "INDEX");
         intent.putExtra("routeParam", "");
-        MainActivity.this.startActivity(intent);
+        MainActivity.this.startActivity(intent);*/
+        String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxMjM0NTY3ODI5IiwiZmlyc3RfbmFtZSI6IlNveWEiLCJsYXN0X25hbWUiOiJTb3lhIiwiZW1haWwiOiJzb3lhQGdtYWlsLmNvbSJ9.s213UFjD7kXAsQ2-foJvJ1S3Im6oKuUxgEWTYD4kn9Y";
 
-        /* WidgetFragment widget = new WidgetFragment(this.getApplicationContext(), "mon-article", "logora-demo-app");
+        WidgetFragment widget = new WidgetFragment(this.getApplicationContext(), "mon-article", "logora-demo-app", token);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.widget_view_container, widget)
-                .commit();*/
+                .commit();
     }
 }
