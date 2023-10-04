@@ -198,7 +198,8 @@
                 android:layout_height="40dp"
                 android:contentDescription="@string/user_icon_content_description"
                 android:scaleType="fitXY" />
-        </androidx.cardview.widget.CardView>
+            </androidx.cardview.widget.CardView>
+
 
         <EditText
             android:id="@+id/reply_input"
@@ -210,7 +211,9 @@
             android:background="@android:color/transparent"
             android:gravity="center_vertical"
             android:hint="@string/reply_input_placeholder"
-            android:textCursorDrawable="@drawable/black_cursor" />
+            android:textCursorDrawable="@drawable/black_cursor"
+            android:divider="?android:dividerHorizontal"
+            android:showDividers="middle"/>
 
         <ImageView
             android:id="@+id/reply_input_send_button"
@@ -221,6 +224,7 @@
             android:focusable="true"
             android:padding="6dp"
             android:src="@drawable/ic_send" />
+
     </LinearLayout>
 
     <FrameLayout

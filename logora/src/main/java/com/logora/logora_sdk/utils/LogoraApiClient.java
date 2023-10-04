@@ -32,6 +32,8 @@ public class LogoraApiClient {
     private String apiKey;
     private Context context;
     private static LogoraApiClient instance = null;
+    private final Settings settings = Settings.getInstance();
+
 
     public LogoraApiClient() {
     }
@@ -167,8 +169,8 @@ public class LogoraApiClient {
         HashMap<String, String> bodyParams = new HashMap<>();
         bodyParams.put("grant_type", "assertion");
         bodyParams.put("assertion", this.authAssertion);
-        bodyParams.put("assertion_type", "oauth2_server");
-        bodyParams.put("provider", "logora-demo-app");
+        bodyParams.put("assertion_type", settings.get("auth.type"));
+        bodyParams.put("provider", this.applicationName);
         String requestUrl = this.authUrl + "/token";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
                 requestUrl, new JSONObject(bodyParams), listener, errorListener) {

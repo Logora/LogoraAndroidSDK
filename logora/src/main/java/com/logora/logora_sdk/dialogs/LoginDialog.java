@@ -3,7 +3,6 @@ package com.logora.logora_sdk.dialogs;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.net.Uri;
 import android.text.method.LinkMovementMethod;
@@ -15,14 +14,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.logora.logora_sdk.R;
 import com.logora.logora_sdk.WebViewActivity;
-import com.logora.logora_sdk.utils.InputProvider;
 import com.logora.logora_sdk.utils.Settings;
 
 
 public class LoginDialog extends LinearLayout {
     private final Context context;
     private final Settings settings = Settings.getInstance();
-    private final InputProvider inputProvider = InputProvider.getInstance();
     private AlertDialog dialog;
     private ImageView nextIcon;
     private TextView signInText;
@@ -50,7 +47,6 @@ public class LoginDialog extends LinearLayout {
 
     private void initView() {
         inflate(getContext(), R.layout.login_dialog, this);
-        Resources res = this.getContext().getResources();
         findViews();
         String callPrimaryColor = settings.get("theme.callPrimaryColor");
 
@@ -97,6 +93,7 @@ public class LoginDialog extends LinearLayout {
                 .appendQueryParameter("scope", settings.get("auth.scope"));
         String authUrl = builder.build().toString();
         goToUrl(authUrl);
+
     }
 
     private void goToUrl(String url) {

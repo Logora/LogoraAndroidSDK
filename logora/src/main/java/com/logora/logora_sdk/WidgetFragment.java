@@ -39,11 +39,11 @@ public class WidgetFragment extends Fragment {
         super(R.layout.fragment_widget);
     }
 
-    public WidgetFragment(Context context, String pageUid, String applicationName) {
+    public WidgetFragment(Context context, String pageUid, String applicationName, String assertion) {
         super(R.layout.fragment_widget);
         this.pageUid = pageUid;
         this.applicationName = applicationName;
-        this.apiClient = LogoraApiClient.getInstance(applicationName, null, context);
+        this.apiClient = LogoraApiClient.getInstance(applicationName, assertion, context);
     }
 
     @Override

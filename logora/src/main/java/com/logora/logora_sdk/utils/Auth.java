@@ -4,6 +4,8 @@ import android.util.Log;
 import com.logora.logora_sdk.models.User;
 import org.json.JSONException;
 import org.json.JSONObject;
+import android.util.Log;
+
 
 
 public class Auth {
@@ -15,6 +17,7 @@ public class Auth {
     private String authError = null;
     private User currentUser;
     private String oauth2Code;
+
 
     public static Auth getInstance() {
         if (Auth.instance == null) {
@@ -42,6 +45,8 @@ public class Auth {
     public void loginUser() {
         this.apiClient.userAuth(
                 response -> {
+                   // System.out.println("the response is"+response);
+                    Log.i("RESPONSE", "The response is " + response);
                     this.apiClient.setUserToken(response);
                     this.fetchUser();
                 },

@@ -182,6 +182,7 @@
             android:textCursorDrawable="@drawable/black_cursor"
             android:textSize="14dp" />
 
+
         <RelativeLayout
             android:id="@+id/argument_input_controls"
             android:layout_width="match_parent"
