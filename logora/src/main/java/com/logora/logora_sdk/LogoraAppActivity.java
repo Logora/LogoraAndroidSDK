@@ -31,6 +31,7 @@ public class LogoraAppActivity extends AppCompatActivity implements Router.Route
         this.parseParams();
         this.apiClient = LogoraApiClient.getInstance(this.applicationName,
                 this.authAssertion, getBaseContext());
+        System.out.println("the authassertion"+this.authAssertion);
         apiClient.setAuthAssertion(this.authAssertion);
         findViews();
         router.setListener(this);

@@ -49,11 +49,13 @@ public class Auth {
         System.out.println("login usere ");
         this.apiClient.userAuth(
             response -> {
+                System.out.println("the response auth"+response);
                 this.apiClient.setUserToken(response);
                 this.fetchUser();
             },
             error -> {
                 String responseBody = new String(error.networkResponse.data);
+                System.out.println("Response Body: " + responseBody);
                 this.exitLogin(String.valueOf(error));
             });
     }
