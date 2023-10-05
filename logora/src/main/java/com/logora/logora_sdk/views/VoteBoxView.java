@@ -184,8 +184,6 @@ public class VoteBoxView extends RelativeLayout {
     public void vote(Integer positionId) {
 
         if (this.voteId != null && this.votePositionId != null) {
-            System.out.println("the voteId is "+voteId);
-            System.out.println("the votePositionId is"+votePositionId);
             debate.updateVote(positionId, this.votePositionId);
             this.updateVote(positionId);
         } else {
@@ -198,7 +196,6 @@ public class VoteBoxView extends RelativeLayout {
     public void createVote(Integer positionId) {
         this.apiClient.createVote(
                 response -> {
-                    System.out.println("le vote est creer"+response);
                     try {
                         boolean success = response.getBoolean("success");
                         JSONObject vote = response.getJSONObject("data").getJSONObject("resource");
@@ -219,7 +216,6 @@ public class VoteBoxView extends RelativeLayout {
     public void updateVote(Integer positionId) {
         this.apiClient.updateVote(
                 response -> {
-                    System.out.println("le vote est modifier"+response);
                     try {
                         boolean success = response.getBoolean("success");
                         JSONObject vote = response.getJSONObject("data").getJSONObject("resource");

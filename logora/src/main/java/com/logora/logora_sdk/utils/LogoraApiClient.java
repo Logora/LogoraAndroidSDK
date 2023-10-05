@@ -170,7 +170,6 @@ public class LogoraApiClient {
         bodyParams.put("assertion", this.authAssertion);
         bodyParams.put("assertion_type", settings.get("auth.type"));
         bodyParams.put("provider", this.applicationName);
-        System.out.println("the body"+bodyParams);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
                 this.authUrl, new JSONObject(bodyParams), listener, errorListener) {
             @Override
