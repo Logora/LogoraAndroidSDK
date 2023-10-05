@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         MainActivity.this.startActivity(intent);*/
         String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxMjM0NTY3ODI5IiwiZmlyc3RfbmFtZSI6IlNveWEiLCJsYXN0X25hbWUiOiJTb3lhIiwiZW1haWwiOiJzb3lhQGdtYWlsLmNvbSJ9.s213UFjD7kXAsQ2-foJvJ1S3Im6oKuUxgEWTYD4kn9Y";
 
-        WidgetFragment widget = new WidgetFragment(this.getApplicationContext(), "mon-article", "logora-demo-app", null);
+        WidgetFragment widget = new WidgetFragment(this.getApplicationContext(), "mon-article", "logora-demo-app", token);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.widget_view_container, widget)
                 .commit();
