@@ -123,7 +123,6 @@ public class UserFragment extends Fragment {
                 Glide.with(userImageView.getContext())
                         .load(Uri.parse(user.getImageUrl()))
                         .into(userImageView);
-
                 UserBoxListAdapter userDisciplesListAdapter = new UserBoxListAdapter();
                 UserBoxListAdapter userMentorsListAdapter = new UserBoxListAdapter();
                 UserMessagesListAdapter userMessagesListAdapter = new UserMessagesListAdapter();

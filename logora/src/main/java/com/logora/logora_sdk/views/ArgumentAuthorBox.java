@@ -76,7 +76,6 @@ public class ArgumentAuthorBox extends RelativeLayout {
                 eloquence_point.setText(pointsCount);
 
             } catch (Exception e) {
-
                 System.out.println("ERROR" + e);
             }
         } else {

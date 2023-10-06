@@ -30,6 +30,7 @@ public class WidgetFragment extends Fragment {
     private DebateSynthesis debate;
     private String pageUid;
     private String applicationName;
+    private String authAssertion;
     private Button voteFirstPositionButton;
     private Button voteSecondPositionButton;
     private Button voteThirdPositionButton;
@@ -39,11 +40,12 @@ public class WidgetFragment extends Fragment {
         super(R.layout.fragment_widget);
     }
 
-    public WidgetFragment(Context context, String pageUid, String applicationName) {
+    public WidgetFragment(Context context, String pageUid, String applicationName, String assertion) {
         super(R.layout.fragment_widget);
         this.pageUid = pageUid;
         this.applicationName = applicationName;
-        this.apiClient = LogoraApiClient.getInstance(applicationName, null, context);
+        this.authAssertion = assertion;
+        this.apiClient = LogoraApiClient.getInstance(applicationName, assertion, context);
     }
 
     @Override
@@ -63,10 +65,10 @@ public class WidgetFragment extends Fragment {
     private void findViews(View view) {
         rootLayout = view.findViewById(R.id.root_layout);
         debateNameView = view.findViewById(R.id.widget_debate_name);
-        voteFirstPositionButton=view.findViewById(R.id.vote_first_position_button);
-        voteSecondPositionButton=view.findViewById(R.id.vote_second_position_button);
-        voteThirdPositionButton=view.findViewById(R.id.vote_third_position_button);
-        votesCountView=view.findViewById(R.id.vote_total);
+        voteFirstPositionButton = view.findViewById(R.id.vote_first_position_button);
+        voteSecondPositionButton = view.findViewById(R.id.vote_second_position_button);
+        voteThirdPositionButton = view.findViewById(R.id.vote_third_position_button);
+        votesCountView = view.findViewById(R.id.vote_total);
     }
 
     private void setWidget(DebateSynthesis debate) {
@@ -79,7 +81,7 @@ public class WidgetFragment extends Fragment {
         voteSecondPositionButton.setBackgroundColor(Color.parseColor(secondPositionPrimaryColor));
         voteThirdPositionButton.setBackgroundColor(Color.parseColor(thirdPositionPrimaryColor));
         debateNameView.setOnClickListener(v -> {
-            startDebate(this.applicationName);
+            startDebate();
         });
     }
 
@@ -109,9 +111,10 @@ public class WidgetFragment extends Fragment {
         });
     }
 
-    private void startDebate(String applicationName) {
+    private void startDebate() {
         Intent intent = new Intent(getContext(), LogoraAppActivity.class);
-        intent.putExtra("applicationName", applicationName);
+        intent.putExtra("applicationName", this.applicationName);
+        intent.putExtra("authAssertion", this.authAssertion);
         intent.putExtra("routeName", "DEBATE");
         intent.putExtra("routeParam", debate.getSlug());
         this.getContext().startActivity(intent);

@@ -1,9 +1,9 @@
 package com.logora.logora_sdk.utils;
 
-import android.util.Log;
 import com.logora.logora_sdk.models.User;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 
 
 public class Auth {
@@ -41,14 +41,13 @@ public class Auth {
 
     public void loginUser() {
         this.apiClient.userAuth(
-                response -> {
-                    this.apiClient.setUserToken(response);
-                    this.fetchUser();
-                },
-                error -> {
-                    Log.i("ERROR", String.valueOf(error));
-                    this.exitLogin(String.valueOf(error));
-                });
+            response -> {
+                this.apiClient.setUserToken(response);
+                this.fetchUser();
+            },
+            error -> {
+                this.exitLogin(String.valueOf(error));
+            });
     }
 
     public void fetchUser() {
