@@ -1,10 +1,8 @@
 package com.logora.logora_sdk.utils;
 
-import android.util.Log;
 import com.logora.logora_sdk.models.User;
 import org.json.JSONException;
 import org.json.JSONObject;
-import android.util.Log;
 
 
 
@@ -27,33 +25,27 @@ public class Auth {
 
     public void authenticate() {
         if (hasSession()) {
-            System.out.println("has session !");
             if (isLoggedInRemotely()) {
                 this.fetchUser();
             } else {
                 this.logoutUser();
             }
         } else {
-            System.out.println("pas de session !");
             if (isLoggedInRemotely()) {
-                System.out.println("logged in remotely !");
                 this.loginUser();
             } else {
-                System.out.println("pas logged in remotely !");
                 this.logoutUser();
             }
         }
     }
 
     public void loginUser() {
-        System.out.println("login usere ");
         this.apiClient.userAuth(
             response -> {
                 this.apiClient.setUserToken(response);
                 this.fetchUser();
             },
             error -> {
-                String responseBody = new String(error.networkResponse.data);
                 this.exitLogin(String.valueOf(error));
             });
     }
@@ -104,7 +96,6 @@ public class Auth {
 
     public Boolean isLoggedInRemotely() {
         String authAssertion = this.apiClient.getAuthAssertion();
-        System.out.println("auth assertion : " + authAssertion);
         return authAssertion != null && !authAssertion.isEmpty();
     }
 

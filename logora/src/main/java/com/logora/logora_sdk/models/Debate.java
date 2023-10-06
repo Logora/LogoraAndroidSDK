@@ -218,7 +218,6 @@ public class Debate {
 
     public void updateVote(Integer positionId, Integer oldPositionId) {
         votesCountObject.put(positionId, votesCountObject.get(positionId) + 1);
-
         if (oldPositionId != null) {
             votesCountObject.put(oldPositionId, votesCountObject.get(oldPositionId) - 1);
         } else {
