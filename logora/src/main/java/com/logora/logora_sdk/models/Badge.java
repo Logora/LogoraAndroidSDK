@@ -4,6 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Badge extends Model {
+    private String name;
     private String title;
     private String description;
     private String iconUrl;
@@ -20,7 +21,7 @@ public class Badge extends Model {
             if (jsonObject.has("badge")) {
                 badgeObject = jsonObject.getJSONObject("badge");
             }
-
+            badgeBox.setName(badgeObject.getString("name"));
             badgeBox.setTitle(badgeObject.getString("title"));
             badgeBox.setDescription(badgeObject.getString("description"));
             badgeBox.setIconUrl(badgeObject.getString("icon_url"));
@@ -36,6 +37,8 @@ public class Badge extends Model {
             return null;
         }
     }
+    public String getName(){return name;}
+    public void setName(String name){this.name= name;}
 
     public String getTitle() {
         return title;

@@ -29,7 +29,7 @@
             android:backgroundTint="@color/call_primary"
             android:paddingHorizontal="10dp"
             android:paddingVertical="6dp"
-            android:text="Oui"
+            android:text="@string/debate_first_position"
             android:textColor="@android:color/white" />
 
         <Button
@@ -40,7 +40,7 @@
             android:backgroundTint="@color/first_position_primary"
             android:paddingHorizontal="10dp"
             android:paddingVertical="6dp"
-            android:text="Non"
+            android:text="@string/debate_second_position"
             android:textColor="@android:color/white" />
     </RelativeLayout>
 

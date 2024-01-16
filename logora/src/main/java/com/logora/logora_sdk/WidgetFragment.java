@@ -83,6 +83,15 @@ public class WidgetFragment extends Fragment {
         debateNameView.setOnClickListener(v -> {
             startDebate();
         });
+        voteFirstPositionButton.setOnClickListener(v -> {
+            startDebate();
+        });
+        voteSecondPositionButton.setOnClickListener(v -> {
+            startDebate();
+        });
+        voteThirdPositionButton.setOnClickListener(v -> {
+            startDebate();
+        });
     }
 
     public void getDebate() {

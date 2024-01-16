@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LogoraAndroid</string>
+    <string name="activity_name">logora_root_activity</string>
+    <string name="headerMainDebate">Débat à l\'affiche</string>
+    <string name="headerTrendingDebates">Trending debates</string>
+    <string name="headerBestUsers">Best debaters</string>
+    <string name="infoSeeMoreDebates">View more debates</string>
+    <string name="infoAllDebates">All debates</string>
+    <string name="infoRelatedDebates">Debates selected for you</string>
+    <string name="actionSignInIn">Sign in</string>
+    <string name="debate_box_title">Titre du débat</string>
+    <string name="debate_box_image_content_description">Image du débat</string>
+    <string name="debate_box_vote_percentage">50% Yes</string>
+    <string name="debate_box_user_list_empty">No participants</string>
+    <string name="user_icon_content_description">Image du participant</string>
+    <string name="user_box_full_name">Nom du débatteur</string>
+    <string name="user_box_level">Level</string>
+    <string name="user_box_level_content_description">Icône de niveau</string>
+    <string name="search_debate_tab">Debates</string>
+    <string name="search_user_tab">Debaters</string>
+    <string name="list_empty">No element found</string>
+    <string name="search_header">Résultats pour</string>
+    <string name="index_sort_trending_option">Most relevant</string>
+    <string name="index_sort_recent_option">Newest</string>
+    <string name="index_sort_old_option">Oldest</string>
+    <string name="user_image_content_description">Image de profile du débatteur</string>
+    <plurals name="user_debates_count_text">
+        <item quantity="one">%d argument</item>
+        <item quantity="other">%d arguments</item>
+    </plurals>
+    <plurals name="user_votes_count_text">
+        <item quantity="one">%d  vote</item>
+        <item quantity="other">%d votes</item>
+    </plurals>
+    <plurals name="user_disciples_count_text">
+        <item quantity="one">%d follower</item>
+        <item quantity="other">%d followers</item>
+    </plurals>
+    <string name="user_tags_header">Interests</string>
+    <string name="user_tags_empty">Not enough activity</string>
+    <string name="user_arguments_tab">Arguments</string>
+    <string name="user_badges_tab">Badges</string>
+    <string name="user_mentors_tab">subscribers</string>
+    <string name="user_disciples_tab">followers</string>
+    <string name="user_next_badges_header">Next badges to obtain</string>
+    <string name="user_badges_header">Badge room</string>
+    <string name="user_notifications_count">0</string>
+    <string name="badge_icon_content_description">Icône du badge</string>
+    <string name="next_badge_icon_content_description">Icône du badge</string>
+    <string name="badge_box_title">Nom du badge</string>
+    <string name="badge_box_description">Description du badge</string>
+    <string name="debate_name">Titre du débat</string>
+    <string name="debate_published_date">Date de publication du débat</string>
+    <string name="debate_first_position">Yes</string>
+    <string name="debate_second_position">No</string>
+    <string name="debate_third_position">Without opinion</string>
+    <string name="vote_third_position_button">Without opinion</string>
+    <plurals name="eloquence_point">
+        <item quantity="one">%d eloquence point</item>
+        <item quantity="other">%d eloquence points</item>
+    </plurals>
+    <plurals name="debate_votes_count">
+        <item quantity="one">%d vote</item>
+        <item quantity="other">%d votes</item>
+    </plurals>
+    <string name="resultat">-Show result</string>
+    <plurals name="user_vote_count">
+        <item quantity="one">%d vote</item>
+        <item quantity="other">%d votes</item>
+    </plurals>
+    <plurals name="user_argument_count">
+        <item quantity="one">%d argument</item>
+        <item quantity="other">%d arguments</item>
+    </plurals>
+    <plurals name="user_points">
+        <item quantity="one">%d point</item>
+        <item quantity="other">%d points</item>
+    </plurals>
+    <string name="debate_edit_vote">Edit</string>
+    <string name="debate_first_position_progress_text">50%</string>
+    <string name="debate_second_position_progress_text">50%</string>
+    <string name="debate_third_position_progress_text">50%</string>
+    <string name="search_icon_content_description">Icône de recherche</string>
+    <string name="search_back_icon_content_description">Icône de retour</string>
+    <string name="search_placeholder">Rechercher un débat…</string>
+    <string name="search_submit_icon_content_description">Icône de recherche</string>
+    <string name="notification_icon_content_description">Icône de notification</string>
+    <string name="debate_follow_inactive">Follow</string>
+    <string name="debate_follow_active">Followed</string>
+    <string  name="user_follow_active">Followed</string>
+    <string name="share_icon_content_description">Icône de partage</string>
+    <string name="share_link_icon_content_description">Icône de copie dans le presse-papier</string>
+    <string name="share_email_icon_content_description">Icône de partage par email</string>
+    <string name="share_facebook_icon_content_description">Icône de partage par Facebook</string>
+    <string name="share_twitter_icon_content_description">Icône de partage par Twitter</string>
+    <string name="argument_sort_trending">Most relevant</string>
+    <string name="argument_sort_recent">Newest</string>
+    <string name="argument_sort_old">Oldest</string>
+    <string name="argument_date">5 days ago</string>
+    <string name="argument_clap_icon_content_description">Icône du bouton de vote pour l\'argument</string>
+    <string name="argument_reply_icon_content_description">Icône du bouton de réponse de l\'argument</string>
+    <string name="argument_view_replies">See the answers</string>
+    <string name="argument_hide_replies">Hide answers</string>
+    <string name="arrow_up">&#9650;</string>
+    <string name="arrow_down">&#9660;</string>
+    <string name="argument_more_icon_content_description">Icône du bouton "plus d'actions" de l\'argument</string>
+    <string name="more_actions">More actions</string>
+    <string name="report">Report</string>
+    <string name="participants_count">Number of participants</string>
+    <string name="notifications">Alerts</string>
+    <string name="notification_content">Alerts</string>
+    <string name="notification_date">A day ago</string>
+    <string name="notifications_new_badge">You got the badge</string>
+    <string name="notifications_level_up">You are now at the level</string>
+    <string name="notifications_mentor_level_up">reached the level</string>
+    <string name="notifications_followed">followed you</string>
+    <string name="notifications_one_answers">another person responded to</string>
+    <string name="notifications_multiple_answers">another person responded to</string>
+    <string name="notifications_answer">responded</string>
+    <string name="notifications_multiple_support">other people support</string>
+    <string name="notifications_one_support">other people support</string>
+    <string name="notifications_support">support</string>
+    <string name="notifications_multiple_participations">other people participated</string>
+    <string name="notifications_participation">took part</string>
+    <string name="notifications_subject">to your message in the debate</string>
+    <string name="notifications_subject_argument">your argument</string>
+    <string name="notifications_subject_debate">in the debate</string>
+    <string name="notifications_read_all">Mark all as read</string>
+    <string name="notifications_group_invitation_action">challenges you to a duel</string>
+    <string name="view_more">View more</string>
+    <string name="report_spam">Unwanted or low-quality content</string>
+    <string name="report_harassment">Harassment</string>
+    <string name="report_hate_speech">Hate speech</string>
+    <string name="report_plagiarism">Plagiarism</string>
+    <string name="report_fake_news">Fake news</string>
+    <string name="report_success">Your report has been sent.</string>
+    <string name="report_error">There was a problem sending your report</string>
+    <string name="report_header">Report an argument</string>
+    <string name="side_dialog_header">Choose your side</string>
+    <string name="delete_dialog_header">Are you sure you want to remove this argument?</string>
+    <string name="widget_button">Go to Debate</string>
+    <string name="argument_update_success">Your argument has been modified</string>
+    <string name="argument_delete_success">Your argument has been deleted</string>
+    <string name="argument_create_success">Your argument has been published</string>
+    <string name="reply_create_success">Your response has been published</string>
+    <string name="issue">A problem has occurred</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="author_box_default_name">Share your opinion</string>
+    <string name="author_box_default_level">Level up</string>
+    <string name="moderated_argument">Awaiting moderation</string>
+    <string name="login_info">Your action is not recorded! Sign up to save it and be alerted by email.</string>
+    <string name="login_sign_up">Sign up</string>
+    <string name="already_have_account">Already have an account ?</string>
+    <string name="login_sign_in">Sign in</string>
+    <string name="login_cancel">Continue without saving</string>
+    <string name="argument_input_placeholder">Add an argument...</string>
+    <string name="reply_input_placeholder">Add an argument...</string>
+    <string name="login_cgu">By clicking on « Sign up  », I declare that I have read the <a href="https://logora.fr/cgu">General Conditions of Use</a> of the debate space and accept them </string>
+    <string name="see_all_debates">See all debates</string>
+    <string name="read_more">Read more</string>
+    <string name="share_content">This debate should interest you</string>
+    <string name="link_copied">Link copied !</string>
+    <string name="request_error">An error occurred during your request</string>
+    <string name="error_debate">An error occurred</string>
+    <string name="list_recent"><font size="30">Newest</font></string>
+    <string name="list_tendance">The most trendy</string>
+    <string name="list_ancien">Oldest</string>
+    <string name="argument_interessant">This argument should interest you</string>
+    <string name="partager_argument">Share the argument</string>
+    <string name="modifier">Edit</string>
+    <string name="supprimer">Delete</string>
+    <string name="signaler">Report</string>
+    <string name="percentage">%</string>
+    <string name="share_debat">Here is a debate that might interest you:</string>
+    <string name="share_argument">Here is an argument that might interest you:</string>
+    <string name="déconnexion">Logout</string>
+    <string name="recherche">Search</string>
+    <string name="alerte">Alerts</string>
+    <string name="titre_dialog">Debates</string>
+    <string name="info_profil">Profile</string>
+    <string name="user_guide">User guide</string>
+    <string name="bug_report">Suggest an improvement</string>
+    <string name="terms">Terms</string>
+    <string name="made_by_logora">Powered by Logora</string>
+    <string name="retour">Back</string>
+    <string name="date">time</string>
+    <string name="jours">days</string>
+    <string name="heures">hours</string>
+    <string name="minutes">minutes</string>
+    <string name="secondes">seconds</string>
+    <string name="partager">Share</string>
+    <string name="gamification_badge_box_completed">Completed!</string>
+
+    <string name="gamification_badge_box_create_argument_description">
+        Write %1$d argument%2$s
+        </string>
+    <string name="gamification_badge_box_create_argument_reward">Dialogue pro</string>
+    <string name="gamification_badge_box_create_argument_title">Contributor</string>
+
+    <string name="gamification_badge_box_create_argument_well_scored_description">
+        Write  %1$d argument%2$s with a relevance score of at least 75
+        </string>
+    <string name="gamification_badge_box_create_argument_well_scored_reward">Great Debater</string>
+    <string name="gamification_badge_box_create_argument_well_scored_title">Speaker</string>
+
+    <string name="gamification_badge_box_debate_suggestion_accepted_description">
+        Have your suggestion selected %1$d times
+        </string>
+    <string name="gamification_badge_box_debate_suggestion_accepted_reward">Master influencer</string>
+    <string name="gamification_badge_box_debate_suggestion_accepted_title">Influencer</string>
+
+    <string name="gamification_badge_box_description_added_description">Add a description to your profile</string>
+    <string name="gamification_badge_box_description_added_title">Person with status</string>
+    <string name="gamification_badge_box_get_vote_description">
+        Get %1$d vote%2$s
+        </string>
+
+    <string name="gamification_badge_box_get_vote_reward">Charismatic</string>
+    <string name="gamification_badge_box_get_vote_title">Popular</string>
+
+    <string name="gamification_badge_box_join_against_camp_description">
+        Support the \"Against\" camp on %1$d débate%2$s
+        </string>
+    <string name="gamification_badge_box_join_against_camp_reward">Opponent</string>
+    <string name="gamification_badge_box_join_against_camp_title">Critic</string>
+
+    <string name="gamification_badge_box_join_debate_description">
+        Participate in %1$d débate%2$s
+        </string>
+    <string name="gamification_badge_box_join_debate_reward">Great Debater</string>
+    <string name="gamification_badge_box_join_debate_title">Deputy</string>
+
+    <string name="gamification_badge_box_join_for_camp_description">
+        Support the \"For\" camp on %1$d débate%2$s
+        </string>
+    <string name="gamification_badge_box_join_for_camp_reward">Partisan</string>
+    <string name="gamification_badge_box_join_for_camp_title">Supporter</string>
+
+    <string name="gamification_badge_box_level">Level %1$d</string>
+    <string name="gamification_badge_box_title">At level %1$d you will get the title:</string>
+    <string name="gamification_badge_box_title_obtained">Title obtained:</string>
+    <string name="gamification_badge_box_title_shown">Title shown:</string>
+
+</resources>

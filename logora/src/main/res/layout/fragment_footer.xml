@@ -16,7 +16,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginEnd="8dp"
         android:gravity="center"
-        android:text="Charte de modération"
+        android:text="@string/user_guide"
         android:textColor="@color/text_secondary" />
 
     <TextView
@@ -28,7 +28,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="8dp"
         android:gravity="center"
-        android:text="Proposer une amélioration"
+        android:text="@string/bug_report"
         android:textColor="@color/text_secondary" />
 
     <TextView
@@ -40,7 +40,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="8dp"
         android:gravity="center"
-        android:text="CGU"
+        android:text="@string/terms"
         android:textColor="@color/text_secondary" />
 
     <LinearLayout
@@ -63,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="Créé par logora"
+            android:text="@string/made_by_logora"
             android:textColor="@color/text_secondary" />
 
     </LinearLayout>
