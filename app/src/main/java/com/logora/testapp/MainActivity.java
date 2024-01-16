@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("routeParam", "");
         MainActivity.this.startActivity(intent);*/
        String token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIxMjM0NTY2NTg5MCIsImZpcnN0X25hbWUiOiJNYXhpbWUiLCJsYXN0X25hbWUiOiJNYXhpbW9uIiwiZW1haWwiOiJtYXhpbWVAZ21haWwuY29tIn0.rppsWW38O3X1rIM10WuBSssmDZght8JhUwAU6cvvLdM";
-       WidgetFragment widget = new WidgetFragment(this.getApplicationContext(), "mon-article", "logora-demo-app", null);
+       WidgetFragment widget = new WidgetFragment(this.getApplicationContext(), "mon-article", "logora-demo-app", token);
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.widget_view_container, widget)
                 .commit();
