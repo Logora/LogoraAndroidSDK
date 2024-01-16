@@ -155,7 +155,7 @@ public class ArgumentBox extends RelativeLayout implements DeleteArgumentDialog.
         }
         sideLabelView.setBackground(shape);
         sideLabelView.setText(argument.getPosition().getName());
-        dateView.setText(DateUtil.getTimeAgo(argument.getPublishedDate()));
+        dateView.setText(DateUtil.getTimeAgo(getContext(),argument.getPublishedDate()));
         argumentAuthorBox.init(argument);
         argumentAuthorBox.setOnClickListener(v -> {
             HashMap<String, String> routeParams = new HashMap<>();

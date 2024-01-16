@@ -1,5 +1,6 @@
 package com.logora.logora_sdk;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ public class IndexFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         try {
+            Resources res = this.getContext().getResources();
             super.onViewCreated(view, savedInstanceState);
             String debateResourceName = "groups";
             DebateBoxListAdapter debateListAdapter = new DebateBoxListAdapter();
@@ -32,9 +34,9 @@ public class IndexFragment extends Fragment {
 
             ArrayList<SortOption> debateListSortOptions = new ArrayList<>();
 
-            debateListSortOptions.add(new SortOption("Le plus récent", "-created_at", null));
-            debateListSortOptions.add(new SortOption("Le plus pertinent", "-score", null));
-            debateListSortOptions.add(new SortOption("Le plus ancien", "+created_at", null));
+            debateListSortOptions.add(new SortOption(res.getString(R.string.index_sort_recent_option), "-created_at", null));
+            debateListSortOptions.add(new SortOption(res.getString(R.string.index_sort_trending_option), "-score", null));
+            debateListSortOptions.add(new SortOption(res.getString(R.string.index_sort_old_option), "+created_at", null));
 
             getChildFragmentManager()
                     .beginTransaction()

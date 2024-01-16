@@ -1,5 +1,7 @@
 package com.logora.logora_sdk.view_holders;
 
+import static androidx.test.InstrumentationRegistry.getContext;
+
 import android.content.res.Resources;
 import android.net.Uri;
 import android.text.Html;
@@ -49,7 +51,7 @@ public class NotificationViewHolder extends ListViewHolder {
         if (!notification.getIsOpened()) {
             notificationContainer.setBackgroundColor(res.getColor(R.color.text_tertiary));
         }
-        notificationDate.setText(DateUtil.getTimeAgo(notification.getPublishedDate()));
+        notificationDate.setText(DateUtil.getTimeAgo(itemView.getContext(),notification.getPublishedDate()));
         switch (notification.getNotifyType()) {
             case "get_badge":
                 BadgeNotification badgeNotification = (BadgeNotification) object;

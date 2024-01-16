@@ -1,7 +1,6 @@
 package com.logora.logora_sdk.view_models;
 
 import android.util.Log;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -103,8 +102,12 @@ public class ListViewModel extends ViewModel {
                             this.items.add(itemsJson.getJSONObject(i));
                         }
                         JSONObject headers = response.getJSONObject("headers");
-                        this.total = headers.getInt("Total");
-                        this.totalPages = headers.getInt("Total-Pages");
+                        if (headers.has("total")) {
+                            this.total = headers.getInt("total");
+                        }
+                        if (headers.has("total-pages")) {
+                            this.totalPages = headers.getInt("total-pages");
+                        }
                         itemsLiveData.setValue(this.items);
 
                     } catch (JSONException e) {

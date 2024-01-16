@@ -2,6 +2,7 @@ package com.logora.logora_sdk;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -33,6 +34,7 @@ public class NavbarFragment extends Fragment {
     private IconTextView notificationButtonView;
     private RelativeLayout notificationContainer;
 
+
     public NavbarFragment() {
         super(R.layout.fragment_navbar);
     }
@@ -44,6 +46,7 @@ public class NavbarFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        Resources res = this.getContext().getResources();
         findViews(view);
 
         if (auth.getIsLoggedIn()) {
@@ -55,13 +58,13 @@ public class NavbarFragment extends Fragment {
             } else {
                 notificationsBadge.setVisibility(View.GONE);
             }
-            notificationButtonView.init(R.drawable.ic_bell, "Alertes", null, null);
+            notificationButtonView.init(R.drawable.ic_bell,res.getString(R.string.alerte), null, null);
             notificationButtonView.setOnClickListener(v -> {
                 HashMap<String, String> routeParams = new HashMap<>();
                 notificationsBadge.setVisibility(View.GONE);
                 router.navigate(Router.getRoute("NOTIFICATIONS"), routeParams);
             });
-            userProfileView.init(0, "Profil", null, auth.getCurrentUser().getImageUrl());
+            userProfileView.init(0,res.getString(R.string.info_profil) , null, auth.getCurrentUser().getImageUrl());
             userProfileView.setOnClickListener(v -> {
                 HashMap<String, String> routeParams = new HashMap<>();
                 routeParams.put("userSlug", auth.getCurrentUser().getHashId());
@@ -69,7 +72,7 @@ public class NavbarFragment extends Fragment {
             });
         }
 
-        indexButtonView.init(R.drawable.ic_chat, "Débats", "infoAllDebates", null);
+        indexButtonView.init(R.drawable.ic_chat, res.getString(R.string.titre_dialog), "infoAllDebates", null);
         indexButtonView.setOnClickListener(v -> router.navigate(Router.getRoute("INDEX"), null));
         loginLinkView.init(R.drawable.ic_login, "Connexion", null, null);
         loginLinkView.setOnClickListener(v -> {
@@ -83,7 +86,7 @@ public class NavbarFragment extends Fragment {
             goToUrl(authUrl);
 
         });
-        searchButtonView.init(R.drawable.ic_search, "Recherche", null, null);
+        searchButtonView.init(R.drawable.ic_search,res.getString(R.string.recherche), null, null);
         searchButtonView.setOnClickListener(v -> {
             this.searchFormView.setVisibility(View.VISIBLE);
         });
