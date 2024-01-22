@@ -27,17 +27,12 @@ public class IndexFragment extends Fragment {
             super.onViewCreated(view, savedInstanceState);
             String debateResourceName = "groups";
             DebateBoxListAdapter debateListAdapter = new DebateBoxListAdapter();
-
             String userResourceName = "users/index/trending";
             UserBoxListAdapter userListAdapter = new UserBoxListAdapter();
-
-
             ArrayList<SortOption> debateListSortOptions = new ArrayList<>();
-
             debateListSortOptions.add(new SortOption(res.getString(R.string.index_sort_recent_option), "-created_at", null));
             debateListSortOptions.add(new SortOption(res.getString(R.string.index_sort_trending_option), "-score", null));
             debateListSortOptions.add(new SortOption(res.getString(R.string.index_sort_old_option), "+created_at", null));
-
             getChildFragmentManager()
                     .beginTransaction()
                     .add(R.id.trending_debates_list, new PaginatedListFragment(debateResourceName, "CLIENT", debateListAdapter, null, debateListSortOptions, null, null))

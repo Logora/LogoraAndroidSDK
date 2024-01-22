@@ -30,7 +30,6 @@ public class DateUtil {
 
     public static String getTimeAgo(Context context, Date startDate) {
         Resources res = context.getResources();
-
         long different = System.currentTimeMillis() - startDate.getTime();
         long secondsInMilli = 1000;
         long minutesInMilli = secondsInMilli * 60;

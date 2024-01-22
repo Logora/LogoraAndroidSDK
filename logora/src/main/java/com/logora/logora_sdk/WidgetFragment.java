@@ -58,7 +58,6 @@ public class WidgetFragment extends Fragment {
         } catch (Exception e) {
             Toast.makeText(getContext(), getResources().getString(R.string.error_debate), Toast.LENGTH_LONG).show();
         }
-
         return view;
     }
 

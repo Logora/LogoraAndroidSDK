@@ -12,9 +12,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
-      /*  Intent intent = new Intent(MainActivity.this, LogoraAppActivity.class);
+        /*Intent intent = new Intent(MainActivity.this, LogoraAppActivity.class);
         intent.putExtra("applicationName", "logora-demo-app");
         intent.putExtra("routeName", "INDEX");
         intent.putExtra("routeParam", "");

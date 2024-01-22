@@ -48,7 +48,6 @@ public class NavbarFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         Resources res = this.getContext().getResources();
         findViews(view);
-
         if (auth.getIsLoggedIn()) {
             loginLinkView.setVisibility(View.GONE);
             notificationContainer.setVisibility(View.VISIBLE);
@@ -71,7 +70,6 @@ public class NavbarFragment extends Fragment {
                 router.navigate(Router.getRoute("USER"), routeParams);
             });
         }
-
         indexButtonView.init(R.drawable.ic_chat, res.getString(R.string.titre_dialog), "infoAllDebates", null);
         indexButtonView.setOnClickListener(v -> router.navigate(Router.getRoute("INDEX"), null));
         loginLinkView.init(R.drawable.ic_login, "Connexion", null, null);
