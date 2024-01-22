@@ -11,7 +11,7 @@
     <string name="actionSignInIn">Conexión</string>
     <string name="debate_box_title">Título del debate</string>
     <string name="debate_box_image_content_description">Imagen del debate</string>
-    <string name="debate_box_vote_percentage">50% si</string>
+    <string name="debate_box_vote_percentage">50%% si</string>
     <string name="debate_box_user_list_empty">No hay participantes</string>
     <string name="user_icon_content_description">Imagen del participante</string>
     <string name="user_box_full_name">Nombre del polemista</string>
