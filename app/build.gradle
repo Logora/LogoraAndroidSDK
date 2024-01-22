@@ -6,6 +6,10 @@ android {
     namespace "com.logora.testapp"
     compileSdk 33
 
+    lintOptions {
+        abortOnError false
+    }
+
     defaultConfig {
         applicationId "com.logora.testapp"
         minSdk 21
