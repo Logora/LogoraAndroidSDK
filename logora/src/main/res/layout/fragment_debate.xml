@@ -66,7 +66,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/debate_name"
-            android:layout_marginTop="130px">
+            android:layout_marginTop="220px">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -98,7 +98,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="160px"
+                android:layout_marginLeft="300px"
                 android:background="@drawable/border_icon">
 
                 <ImageView
