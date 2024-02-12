@@ -84,7 +84,7 @@ public class NavbarFragment extends Fragment {
             goToUrl(authUrl);
 
         });
-        searchButtonView.init(R.drawable.ic_search,res.getString(R.string.recherche), null, null);
+        searchButtonView.init(R.drawable.search_bold,res.getString(R.string.recherche), null, null);
         searchButtonView.setOnClickListener(v -> {
             this.searchFormView.setVisibility(View.VISIBLE);
         });
