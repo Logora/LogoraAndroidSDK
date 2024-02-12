@@ -96,7 +96,7 @@ public class UserFragment extends Fragment {
                 }
                 try {
                     if (auth.getCurrentUser().getId().equals(user.getId())) {
-                        logoutButton.setVisibility(View.VISIBLE);
+                        logoutButton.setVisibility(View.GONE);
                     } else {
                         logoutButton.setVisibility(View.GONE);
                     }
