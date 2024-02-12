@@ -281,7 +281,7 @@ public class VoteBoxView extends RelativeLayout {
         try {
             voteThirdPositionResultText.setText(this.debate.getPositionList().get(2).getName());
         } catch (Exception e) {
-            System.out.println("ERROR" + e);
+            System.out.println("Error" + e);
         }
         voteFirstPositionProgress.setProgressTintList(ColorStateList.valueOf(Color.parseColor(firstPositionPrimaryColor)));
         voteSecondPositionProgress.setProgressTintList(ColorStateList.valueOf(Color.parseColor(secondPositionPrimaryColor)));
