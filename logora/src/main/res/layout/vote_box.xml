@@ -43,7 +43,7 @@
             android:text="@string/vote_third_position_button"
             android:textColor="@android:color/white"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/vote_total"

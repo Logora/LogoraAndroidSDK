@@ -77,6 +77,7 @@ public class VoteBoxView extends RelativeLayout {
     private ImageView firstPositionSuccessVote;
     private ImageView secondPositionSuccessVote;
     private ImageView thirdPositionSuccessVote;
+    private TextView votethirdpositionresulttext;
 
     Resources res = getResources();
 
@@ -156,6 +157,8 @@ public class VoteBoxView extends RelativeLayout {
         firstPositionSuccessVote = findViewById(R.id.success_first_position_vote);
         secondPositionSuccessVote = findViewById(R.id.success_second_position_vote);
         thirdPositionSuccessVote = findViewById(R.id.success_third_position_vote);
+        votethirdpositionresulttext = findViewById(R.id.vote_third_position_result_text);
+
     }
 
     public void init(Debate debate) {
@@ -249,13 +252,15 @@ public class VoteBoxView extends RelativeLayout {
         String thirdPositionPrimaryColor = settings.get("theme.thirdPositionColorPrimary");
         voteFirstPositionButton.setBackgroundColor(Color.parseColor(firstPositionPrimaryColor));
         voteSecondPositionButton.setBackgroundColor(Color.parseColor(secondPositionPrimaryColor));
-        voteThirdPositionButton.setBackgroundColor(Color.parseColor(thirdPositionPrimaryColor));
         voteFirstPositionButton.setText(this.debate.getPositionList().get(0).getName());
         voteSecondPositionButton.setText(this.debate.getPositionList().get(1).getName());
-        try {
+        // Vérifier si la troisième position existe avant de configurer le bouton
+        if (debate.getPositionList().size() >= 3) {
+            voteThirdPositionButton.setVisibility(VISIBLE);
+            voteThirdPositionButton.setBackgroundColor(Color.parseColor(thirdPositionPrimaryColor));
             voteThirdPositionButton.setText(this.debate.getPositionList().get(2).getName());
-        } catch (Exception e) {
-            System.out.println("ERROR" + e);
+        } else {
+            voteThirdPositionButton.setVisibility(GONE);
         }
         int count = debate.getTotalVotesCount();
         Resources res = getResources();
@@ -278,14 +283,19 @@ public class VoteBoxView extends RelativeLayout {
         voteResultsContainer.setVisibility(VISIBLE);
         voteFirstPositionResultText.setText(this.debate.getPositionList().get(0).getName());
         voteSecondPositionResultText.setText(this.debate.getPositionList().get(1).getName());
-        try {
+        if (debate.getPositionList().size() >= 3) {
             voteThirdPositionResultText.setText(this.debate.getPositionList().get(2).getName());
-        } catch (Exception e) {
-            System.out.println("Error" + e);
+            voteThirdPositionProgress.setProgressTintList(ColorStateList.valueOf(Color.parseColor(thirdPositionPrimaryColor)));
+            voteThirdPositionProgress.setVisibility(VISIBLE);
+            voteThirdPositionResultText.setVisibility(VISIBLE);
+            votethirdpositionresulttext.setVisibility(VISIBLE);
+        } else {
+            voteThirdPositionResultText.setVisibility(GONE);
+            voteThirdPositionProgress.setVisibility(GONE);
+            votethirdpositionresulttext.setVisibility(GONE);
         }
         voteFirstPositionProgress.setProgressTintList(ColorStateList.valueOf(Color.parseColor(firstPositionPrimaryColor)));
         voteSecondPositionProgress.setProgressTintList(ColorStateList.valueOf(Color.parseColor(secondPositionPrimaryColor)));
-        voteThirdPositionProgress.setProgressTintList(ColorStateList.valueOf(Color.parseColor(thirdPositionPrimaryColor)));
         List<Position> positionList = this.debate.getPositionList();
         for (Integer i = 0; i < positionList.size(); i++) {
             if (positionList.get(i).getId().equals(votePositionId) && i.equals(0)) {
@@ -296,24 +306,23 @@ public class VoteBoxView extends RelativeLayout {
                 secondPositionSuccessVote.setVisibility(VISIBLE);
             } else if (positionList.get(i).getId().equals(votePositionId) && i.equals(2)) {
                 voteThirdPositionResultText.setTypeface(null, Typeface.BOLD);
-                thirdPositionSuccessVote.setVisibility(VISIBLE);
+                thirdPositionSuccessVote.setVisibility(INVISIBLE);
             }
         }
         voteFirstPositionProgressPercentage = debate.getPositionPercentage(this.debate.getPositionList().get(0).getId());
         voteSecondPositionProgressPercentage = debate.getPositionPercentage(this.debate.getPositionList().get(1).getId());
-        try {
+        if (debate.getPositionList().size() >= 3) {
             voteThirdPositionProgressPercentage = debate.getPositionPercentage(this.debate.getPositionList().get(2).getId());
-        } catch (Exception e) {
-            System.out.println("ERROR" + e);
         }
-
         if (voteFirstPositionProgressPercentage != null && voteSecondPositionProgressPercentage != null && voteThirdPositionProgressPercentage != null) {
             setUpObserver();
         }
         voteFirstPositionProgressResult.setText(voteFirstPositionProgressPercentage + res.getString(R.string.percentage));
         voteSecondPositionProgressResult.setText(voteSecondPositionProgressPercentage + res.getString(R.string.percentage));
-        voteThirdPositionProgressResult.setText(voteThirdPositionProgressPercentage + res.getString(R.string.percentage));
-
+        // Vérifier si la troisième position existe avant de configurer le texte
+        if (debate.getPositionList().size() >= 3) {
+            voteThirdPositionProgressResult.setText(voteThirdPositionProgressPercentage + res.getString(R.string.percentage));
+        }
         int count = debate.getTotalVotesCount();
         Resources res = getResources();
         String votesCount = res.getQuantityString(R.plurals.debate_votes_count, count, count);

@@ -41,8 +41,8 @@
     <string name="user_tags_empty">No hay suficiente actividad</string>
     <string name="user_arguments_tab">Argumentos</string>
     <string name="user_badges_tab">Insignias</string>
-    <string name="user_mentors_tab">suscripciones</string>
-    <string name="user_disciples_tab">seguidores</string>
+    <string name="user_mentors_tab">Suscripciones</string>
+    <string name="user_disciples_tab">Seguidores</string>
     <string name="user_next_badges_header">Próximas insignias a obtener</string>
     <string name="user_badges_header">Sala de insignias</string>
     <string name="user_notifications_count">0</string>
@@ -165,7 +165,7 @@
     <string name="request_error">Se produjo un error durante su solicitud.</string>
     <string name="error_debate">Se ha producido un error durante el inicio de sesión</string>
     <string name="list_recent"><font size="30">Los más recientes</font></string>
-    <string name="list_tendance">La tendance positive</string>
+    <string name="list_tendance">Lo más relevante</string>
     <string name="list_ancien">Los más antiguos</string>
     <string name="argument_interessant">Este argumento debería interesarte</string>
     <string name="partager_argument">Comparte el argumento</string>
@@ -184,7 +184,7 @@
     <string name="bug_report">Sugerir una mejora</string>
     <string name="terms">Términos de servicio</string>
     <string name="made_by_logora">Desarrollado por Logora</string>
-    <string name="retour">Retorno</string>
+    <string name="retour">Volver</string>
     <string name="date">Hace</string>
     <string name="jours">días</string>
     <string name="heures">horas</string>
