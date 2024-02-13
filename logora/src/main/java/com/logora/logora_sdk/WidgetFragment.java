@@ -13,11 +13,14 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.fragment.app.Fragment;
+
+import com.logora.logora_sdk.models.Argument;
 import com.logora.logora_sdk.models.Debate;
 import com.logora.logora_sdk.models.DebateSynthesis;
 import com.logora.logora_sdk.utils.LogoraApiClient;
 import com.logora.logora_sdk.utils.Settings;
 import com.logora.logora_sdk.view_models.SettingsViewModel;
+import com.logora.logora_sdk.views.ArgumentAuthorBox;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,6 +38,12 @@ public class WidgetFragment extends Fragment {
     private Button voteSecondPositionButton;
     private Button voteThirdPositionButton;
     private TextView votesCountView;
+    private ArgumentAuthorBox argumentAuthorBox;
+
+    private Argument argument;
+    private TextView contentView;
+
+
 
     public WidgetFragment() {
         super(R.layout.fragment_widget);
@@ -68,10 +77,14 @@ public class WidgetFragment extends Fragment {
         voteSecondPositionButton = view.findViewById(R.id.vote_second_position_button);
         voteThirdPositionButton = view.findViewById(R.id.vote_third_position_button);
         votesCountView = view.findViewById(R.id.vote_total);
+        argumentAuthorBox = view.findViewById(R.id.argument_author_box_container);
+        contentView = view.findViewById(R.id.argument_content);
+
+
+
     }
 
     private void setWidget(DebateSynthesis debate) {
-        Debate d = null;
         debateNameView.setText(debate.getName());
         String firstPositionPrimaryColor = settings.get("theme.firstPositionColorPrimary");
         String secondPositionPrimaryColor = settings.get("theme.secondPositionColorPrimary");
@@ -91,6 +104,7 @@ public class WidgetFragment extends Fragment {
         voteThirdPositionButton.setOnClickListener(v -> {
             startDebate();
         });
+
     }
 
     public void getDebate() {

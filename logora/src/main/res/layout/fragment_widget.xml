@@ -59,10 +59,127 @@
             android:textColor="@android:color/white"
             android:textSize="16sp"
             android:textStyle="bold" />
-
-
     </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/argument_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/box_background"
+        android:layout_below="@id/vote_box_buttons_container">
 
+        <com.logora.logora_sdk.views.ArgumentAuthorBox
+            android:id="@+id/argument_author_box_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <RelativeLayout
+            android:id="@+id/argument_right_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true">
+
+            <TextView
+                android:id="@+id/argument_position"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@id/argument_date"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/position_background"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="6dp"
+                android:text="@string/debate_first_position"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/argument_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/argument_position"
+                android:paddingStart="5dp"
+                android:paddingEnd="15dp"
+                android:text="@string/argument_date"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/argument_content_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/argument_author_box_container"
+            android:layout_marginVertical="6dp"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="5dp">
+
+            <TextView
+                android:id="@+id/argument_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/argument_footer"
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:layout_below="@+id/argument_content_container"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="40px"
+            android:orientation="horizontal"
+            android:paddingHorizontal="6px">
+
+            <com.logora.logora_sdk.views.ArgumentVote
+                android:id="@+id/argument_vote_container"
+                android:layout_width="0dp"
+                android:layout_height="28dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical" />
+
+            <ImageView
+                android:id="@+id/argument_reply_button"
+                android:layout_width="0dp"
+                android:layout_height="22dp"
+                android:layout_marginHorizontal="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:contentDescription="@string/argument_reply_icon_content_description"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:src="@drawable/ic_reply" />
+
+            <ImageView
+                android:id="@+id/argument_share_button"
+                android:layout_width="0dp"
+                android:layout_height="22dp"
+                android:layout_marginHorizontal="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:contentDescription="@string/share_icon_content_description"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:src="@drawable/ic_share" />
+
+            <ImageView
+                android:id="@+id/argument_more_button"
+                android:layout_width="0dp"
+                android:layout_height="22dp"
+                android:layout_marginHorizontal="6dp"
+                android:layout_marginTop="6dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:contentDescription="@string/argument_more_icon_content_description"
+                android:focusable="true"
+                android:src="@drawable/ic_more" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
 </RelativeLayout>
 
 
