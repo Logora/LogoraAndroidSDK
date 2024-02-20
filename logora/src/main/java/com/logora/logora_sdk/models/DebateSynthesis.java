@@ -8,6 +8,8 @@ public class DebateSynthesis {
     private String slug;
     private Integer totalVotesCount = 0;
 
+
+
     public DebateSynthesis() {
     }
 
@@ -47,4 +49,6 @@ public class DebateSynthesis {
     public void setTotalVotesCount(Integer totalVotesCount) {
         this.totalVotesCount = totalVotesCount;
     }
+
+
 }

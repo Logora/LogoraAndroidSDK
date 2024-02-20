@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
+import com.logora.logora_sdk.adapters.ArgumentListAdapter;
 import com.logora.logora_sdk.models.Argument;
 import com.logora.logora_sdk.models.Debate;
 import com.logora.logora_sdk.models.DebateSynthesis;
@@ -21,6 +22,7 @@ import com.logora.logora_sdk.utils.LogoraApiClient;
 import com.logora.logora_sdk.utils.Settings;
 import com.logora.logora_sdk.view_models.SettingsViewModel;
 import com.logora.logora_sdk.views.ArgumentAuthorBox;
+import com.logora.logora_sdk.views.ArgumentBox;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,11 +39,7 @@ public class WidgetFragment extends Fragment {
     private Button voteFirstPositionButton;
     private Button voteSecondPositionButton;
     private Button voteThirdPositionButton;
-    private TextView votesCountView;
-    private ArgumentAuthorBox argumentAuthorBox;
 
-    private Argument argument;
-    private TextView contentView;
 
 
 
@@ -76,12 +74,6 @@ public class WidgetFragment extends Fragment {
         voteFirstPositionButton = view.findViewById(R.id.vote_first_position_button);
         voteSecondPositionButton = view.findViewById(R.id.vote_second_position_button);
         voteThirdPositionButton = view.findViewById(R.id.vote_third_position_button);
-        votesCountView = view.findViewById(R.id.vote_total);
-        argumentAuthorBox = view.findViewById(R.id.argument_author_box_container);
-        contentView = view.findViewById(R.id.argument_content);
-
-
-
     }
 
     private void setWidget(DebateSynthesis debate) {
@@ -104,7 +96,6 @@ public class WidgetFragment extends Fragment {
         voteThirdPositionButton.setOnClickListener(v -> {
             startDebate();
         });
-
     }
 
     public void getDebate() {
